@@ -7,6 +7,7 @@ public class LocadoraBoaViagem {
         //criando o objeto da tela login do sistema
         telas.JfrmLogin telalogin = new telas.JfrmLogin();
         //usando o metodo para mostrar a tela
+        
         telalogin.show();
          
     }
