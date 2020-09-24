@@ -129,7 +129,7 @@
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\Tiago Teixeira\Desktop\Documentos de Programa&#xe7;&#xe3;o\Icones\Crystal Clear - Wikimedia Commons_files\48px-Crystal_Clear_app_kuser.png"/>
+          <Image iconType="3" name="/imagens/48px-Crystal_Clear_app_kuser.png"/>
         </Property>
       </Properties>
     </Component>

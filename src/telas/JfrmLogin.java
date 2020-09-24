@@ -51,7 +51,7 @@ public class JfrmLogin extends javax.swing.JFrame {
         });
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Tiago Teixeira\\Desktop\\Documentos de Programação\\Icones\\Crystal Clear - Wikimedia Commons_files\\48px-Crystal_Clear_app_kuser.png")); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/48px-Crystal_Clear_app_kuser.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,6 +102,7 @@ public class JfrmLogin extends javax.swing.JFrame {
 
     private void jTxtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtSenhaActionPerformed
         // TODO add your handling code here:
+        jTxtSenha.setEditable(false);
     }//GEN-LAST:event_jTxtSenhaActionPerformed
 
     private void jBtnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnFecharActionPerformed
