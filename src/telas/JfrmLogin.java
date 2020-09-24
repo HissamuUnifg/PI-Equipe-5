@@ -66,12 +66,12 @@ public class JfrmLogin extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTxtSenha, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCboUsuario, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jBtnLogin)
                                 .addGap(18, 18, 18)
-                                .addComponent(jBtnFechar)))
+                                .addComponent(jBtnFechar))
+                            .addComponent(jTxtSenha, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(55, 55, 55))))
         );
         layout.setVerticalGroup(
