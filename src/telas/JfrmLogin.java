@@ -45,6 +45,11 @@ public class JfrmLogin extends javax.swing.JFrame {
         jLabel2.setText("Senha");
 
         jBtnLogin.setText("Login");
+        jBtnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnLoginActionPerformed(evt);
+            }
+        });
 
         jBtnFechar.setText("Fehar");
         jBtnFechar.addActionListener(new java.awt.event.ActionListener() {
@@ -112,6 +117,14 @@ public class JfrmLogin extends javax.swing.JFrame {
        this.setVisible(false);
        System.exit(0);
     }//GEN-LAST:event_jBtnFecharActionPerformed
+
+    private void jBtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLoginActionPerformed
+       this.setVisible(false);
+       
+       //criando o objeto da tela principal
+       telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal();
+       telaprincipal.show();
+    }//GEN-LAST:event_jBtnLoginActionPerformed
 
  
  
