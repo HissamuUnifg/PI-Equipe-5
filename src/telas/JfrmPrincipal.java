@@ -1,16 +1,12 @@
 
 package telas;
-
-import javax.swing.JOptionPane;
-
-
 /**
  *
  * @author Tiago Teixeira
  */
 public class JfrmPrincipal extends javax.swing.JFrame {
 
-
+public boolean ativo = true;
     public JfrmPrincipal() {
         initComponents();
     }
@@ -104,6 +100,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
     private void jMenuCadastroCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadastroCliActionPerformed
         telas.JfrmClientes telaclientes = new telas.JfrmClientes();
         this.setVisible(false);
+        ativo = false;
         telaclientes.show();
     }//GEN-LAST:event_jMenuCadastroCliActionPerformed
 
