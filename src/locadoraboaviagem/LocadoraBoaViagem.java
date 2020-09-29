@@ -8,7 +8,7 @@ public class LocadoraBoaViagem {
         telas.JfrmLogin telalogin = new telas.JfrmLogin();
         //usando o metodo para mostrar a tela
         telalogin.show();
-         
+       
     }
        
 }

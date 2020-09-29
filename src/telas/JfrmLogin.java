@@ -1,8 +1,11 @@
 
 package telas;
 
+
+
 public class JfrmLogin extends javax.swing.JFrame {
 
+    
     public JfrmLogin() {
         initComponents();
     }
@@ -106,6 +109,7 @@ public class JfrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jTxtSenhaActionPerformed
 
     private void jBtnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnFecharActionPerformed
+       this.setVisible(false);
        System.exit(0);
     }//GEN-LAST:event_jBtnFecharActionPerformed
 
