@@ -1,6 +1,9 @@
 
 package telas;
 
+import javax.swing.JOptionPane;
+
+
 /**
  *
  * @author Tiago Teixeira
@@ -17,6 +20,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenuClientes = new javax.swing.JMenu();
         jMenuCadastroCli = new javax.swing.JMenuItem();
@@ -33,10 +37,26 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         setPreferredSize(new java.awt.Dimension(1024, 768));
         setResizable(false);
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1023, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 600, Short.MAX_VALUE)
+        );
+
         jMenuClientes.setText("Clientes");
 
         jMenuCadastroCli.setText("Cadastro");
         jMenuCadastroCli.setToolTipText("");
+        jMenuCadastroCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuCadastroCliActionPerformed(evt);
+            }
+        });
         jMenuClientes.add(jMenuCadastroCli);
 
         jMenuBar2.add(jMenuClientes);
@@ -71,15 +91,22 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1023, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jMenuCadastroCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadastroCliActionPerformed
+        telas.JfrmClientes telaclientes = new telas.JfrmClientes();
+        this.setVisible(false);
+        telaclientes.show();
+    }//GEN-LAST:event_jMenuCadastroCliActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -96,6 +123,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuColaboradores;
     private javax.swing.JMenu jMenuContratLoc;
     private javax.swing.JMenu jMenuPatriVeicu;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
    
 }
