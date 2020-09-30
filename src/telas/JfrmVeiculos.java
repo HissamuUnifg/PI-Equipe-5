@@ -116,7 +116,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtKm.setBackground(new java.awt.Color(240, 240, 240));
         jTxtKm.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtKm.setToolTipText("Digite a KM rodada do veiculo");
-        jTxtKm.setBorder(javax.swing.BorderFactory.createTitledBorder("Marca"));
+        jTxtKm.setBorder(javax.swing.BorderFactory.createTitledBorder("Km Rodado"));
 
         jTxtAnoModelo.setBackground(new java.awt.Color(240, 240, 240));
         jTxtAnoModelo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
