@@ -77,6 +77,11 @@ public boolean ativo = true;
         jMenuColaboradores.setText("Colaboradores");
 
         jMenuCadColab.setText("Cadastro");
+        jMenuCadColab.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuCadColabActionPerformed(evt);
+            }
+        });
         jMenuColaboradores.add(jMenuCadColab);
 
         jMenuBar2.add(jMenuColaboradores);
@@ -103,6 +108,12 @@ public boolean ativo = true;
         ativo = false;
         telaclientes.show();
     }//GEN-LAST:event_jMenuCadastroCliActionPerformed
+
+    private void jMenuCadColabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadColabActionPerformed
+        telas.JfrmColaborador telacolaborador = new telas.JfrmColaborador();
+        this.setVisible(false);
+        telacolaborador.show();
+    }//GEN-LAST:event_jMenuCadColabActionPerformed
 
 
     /**
