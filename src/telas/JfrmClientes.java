@@ -54,9 +54,9 @@ public class JfrmClientes extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Clientes");
-        setPreferredSize(new java.awt.Dimension(1023, 620));
+        setPreferredSize(new java.awt.Dimension(1055, 630));
         setResizable(false);
-        setSize(new java.awt.Dimension(1023, 620));
+        setSize(new java.awt.Dimension(1055, 630));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);

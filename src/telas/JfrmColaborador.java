@@ -44,7 +44,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         JbtnExcluir.setFocusPainted(false);
 
         JbtnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/search_121759.png"))); // NOI18N
-        JbtnBuscar.setToolTipText("Clique aqui para buscar Colaborador");
+        JbtnBuscar.setToolTipText("Clique aqui para buscar Colaborador usando o seu CPF");
         JbtnBuscar.setBorder(null);
         JbtnBuscar.setFocusPainted(false);
 

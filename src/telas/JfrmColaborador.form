@@ -89,7 +89,7 @@
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/imagens/search_121759.png"/>
         </Property>
-        <Property name="toolTipText" type="java.lang.String" value="Clique aqui para buscar Colaborador"/>
+        <Property name="toolTipText" type="java.lang.String" value="Clique aqui para buscar Colaborador usando o seu CPF"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="null"/>
         </Property>
