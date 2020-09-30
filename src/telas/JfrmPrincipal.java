@@ -62,6 +62,11 @@ public boolean ativo = true;
 
         jMenuCadMovVeic.setText("Cadastro/Movimentação");
         jMenuCadMovVeic.setToolTipText("");
+        jMenuCadMovVeic.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuCadMovVeicActionPerformed(evt);
+            }
+        });
         jMenuPatriVeicu.add(jMenuCadMovVeic);
 
         jMenuBar2.add(jMenuPatriVeicu);
@@ -114,6 +119,12 @@ public boolean ativo = true;
         this.setVisible(false);
         telacolaborador.show();
     }//GEN-LAST:event_jMenuCadColabActionPerformed
+
+    private void jMenuCadMovVeicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadMovVeicActionPerformed
+       telas.JfrmVeiculos telaveiculos = new telas.JfrmVeiculos();
+       this.setVisible(false);
+       telaveiculos.show();
+    }//GEN-LAST:event_jMenuCadMovVeicActionPerformed
 
 
     /**
