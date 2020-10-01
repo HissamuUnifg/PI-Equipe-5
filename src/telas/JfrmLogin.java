@@ -104,11 +104,11 @@ public class JfrmLogin extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTxtSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtSenhaActionPerformed
-        // TODO add your handling code here:
-        jTxtSenha.setEditable(false);
+         jTxtSenha.setEditable(false);
     }//GEN-LAST:event_jTxtSenhaActionPerformed
 
     private void jBtnFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnFecharActionPerformed
@@ -118,8 +118,7 @@ public class JfrmLogin extends javax.swing.JFrame {
 
     private void jBtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLoginActionPerformed
        this.setVisible(false);
-       
-       //criando o objeto da tela principal
+        //criando o objeto da tela principal
        telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal();
        telaprincipal.show();
     }//GEN-LAST:event_jBtnLoginActionPerformed
