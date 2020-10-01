@@ -31,11 +31,16 @@ public boolean ativo = true;
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal - Locadora App");
         setIconImages(null);
-        setPreferredSize(new java.awt.Dimension(848, 490));
+        setPreferredSize(new java.awt.Dimension(1170, 820));
         setResizable(false);
-        setSize(new java.awt.Dimension(848, 490));
+        setSize(new java.awt.Dimension(1170, 820));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Frota2.jpg"))); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Frota3.jpg"))); // NOI18N
+        jLabel1.setText("Locadora App Release 1.0");
+        jLabel1.setToolTipText("");
+        jLabel1.setFocusable(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
