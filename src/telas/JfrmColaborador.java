@@ -1,6 +1,8 @@
 
 package telas;
 
+import java.awt.Toolkit;
+
 /**
  *
  * @author Tiago Teixeira
@@ -10,6 +12,8 @@ public class JfrmColaborador extends javax.swing.JFrame {
 
     public JfrmColaborador() {
         initComponents();
+       getIcon();
+       
     }
 
 
@@ -193,4 +197,8 @@ public class JfrmColaborador extends javax.swing.JFrame {
     private javax.swing.JTextField jTxtNome;
     private javax.swing.JTextField jTxtSenha;
     // End of variables declaration//GEN-END:variables
+
+    private void getIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagens/icone_colaborador.png")));
+    }
 }

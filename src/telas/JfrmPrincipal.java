@@ -1,5 +1,8 @@
 
 package telas;
+
+import java.awt.Toolkit;
+
 /**
  *
  * @author Tiago Teixeira
@@ -9,6 +12,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
 public boolean ativo = true;
     public JfrmPrincipal() {
         initComponents();
+        setIcon();
     }
 
 
@@ -53,8 +57,10 @@ public boolean ativo = true;
             .addComponent(jLabel1)
         );
 
+        jMenuClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_menu_clientes.png"))); // NOI18N
         jMenuClientes.setText("Clientes");
 
+        jMenuCadastroCli.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_menu_clientes.png"))); // NOI18N
         jMenuCadastroCli.setText("Cadastro");
         jMenuCadastroCli.setToolTipText("");
         jMenuCadastroCli.addActionListener(new java.awt.event.ActionListener() {
@@ -66,9 +72,11 @@ public boolean ativo = true;
 
         jMenuBar2.add(jMenuClientes);
 
+        jMenuPatriVeicu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_menu_carro.png"))); // NOI18N
         jMenuPatriVeicu.setText("Patrimonios Veiculos");
         jMenuPatriVeicu.setToolTipText("");
 
+        jMenuCadMovVeic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_veiculo.png"))); // NOI18N
         jMenuCadMovVeic.setText("Cadastro/Movimentação");
         jMenuCadMovVeic.setToolTipText("");
         jMenuCadMovVeic.addActionListener(new java.awt.event.ActionListener() {
@@ -80,8 +88,10 @@ public boolean ativo = true;
 
         jMenuBar2.add(jMenuPatriVeicu);
 
+        jMenuContratLoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_menu_contrato.png"))); // NOI18N
         jMenuContratLoc.setText("Contrato Locação");
 
+        jMenuCadMovCont.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_contrato2.png"))); // NOI18N
         jMenuCadMovCont.setText("Cadastro/Movimentação");
         jMenuCadMovCont.setToolTipText("");
         jMenuCadMovCont.addActionListener(new java.awt.event.ActionListener() {
@@ -93,8 +103,10 @@ public boolean ativo = true;
 
         jMenuBar2.add(jMenuContratLoc);
 
+        jMenuColaboradores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_menu_colaborador.png"))); // NOI18N
         jMenuColaboradores.setText("Colaboradores");
 
+        jMenuCadColab.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Icone_colaborador.png"))); // NOI18N
         jMenuCadColab.setText("Cadastro");
         jMenuCadColab.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -166,5 +178,9 @@ public boolean ativo = true;
     private javax.swing.JMenu jMenuPatriVeicu;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagens/icone_menu_carro.png")));
+    }
    
 }

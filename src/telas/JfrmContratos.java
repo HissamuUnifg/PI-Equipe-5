@@ -5,6 +5,8 @@
  */
 package telas;
 
+import java.awt.Toolkit;
+
 /**
  *
  * @author Tiago Teixeira
@@ -16,6 +18,7 @@ public class JfrmContratos extends javax.swing.JFrame {
      */
     public JfrmContratos() {
         initComponents();
+        setIcon();
     }
 
     /**
@@ -635,4 +638,8 @@ public class JfrmContratos extends javax.swing.JFrame {
     private javax.swing.JTextField jTxtVeiculo;
     private javax.swing.JTextField jTxt_rg_ie;
     // End of variables declaration//GEN-END:variables
+
+    private void setIcon() {
+       setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagens/icone_contrato2.png")));
+    }
 }

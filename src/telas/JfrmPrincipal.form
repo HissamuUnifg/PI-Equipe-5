@@ -6,11 +6,17 @@
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenuClientes">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagens/icone_menu_clientes.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Clientes"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuCadastroCli">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/icone_menu_clientes.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Cadastro"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
@@ -22,12 +28,18 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenuPatriVeicu">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagens/icone_menu_carro.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Patrimonios Veiculos"/>
             <Property name="toolTipText" type="java.lang.String" value=""/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuCadMovVeic">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/icone_veiculo.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Cadastro/Movimenta&#xe7;&#xe3;o"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
@@ -39,11 +51,17 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenuContratLoc">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagens/icone_menu_contrato.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Contrato Loca&#xe7;&#xe3;o"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuCadMovCont">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/icone_contrato2.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Cadastro/Movimenta&#xe7;&#xe3;o"/>
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
@@ -55,11 +73,17 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenuColaboradores">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagens/icone_menu_colaborador.png"/>
+            </Property>
             <Property name="text" type="java.lang.String" value="Colaboradores"/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuCadColab">
               <Properties>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/imagens/Icone_colaborador.png"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Cadastro"/>
               </Properties>
               <Events>

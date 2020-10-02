@@ -1,6 +1,8 @@
 
 package telas;
 
+import java.awt.Toolkit;
+
 
 /**
  *
@@ -10,6 +12,7 @@ public class JfrmClientes extends javax.swing.JFrame {
    
     public JfrmClientes() {
         initComponents();
+        setIcon();
     }
 
     
@@ -439,4 +442,8 @@ public class JfrmClientes extends javax.swing.JFrame {
     private javax.swing.JTextField jTxtRua;
     private javax.swing.JTextField jTxt_rg_ie;
     // End of variables declaration//GEN-END:variables
+
+    private void setIcon() {
+       setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagens/icone_menu_clientes.png")));
+    }
 }

@@ -1,6 +1,8 @@
 
 package telas;
 
+import java.awt.Toolkit;
+
 /**
  *
  * @author Tiago Teixeira
@@ -10,6 +12,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
     public JfrmVeiculos() {
         initComponents();
+        setIcon();
     }
 
    
@@ -431,4 +434,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     private javax.swing.JTextField jTxtValorSeguro;
     private javax.swing.JTextField jTxtVeiculo;
     // End of variables declaration//GEN-END:variables
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagens/icone_veiculo.png")));
+    }
 }

@@ -1,6 +1,8 @@
 
 package telas;
 
+import java.awt.Toolkit;
+
 
 
 public class JfrmLogin extends javax.swing.JFrame {
@@ -8,6 +10,7 @@ public class JfrmLogin extends javax.swing.JFrame {
     
     public JfrmLogin() {
         initComponents();
+        setIcon();
     }
 
     
@@ -131,4 +134,8 @@ public class JfrmLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPasswordField jPassSenha;
     // End of variables declaration//GEN-END:variables
+
+    private void setIcon() {
+       setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagens/business_man.png")));
+    }
 }
