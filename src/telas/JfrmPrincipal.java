@@ -73,7 +73,7 @@ public boolean ativo = true;
         jMenuBar2.add(jMenuClientes);
 
         jMenuPatriVeicu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_menu_carro.png"))); // NOI18N
-        jMenuPatriVeicu.setText("Patrimonios Veiculos");
+        jMenuPatriVeicu.setText("Patrimônios Veiculos");
         jMenuPatriVeicu.setToolTipText("");
 
         jMenuCadMovVeic.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_veiculo.png"))); // NOI18N

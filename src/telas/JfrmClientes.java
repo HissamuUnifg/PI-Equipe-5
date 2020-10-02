@@ -48,12 +48,12 @@ public class JfrmClientes extends javax.swing.JFrame {
         jCboTipoEnd = new javax.swing.JComboBox<>();
         jTxtReferencia = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTblEnderecos = new javax.swing.JTable();
         jBtn_Adcionar_end = new javax.swing.JButton();
         jBtn_Salvar_End = new javax.swing.JButton();
         jBtn_excluir_end = new javax.swing.JButton();
         jBtn_Editar_End = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        jLabelCodigo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Clientes");
@@ -245,7 +245,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jTxtReferencia.setToolTipText("Breve ponto de referencia");
         jTxtReferencia.setBorder(javax.swing.BorderFactory.createTitledBorder("Referencia"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTblEnderecos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null},
@@ -263,10 +263,10 @@ public class JfrmClientes extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setToolTipText("Selecione o endereço para usar as opções");
-        jTable1.setCellSelectionEnabled(true);
-        jTable1.setName(""); // NOI18N
-        jScrollPane2.setViewportView(jTable1);
+        jTblEnderecos.setToolTipText("Selecione o endereço para usar as opções");
+        jTblEnderecos.setCellSelectionEnabled(true);
+        jTblEnderecos.setName(""); // NOI18N
+        jScrollPane2.setViewportView(jTblEnderecos);
 
         jBtn_Adcionar_end.setText("Adicionar");
         jBtn_Adcionar_end.setToolTipText("Clique para adicionar um endereço");
@@ -340,7 +340,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                     .addComponent(jBtn_Editar_End)))
         );
 
-        jLabel1.setText("Codigo:");
+        jLabelCodigo.setText("Codigo:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -359,7 +359,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(JbtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
+                .addComponent(jLabelCodigo)
                 .addGap(54, 54, 54))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
@@ -381,7 +381,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                     .addComponent(JbtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel1)))
+                        .addComponent(jLabelCodigo)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -422,13 +422,13 @@ public class JfrmClientes extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCkb_inativar;
     private javax.swing.JFormattedTextField jFtxtCelular;
     private javax.swing.JFormattedTextField jFtxtFone;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabelCodigo;
     private javax.swing.JPanel jPanDadosGerais;
     private javax.swing.JPanel jPanelDadosEnderecos;
     private javax.swing.JPanel jPanelObservacoes;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTblEnderecos;
     private javax.swing.JTextArea jTextObservacoes;
     private javax.swing.JTextField jTxtBairro;
     private javax.swing.JTextField jTxtCEP;

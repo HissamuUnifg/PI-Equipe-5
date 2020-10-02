@@ -50,7 +50,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtPlacaBusca = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTblVeiculos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -275,7 +275,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTblVeiculos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null, null},
                 {null, null, null, null, null, null, null, null, null},
@@ -294,8 +294,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jTable1.setToolTipText("Selecione e use as feramentas da parte superior da tela");
-        jScrollPane1.setViewportView(jTable1);
+        jTblVeiculos.setToolTipText("Selecione e use as feramentas da parte superior da tela");
+        jScrollPane1.setViewportView(jTblVeiculos);
 
         jLabel1.setText("Patrimonios/Veiculos Cadastrados");
 
@@ -416,7 +416,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelBusca;
     private javax.swing.JPanel jPanelDadosValores;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTblVeiculos;
     private javax.swing.JTextField jTxtAnoFabricacao;
     private javax.swing.JTextField jTxtAnoModelo;
     private javax.swing.JTextField jTxtChassi;
