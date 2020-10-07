@@ -13,6 +13,7 @@ public boolean ativo = true;
     public JfrmPrincipal() {
         initComponents();
         setIcon();
+        setUserLoged();
     }
 
 
@@ -22,6 +23,9 @@ public boolean ativo = true;
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        JlbUserLoged = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenuClientes = new javax.swing.JMenu();
         jMenuCadastroCli = new javax.swing.JMenuItem();
@@ -35,9 +39,8 @@ public boolean ativo = true;
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal - Locadora App");
         setIconImages(null);
-        setPreferredSize(new java.awt.Dimension(1170, 820));
-        setResizable(false);
-        setSize(new java.awt.Dimension(1170, 820));
+        setPreferredSize(new java.awt.Dimension(1170, 850));
+        setSize(new java.awt.Dimension(1170, 850));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -46,16 +49,39 @@ public boolean ativo = true;
         jLabel1.setToolTipText("");
         jLabel1.setFocusable(false);
 
+        JlbUserLoged.setText("jLabel3");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(JlbUserLoged, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(JlbUserLoged)
+                .addGap(0, 22, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1)
+            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1171, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 747, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        jLabel2.setText("jLabel2");
 
         jMenuClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_menu_clientes.png"))); // NOI18N
         jMenuClientes.setText("Clientes");
@@ -166,7 +192,9 @@ public boolean ativo = true;
    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel JlbUserLoged;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuCadColab;
     private javax.swing.JMenuItem jMenuCadMovCont;
@@ -177,10 +205,16 @@ public boolean ativo = true;
     private javax.swing.JMenu jMenuContratLoc;
     private javax.swing.JMenu jMenuPatriVeicu;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables
 
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagens/icone_menu_carro.png")));
+    }
+
+    private void setUserLoged() {
+        models.ClsLogin clslogin = new models.ClsLogin();
+        JlbUserLoged.setText("Seja bem vindo " + clslogin.getUserLoged()); 
     }
    
 }

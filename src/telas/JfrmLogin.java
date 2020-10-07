@@ -2,15 +2,18 @@
 package telas;
 
 import java.awt.Toolkit;
+import javax.swing.JOptionPane;
 
 
 
 public class JfrmLogin extends javax.swing.JFrame {
 
-    
+    private boolean loginsucess;
     public JfrmLogin() {
         initComponents();
         setIcon();
+        loadUser();
+        jPassSenha.enable(false);
     }
 
     
@@ -37,6 +40,11 @@ public class JfrmLogin extends javax.swing.JFrame {
         jCboUsuario.setMaximumRowCount(20);
         jCboUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jCboUsuario.setToolTipText("Selecione o Usuário");
+        jCboUsuario.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCboUsuarioItemStateChanged(evt);
+            }
+        });
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/senha.png"))); // NOI18N
         jLabel2.setText("Senha");
@@ -113,11 +121,30 @@ public class JfrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnFecharActionPerformed
 
     private void jBtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLoginActionPerformed
-       this.setVisible(false);
-        //criando o objeto da tela principal
-       telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal();
-       telaprincipal.show();
+     
+       if(jCboUsuario.getSelectedIndex() > 0){
+           models.ClsLogin clslogin = new models.ClsLogin();
+       loginsucess = clslogin.validarlogin(jCboUsuario.getSelectedItem().toString(), new String(jPassSenha.getPassword()));
+       if(loginsucess == true){
+           clslogin.setUserLoged(jCboUsuario.getSelectedItem().toString());
+           this.setVisible(false);
+           //criando o objeto da tela principal
+           telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal();
+           telaprincipal.show();
+       }else{
+           JOptionPane.showMessageDialog(this, "Senha ou Usuario Incorretos", "ERRO", JOptionPane.ERROR_MESSAGE);
+       }
+       }else{
+           JOptionPane.showMessageDialog(this, "Usuario não selecionado, por favor selecione!", "ERRO", JOptionPane.INFORMATION_MESSAGE);
+       }
+       
+       
+       
     }//GEN-LAST:event_jBtnLoginActionPerformed
+
+    private void jCboUsuarioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCboUsuarioItemStateChanged
+      jPassSenha.enable(true);
+    }//GEN-LAST:event_jCboUsuarioItemStateChanged
 
   
                
@@ -137,5 +164,9 @@ public class JfrmLogin extends javax.swing.JFrame {
 
     private void setIcon() {
        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagens/business_man.png")));
+    }
+
+    private void loadUser() {
+        jCboUsuario.addItem("Admin");
     }
 }
