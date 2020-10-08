@@ -129,7 +129,7 @@ public class JfrmLogin extends javax.swing.JFrame {
            clslogin.setUserLoged(jCboUsuario.getSelectedItem().toString());
            this.setVisible(false);
            //criando o objeto da tela principal
-           telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal();
+           telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal(clslogin);
            telaprincipal.show();
        }else{
            JOptionPane.showMessageDialog(this, "Senha ou Usuario Incorretos", "ERRO", JOptionPane.ERROR_MESSAGE);

@@ -2,20 +2,27 @@
 package telas;
 
 import java.awt.Toolkit;
+import models.ClsLogin;
 
 /**
  *
  * @author Tiago Teixeira
  */
 public class JfrmPrincipal extends javax.swing.JFrame {
-
-public boolean ativo = true;
+    private String userLoged = "";
     public JfrmPrincipal() {
         initComponents();
         setIcon();
         setUserLoged();
     }
-
+    public JfrmPrincipal(ClsLogin clslogin) {
+       userLoged = clslogin.getUserLoged();
+       initComponents();
+       setIcon();
+       setUserLoged();
+    }
+   
+    
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -163,7 +170,6 @@ public boolean ativo = true;
     private void jMenuCadastroCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadastroCliActionPerformed
         telas.JfrmClientes telaclientes = new telas.JfrmClientes();
         this.setVisible(false);
-        ativo = false;
         telaclientes.show();
     }//GEN-LAST:event_jMenuCadastroCliActionPerformed
 
@@ -213,8 +219,7 @@ public boolean ativo = true;
     }
 
     private void setUserLoged() {
-        models.ClsLogin clslogin = new models.ClsLogin();
-        JlbUserLoged.setText("Seja bem vindo " + clslogin.getUserLoged()); 
+        JlbUserLoged.setText("Seja bem vindo " + userLoged); 
     }
    
 }
