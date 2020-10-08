@@ -2,6 +2,7 @@
 package telas;
 
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import javax.swing.JOptionPane;
 
 
@@ -14,6 +15,7 @@ public class JfrmLogin extends javax.swing.JFrame {
         setIcon();
         loadUser();
         jPassSenha.enable(false);
+        jBtnLogin.enable(false);
     }
 
     
@@ -68,6 +70,16 @@ public class JfrmLogin extends javax.swing.JFrame {
 
         jPassSenha.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPassSenha.setToolTipText("Digite a sua senha!");
+        jPassSenha.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jPassSenhaActionPerformed(evt);
+            }
+        });
+        jPassSenha.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPassSenhaKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,30 +133,50 @@ public class JfrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnFecharActionPerformed
 
     private void jBtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLoginActionPerformed
-     
-       if(jCboUsuario.getSelectedIndex() > 0){
-           models.ClsLogin clslogin = new models.ClsLogin();
-       loginsucess = clslogin.validarlogin(jCboUsuario.getSelectedItem().toString(), new String(jPassSenha.getPassword()));
-       if(loginsucess == true){
-           clslogin.setUserLoged(jCboUsuario.getSelectedItem().toString());
-           this.setVisible(false);
-           //criando o objeto da tela principal
-           telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal(clslogin);
-           telaprincipal.show();
-       }else{
-           JOptionPane.showMessageDialog(this, "Senha ou Usuario Incorretos", "ERRO", JOptionPane.ERROR_MESSAGE);
-       }
-       }else{
-           JOptionPane.showMessageDialog(this, "Usuario não selecionado, por favor selecione!", "ERRO", JOptionPane.INFORMATION_MESSAGE);
-       }
-       
-       
-       
+
+        if (jCboUsuario.getSelectedIndex() > 0) {
+            models.ClsLogin clslogin = new models.ClsLogin();
+            loginsucess = clslogin.validarlogin(jCboUsuario.getSelectedItem().toString(), new String(jPassSenha.getPassword()));
+            if (loginsucess == true) {
+                clslogin.setUserLoged(jCboUsuario.getSelectedItem().toString());
+                this.setVisible(false);
+                //criando o objeto da tela principal
+                telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal(clslogin);
+                telaprincipal.show();
+            } else {
+                JOptionPane.showMessageDialog(this, "Senha ou Usuario Incorretos", "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuario não selecionado, por favor selecione!", "ERRO", JOptionPane.INFORMATION_MESSAGE);
+        }
+
     }//GEN-LAST:event_jBtnLoginActionPerformed
 
     private void jCboUsuarioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCboUsuarioItemStateChanged
       jPassSenha.enable(true);
+      jPassSenha.requestFocus();
     }//GEN-LAST:event_jCboUsuarioItemStateChanged
+
+    private void jPassSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPassSenhaActionPerformed
+      jBtnLogin.enable(true);
+      jBtnLogin.requestFocus();
+    }//GEN-LAST:event_jPassSenhaActionPerformed
+
+    private void jPassSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPassSenhaKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            models.ClsLogin clslogin = new models.ClsLogin();
+            loginsucess = clslogin.validarlogin(jCboUsuario.getSelectedItem().toString(), new String(jPassSenha.getPassword()));
+            if (loginsucess == true) {
+                clslogin.setUserLoged(jCboUsuario.getSelectedItem().toString());
+                this.setVisible(false);
+                //criando o objeto da tela principal
+                telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal(clslogin);
+                telaprincipal.show();
+            } else {
+                JOptionPane.showMessageDialog(this, "Senha ou Usuario Incorretos", "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jPassSenhaKeyPressed
 
   
                

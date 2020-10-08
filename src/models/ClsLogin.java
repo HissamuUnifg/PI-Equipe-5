@@ -24,6 +24,4 @@ public class ClsLogin {
     public void setUserLoged(String usuario){
         userLoged = usuario;
     }
-    
-    
 }
