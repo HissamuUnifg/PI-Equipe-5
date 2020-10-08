@@ -132,9 +132,9 @@ public class ColaboradorDAO {
         }
     }
 
-    public List<models.ClsColaborador> select() {
+    public List<models.ClsColaborador> select(String cpf) {
 
-        String sql = "select * from colaboradores";
+        String sql = "select id, nome, cpf, nomeLogin, senha, telefone from colaboradores where cpf = ?";
         List<models.ClsColaborador> colaboradores = new ArrayList<models.ClsColaborador>();
 
         Connection conn = null;
@@ -144,18 +144,20 @@ public class ColaboradorDAO {
         try {
             conn = ConexaoDAO.getConexaoDAO();
             ps = conn.prepareStatement(sql);
+            ps.setString(1, cpf);
             rset = ps.executeQuery();
-
+            
             while (rset.next()) {
                 models.ClsColaborador colaborador = new models.ClsColaborador();
                 colaborador.setId(rset.getInt("id"));
                 colaborador.setNome(rset.getString("nome"));
-                colaborador.setNome(rset.getString("nomeLogin"));
-                colaborador.setNome(rset.getString("senha"));
-                colaborador.setNome(rset.getString("telefone"));
-                colaborador.setNome(rset.getString("cpf"));
+                colaborador.setCpf(rset.getString("cpf"));
+                colaborador.setNomeLogin(rset.getString("nomeLogin"));
+                colaborador.setSenha(rset.getString("senha"));
+                colaborador.setTelefone(rset.getString("telefone"));
                 colaboradores.add(colaborador);
             }
+            retorno = "Colaborador Encontrado!";
         } catch (SQLException e) {
             retorno = "Erro: " + e;
         } finally {
@@ -180,5 +182,7 @@ public class ColaboradorDAO {
 
         return colaboradores;
     }
+    
+
 
 }

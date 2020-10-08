@@ -95,6 +95,9 @@
         </Property>
         <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="JbtnBuscarMouseClicked"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="JbtnSalvar">
       <Properties>

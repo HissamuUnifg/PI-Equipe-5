@@ -3,6 +3,7 @@ package telas;
 
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -10,14 +11,14 @@ import javax.swing.JOptionPane;
  * @author Tiago Teixeira
  */
 public class JfrmColaborador extends javax.swing.JFrame {
-
+   
     models.ClsColaborador clscolaborador = new models.ClsColaborador();
     DAO.ColaboradorDAO colaboradorDAO = new DAO.ColaboradorDAO();
 
     public JfrmColaborador() {
         initComponents();
         getIcon();
-        disableControls();
+        disableControls();        
     }
 
 
@@ -55,6 +56,11 @@ public class JfrmColaborador extends javax.swing.JFrame {
         JbtnBuscar.setToolTipText("Clique aqui para buscar Colaborador usando o seu CPF");
         JbtnBuscar.setBorder(null);
         JbtnBuscar.setFocusPainted(false);
+        JbtnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JbtnBuscarMouseClicked(evt);
+            }
+        });
 
         JbtnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/save_121760.png"))); // NOI18N
         JbtnSalvar.setToolTipText("Clique aqui para salvar Colaborador");
@@ -224,6 +230,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
 
     private void JbtnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnNovoActionPerformed
        enableControls();
+       clearTextBox();
     }//GEN-LAST:event_JbtnNovoActionPerformed
 
     private void jTxtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtNomeKeyPressed
@@ -294,6 +301,18 @@ public class JfrmColaborador extends javax.swing.JFrame {
         JbtnBuscar.setEnabled(true);
     }//GEN-LAST:event_JbtnSalvarMouseClicked
 
+    private void JbtnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbtnBuscarMouseClicked
+        String cpf = JOptionPane.showInputDialog("Digite o CPF para procurar");
+                
+        for(models.ClsColaborador clb: colaboradorDAO.select(cpf)){
+            jTxtNome.setText(clb.getNome());
+            jTxtCpf.setText(clb.getCpf());
+            jTxtNmlogin.setText(clb.getNomeLogin());
+            jTxtFone.setText(clb.getTelefone());
+            jTxtSenha.setText(clb.getSenha());              
+        }
+    }//GEN-LAST:event_JbtnBuscarMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -342,5 +361,14 @@ public class JfrmColaborador extends javax.swing.JFrame {
         JbtnEditar.setEnabled(false);
         JbtnBuscar.setEnabled(false);
         JbtnSalvar.setEnabled(true);
+    }
+
+    private void clearTextBox() {
+        //limpando os TxtBox
+        jTxtCpf.setText("");
+        jTxtFone.setText("");
+        jTxtNmlogin.setText("");
+        jTxtNome.setText("");
+        jTxtSenha.setText("");
     }
 }
