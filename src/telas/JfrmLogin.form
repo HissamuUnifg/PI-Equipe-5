@@ -112,6 +112,7 @@
     <Component class="javax.swing.JButton" name="jBtnLogin">
       <Properties>
         <Property name="text" type="java.lang.String" value="Login"/>
+        <Property name="toolTipText" type="java.lang.String" value="Clique aqui para fazer o login"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnLoginActionPerformed"/>
@@ -120,6 +121,7 @@
     <Component class="javax.swing.JButton" name="jBtnFechar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Fehar"/>
+        <Property name="toolTipText" type="java.lang.String" value="Clique aqui para fechar o sistema"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnFecharActionPerformed"/>

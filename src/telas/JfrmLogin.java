@@ -14,8 +14,8 @@ public class JfrmLogin extends javax.swing.JFrame {
         initComponents();
         setIcon();
         loadUser();
-        jPassSenha.enable(false);
-        jBtnLogin.enable(false);
+        jPassSenha.setEnabled(false);
+        jBtnLogin.setEnabled(false);
     }
 
     
@@ -52,6 +52,7 @@ public class JfrmLogin extends javax.swing.JFrame {
         jLabel2.setText("Senha");
 
         jBtnLogin.setText("Login");
+        jBtnLogin.setToolTipText("Clique aqui para fazer o login");
         jBtnLogin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnLoginActionPerformed(evt);
@@ -59,6 +60,7 @@ public class JfrmLogin extends javax.swing.JFrame {
         });
 
         jBtnFechar.setText("Fehar");
+        jBtnFechar.setToolTipText("Clique aqui para fechar o sistema");
         jBtnFechar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jBtnFecharActionPerformed(evt);
@@ -153,17 +155,20 @@ public class JfrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnLoginActionPerformed
 
     private void jCboUsuarioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCboUsuarioItemStateChanged
-      jPassSenha.enable(true);
-      jPassSenha.requestFocus();
+        if (jCboUsuario.getSelectedIndex() > -1) {
+            jPassSenha.setEnabled(true);
+            jPassSenha.requestFocus();
+        }
     }//GEN-LAST:event_jCboUsuarioItemStateChanged
 
     private void jPassSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPassSenhaActionPerformed
-      jBtnLogin.enable(true);
-      jBtnLogin.requestFocus();
+        jBtnLogin.setEnabled(true);       
     }//GEN-LAST:event_jPassSenhaActionPerformed
 
     private void jPassSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPassSenhaKeyPressed
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+        jBtnLogin.setEnabled(true);
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
+            jBtnLogin.requestFocus();
             models.ClsLogin clslogin = new models.ClsLogin();
             loginsucess = clslogin.validarlogin(jCboUsuario.getSelectedItem().toString(), new String(jPassSenha.getPassword()));
             if (loginsucess == true) {

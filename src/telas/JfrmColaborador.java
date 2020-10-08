@@ -2,6 +2,8 @@
 package telas;
 
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -9,11 +11,13 @@ import java.awt.Toolkit;
  */
 public class JfrmColaborador extends javax.swing.JFrame {
 
+    models.ClsColaborador clscolaborador = new models.ClsColaborador();
+    DAO.ColaboradorDAO colaboradorDAO = new DAO.ColaboradorDAO();
 
     public JfrmColaborador() {
         initComponents();
-       getIcon();
-       
+        getIcon();
+        disableControls();
     }
 
 
@@ -56,6 +60,11 @@ public class JfrmColaborador extends javax.swing.JFrame {
         JbtnSalvar.setToolTipText("Clique aqui para salvar Colaborador");
         JbtnSalvar.setBorder(null);
         JbtnSalvar.setFocusPainted(false);
+        JbtnSalvar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JbtnSalvarMouseClicked(evt);
+            }
+        });
 
         JbtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/new_121792.png"))); // NOI18N
         JbtnEditar.setToolTipText("Clique aqui para editar Colaborador");
@@ -66,6 +75,11 @@ public class JfrmColaborador extends javax.swing.JFrame {
         JbtnNovo.setToolTipText("Clique aqui para novo Colaborador");
         JbtnNovo.setBorder(null);
         JbtnNovo.setFocusPainted(false);
+        JbtnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JbtnNovoActionPerformed(evt);
+            }
+        });
 
         JpanDadosGerais.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados Gerais"));
 
@@ -73,26 +87,56 @@ public class JfrmColaborador extends javax.swing.JFrame {
         jTxtNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtNome.setToolTipText("Digite o nome completo do colaborador");
         jTxtNome.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome"));
+        jTxtNome.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtNomeFocusLost(evt);
+            }
+        });
+        jTxtNome.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTxtNomeKeyPressed(evt);
+            }
+        });
 
         jTxtCpf.setBackground(new java.awt.Color(240, 240, 240));
         jTxtCpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtCpf.setToolTipText("Digite o CPF do colaborador");
         jTxtCpf.setBorder(javax.swing.BorderFactory.createTitledBorder("CPF"));
+        jTxtCpf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtCpfFocusLost(evt);
+            }
+        });
 
         jTxtNmlogin.setBackground(new java.awt.Color(240, 240, 240));
         jTxtNmlogin.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtNmlogin.setToolTipText("Digite o nomedo login do colaborador");
         jTxtNmlogin.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome Login"));
+        jTxtNmlogin.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtNmloginFocusLost(evt);
+            }
+        });
 
         jTxtFone.setBackground(new java.awt.Color(240, 240, 240));
         jTxtFone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtFone.setToolTipText("Digite o Telefone do colaborador");
         jTxtFone.setBorder(javax.swing.BorderFactory.createTitledBorder("Telefone"));
+        jTxtFone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtFoneFocusLost(evt);
+            }
+        });
 
         jTxtSenha.setBackground(new java.awt.Color(240, 240, 240));
         jTxtSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtSenha.setToolTipText("Digite a senha do colaborador");
         jTxtSenha.setBorder(javax.swing.BorderFactory.createTitledBorder("Senha"));
+        jTxtSenha.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtSenhaFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout JpanDadosGeraisLayout = new javax.swing.GroupLayout(JpanDadosGerais);
         JpanDadosGerais.setLayout(JpanDadosGeraisLayout);
@@ -178,6 +222,78 @@ public class JfrmColaborador extends javax.swing.JFrame {
        telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
+    private void JbtnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnNovoActionPerformed
+       enableControls();
+    }//GEN-LAST:event_JbtnNovoActionPerformed
+
+    private void jTxtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtNomeKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
+            if (jTxtNome.getText().length() < 10) {
+                JOptionPane.showMessageDialog(this, "O nome está muito pequeno", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                clscolaborador.setNome(jTxtNome.getText());
+            }
+        }
+    }//GEN-LAST:event_jTxtNomeKeyPressed
+
+    private void jTxtNomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNomeFocusLost
+       if (jTxtNome.getText().length() < 10) {
+                JOptionPane.showMessageDialog(this, "O nome está muito pequeno", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                clscolaborador.setNome(jTxtNome.getText());
+            }
+    }//GEN-LAST:event_jTxtNomeFocusLost
+
+    private void jTxtCpfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtCpfFocusLost
+        models.ClsValidacoes clsvalidacoes = new models.ClsValidacoes();
+        boolean validado;
+        if (jTxtCpf.getText().length() < 11) {
+            JOptionPane.showMessageDialog(this, "CPF digitado invalido! Tamanho menor que 11 digitos!", "ERRO", JOptionPane.ERROR_MESSAGE);
+        } else {
+            validado = clsvalidacoes.isValid(jTxtCpf.getText());
+            if (validado == true) {
+                clscolaborador.setCpf(jTxtCpf.getText());
+            } else {
+                JOptionPane.showMessageDialog(this, "CPF digitado invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_jTxtCpfFocusLost
+
+    private void jTxtNmloginFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNmloginFocusLost
+       if(jTxtNmlogin.getText().length() > 15){
+           JOptionPane.showMessageDialog(this, "Apelido maior que o permitido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+       }else{
+           clscolaborador.setNomeLogin(jTxtNmlogin.getText());
+       }
+    }//GEN-LAST:event_jTxtNmloginFocusLost
+
+    private void jTxtSenhaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtSenhaFocusLost
+        if(jTxtSenha.getText().length() > 15){
+            JOptionPane.showMessageDialog(this, "Senha muito extensa!", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }else{
+            clscolaborador.setSenha(jTxtSenha.getText());
+        }
+    }//GEN-LAST:event_jTxtSenhaFocusLost
+
+    private void jTxtFoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtFoneFocusLost
+        if(jTxtFone.getText().length() < 11){
+            JOptionPane.showMessageDialog(this, "Telefone invalido, tamanho inferior ao padrão!", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }else{
+            clscolaborador.setTelefone(jTxtFone.getText());
+        }
+        
+    }//GEN-LAST:event_jTxtFoneFocusLost
+
+    private void JbtnSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbtnSalvarMouseClicked
+        colaboradorDAO.save(clscolaborador);
+        JOptionPane.showMessageDialog(this, colaboradorDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
+        disableControls();
+        JbtnNovo.setEnabled(true);
+        JbtnExcluir.setEnabled(true);
+        JbtnEditar.setEnabled(true);
+        JbtnBuscar.setEnabled(true);
+    }//GEN-LAST:event_JbtnSalvarMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -200,5 +316,31 @@ public class JfrmColaborador extends javax.swing.JFrame {
 
     private void getIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagens/icone_colaborador.png")));
+    }
+
+    private void disableControls() {
+        //desabilitando os controles jTextBox
+        jTxtCpf.setEnabled(false);
+        jTxtFone.setEnabled(false);
+        jTxtNmlogin.setEnabled(false);
+        jTxtNome.setEnabled(false);
+        jTxtSenha.setEnabled(false);
+        //desabilitando os controles Jbutton
+        JbtnSalvar.setEnabled(false);
+    }
+
+    private void enableControls() {
+        //habilitando os controles apos o clieque no botão novo e editar
+        jTxtCpf.setEnabled(true);
+        jTxtFone.setEnabled(true);
+        jTxtNmlogin.setEnabled(true);
+        jTxtNome.setEnabled(true);
+        jTxtSenha.setEnabled(true);
+        //desabilitando os botes e habilitando apenas o Jbutton salvar
+        JbtnNovo.setEnabled(false);
+        JbtnExcluir.setEnabled(false);
+        JbtnEditar.setEnabled(false);
+        JbtnBuscar.setEnabled(false);
+        JbtnSalvar.setEnabled(true);
     }
 }
