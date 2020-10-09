@@ -24,18 +24,18 @@ public class ConexaoDAO {
     //Método de Conexão//
     public static java.sql.Connection getConexaoDAO() {
 
-        Connection connection = null;          //atributo do tipo Connection
+        Connection connection = null;  
         
         try {
     // Carregando o JDBC Driver padrão
             String driverName = "com.mysql.cj.jdbc.Driver";
             Class.forName(driverName);
-            // Configurando a nossa conexão com um banco de dados//
-            String serverName = "localhost";    //caminho do servidor do BD
-            String mydatabase = "locadora";        //nome do seu banco de dados
+            // Configurando a nossa conexão //
+            String serverName = "localhost";    
+            String mydatabase = "locadora";      
             String url = "jdbc:mysql://" + serverName + ":3306/" + mydatabase + "?useTimezone=true&serverTimezone=UTC";
-            String username = "root";        //nome de um usuário de seu BD
-            String password = "root";      //sua senha de acesso
+            String username = "root";     
+            String password = "root";     
 
             connection = DriverManager.getConnection(url, username, password);
             
@@ -53,17 +53,16 @@ public class ConexaoDAO {
 
             return connection;
 
-        } catch (ClassNotFoundException e ) {  //Driver não encontrado
-
+        } catch (ClassNotFoundException e) {
+            
             System.out.println("O driver expecificado nao foi encontrado." + e);
-
+            
             return null;
-
+            
         } catch (SQLException e) {
-
-            //Não conseguindo se conectar ao banco
+            
             System.out.println("Nao foi possivel conectar ao Banco de Dados." + e);
-
+            
             return null;
 
         }
@@ -93,9 +92,6 @@ public class ConexaoDAO {
         }
 
     }
-
-
-   //Método que reinicia sua conexão//
 
     public static java.sql.Connection ReiniciarConexao() {
 

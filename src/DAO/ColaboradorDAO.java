@@ -61,7 +61,7 @@ public class ColaboradorDAO {
     public void update(models.ClsColaborador clscolaborador) {
 
         // variavel com a string do comando SQL para atualização dos dados na enticade Colaborador
-        String sql = "update colaboradores set nome = ?, set cpf = ?, set nomeLogin = ?, set senha = ?, set telefone = ? where id = ?";
+        String sql = "update colaboradores set nome = ?, cpf = ?, nomeLogin = ?, senha = ?, telefone = ? where id = ?";
 
         Connection conn = null;
         PreparedStatement ps = null;
