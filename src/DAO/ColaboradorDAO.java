@@ -37,7 +37,6 @@ public class ColaboradorDAO {
             ps.setString(3, clscolaborador.getNomeLogin());
             ps.setString(4, clscolaborador.getSenha());
             ps.setString(5, clscolaborador.getTelefone());
-
             //executando a instrução com os parametro setados da classe colaborador
             ps.execute();
             retorno = "Gravado com sucesso!";

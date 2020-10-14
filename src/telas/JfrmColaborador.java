@@ -22,11 +22,15 @@ public class JfrmColaborador extends javax.swing.JFrame {
     
     private boolean editando = false;
     
-    public JfrmColaborador() throws ParseException {
+    public JfrmColaborador(){
         initComponents();
         getIcon();
         disableControls(); 
-        initMascaraCpfTelefone();
+        try {
+            initMascaraCpfTelefone();
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao iniciar as mascaras" + ex +"", "ERRO", JOptionPane.INFORMATION_MESSAGE);
+        }
     }
     
     
@@ -409,9 +413,11 @@ public class JfrmColaborador extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
             if (jTxtCpf.getText().length() < 11) {
                 JOptionPane.showMessageDialog(this, "O numero do CPF é invalido, tamanho menor que 11 digitos!", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+                jTxtCpf.setText("");
             }
             if (validado == false) {
                 JOptionPane.showMessageDialog(this, "O numero do CPF é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+                jTxtCpf.setText("");
             } else {
                 clscolaborador.setCpf(clsValidacoes.replaceDado(jTxtCpf.getText()));
             }
@@ -432,9 +438,11 @@ public class JfrmColaborador extends javax.swing.JFrame {
         boolean validado = clsValidacoes.isValid(clsValidacoes.replaceDado(jTxtCpf.getText()));
         if (jTxtCpf.getText().length() < 11) {
             JOptionPane.showMessageDialog(this, "O numero do CPF é invalido, tamanho menor que 11 digitos!", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+            jTxtCpf.setText("");
         }
         if (validado == false) {
             JOptionPane.showMessageDialog(this, "O numero do CPF é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+            jTxtCpf.setText("");
         } else {
             clscolaborador.setCpf(clsValidacoes.replaceDado(jTxtCpf.getText()));
         }
