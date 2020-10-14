@@ -30,7 +30,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
     private void initMascaraCpfTelefone() throws ParseException {
        // iniciando a mascara com os formatos contidos na classe MascaraCampos//
        jTxtFone.setFormatterFactory(new DefaultFormatterFactory(mc.mascaraCpf(jTxtFone)));
-       jTxtCpf.setFormatterFactory(new DefaultFormatterFactory(mc.mascaraCpf(jTxtCpf)));
+       jTxtCpf.setFormatterFactory(new DefaultFormatterFactory(mc.mascaraCelular(jTxtCpf)));
     }
     private void getIcon() {
         // setando o icone principal do Jframe //
