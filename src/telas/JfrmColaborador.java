@@ -3,7 +3,9 @@ package telas;
 
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
 import javax.swing.JOptionPane;
+import javax.swing.text.DefaultFormatterFactory;
 
 
 
@@ -15,16 +17,61 @@ public class JfrmColaborador extends javax.swing.JFrame {
    
     models.ClsColaborador clscolaborador = new models.ClsColaborador();
     DAO.ColaboradorDAO colaboradorDAO = new DAO.ColaboradorDAO();
+    models.ClsMascaraCampos mc = new models.ClsMascaraCampos();
     
     private boolean editando = false;
     
-    public JfrmColaborador() {
+    public JfrmColaborador() throws ParseException {
         initComponents();
         getIcon();
-        disableControls();        
+        disableControls(); 
+        initMascaraCpfTelefone();
+    }
+    private void initMascaraCpfTelefone() throws ParseException {
+       // iniciando a mascara com os formatos contidos na classe MascaraCampos//
+       jTxtFone.setFormatterFactory(new DefaultFormatterFactory(mc.mascaraCpf(jTxtFone)));
+       jTxtCpf.setFormatterFactory(new DefaultFormatterFactory(mc.mascaraCpf(jTxtCpf)));
+    }
+    private void getIcon() {
+        // setando o icone principal do Jframe //
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagens/icone_colaborador.png")));
     }
 
+    private void disableControls() {
+        //desabilitando os controles jTextBox
+        jTxtCpf.setEnabled(false);
+        jTxtFone.setEnabled(false);
+        jTxtNmlogin.setEnabled(false);
+        jTxtNome.setEnabled(false);
+        jTxtSenha.setEnabled(false);
+        //desabilitando os controles Jbutton
+        JbtnSalvar.setEnabled(false);
+    }
 
+    private void enableControls() {
+        //habilitando os controles apos o clieque no botão novo e editar
+        jTxtCpf.setEnabled(true);
+        jTxtFone.setEnabled(true);
+        jTxtNmlogin.setEnabled(true);
+        jTxtNome.setEnabled(true);
+        jTxtSenha.setEnabled(true);
+        //desabilitando os botes e habilitando apenas o Jbutton salvar
+        JbtnNovo.setEnabled(false);
+        JbtnExcluir.setEnabled(false);
+        JbtnEditar.setEnabled(false);
+        JbtnBuscar.setEnabled(false);
+        JbtnSalvar.setEnabled(true);
+    }
+
+    private void clearTextBox() {
+        //limpando os TxtBox
+        jTxtCpf.setText("");
+        jTxtFone.setText("");
+        jTxtNmlogin.setText("");
+        jTxtNome.setText("");
+        jTxtSenha.setText("");
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -36,10 +83,10 @@ public class JfrmColaborador extends javax.swing.JFrame {
         JbtnNovo = new javax.swing.JButton();
         JpanDadosGerais = new javax.swing.JPanel();
         jTxtNome = new javax.swing.JTextField();
-        jTxtCpf = new javax.swing.JTextField();
         jTxtNmlogin = new javax.swing.JTextField();
-        jTxtFone = new javax.swing.JTextField();
         jTxtSenha = new javax.swing.JTextField();
+        jTxtCpf = new javax.swing.JFormattedTextField();
+        jTxtFone = new javax.swing.JFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -117,16 +164,6 @@ public class JfrmColaborador extends javax.swing.JFrame {
             }
         });
 
-        jTxtCpf.setBackground(new java.awt.Color(240, 240, 240));
-        jTxtCpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTxtCpf.setToolTipText("Digite o CPF do colaborador");
-        jTxtCpf.setBorder(javax.swing.BorderFactory.createTitledBorder("CPF"));
-        jTxtCpf.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTxtCpfFocusLost(evt);
-            }
-        });
-
         jTxtNmlogin.setBackground(new java.awt.Color(240, 240, 240));
         jTxtNmlogin.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtNmlogin.setToolTipText("Digite o nomedo login do colaborador");
@@ -137,16 +174,6 @@ public class JfrmColaborador extends javax.swing.JFrame {
             }
         });
 
-        jTxtFone.setBackground(new java.awt.Color(240, 240, 240));
-        jTxtFone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTxtFone.setToolTipText("Digite o Telefone do colaborador");
-        jTxtFone.setBorder(javax.swing.BorderFactory.createTitledBorder("Telefone"));
-        jTxtFone.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTxtFoneFocusLost(evt);
-            }
-        });
-
         jTxtSenha.setBackground(new java.awt.Color(240, 240, 240));
         jTxtSenha.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtSenha.setToolTipText("Digite a senha do colaborador");
@@ -154,6 +181,24 @@ public class JfrmColaborador extends javax.swing.JFrame {
         jTxtSenha.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtSenhaFocusLost(evt);
+            }
+        });
+
+        jTxtCpf.setBackground(new java.awt.Color(240, 240, 240));
+        jTxtCpf.setBorder(javax.swing.BorderFactory.createTitledBorder("CPF"));
+        jTxtCpf.setToolTipText("Digite o CPF do colaborador");
+        jTxtCpf.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTxtCpfKeyPressed(evt);
+            }
+        });
+
+        jTxtFone.setBackground(new java.awt.Color(240, 240, 240));
+        jTxtFone.setBorder(javax.swing.BorderFactory.createTitledBorder("Telefone"));
+        jTxtFone.setToolTipText("Digite o Telefone do colaborador");
+        jTxtFone.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTxtFoneKeyPressed(evt);
             }
         });
 
@@ -171,7 +216,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
                     .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(JpanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTxtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                    .addComponent(jTxtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                     .addComponent(jTxtFone))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -179,15 +224,15 @@ public class JfrmColaborador extends javax.swing.JFrame {
             JpanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JpanDadosGeraisLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(JpanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(JpanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTxtNome)
+                    .addComponent(jTxtCpf))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(JpanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtNmlogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtFone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(31, Short.MAX_VALUE))
+                    .addComponent(jTxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTxtFone, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3592854-add-user-business-man-employee-general-human-member-office_107767.png"))); // NOI18N
@@ -229,7 +274,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(JpanDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
+                .addContainerGap())
         );
 
         pack();
@@ -264,21 +309,6 @@ public class JfrmColaborador extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_jTxtNomeFocusLost
 
-    private void jTxtCpfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtCpfFocusLost
-        models.ClsValidacoes clsvalidacoes = new models.ClsValidacoes();
-        boolean validado;
-        if (jTxtCpf.getText().length() < 11) {
-            JOptionPane.showMessageDialog(this, "CPF digitado invalido! Tamanho menor que 11 digitos!", "ERRO", JOptionPane.ERROR_MESSAGE);
-        } else {
-            validado = clsvalidacoes.isValid(jTxtCpf.getText());
-            if (validado == true) {
-                clscolaborador.setCpf(jTxtCpf.getText());
-            } else {
-                JOptionPane.showMessageDialog(this, "CPF digitado invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }//GEN-LAST:event_jTxtCpfFocusLost
-
     private void jTxtNmloginFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNmloginFocusLost
        if(jTxtNmlogin.getText().length() > 15){
            JOptionPane.showMessageDialog(this, "Apelido maior que o permitido!", "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -294,15 +324,6 @@ public class JfrmColaborador extends javax.swing.JFrame {
             clscolaborador.setSenha(jTxtSenha.getText());
         }
     }//GEN-LAST:event_jTxtSenhaFocusLost
-
-    private void jTxtFoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtFoneFocusLost
-        if(jTxtFone.getText().length() < 11){
-            JOptionPane.showMessageDialog(this, "Telefone invalido, tamanho inferior ao padrão!", "ERRO", JOptionPane.ERROR_MESSAGE);
-        }else{
-            clscolaborador.setTelefone(jTxtFone.getText());
-        }
-        
-    }//GEN-LAST:event_jTxtFoneFocusLost
 
     private void JbtnSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbtnSalvarMouseClicked
         if (editando == false) {
@@ -342,7 +363,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
             jTxtSenha.setText(clb.getSenha());
             clscolaborador.setSenha(clb.getSenha());
             clscolaborador.setId(clb.getId());
-            System.out.println(clb.getId());
+            //System.out.println(clb.getId());
         }
     }//GEN-LAST:event_JbtnBuscarMouseClicked
 
@@ -360,6 +381,27 @@ public class JfrmColaborador extends javax.swing.JFrame {
         
     }//GEN-LAST:event_JbtnExcluirMouseClicked
 
+    private void jTxtCpfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtCpfKeyPressed
+ 
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
+            if (jTxtCpf.getText().length() < 11) {
+                JOptionPane.showMessageDialog(this, "O numero do CPF é invalido, tamanho menor que 11 digitos!", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                clscolaborador.setNome(jTxtCpf.getText());
+            }
+        }
+    }//GEN-LAST:event_jTxtCpfKeyPressed
+
+    private void jTxtFoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtFoneKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
+            if (jTxtFone.getText().length() < 11) {
+                JOptionPane.showMessageDialog(this, "O numero do Celular é invalido, tamanho menor que 11 digitos!", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                clscolaborador.setNome(jTxtFone.getText());
+            }
+        }
+    }//GEN-LAST:event_jTxtFoneKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -373,50 +415,15 @@ public class JfrmColaborador extends javax.swing.JFrame {
     private javax.swing.JButton JbtnSalvar;
     private javax.swing.JPanel JpanDadosGerais;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTxtCpf;
-    private javax.swing.JTextField jTxtFone;
+    private javax.swing.JFormattedTextField jTxtCpf;
+    private javax.swing.JFormattedTextField jTxtFone;
     private javax.swing.JTextField jTxtNmlogin;
     private javax.swing.JTextField jTxtNome;
     private javax.swing.JTextField jTxtSenha;
     // End of variables declaration//GEN-END:variables
 
-    private void getIcon() {
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagens/icone_colaborador.png")));
-    }
+ 
 
-    private void disableControls() {
-        //desabilitando os controles jTextBox
-        jTxtCpf.setEnabled(false);
-        jTxtFone.setEnabled(false);
-        jTxtNmlogin.setEnabled(false);
-        jTxtNome.setEnabled(false);
-        jTxtSenha.setEnabled(false);
-        //desabilitando os controles Jbutton
-        JbtnSalvar.setEnabled(false);
-    }
 
-    private void enableControls() {
-        //habilitando os controles apos o clieque no botão novo e editar
-        jTxtCpf.setEnabled(true);
-        jTxtFone.setEnabled(true);
-        jTxtNmlogin.setEnabled(true);
-        jTxtNome.setEnabled(true);
-        jTxtSenha.setEnabled(true);
-        //desabilitando os botes e habilitando apenas o Jbutton salvar
-        JbtnNovo.setEnabled(false);
-        JbtnExcluir.setEnabled(false);
-        JbtnEditar.setEnabled(false);
-        JbtnBuscar.setEnabled(false);
-        JbtnSalvar.setEnabled(true);
-    }
-
-    private void clearTextBox() {
-        //limpando os TxtBox
-        jTxtCpf.setText("");
-        jTxtFone.setText("");
-        jTxtNmlogin.setText("");
-        jTxtNome.setText("");
-        jTxtSenha.setText("");
-    }
    
 }
