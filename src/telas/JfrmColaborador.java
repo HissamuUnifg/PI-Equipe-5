@@ -17,7 +17,8 @@ public class JfrmColaborador extends javax.swing.JFrame {
    
     models.ClsColaborador clscolaborador = new models.ClsColaborador();
     DAO.ColaboradorDAO colaboradorDAO = new DAO.ColaboradorDAO();
-    models.ClsMascaraCampos mc = new models.ClsMascaraCampos();
+    models.ClsMascaraCampos clsMascaraCampos = new models.ClsMascaraCampos();
+    models.ClsValidacoes clsValidacoes = new models.ClsValidacoes();
     
     private boolean editando = false;
     
@@ -27,10 +28,21 @@ public class JfrmColaborador extends javax.swing.JFrame {
         disableControls(); 
         initMascaraCpfTelefone();
     }
+    
+    
     private void initMascaraCpfTelefone() throws ParseException {
        // iniciando a mascara com os formatos contidos na classe MascaraCampos//
-       jTxtFone.setFormatterFactory(new DefaultFormatterFactory(mc.mascaraCelular(jTxtFone)));
-       jTxtCpf.setFormatterFactory(new DefaultFormatterFactory(mc.mascaraCpf(jTxtCpf)));
+        try {
+           jTxtFone.setFormatterFactory(new DefaultFormatterFactory(clsMascaraCampos.mascaraCelular(jTxtFone))); 
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(this, "Possivel caracter que não seja numero inserido" + e+"", "ERRO", JOptionPane.INFORMATION_MESSAGE);
+        }
+        try {
+           jTxtCpf.setFormatterFactory(new DefaultFormatterFactory(clsMascaraCampos.mascaraCpf(jTxtCpf))); 
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(this, "Possivel caracter que não seja numero inserido" + e+"", "ERRO", JOptionPane.INFORMATION_MESSAGE);
+        }
+       
     }
     private void getIcon() {
         // setando o icone principal do Jframe //
@@ -187,6 +199,11 @@ public class JfrmColaborador extends javax.swing.JFrame {
         jTxtCpf.setBackground(new java.awt.Color(240, 240, 240));
         jTxtCpf.setBorder(javax.swing.BorderFactory.createTitledBorder("CPF"));
         jTxtCpf.setToolTipText("Digite o CPF do colaborador");
+        jTxtCpf.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtCpfFocusLost(evt);
+            }
+        });
         jTxtCpf.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTxtCpfKeyPressed(evt);
@@ -196,6 +213,11 @@ public class JfrmColaborador extends javax.swing.JFrame {
         jTxtFone.setBackground(new java.awt.Color(240, 240, 240));
         jTxtFone.setBorder(javax.swing.BorderFactory.createTitledBorder("Telefone"));
         jTxtFone.setToolTipText("Digite o Telefone do colaborador");
+        jTxtFone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtFoneFocusLost(evt);
+            }
+        });
         jTxtFone.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTxtFoneKeyPressed(evt);
@@ -288,6 +310,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
 
     private void JbtnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnNovoActionPerformed
        enableControls();
+       editando = false;
        clearTextBox();
     }//GEN-LAST:event_JbtnNovoActionPerformed
 
@@ -363,7 +386,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
             jTxtSenha.setText(clb.getSenha());
             clscolaborador.setSenha(clb.getSenha());
             clscolaborador.setId(clb.getId());
-            //System.out.println(clb.getId());
+            System.out.println(clb.getId());
         }
     }//GEN-LAST:event_JbtnBuscarMouseClicked
 
@@ -382,12 +405,15 @@ public class JfrmColaborador extends javax.swing.JFrame {
     }//GEN-LAST:event_JbtnExcluirMouseClicked
 
     private void jTxtCpfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtCpfKeyPressed
- 
+        boolean validado = clsValidacoes.isValid(clsValidacoes.replaceDado(jTxtCpf.getText()));
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
             if (jTxtCpf.getText().length() < 11) {
                 JOptionPane.showMessageDialog(this, "O numero do CPF é invalido, tamanho menor que 11 digitos!", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+            }
+            if (validado == false) {
+                JOptionPane.showMessageDialog(this, "O numero do CPF é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
             } else {
-                clscolaborador.setNome(jTxtCpf.getText());
+                clscolaborador.setCpf(clsValidacoes.replaceDado(jTxtCpf.getText()));
             }
         }
     }//GEN-LAST:event_jTxtCpfKeyPressed
@@ -397,10 +423,30 @@ public class JfrmColaborador extends javax.swing.JFrame {
             if (jTxtFone.getText().length() < 11) {
                 JOptionPane.showMessageDialog(this, "O numero do Celular é invalido, tamanho menor que 11 digitos!", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
             } else {
-                clscolaborador.setNome(jTxtFone.getText());
+                clscolaborador.setTelefone(jTxtFone.getText());
             }
         }
     }//GEN-LAST:event_jTxtFoneKeyPressed
+
+    private void jTxtCpfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtCpfFocusLost
+        boolean validado = clsValidacoes.isValid(clsValidacoes.replaceDado(jTxtCpf.getText()));
+        if (jTxtCpf.getText().length() < 11) {
+            JOptionPane.showMessageDialog(this, "O numero do CPF é invalido, tamanho menor que 11 digitos!", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        }
+        if (validado == false) {
+            JOptionPane.showMessageDialog(this, "O numero do CPF é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+        } else {
+            clscolaborador.setCpf(clsValidacoes.replaceDado(jTxtCpf.getText()));
+        }
+    }//GEN-LAST:event_jTxtCpfFocusLost
+
+    private void jTxtFoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtFoneFocusLost
+        if (jTxtFone.getText().length() < 11) {
+            JOptionPane.showMessageDialog(this, "O numero do Celular é invalido, tamanho menor que 11 digitos!", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            clscolaborador.setTelefone(jTxtFone.getText());
+        }
+    }//GEN-LAST:event_jTxtFoneFocusLost
 
     /**
      * @param args the command line arguments

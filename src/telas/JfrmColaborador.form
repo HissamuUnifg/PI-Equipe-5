@@ -269,6 +269,7 @@
             <Property name="toolTipText" type="java.lang.String" value="Digite o CPF do colaborador"/>
           </Properties>
           <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtCpfFocusLost"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTxtCpfKeyPressed"/>
           </Events>
         </Component>
@@ -285,6 +286,7 @@
             <Property name="toolTipText" type="java.lang.String" value="Digite o Telefone do colaborador"/>
           </Properties>
           <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtFoneFocusLost"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTxtFoneKeyPressed"/>
           </Events>
         </Component>

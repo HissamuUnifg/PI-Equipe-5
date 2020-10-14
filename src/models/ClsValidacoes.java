@@ -9,7 +9,7 @@ public class ClsValidacoes {
     private static final int[] pesoCPF = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};
     private static final int[] pesoCNPJ = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
 
-    public static boolean isValid(String cpfCnpj) {
+    public boolean isValid(String cpfCnpj) {
         return (isValidCPF(cpfCnpj) || isValidCNPJ(cpfCnpj));
     }
 
@@ -47,5 +47,11 @@ public class ClsValidacoes {
         Integer digito1 = calcularDigito(cnpj.substring(0,12), pesoCNPJ);
         Integer digito2 = calcularDigito(cnpj.substring(0,12) + digito1, pesoCNPJ);
         return cnpj.equals(cnpj.substring(0,12) + digito1.toString() + digito2.toString());
+    }
+    
+    public String replaceDado(String dado){
+        dado = dado.replaceAll("\\.", "");
+        dado = dado.replaceAll("-", "");
+        return dado;
     }
 }
