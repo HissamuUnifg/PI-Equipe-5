@@ -5,37 +5,41 @@ package models;
  *
  * @author Tiago Teixeira
  */
-    public class ClsColaborador {
-    private int id;
-    private String nome;
+    public class ClsColaborador extends ClsUsuarios{
+
+        
     private String nomeLogin;
     private String senha;
-    private String telefone;
-    private String cpf;
-    
-    
+   
+ 
+    @Override
     public void setId(int Id){
-        id = Id;
+        this.id = Id;
     }
+    @Override
     public void setNome(String nome_){
-        nome = nome_;
+        this.nome = nome_;
     }
     public void setNomeLogin(String nomeLogin_){
-        nomeLogin = nomeLogin_;
+        this.nomeLogin = nomeLogin_;
     }
     public void setSenha(String senha_){
-        senha = senha_;
+        this.senha = senha_;
     }
+    @Override
     public void setTelefone(String fone_){
-        telefone = fone_;
+        this.telefone = fone_;
     }
+    @Override
     public void setCpf(String cpf_){
-        cpf = cpf_;
+        this.cpf = cpf_;
     }
     
+    @Override
     public int getId(){
         return id;
     }
+    @Override
     public String getNome(){
         return nome;
     }
@@ -45,9 +49,11 @@ package models;
     public String getSenha(){
         return senha;
     }
+    @Override
     public String getTelefone(){
         return telefone;
     }
+    @Override
     public String getCpf(){
         return cpf;
     }

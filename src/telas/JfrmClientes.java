@@ -397,7 +397,7 @@ public class JfrmClientes extends javax.swing.JFrame {
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal();
-       telaprincipal.setVisible(true);
+        telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
     /**

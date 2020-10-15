@@ -10,20 +10,25 @@ import javax.swing.text.DefaultFormatterFactory;
 
 
 /**
- *
+ *  
  * @author Tiago Teixeira
  */
 public class JfrmColaborador extends javax.swing.JFrame {
-   
-    models.ClsColaborador clscolaborador = new models.ClsColaborador();
-    DAO.ColaboradorDAO colaboradorDAO = new DAO.ColaboradorDAO();
-    models.ClsMascaraCampos clsMascaraCampos = new models.ClsMascaraCampos();
-    models.ClsValidacoes clsValidacoes = new models.ClsValidacoes();
+        
+        models.ClsColaborador clscolaborador;
+        DAO.ColaboradorDAO colaboradorDAO;
+        models.ClsMascaraCampos clsMascaraCampos; 
+        models.ClsValidacoes clsValidacoes; 
     
-    private boolean editando = false;
+    private boolean editando;
     
     public JfrmColaborador(){
         initComponents();
+        editando = false;
+        clscolaborador = new models.ClsColaborador();
+        colaboradorDAO = new DAO.ColaboradorDAO();
+        clsMascaraCampos = new models.ClsMascaraCampos();
+        clsValidacoes = new models.ClsValidacoes();
         getIcon();
         disableControls(); 
         try {
@@ -208,11 +213,6 @@ public class JfrmColaborador extends javax.swing.JFrame {
                 jTxtCpfFocusLost(evt);
             }
         });
-        jTxtCpf.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTxtCpfKeyPressed(evt);
-            }
-        });
 
         jTxtFone.setBackground(new java.awt.Color(240, 240, 240));
         jTxtFone.setBorder(javax.swing.BorderFactory.createTitledBorder("Telefone"));
@@ -355,12 +355,23 @@ public class JfrmColaborador extends javax.swing.JFrame {
     private void JbtnSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbtnSalvarMouseClicked
         if (editando == false) {
             colaboradorDAO.save(clscolaborador);
-            JOptionPane.showMessageDialog(this, colaboradorDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
-            disableControls();
-            JbtnNovo.setEnabled(true);
-            JbtnExcluir.setEnabled(true);
-            JbtnEditar.setEnabled(true);
-            JbtnBuscar.setEnabled(true);
+            if (colaboradorDAO.isSucesso() == true) {
+                JOptionPane.showMessageDialog(this, colaboradorDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
+                disableControls();
+                JbtnNovo.setEnabled(true);
+                JbtnExcluir.setEnabled(true);
+                JbtnEditar.setEnabled(true);
+                JbtnBuscar.setEnabled(true);
+            }else{
+                JOptionPane.showMessageDialog(this, colaboradorDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
+                disableControls();
+                clearTextBox();
+                JbtnNovo.setEnabled(true);
+                JbtnExcluir.setEnabled(true);
+                JbtnEditar.setEnabled(true);
+                JbtnBuscar.setEnabled(true);
+            }
+            
         }else{
             colaboradorDAO.update(clscolaborador);
             JOptionPane.showMessageDialog(this, colaboradorDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
@@ -407,22 +418,6 @@ public class JfrmColaborador extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_JbtnExcluirMouseClicked
-
-    private void jTxtCpfKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtCpfKeyPressed
-        boolean validado = clsValidacoes.isValid(clsValidacoes.replaceDado(jTxtCpf.getText()));
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
-            if (jTxtCpf.getText().length() < 11) {
-                JOptionPane.showMessageDialog(this, "O numero do CPF é invalido, tamanho menor que 11 digitos!", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
-                jTxtCpf.setText("");
-            }
-            if (validado == false) {
-                JOptionPane.showMessageDialog(this, "O numero do CPF é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
-                jTxtCpf.setText("");
-            } else {
-                clscolaborador.setCpf(clsValidacoes.replaceDado(jTxtCpf.getText()));
-            }
-        }
-    }//GEN-LAST:event_jTxtCpfKeyPressed
 
     private void jTxtFoneKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtFoneKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {

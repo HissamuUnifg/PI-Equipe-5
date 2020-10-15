@@ -18,7 +18,7 @@ package models;
         mask.setOverwriteMode(true);
         mask.setValidCharacters("0123456789");
         mask.setPlaceholderCharacter('_');
-        mask.install(textfield);        
+        mask.install(textfield);
         return mask;
     }
  

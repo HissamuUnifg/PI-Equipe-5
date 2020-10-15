@@ -15,7 +15,16 @@ import java.util.List;
 public class ColaboradorDAO {
 
     private String retorno;
+    private boolean sucesso;
 
+    public boolean isSucesso() {
+        return sucesso;
+    }
+
+    public void setSucesso(boolean sucesso) {
+        this.sucesso = sucesso;
+    }
+    
     public String getRetorno() {
         return retorno;
     }
@@ -40,8 +49,16 @@ public class ColaboradorDAO {
             //executando a instrução com os parametro setados da classe colaborador
             ps.execute();
             retorno = "Gravado com sucesso!";
+            sucesso = true;
         } catch (SQLException e) {
-            retorno = "Erro ao gravar: " + e;
+            if(e.getErrorCode() == 1062){
+                retorno = "O CPF já está cadastrado!";
+                sucesso = false;
+            }else{
+                retorno = "Erro ao gravar: " + e;
+            }
+            System.out.println(e.getErrorCode());
+            
         } finally {
             try {
                 if (ps != null) {
@@ -80,8 +97,10 @@ public class ColaboradorDAO {
             //executando a instrução com os parametro setados da classe colaborador
             ps.execute();
             retorno = "Atualizado com sucesso!";
+            sucesso = true;
         } catch (SQLException e) {
             retorno = "Erro ao atualizar: " + e;
+            sucesso = false;
         } finally {
             try {
                 if (ps != null) {
@@ -114,8 +133,10 @@ public class ColaboradorDAO {
             //executando a instrução com os parametro setados da classe colaborador
             ps.execute();
             retorno = "Deletado com sucesso!";
+            sucesso = true;
         } catch (SQLException e) {
             retorno = "Erro ao Deletar: " + e;
+            sucesso = false;
         } finally {
             try {
                 if (ps != null) {
@@ -157,8 +178,10 @@ public class ColaboradorDAO {
                 colaboradores.add(colaborador);
             }
             retorno = "Colaborador Encontrado!";
+            sucesso = true;
         } catch (SQLException e) {
             retorno = "Erro: " + e;
+            sucesso = false;
         } finally {
 
             try {
