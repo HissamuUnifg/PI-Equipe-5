@@ -82,7 +82,6 @@ public class JfrmContratos extends javax.swing.JFrame {
         jLabelCodigo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1055, 640));
         setResizable(false);
         setSize(new java.awt.Dimension(1055, 640));
         addWindowListener(new java.awt.event.WindowAdapter() {

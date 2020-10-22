@@ -11,7 +11,7 @@ CREATE DATABASE IF NOT EXISTS LOCADORA;
 
 /*Comando para criar a tabela Colaboradores*/
 
-CREATE TABLE Colaboradores (
+CREATE TABLE IF NOT EXISTS LOCADORA.Colaboradores (
 id int NOT NULL AUTO_INCREMENT,
 Nome varchar(250) NOT NULL,
 Cpf varchar(14) NOT NULL,
@@ -25,3 +25,4 @@ UNIQUE KEY cpf_UNIQUE (Cpf)
 /*Nessa tabela a coluna Id fica como chave primaria 
   e auto incremento, e a coluna Cpf fica como chave
   unica evitando assim um CPF duplicado nos registros*/
+

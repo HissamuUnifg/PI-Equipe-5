@@ -18,7 +18,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         models.ClsColaborador clscolaborador;
         DAO.ColaboradorDAO colaboradorDAO;
         models.ClsMascaraCampos clsMascaraCampos; 
-        models.ClsValidacoes clsValidacoes; 
+        
     
     private boolean editando;
     
@@ -28,7 +28,6 @@ public class JfrmColaborador extends javax.swing.JFrame {
         clscolaborador = new models.ClsColaborador();
         colaboradorDAO = new DAO.ColaboradorDAO();
         clsMascaraCampos = new models.ClsMascaraCampos();
-        clsValidacoes = new models.ClsValidacoes();
         getIcon();
         disableControls(); 
         try {
@@ -430,16 +429,17 @@ public class JfrmColaborador extends javax.swing.JFrame {
     }//GEN-LAST:event_jTxtFoneKeyPressed
 
     private void jTxtCpfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtCpfFocusLost
-        boolean validado = clsValidacoes.isValid(clsValidacoes.replaceDado(jTxtCpf.getText()));
+       
+        clscolaborador.setCpf(jTxtCpf.getText());
         if (jTxtCpf.getText().length() < 11) {
             JOptionPane.showMessageDialog(this, "O numero do CPF é invalido, tamanho menor que 11 digitos!", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
             jTxtCpf.setText("");
         }
-        if (validado == false) {
+        if (clscolaborador.isValido() == false) {
             JOptionPane.showMessageDialog(this, "O numero do CPF é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
             jTxtCpf.setText("");
         } else {
-            clscolaborador.setCpf(clsValidacoes.replaceDado(jTxtCpf.getText()));
+            clscolaborador.setCpf(jTxtCpf.getText());
         }
     }//GEN-LAST:event_jTxtCpfFocusLost
 
