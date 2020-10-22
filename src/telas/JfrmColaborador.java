@@ -36,7 +36,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         try {
             initMascaraCpfTelefone();
         } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Erro ao iniciar as mascaras" + ex +"", "ERRO", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao iniciar as mascaras" + ex +"", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
     

@@ -10,6 +10,11 @@ public class ClsLogin {
     private String senhaDAO = "123456";
     private String userLoged;   // responsavel por levar para todo o sistema a informação do usuario logado.
 
+    public void ClsLogin(String usuarioDAO, String senhaDAO){
+        this.usuarioDAO = usuarioDAO;
+        this.senhaDAO = senhaDAO;
+    }
+    
     public String getUsuarioDAO() {
         return usuarioDAO;
     }

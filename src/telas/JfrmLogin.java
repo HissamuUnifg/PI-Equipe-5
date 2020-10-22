@@ -1,19 +1,36 @@
 
 package telas;
 
+import DAO.ConexaoDAO;
+import DAO.LoginDAO;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.util.List;
 import javax.swing.JOptionPane;
+import models.ClsLogin;
+
 
 
 
 public class JfrmLogin extends javax.swing.JFrame {
 
     private boolean loginsucess;
+    private boolean usarOffline;
+    
+    
+    
+    ConexaoDAO conn;
+    ClsLogin clslogin;
+    LoginDAO loginDAO;
+    
     public JfrmLogin() {
+        conn = new ConexaoDAO();
+        clslogin = new ClsLogin();
+        loginDAO = new LoginDAO();
         initComponents();
         setIcon();
-        loadUser();
+        //loadUser();
+        loadUserDB();
         jPassSenha.setEnabled(false);
         jBtnLogin.setEnabled(false);
     }
@@ -158,6 +175,14 @@ public class JfrmLogin extends javax.swing.JFrame {
         if (jCboUsuario.getSelectedIndex() > -1) {
             jPassSenha.setEnabled(true);
             jPassSenha.requestFocus();
+            if(usarOffline == true){
+                loadUser();
+            }else{
+               List<ClsLogin> ResultSet = loginDAO.select(jCboUsuario.getSelectedItem().toString());
+               clslogin.setSenhaDAO(ResultSet.get(0).getSenhaDAO());
+               clslogin.setUsuarioDAO(jCboUsuario.getSelectedItem().toString());
+            }
+            
         }
     }//GEN-LAST:event_jCboUsuarioItemStateChanged
 
@@ -169,7 +194,6 @@ public class JfrmLogin extends javax.swing.JFrame {
         jBtnLogin.setEnabled(true);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
             jBtnLogin.requestFocus();
-            models.ClsLogin clslogin = new models.ClsLogin();
             loginsucess = clslogin.validarlogin(jCboUsuario.getSelectedItem().toString(), new String(jPassSenha.getPassword()));
             if (loginsucess == true) {
                 clslogin.setUserLoged(jCboUsuario.getSelectedItem().toString());
@@ -206,5 +230,24 @@ public class JfrmLogin extends javax.swing.JFrame {
     private void loadUser() {
         jCboUsuario.addItem("Admin");
         
+    }
+
+    private void loadUserDB() {
+        try {
+            List<models.ClsLogin> ResultSet = loginDAO.selectFull();
+            if (ResultSet.size() < 1) {
+                loadUser();
+            } else {
+                for (models.ClsLogin cls : loginDAO.selectFull()) {
+                    jCboUsuario.addItem(cls.getUsuarioDAO());
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Banco de Dados não configurado, passando usuario mestre para login!", "ERRO", JOptionPane.ERROR_MESSAGE);
+            loadUser();
+            usarOffline = true;
+        }
+
     }
 }
