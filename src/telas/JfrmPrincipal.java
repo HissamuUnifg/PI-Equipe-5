@@ -2,7 +2,6 @@
 package telas;
 
 import java.awt.Toolkit;
-import java.text.ParseException;
 import models.ClsLogin;
 
 /**

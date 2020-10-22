@@ -166,19 +166,21 @@ public class ColaboradorDAO {
             ps = conn.prepareStatement(sql);
             ps.setString(1, cpf);
             rset = ps.executeQuery();
-            
-            while (rset.next()) {
-                models.ClsColaborador colaborador = new models.ClsColaborador();
-                colaborador.setId(rset.getInt("id"));
-                colaborador.setNome(rset.getString("nome"));
-                colaborador.setCpf(rset.getString("cpf"));
-                colaborador.setNomeLogin(rset.getString("nomeLogin"));
-                colaborador.setSenha(rset.getString("senha"));
-                colaborador.setTelefone(rset.getString("telefone"));
-                colaboradores.add(colaborador);
-            }
-            retorno = "Colaborador Encontrado!";
-            sucesso = true;
+
+         
+                while (rset.next()) {
+                    models.ClsColaborador colaborador = new models.ClsColaborador();
+                    colaborador.setId(rset.getInt("id"));
+                    colaborador.setNome(rset.getString("nome"));
+                    colaborador.setCpf(rset.getString("cpf"));
+                    colaborador.setNomeLogin(rset.getString("nomeLogin"));
+                    colaborador.setSenha(rset.getString("senha"));
+                    colaborador.setTelefone(rset.getString("telefone"));
+                    colaboradores.add(colaborador);
+                }
+                retorno = "Colaborador Encontrado!";
+                sucesso = true;
+
         } catch (SQLException e) {
             retorno = "Erro: " + e;
             sucesso = false;
