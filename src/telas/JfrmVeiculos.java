@@ -12,6 +12,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
   
     private String userLoged;
     private int userIdLoged;
+    private String CpfUserLoged;
 
     public JfrmVeiculos() {
         initComponents();
@@ -20,6 +21,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     public JfrmVeiculos(ClsLogin clslogin) {
         userLoged = clslogin.getUserLoged();
         userIdLoged = clslogin.getId();
+        CpfUserLoged = clslogin.getCpfUserLoged();
         initComponents();
         setIcon();
     }
@@ -403,6 +405,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         models.ClsLogin clslogin = new ClsLogin();
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
+        clslogin.setCpfUserLoged(CpfUserLoged);
         telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal(clslogin);
         telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing

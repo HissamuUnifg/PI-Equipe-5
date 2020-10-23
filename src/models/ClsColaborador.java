@@ -10,6 +10,7 @@ package models;
         
     private String nomeLogin;
     private String senha;
+    
 
     public boolean isValido() {
         return valido;

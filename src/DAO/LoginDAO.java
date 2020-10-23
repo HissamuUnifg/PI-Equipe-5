@@ -28,7 +28,7 @@ public class LoginDAO {
     
      public List<models.ClsLogin> select(String nomeLogin) {
 
-        String sql = "select id, nomeLogin, senha from colaboradores where nomeLogin = ? ";
+        String sql = "select id, Cpf, nomeLogin, senha from colaboradores where nomeLogin = ? ";
         List<models.ClsLogin> login = new ArrayList<models.ClsLogin>();
 
         Connection conn = null;
@@ -45,6 +45,7 @@ public class LoginDAO {
                 while (rset.next()) {
                     models.ClsLogin clsLogin = new models.ClsLogin();
                     clsLogin.setId(rset.getInt("id"));
+                    clsLogin.setCpfUserLoged(rset.getString("Cpf"));
                     clsLogin.setUsuarioDAO(rset.getString("nomeLogin"));
                     clsLogin.setSenhaDAO(rset.getString("senha"));
                     login.add(clsLogin);

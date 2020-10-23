@@ -179,8 +179,13 @@ public class JfrmLogin extends javax.swing.JFrame {
                 loadUser();
             }else{
                List<ClsLogin> ResultSet = loginDAO.select(jCboUsuario.getSelectedItem().toString());
-               clslogin.setSenhaDAO(ResultSet.get(0).getSenhaDAO());
-               clslogin.setUsuarioDAO(jCboUsuario.getSelectedItem().toString());
+               clslogin.ClsLogin(ResultSet.get(0).getId(),jCboUsuario.getSelectedItem().toString(),
+                                ResultSet.get(0).getSenhaDAO(),ResultSet.get(0).getCpfUserLoged());
+               
+               //clslogin.setId(ResultSet.get(0).getId());
+               //clslogin.setSenhaDAO(ResultSet.get(0).getSenhaDAO());
+               //clslogin.setUsuarioDAO(jCboUsuario.getSelectedItem().toString());
+               //clslogin.setCpfUserLoged(ResultSet.get(0).getCpfUserLoged());
             }
             
         }

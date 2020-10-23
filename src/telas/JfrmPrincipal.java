@@ -11,6 +11,7 @@ import models.ClsLogin;
 public class JfrmPrincipal extends javax.swing.JFrame {
     private String userLoged;
     private int userIdLoged;
+    private String CpfUserLoged;
     
     public JfrmPrincipal() {
         initComponents();
@@ -20,6 +21,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
     public JfrmPrincipal(ClsLogin clslogin) {
        userLoged = clslogin.getUserLoged();
        userIdLoged = clslogin.getId();
+       CpfUserLoged = clslogin.getCpfUserLoged();
        initComponents();
        setIcon();
        setUserLoged();
@@ -174,6 +176,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         models.ClsLogin clslogin = new ClsLogin();
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
+        clslogin.setCpfUserLoged(CpfUserLoged);
         telas.JfrmClientes telaclientes = new telas.JfrmClientes(clslogin);
         this.setVisible(false);
         telaclientes.show();
@@ -183,6 +186,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         models.ClsLogin clslogin = new ClsLogin();
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
+        clslogin.setCpfUserLoged(CpfUserLoged);
         telas.JfrmColaborador telacolaborador = new telas.JfrmColaborador(clslogin);
         this.setVisible(false);
         telacolaborador.show();
@@ -192,6 +196,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         models.ClsLogin clslogin = new ClsLogin();
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
+        clslogin.setCpfUserLoged(CpfUserLoged);
         telas.JfrmVeiculos telaveiculos = new telas.JfrmVeiculos(clslogin);
         this.setVisible(false);
         telaveiculos.show();
@@ -201,6 +206,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         models.ClsLogin clslogin = new ClsLogin();
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
+        clslogin.setCpfUserLoged(CpfUserLoged);
         telas.JfrmContratos telacontrato = new telas.JfrmContratos(clslogin);
         this.setVisible(false);
         telacontrato.show();

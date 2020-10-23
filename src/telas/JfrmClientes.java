@@ -3,7 +3,7 @@ package telas;
 
 import java.awt.Toolkit;
 import models.ClsLogin;
-import sun.security.x509.X500Name;
+
 
 
 
@@ -14,6 +14,7 @@ import sun.security.x509.X500Name;
 public class JfrmClientes extends javax.swing.JFrame {
    private String userLoged;
    private int userIdLoged;
+   private String CpfUserLoged;
     public JfrmClientes() {
         initComponents();
         setIcon();
@@ -21,6 +22,7 @@ public class JfrmClientes extends javax.swing.JFrame {
     public JfrmClientes(ClsLogin clslogin) {
         userLoged = clslogin.getUserLoged();
         userIdLoged = clslogin.getId();
+        CpfUserLoged = clslogin.getCpfUserLoged();
         initComponents();
         setIcon();
     }
@@ -409,6 +411,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         models.ClsLogin clslogin = new ClsLogin();
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
+        clslogin.setCpfUserLoged(CpfUserLoged);
         telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal(clslogin);
         telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing

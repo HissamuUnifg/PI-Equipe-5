@@ -24,6 +24,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         models.ClsMascaraCampos clsMascaraCampos; 
         private String userLoged;
         private int userIdLoged;
+        private String CpfUserLoged;
     
     private boolean editando;
     
@@ -44,6 +45,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
     public JfrmColaborador(ClsLogin clslogin){
         userLoged = clslogin.getUserLoged();
         userIdLoged = clslogin.getId();
+        CpfUserLoged = clslogin.getCpfUserLoged();
         initComponents();
         editando = false;
         clscolaborador = new models.ClsColaborador();
@@ -91,6 +93,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
                     clscolaborador.setCpf(clb.getCpf());
                     jTxtNmlogin.setText(clb.getNomeLogin());
                     clscolaborador.setNomeLogin(clb.getNomeLogin());
+                    clscolaborador.setCpf_funCadastro(clb.getCpf_funCadastro());
                     jTxtFone.setText(clb.getTelefone());
                     clscolaborador.setTelefone(clb.getTelefone());
                     jTxtSenha.setText(clb.getSenha());
@@ -369,6 +372,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
 
     private void JbtnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnNovoActionPerformed
        enableControls();
+       clscolaborador.setCpf_funCadastro(CpfUserLoged);
        editando = false;
        clearTextBox();
     }//GEN-LAST:event_JbtnNovoActionPerformed
