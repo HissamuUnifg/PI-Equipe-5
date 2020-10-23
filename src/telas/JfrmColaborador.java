@@ -8,6 +8,7 @@ import java.text.ParseException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
+import models.ClsLogin;
 import models.ClsValidacoes;
 
 
@@ -21,11 +22,28 @@ public class JfrmColaborador extends javax.swing.JFrame {
         models.ClsColaborador clscolaborador;
         DAO.ColaboradorDAO colaboradorDAO;
         models.ClsMascaraCampos clsMascaraCampos; 
-        
+        private String userLoged;
+        private int userIdLoged;
     
     private boolean editando;
     
     public JfrmColaborador(){
+        initComponents();
+        editando = false;
+        clscolaborador = new models.ClsColaborador();
+        colaboradorDAO = new DAO.ColaboradorDAO();
+        clsMascaraCampos = new models.ClsMascaraCampos();
+        getIcon();
+        disableControls(); 
+        try {
+            initMascaraCpfTelefone();
+        } catch (ParseException ex) {
+            JOptionPane.showMessageDialog(this, "Erro ao iniciar as mascaras" + ex +"", "ERRO", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    public JfrmColaborador(ClsLogin clslogin){
+        userLoged = clslogin.getUserLoged();
+        userIdLoged = clslogin.getId();
         initComponents();
         editando = false;
         clscolaborador = new models.ClsColaborador();
@@ -342,8 +360,11 @@ public class JfrmColaborador extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-       telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal();
-       telaprincipal.setVisible(true);
+        ClsLogin clslogin = new ClsLogin();
+        clslogin.setUserLoged(userLoged);
+        clslogin.setId(userIdLoged);
+        telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal(clslogin);
+        telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
     private void JbtnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnNovoActionPerformed

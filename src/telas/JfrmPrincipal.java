@@ -9,7 +9,9 @@ import models.ClsLogin;
  * @author Tiago Teixeira
  */
 public class JfrmPrincipal extends javax.swing.JFrame {
-    private String userLoged = "";
+    private String userLoged;
+    private int userIdLoged;
+    
     public JfrmPrincipal() {
         initComponents();
         setIcon();
@@ -17,6 +19,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
     }
     public JfrmPrincipal(ClsLogin clslogin) {
        userLoged = clslogin.getUserLoged();
+       userIdLoged = clslogin.getId();
        initComponents();
        setIcon();
        setUserLoged();
@@ -168,25 +171,37 @@ public class JfrmPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuCadastroCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadastroCliActionPerformed
-        telas.JfrmClientes telaclientes = new telas.JfrmClientes();
+        models.ClsLogin clslogin = new ClsLogin();
+        clslogin.setUserLoged(userLoged);
+        clslogin.setId(userIdLoged);
+        telas.JfrmClientes telaclientes = new telas.JfrmClientes(clslogin);
         this.setVisible(false);
         telaclientes.show();
     }//GEN-LAST:event_jMenuCadastroCliActionPerformed
 
     private void jMenuCadColabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadColabActionPerformed
-        telas.JfrmColaborador telacolaborador = new telas.JfrmColaborador();
+        models.ClsLogin clslogin = new ClsLogin();
+        clslogin.setUserLoged(userLoged);
+        clslogin.setId(userIdLoged);
+        telas.JfrmColaborador telacolaborador = new telas.JfrmColaborador(clslogin);
         this.setVisible(false);
         telacolaborador.show();
     }//GEN-LAST:event_jMenuCadColabActionPerformed
 
     private void jMenuCadMovVeicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadMovVeicActionPerformed
-       telas.JfrmVeiculos telaveiculos = new telas.JfrmVeiculos();
-       this.setVisible(false);
-       telaveiculos.show();
+        models.ClsLogin clslogin = new ClsLogin();
+        clslogin.setUserLoged(userLoged);
+        clslogin.setId(userIdLoged);
+        telas.JfrmVeiculos telaveiculos = new telas.JfrmVeiculos(clslogin);
+        this.setVisible(false);
+        telaveiculos.show();
     }//GEN-LAST:event_jMenuCadMovVeicActionPerformed
 
     private void jMenuCadMovContActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadMovContActionPerformed
-        telas.JfrmContratos telacontrato = new telas.JfrmContratos();
+        models.ClsLogin clslogin = new ClsLogin();
+        clslogin.setUserLoged(userLoged);
+        clslogin.setId(userIdLoged);
+        telas.JfrmContratos telacontrato = new telas.JfrmContratos(clslogin);
         this.setVisible(false);
         telacontrato.show();
     }//GEN-LAST:event_jMenuCadMovContActionPerformed

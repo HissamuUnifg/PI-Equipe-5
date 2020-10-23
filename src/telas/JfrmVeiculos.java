@@ -2,15 +2,24 @@
 package telas;
 
 import java.awt.Toolkit;
+import models.ClsLogin;
 
 /**
  *
  * @author Tiago Teixeira
  */
 public class JfrmVeiculos extends javax.swing.JFrame {
-
+  
+    private String userLoged;
+    private int userIdLoged;
 
     public JfrmVeiculos() {
+        initComponents();
+        setIcon();
+    }
+    public JfrmVeiculos(ClsLogin clslogin) {
+        userLoged = clslogin.getUserLoged();
+        userIdLoged = clslogin.getId();
         initComponents();
         setIcon();
     }
@@ -391,8 +400,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-       telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal();
-       telaprincipal.setVisible(true);
+        models.ClsLogin clslogin = new ClsLogin();
+        clslogin.setUserLoged(userLoged);
+        clslogin.setId(userIdLoged);
+        telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal(clslogin);
+        telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
     /**
