@@ -1,7 +1,7 @@
 
 /**
  * Função:  Criação da Base de Dados
- * Author:  Tiago Teixeira
+ * Authors:  Tiago Teixeira / André Luiz / Bernado Souto
  * Created: 21/10/2020
  */
 
