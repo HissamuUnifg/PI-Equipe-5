@@ -49,7 +49,7 @@ import net.sf.jasperreports.view.JasperViewer;
        File directory = new File("./src/relatorios/NOME RELATORIO.jrxml");
        // passa o caminho do relatorio e o parametro para carregar o relatorio. 
        try {
-            new NOME DA FORM().openReport(directory.getAbsolutePath(),"PARAMETRO RELATORIO", "VALOR A FILTRAR", "TITULO DA TELA JFRAME");
+            new NOME DA FORM().ClsImpressao(directory.getAbsolutePath(),"PARAMETRO RELATORIO", "VALOR A FILTRAR", "TITULO DA TELA JFRAME");
         } catch (ClassNotFoundException | SQLException | JRException e) {
             System.out.println("Erro foi aqui" + e);
         }
@@ -57,7 +57,7 @@ import net.sf.jasperreports.view.JasperViewer;
 
 public class ClsImpressao {
     
-    public void openReport(String nomeRel, String parametro, String valorParametro, String tituloRelatorio) throws JRException, SQLException, ClassNotFoundException {
+    public void ClsImpressao(String nomeRel, String parametro, String valorParametro, String tituloRelatorio) throws JRException, SQLException, ClassNotFoundException {
         //gerando o jasper design
         JasperDesign desenho = JRXmlLoader.load(nomeRel);
 

@@ -3,13 +3,17 @@ package telas;
 
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
-import java.sql.ResultSet;
+import java.io.File;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
+import models.ClsImpressao;
 import models.ClsLogin;
 import models.ClsValidacoes;
+import net.sf.jasperreports.engine.JRException;
+
 
 
 
@@ -99,6 +103,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
                     jTxtSenha.setText(clb.getSenha());
                     clscolaborador.setSenha(clb.getSenha());
                     clscolaborador.setId(clb.getId());
+                    JbtnImprimir.setVisible(true);
                     System.out.println(clb.getId());
                 }
             }
@@ -122,6 +127,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         jTxtSenha.setEnabled(false);
         //desabilitando os controles Jbutton
         JbtnSalvar.setEnabled(false);
+        JbtnImprimir.setVisible(false);
     }
 
     private void enableControls() {
@@ -164,6 +170,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         jTxtCpf = new javax.swing.JFormattedTextField();
         jTxtFone = new javax.swing.JFormattedTextField();
         jLabel1 = new javax.swing.JLabel();
+        JbtnImprimir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro Colaboraores");
@@ -318,6 +325,16 @@ public class JfrmColaborador extends javax.swing.JFrame {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3592854-add-user-business-man-employee-general-human-member-office_107767.png"))); // NOI18N
 
+        JbtnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/print_121773.png"))); // NOI18N
+        JbtnImprimir.setToolTipText("Clique aqui para imprimir Relatorio Colaborador");
+        JbtnImprimir.setBorder(null);
+        JbtnImprimir.setFocusPainted(false);
+        JbtnImprimir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JbtnImprimirMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -338,9 +355,10 @@ public class JfrmColaborador extends javax.swing.JFrame {
                         .addComponent(JbtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JbtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JbtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -352,7 +370,8 @@ public class JfrmColaborador extends javax.swing.JFrame {
                     .addComponent(JbtnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JbtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JbtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JbtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(JpanDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -496,6 +515,17 @@ public class JfrmColaborador extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTxtFoneFocusLost
 
+    private void JbtnImprimirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbtnImprimirMouseClicked
+        File directory = new File("./src/relatorios/relColaborador.jrxml");
+        // passa o caminho do relatorio e o parametro para carregar o relatorio. 
+        try {
+            models.ClsImpressao clsimpressao = new ClsImpressao();
+            clsimpressao.ClsImpressao(directory.getAbsolutePath(), "Cpf", clscolaborador.getCpf(), "Colaboradores");
+        } catch (ClassNotFoundException | SQLException | JRException e) {
+            System.out.println("Erro foi aqui" + e);
+        }
+    }//GEN-LAST:event_JbtnImprimirMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -505,6 +535,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
     private javax.swing.JButton JbtnBuscar;
     private javax.swing.JButton JbtnEditar;
     private javax.swing.JButton JbtnExcluir;
+    private javax.swing.JButton JbtnImprimir;
     private javax.swing.JButton JbtnNovo;
     private javax.swing.JButton JbtnSalvar;
     private javax.swing.JPanel JpanDadosGerais;
