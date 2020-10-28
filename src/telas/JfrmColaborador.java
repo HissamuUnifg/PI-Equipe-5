@@ -22,16 +22,19 @@ import net.sf.jasperreports.engine.JRException;
  * @author Tiago Teixeira
  */
 public class JfrmColaborador extends javax.swing.JFrame {
-        
-        models.ClsColaborador clscolaborador;
-        DAO.ColaboradorDAO colaboradorDAO;
-        models.ClsMascaraCampos clsMascaraCampos; 
-        private String userLoged;
-        private int userIdLoged;
-        private String CpfUserLoged;
     
+    //Declaração de objetos a serem usados na tela
+    models.ClsColaborador clscolaborador;
+    DAO.ColaboradorDAO colaboradorDAO;
+    models.ClsMascaraCampos clsMascaraCampos;
+    //declaração de variaveis de controle da tela
+    private String userLoged;
+    private int userIdLoged;
+    private String CpfUserLoged;
     private boolean editando;
+    private boolean precionado;
     
+    //metodos construtores da tela
     public JfrmColaborador(){
         initComponents();
         editando = false;
@@ -46,12 +49,14 @@ public class JfrmColaborador extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Erro ao iniciar as mascaras" + ex +"", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
     public JfrmColaborador(ClsLogin clslogin){
         userLoged = clslogin.getUserLoged();
         userIdLoged = clslogin.getId();
         CpfUserLoged = clslogin.getCpfUserLoged();
         initComponents();
         editando = false;
+        precionado = false;
         clscolaborador = new models.ClsColaborador();
         colaboradorDAO = new DAO.ColaboradorDAO();
         clsMascaraCampos = new models.ClsMascaraCampos();
@@ -64,7 +69,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         }
     }
     
-    
+    //funções e eventos da tela
     private void initMascaraCpfTelefone() throws ParseException {
        // iniciando a mascara com os formatos contidos na classe MascaraCampos//
         try {
@@ -103,9 +108,10 @@ public class JfrmColaborador extends javax.swing.JFrame {
                     jTxtSenha.setText(clb.getSenha());
                     clscolaborador.setSenha(clb.getSenha());
                     clscolaborador.setId(clb.getId());
-                    JbtnImprimir.setVisible(true);
-                    System.out.println(clb.getId());
+                    
                 }
+                disableCtrlBusca();
+                precionado = true;
             }
         } else {
             JOptionPane.showMessageDialog(this, "O CPF digitado é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -115,7 +121,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
     
     private void getIcon() {
         // setando o icone principal do Jframe //
-        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagens/icone_colaborador.png")));
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagens/Icone_colaborador.png")));
     }
 
     private void disableControls() {
@@ -128,8 +134,29 @@ public class JfrmColaborador extends javax.swing.JFrame {
         //desabilitando os controles Jbutton
         JbtnSalvar.setEnabled(false);
         JbtnImprimir.setVisible(false);
+        JbtnBuscar.setEnabled(true);
+        JbtnExcluir.setEnabled(false);
+        JbtnEditar.setEnabled(false);
+        
     }
-
+    
+    private void disableCtrlBusca() {
+        //desabilitando os controles jTextBox
+        jTxtCpf.setEnabled(false);
+        jTxtFone.setEnabled(false);
+        jTxtNmlogin.setEnabled(false);
+        jTxtNome.setEnabled(false);
+        jTxtSenha.setEnabled(false);
+        //desabilitando os controles Jbutton
+        JbtnSalvar.setEnabled(false);
+        JbtnImprimir.setVisible(true);
+        JbtnBuscar.setEnabled(true);
+        JbtnExcluir.setEnabled(true);
+        JbtnEditar.setEnabled(true);
+        JbtnNovo.setEnabled(false);
+        
+    }
+    
     private void enableControls() {
         //habilitando os controles apos o clieque no botão novo e editar
         jTxtCpf.setEnabled(true);
@@ -138,13 +165,13 @@ public class JfrmColaborador extends javax.swing.JFrame {
         jTxtNome.setEnabled(true);
         jTxtSenha.setEnabled(true);
         //desabilitando os botes e habilitando apenas o Jbutton salvar
-        JbtnNovo.setEnabled(false);
+        JbtnNovo.setEnabled(true);
         JbtnExcluir.setEnabled(false);
         JbtnEditar.setEnabled(false);
         JbtnBuscar.setEnabled(false);
         JbtnSalvar.setEnabled(true);
     }
-
+    
     private void clearTextBox() {
         //limpando os TxtBox
         jTxtCpf.setText("");
@@ -152,6 +179,16 @@ public class JfrmColaborador extends javax.swing.JFrame {
         jTxtNmlogin.setText("");
         jTxtNome.setText("");
         jTxtSenha.setText("");
+    }
+    
+    private void setIconBtnNv(boolean funcao){
+        if (funcao == true) {
+            JbtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_cancelar.png"))); // NOI18N
+            JbtnNovo.setToolTipText("Clique aqui para cancelar a operacao");
+        } else {
+            JbtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add_121935.png"))); // NOI18N
+            JbtnNovo.setToolTipText("Clique aqui para novo Colaborador");
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -329,9 +366,9 @@ public class JfrmColaborador extends javax.swing.JFrame {
         JbtnImprimir.setToolTipText("Clique aqui para imprimir Relatorio Colaborador");
         JbtnImprimir.setBorder(null);
         JbtnImprimir.setFocusPainted(false);
-        JbtnImprimir.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                JbtnImprimirMouseClicked(evt);
+        JbtnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JbtnImprimirActionPerformed(evt);
             }
         });
 
@@ -390,10 +427,21 @@ public class JfrmColaborador extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void JbtnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnNovoActionPerformed
-       enableControls();
-       clscolaborador.setCpf_funCadastro(CpfUserLoged);
-       editando = false;
-       clearTextBox();
+       if(precionado == false){
+           enableControls();
+           setIconBtnNv(true);
+           clscolaborador.setCpf_funCadastro(CpfUserLoged);
+           editando = false;
+           precionado = true;
+           clearTextBox();
+       }else{
+           clearTextBox();
+           disableControls();
+           setIconBtnNv(false);
+           precionado = false;
+       }
+        
+       
     }//GEN-LAST:event_JbtnNovoActionPerformed
 
     private void jTxtNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtNomeKeyPressed
@@ -436,18 +484,22 @@ public class JfrmColaborador extends javax.swing.JFrame {
             if (colaboradorDAO.isSucesso() == true) {
                 JOptionPane.showMessageDialog(this, colaboradorDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
                 disableControls();
+                setIconBtnNv(false);
                 JbtnNovo.setEnabled(true);
                 JbtnExcluir.setEnabled(true);
                 JbtnEditar.setEnabled(true);
                 JbtnBuscar.setEnabled(true);
+                JbtnImprimir.setVisible(true);
             }else{
                 JOptionPane.showMessageDialog(this, colaboradorDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
                 disableControls();
+                setIconBtnNv(false);
                 clearTextBox();
                 JbtnNovo.setEnabled(true);
                 JbtnExcluir.setEnabled(true);
                 JbtnEditar.setEnabled(true);
                 JbtnBuscar.setEnabled(true);
+                JbtnImprimir.setVisible(true);
             }
             
         }else{
@@ -458,6 +510,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
             JbtnExcluir.setEnabled(true);
             JbtnEditar.setEnabled(true);
             JbtnBuscar.setEnabled(true);
+            JbtnImprimir.setVisible(true);
         }
         
         
@@ -471,13 +524,26 @@ public class JfrmColaborador extends javax.swing.JFrame {
     private void JbtnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbtnEditarMouseClicked
        enableControls();
        editando = true;
+       precionado = true;
+       setIconBtnNv(precionado);
     }//GEN-LAST:event_JbtnEditarMouseClicked
 
     private void JbtnExcluirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbtnExcluirMouseClicked
         int deletar = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir?", "Atenção", JOptionPane.YES_NO_OPTION);
         if(deletar == 0){
             colaboradorDAO.delete(clscolaborador.getId());
-            clearTextBox();                     
+            if(colaboradorDAO.isSucesso() == true){
+                clearTextBox();
+                disableControls();
+                setIconBtnNv(false);
+                precionado = false;
+            }else{
+                JOptionPane.showMessageDialog(this, colaboradorDAO.getRetorno() + "O usuario "+userLoged+""
+                                              + " não tem permissao para deletar!", "Erro", JOptionPane.ERROR_MESSAGE);
+                setIconBtnNv(true);
+                precionado = true;
+            }
+            
         }
         
     }//GEN-LAST:event_JbtnExcluirMouseClicked
@@ -515,16 +581,16 @@ public class JfrmColaborador extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTxtFoneFocusLost
 
-    private void JbtnImprimirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbtnImprimirMouseClicked
+    private void JbtnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnImprimirActionPerformed
         File directory = new File("./src/relatorios/relColaborador.jrxml");
         // passa o caminho do relatorio e o parametro para carregar o relatorio. 
         try {
             models.ClsImpressao clsimpressao = new ClsImpressao();
             clsimpressao.ClsImpressao(directory.getAbsolutePath(), "Cpf", clscolaborador.getCpf(), "Colaboradores");
         } catch (ClassNotFoundException | SQLException | JRException e) {
-            System.out.println("Erro foi aqui" + e);
+            JOptionPane.showMessageDialog(this, "Erro foi aqui" + e, "Erro", JOptionPane.ERROR_MESSAGE);
         }
-    }//GEN-LAST:event_JbtnImprimirMouseClicked
+    }//GEN-LAST:event_JbtnImprimirActionPerformed
 
     /**
      * @param args the command line arguments

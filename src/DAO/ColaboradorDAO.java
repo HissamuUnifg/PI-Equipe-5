@@ -137,8 +137,13 @@ public class ColaboradorDAO {
             retorno = "Deletado com sucesso!";
             sucesso = true;
         } catch (SQLException e) {
-            retorno = "Erro ao Deletar: " + e;
-            sucesso = false;
+            if(e.getErrorCode() == 1451){
+                retorno = "Erro ao Deletar: ";
+                sucesso = false;
+            }
+            //retorno = "Erro ao Deletar: " + e;
+            //System.out.println("Erro: " + e + e.getErrorCode());
+           
         } finally {
             try {
                 if (ps != null) {

@@ -179,7 +179,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         clslogin.setCpfUserLoged(CpfUserLoged);
         telas.JfrmClientes telaclientes = new telas.JfrmClientes(clslogin);
         this.setVisible(false);
-        telaclientes.show();
+        telaclientes.setVisible(true);
     }//GEN-LAST:event_jMenuCadastroCliActionPerformed
 
     private void jMenuCadColabActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadColabActionPerformed
@@ -189,7 +189,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         clslogin.setCpfUserLoged(CpfUserLoged);
         telas.JfrmColaborador telacolaborador = new telas.JfrmColaborador(clslogin);
         this.setVisible(false);
-        telacolaborador.show();
+        telacolaborador.setVisible(true);
     }//GEN-LAST:event_jMenuCadColabActionPerformed
 
     private void jMenuCadMovVeicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadMovVeicActionPerformed
@@ -199,7 +199,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         clslogin.setCpfUserLoged(CpfUserLoged);
         telas.JfrmVeiculos telaveiculos = new telas.JfrmVeiculos(clslogin);
         this.setVisible(false);
-        telaveiculos.show();
+        telaveiculos.setVisible(true);
     }//GEN-LAST:event_jMenuCadMovVeicActionPerformed
 
     private void jMenuCadMovContActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadMovContActionPerformed
@@ -209,7 +209,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         clslogin.setCpfUserLoged(CpfUserLoged);
         telas.JfrmContratos telacontrato = new telas.JfrmContratos(clslogin);
         this.setVisible(false);
-        telacontrato.show();
+        telacontrato.setVisible(true);
     }//GEN-LAST:event_jMenuCadMovContActionPerformed
 
 

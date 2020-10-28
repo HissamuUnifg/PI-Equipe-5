@@ -22,7 +22,6 @@ package models;
 
 import DAO.ConexaoDAO;
 import java.awt.BorderLayout;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -63,20 +62,19 @@ public class ClsImpressao {
 
         //compila o relatório
         JasperReport relatorio = JasperCompileManager.compileReport(desenho);
-
-        Connection conn = ConexaoDAO.getConexaoDAO();
+               
 
         //executa o relatório
         Map parametros = new HashMap();
         parametros.put(parametro, valorParametro);
-        JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, conn);
+        JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConexaoDAO.getConexaoDAO());
         
         //exibe o resultado
         JasperViewer viewer = new JasperViewer(impressao, true);
         relOpemFrame(tituloRelatorio, impressao);
         
         //fecha conexão com o banco de dados
-        conn.close();
+      
         ConexaoDAO.FecharConexao();
     }
     private static void relOpemFrame( String titulo, JasperPrint print ) {
