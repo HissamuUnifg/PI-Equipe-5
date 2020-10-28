@@ -24,7 +24,7 @@ public class ColaboradorDAO {
     public void setSucesso(boolean sucesso) {
         this.sucesso = sucesso;
     }
-    
+
     public String getRetorno() {
         return retorno;
     }
@@ -52,14 +52,17 @@ public class ColaboradorDAO {
             retorno = "Gravado com sucesso!";
             sucesso = true;
         } catch (SQLException e) {
-            if(e.getErrorCode() == 1062){
+            if (e.getErrorCode() == 1062) {
                 retorno = "O CPF já está cadastrado!";
                 sucesso = false;
-            }else{
-                retorno = "Erro ao gravar: " + e;
             }
-            System.out.println(e.getErrorCode());
-            
+            if (e.getErrorCode() == 1048) {
+                retorno = "Verifique todos os campos se estão preenchidos!";
+                sucesso = false;
+            }
+
+            System.out.println("" + e.getErrorCode() + "" + e);
+
         } finally {
             try {
                 if (ps != null) {
@@ -101,8 +104,13 @@ public class ColaboradorDAO {
             retorno = "Atualizado com sucesso!";
             sucesso = true;
         } catch (SQLException e) {
-            retorno = "Erro ao atualizar: " + e;
-            sucesso = false;
+            if (e.getErrorCode() == 1048) {
+                retorno = "Verifique todos os campos se estão preenchidos!";
+                sucesso = false;
+            } else {
+                retorno = "Erro ao atualizar: " + e;
+                sucesso = false;
+            }
         } finally {
             try {
                 if (ps != null) {
@@ -137,12 +145,10 @@ public class ColaboradorDAO {
             retorno = "Deletado com sucesso!";
             sucesso = true;
         } catch (SQLException e) {
-            if(e.getErrorCode() == 1451){
+            if (e.getErrorCode() == 1451) {
                 retorno = "Erro ao Deletar: ";
                 sucesso = false;
             }
-            //retorno = "Erro ao Deletar: " + e;
-            //System.out.println("Erro: " + e + e.getErrorCode());
            
         } finally {
             try {
@@ -174,23 +180,23 @@ public class ColaboradorDAO {
             ps.setString(1, cpf);
             rset = ps.executeQuery();
 
-         
-                while (rset.next()) {
-                    models.ClsColaborador colaborador = new models.ClsColaborador();
-                    colaborador.setId(rset.getInt("id"));
-                    colaborador.setNome(rset.getString("nome"));
-                    colaborador.setCpf(rset.getString("cpf"));
-                    colaborador.setNomeLogin(rset.getString("nomeLogin"));
-                    colaborador.setCpf_funCadastro(rset.getString("Cpf_funCadastro"));
-                    colaborador.setSenha(rset.getString("senha"));
-                    colaborador.setTelefone(rset.getString("telefone"));
-                    colaboradores.add(colaborador);
-                }
-                retorno = "Colaborador Encontrado!";
-                sucesso = true;
+            while (rset.next()) {
+                models.ClsColaborador colaborador = new models.ClsColaborador();
+                colaborador.setId(rset.getInt("id"));
+                colaborador.setNome(rset.getString("nome"));
+                colaborador.setCpf(rset.getString("cpf"));
+                colaborador.setNomeLogin(rset.getString("nomeLogin"));
+                colaborador.setCpf_funCadastro(rset.getString("Cpf_funCadastro"));
+                colaborador.setSenha(rset.getString("senha"));
+                colaborador.setTelefone(rset.getString("telefone"));
+                colaboradores.add(colaborador);
+            }
+            retorno = "Colaborador Encontrado!";
+            sucesso = true;
 
         } catch (SQLException e) {
             retorno = "Erro: " + e;
+            System.out.println(e);
             sucesso = false;
         } finally {
 
@@ -214,7 +220,5 @@ public class ColaboradorDAO {
 
         return colaboradores;
     }
-    
-
 
 }

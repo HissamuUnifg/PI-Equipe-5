@@ -137,6 +137,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         JbtnBuscar.setEnabled(true);
         JbtnExcluir.setEnabled(false);
         JbtnEditar.setEnabled(false);
+        JbtnNovo.setEnabled(true);
         
     }
     
@@ -585,11 +586,15 @@ public class JfrmColaborador extends javax.swing.JFrame {
         File directory = new File("./src/relatorios/relColaborador.jrxml");
         // passa o caminho do relatorio e o parametro para carregar o relatorio. 
         try {
-            models.ClsImpressao clsimpressao = new ClsImpressao();
+           ClsImpressao clsimpressao = new ClsImpressao();
             clsimpressao.ClsImpressao(directory.getAbsolutePath(), "Cpf", clscolaborador.getCpf(), "Colaboradores");
         } catch (ClassNotFoundException | SQLException | JRException e) {
             JOptionPane.showMessageDialog(this, "Erro foi aqui" + e, "Erro", JOptionPane.ERROR_MESSAGE);
         }
+        clearTextBox();
+        disableControls();
+        setIconBtnNv(false);
+        precionado = false;
     }//GEN-LAST:event_JbtnImprimirActionPerformed
 
     /**
