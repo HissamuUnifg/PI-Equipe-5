@@ -24,6 +24,100 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         CpfUserLoged = clslogin.getCpfUserLoged();
         initComponents();
         setIcon();
+        setCarroTipo();
+        setCarroClasse();
+        disableControl();
+    }
+    
+    private void setCarroTipo() {
+        jCboTipo.removeAllItems();
+        jCboTipo.addItem("PASSEIO HATCH");
+        jCboTipo.addItem("PASSEIO SEDAN");
+        jCboTipo.addItem("UTILITARIO SUV");
+        jCboTipo.addItem("CAMINHONETE");
+    }
+
+    private void setCarroClasse() {
+        jCboClasse.removeAllItems();
+        jCboClasse.addItem("POPULAR");
+        jCboClasse.addItem("MEDIO");
+        jCboClasse.addItem("LUXO");
+    }
+    
+    private void setIconBtnNv(boolean funcao){
+        if (funcao == true) {
+            JbtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_cancelar.png"))); // NOI18N
+            JbtnNovo.setToolTipText("Clique aqui para cancelar a operacao");
+        } else {
+            JbtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add_121935.png"))); // NOI18N
+            JbtnNovo.setToolTipText("Clique aqui para novo Veiculo");
+        }
+    }
+    
+    private void disableControl() {
+        //desabilitando os controles e campos da tela
+        jCboTipo.setEnabled(false);
+        jCboClasse.setEnabled(false);
+        jCkbInativar.setEnabled(false);
+        jDateCompra.setEnabled(false);
+        jTblVeiculos.setEnabled(false);
+        jTxtAnoFabricacao.setEnabled(false);
+        jTxtAnoModelo.setEnabled(false);
+        jTxtChassi.setEnabled(false);
+        jTxtCor.setEnabled(false);
+        jTxtKm.setEnabled(false);
+        jTxtMarca.setEnabled(false);
+        jTxtNome.setEnabled(false);
+        jTxtNumeroRenavan.setEnabled(false);
+        jTxtObservacoes.setEnabled(false);
+        jTxtPlaca.setEnabled(false);
+        jTxtPlacaBusca.setEnabled(true);
+        jTxtValorDiaria.setEnabled(false);
+        jTxtValorKmRodado.setEnabled(false);
+        jTxtValorMercado.setEnabled(false);
+        jTxtValorSeguro.setEnabled(false);
+        jTxtVeiculo.setEnabled(false);
+        
+        //desabilitando os controles botões
+        JbtnEditar.setEnabled(false);
+        JbtnExcluir.setEnabled(false);
+        JbtnSalvar.setEnabled(false);
+        JbtnNovo.setEnabled(true);
+        jBtnBuscar.setEnabled(true);
+               
+    }
+    
+    private void enableControl() {
+        //desabilitando os controles e campos da tela
+        jCboTipo.setEnabled(true);
+        jCboClasse.setEnabled(true);
+        jCkbInativar.setEnabled(true);
+        jDateCompra.setEnabled(true);
+        jTblVeiculos.setEnabled(true);
+        jTxtAnoFabricacao.setEnabled(true);
+        jTxtAnoModelo.setEnabled(true);
+        jTxtChassi.setEnabled(true);
+        jTxtCor.setEnabled(true);
+        jTxtKm.setEnabled(true);
+        jTxtMarca.setEnabled(true);
+        jTxtNome.setEnabled(true);
+        jTxtNumeroRenavan.setEnabled(true);
+        jTxtObservacoes.setEnabled(true);
+        jTxtPlaca.setEnabled(true);
+        jTxtPlacaBusca.setEnabled(true);
+        jTxtValorDiaria.setEnabled(true);
+        jTxtValorKmRodado.setEnabled(true);
+        jTxtValorMercado.setEnabled(true);
+        jTxtValorSeguro.setEnabled(true);
+        jTxtVeiculo.setEnabled(true);
+        
+        //desabilitando os controles botões
+        JbtnEditar.setEnabled(true);
+        JbtnExcluir.setEnabled(true);
+        JbtnSalvar.setEnabled(false);
+        JbtnNovo.setEnabled(true);
+        jBtnBuscar.setEnabled(true);
+               
     }
 
    
@@ -59,7 +153,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorDiaria = new javax.swing.JTextField();
         jPanelBusca = new javax.swing.JPanel();
         jTxtPlacaBusca = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        jBtnBuscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTblVeiculos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -264,7 +358,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtPlacaBusca.setToolTipText("Digite a placa para realizar a busca");
         jTxtPlacaBusca.setBorder(javax.swing.BorderFactory.createTitledBorder("Placa "));
 
-        jButton1.setText("Localizar");
+        jBtnBuscar.setText("Localizar");
 
         javax.swing.GroupLayout jPanelBuscaLayout = new javax.swing.GroupLayout(jPanelBusca);
         jPanelBusca.setLayout(jPanelBuscaLayout);
@@ -274,14 +368,14 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jTxtPlacaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
         );
         jPanelBuscaLayout.setVerticalGroup(
             jPanelBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelBuscaLayout.createSequentialGroup()
                 .addGroup(jPanelBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jBtnBuscar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jTxtPlacaBusca, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
@@ -420,7 +514,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     private javax.swing.JButton JbtnExcluir;
     private javax.swing.JButton JbtnNovo;
     private javax.swing.JButton JbtnSalvar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jBtnBuscar;
     private javax.swing.JComboBox<String> jCboClasse;
     private javax.swing.JComboBox<String> jCboTipo;
     private javax.swing.JCheckBox jCkbInativar;
@@ -453,4 +547,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagens/icone_veiculo.png")));
     }
+
+   
+
+
 }
