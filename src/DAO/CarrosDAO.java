@@ -10,8 +10,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import models.ClsCarros;
 
 
@@ -19,6 +21,7 @@ public class CarrosDAO {
     
     private String retorno;
     private boolean sucesso;
+    SimpleDateFormat formatoBr = new SimpleDateFormat("dd-MM-yyyy");
     
     public boolean isSucesso() {
         return sucesso;
@@ -55,7 +58,7 @@ public class CarrosDAO {
             ps.setString(7, clscarros.getPlaca());
             ps.setInt(8, clscarros.getRenavam());
             ps.setString(9, clscarros.getObsEstado());
-            ps.setDate(10, clscarros.getDataCompra());
+            ps.setString(10, clscarros.getDataCompra());
             ps.setInt(11, clscarros.getAnoModelo());
             ps.setInt(12, clscarros.getAnoFabricacao());
             ps.setString(13, clscarros.getChassi());
@@ -75,6 +78,7 @@ public class CarrosDAO {
             if (e.getErrorCode() == 1062) {
                 retorno = "O Carro já está cadastrado!";
                 sucesso = false;
+                System.out.println("Erro aqui: "+ e);
             }
             if (e.getErrorCode() == 1048) {
                 retorno = "Verifique todos os campos se estão preenchidos!";
@@ -122,7 +126,7 @@ public class CarrosDAO {
             ps.setString(7, clscarros.getPlaca());
             ps.setInt(8, clscarros.getRenavam());
             ps.setString(9, clscarros.getObsEstado());
-            ps.setDate(10, clscarros.getDataCompra());
+            ps.setString(10, clscarros.getDataCompra());
             ps.setInt(11, clscarros.getAnoModelo());
             ps.setInt(12, clscarros.getAnoFabricacao());
             ps.setString(13, clscarros.getChassi());
@@ -236,7 +240,7 @@ public class CarrosDAO {
             carroEcontrado.setPlaca(rset.getString("Placa"));
             carroEcontrado.setRenavam(rset.getInt("Renavam"));
             carroEcontrado.setObsEstado(rset.getString("ObsEstado"));
-            carroEcontrado.setDataCompra(rset.getDate("DataCompra"));
+            carroEcontrado.setDataCompra(formatoBr.format(rset.getDate("DataCompra")));
             carroEcontrado.setAnoModelo(rset.getInt("AnoModelo"));
             carroEcontrado.setAnoFabricacao(rset.getInt("AnoFabricacao"));
             carroEcontrado.setChassi(rset.getString("Chassi"));
@@ -314,7 +318,7 @@ public class CarrosDAO {
             carroEcontrado.setPlaca(rset.getString("Placa"));
             carroEcontrado.setRenavam(rset.getInt("Renavam"));
             carroEcontrado.setObsEstado(rset.getString("ObsEstado"));
-            carroEcontrado.setDataCompra(rset.getDate("DataCompra"));
+            carroEcontrado.setDataCompra(formatoBr.format(rset.getDate("DataCompra")));
             carroEcontrado.setAnoModelo(rset.getInt("AnoModelo"));
             carroEcontrado.setAnoFabricacao(rset.getInt("AnoFabricacao"));
             carroEcontrado.setChassi(rset.getString("Chassi"));

@@ -1,6 +1,10 @@
 
 package models;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.util.Locale;
+
 /**
  * Classe responsavel por validacoes de CPF e CNPJ
  * @author Tiago Teixeira
@@ -54,4 +58,30 @@ public class ClsValidacoes {
         dado = dado.replaceAll("-", "");
         return dado;
     }
+    
+    public  String dataFormatoUS(String dataEntrada){
+        //10-10-2010
+        String dia = dataEntrada.substring(0, 2);
+        String mes = dataEntrada.substring(3, 5);
+        String ano = dataEntrada.substring(6);
+        String dataSaida = ano+"/"+mes+"/"+dia;
+        return dataSaida;
+    }
+     
+    public String dataFormatoBR(String dataEntrada){
+        //2001-01-01 10-10-2010
+        String ano = dataEntrada.substring(0, 4);
+        String mes = dataEntrada.substring(5, 7);
+        String dia = dataEntrada.substring(8);
+        String dataSaida = dia+"/"+mes+"/"+ano;
+        return dataSaida;
+    }
+    public  float formataMoeda(String arg) throws ParseException {
+        //obtem um NumberFormat para o Locale default (BR)
+        NumberFormat nf = NumberFormat.getNumberInstance(new Locale("pt", "BR"));
+        //converte um número com vírgulas ex: 2,56 para double
+        float number = nf.parse(arg).floatValue();
+        return number;
+    }
+
 }

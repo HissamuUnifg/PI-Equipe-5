@@ -1,7 +1,6 @@
 
 package models;
 
-import java.sql.Date;
 
 /**
  * Classe dos Patrimonios e Veiculos
@@ -18,7 +17,7 @@ public class ClsCarros {
     private String Placa;
     private int Renavam;
     private String ObsEstado;
-    private Date DataCompra;
+    private String DataCompra;
     private int AnoModelo;
     private int AnoFabricacao;
     private String Chassi;
@@ -31,7 +30,7 @@ public class ClsCarros {
     private int Inativo;
     private int id_colaborador;
 
-    public ClsCarros(String Nome, String Marca, String Modelo, String Classe, String TipoVeiculo, String Cor, String Placa, int Renavam, String ObsEstado, Date DataCompra, int AnoModelo, int AnoFabricacao, String Chassi, int KmRodados, float ValorMercado, float ValorSeguro, float ValorKmRd, float ValorDiariaLoc, int Status, int Inativo, int id_colaborador) {
+    public ClsCarros(String Nome, String Marca, String Modelo, String Classe, String TipoVeiculo, String Cor, String Placa, int Renavam, String ObsEstado, String DataCompra, int AnoModelo, int AnoFabricacao, String Chassi, int KmRodados, float ValorMercado, float ValorSeguro, float ValorKmRd, float ValorDiariaLoc, int Status, int Inativo, int id_colaborador) {
         this.Nome = Nome;
         this.Marca = Marca;
         this.Modelo = Modelo;
@@ -165,11 +164,11 @@ public class ClsCarros {
         this.ObsEstado = ObsEstado;
     }
 
-    public Date getDataCompra() {
+    public String getDataCompra() {
         return DataCompra;
     }
 
-    public void setDataCompra(Date DataCompra) {
+    public void setDataCompra(String DataCompra) {
         this.DataCompra = DataCompra;
     }
 
@@ -260,6 +259,7 @@ public class ClsCarros {
     public void setId_colaborador(int id_colaborador) {
         this.id_colaborador = id_colaborador;
     }
-   
+
+  
     
 }

@@ -71,17 +71,10 @@ public class JfrmColaborador extends javax.swing.JFrame {
     //funções e eventos da tela
     private void initMascaraCpfTelefone() throws ParseException {
        // iniciando a mascara com os formatos contidos na classe MascaraCampos//
-        try {
-           jTxtFone.setFormatterFactory(new DefaultFormatterFactory(clsMascaraCampos.mascaraCelular(jTxtFone))); 
-        } catch (ParseException e) {
-            JOptionPane.showMessageDialog(this, "Possivel caracter que não seja numero inserido" + e+"", "ERRO", JOptionPane.INFORMATION_MESSAGE);
-        }
-        try {
-           jTxtCpf.setFormatterFactory(new DefaultFormatterFactory(clsMascaraCampos.mascaraCpf(jTxtCpf))); 
-        } catch (ParseException e) {
-            JOptionPane.showMessageDialog(this, "Possivel caracter que não seja numero inserido" + e+"", "ERRO", JOptionPane.INFORMATION_MESSAGE);
-        }
-       
+       jTxtFone.setFormatterFactory(new DefaultFormatterFactory(clsMascaraCampos.mascaraCelular(jTxtFone))); 
+        
+       jTxtCpf.setFormatterFactory(new DefaultFormatterFactory(clsMascaraCampos.mascaraCpf(jTxtCpf))); 
+        
     }
     
     private void buscaCliente(){
