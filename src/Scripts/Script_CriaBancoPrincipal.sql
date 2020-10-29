@@ -62,3 +62,14 @@ PRIMARY KEY (id),
 UNIQUE KEY placa_UNIQUE (Placa),
 FOREIGN KEY fk_id_colaborador(id_colaborador) references Colaboradores(id)
 )
+
+/*Criando tabela Cidades*/
+CREATE TABLE IF NOT EXISTS Cidades (
+id int NOT NULL,
+NomeCidade varchar(200),
+SiglaEstado varchar(2),
+Estado varchar(200),
+Pais varchar(6),
+
+PRIMARY KEY(id)
+)
