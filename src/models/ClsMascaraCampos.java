@@ -61,4 +61,13 @@ package models;
         mask.install(textfield);
        return mask;
     }
+ public MaskFormatter mascaraData(JFormattedTextField textfield) throws ParseException{
+        MaskFormatter mask = null;
+        mask = new MaskFormatter("##/##/####");
+        mask.setOverwriteMode(true);
+        mask.setValidCharacters("0123456789");
+        mask.setPlaceholderCharacter('_');
+        mask.install(textfield);
+       return mask;
+    }
  }

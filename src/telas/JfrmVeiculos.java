@@ -1,8 +1,11 @@
 
 package telas;
 
+
 import java.awt.Toolkit;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import models.ClsLogin;
 
@@ -24,7 +27,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     
     //variaveis de classes a serem usadas na tela
     models.ClsCarros clscarros;
-
+    models.ClsMascaraCampos clsmascaracampos;
+ 
     public JfrmVeiculos() {
         initComponents();
         setIcon();
@@ -34,13 +38,19 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         userIdLoged = clslogin.getId();
         CpfUserLoged = clslogin.getCpfUserLoged();
         clscarros = new models.ClsCarros();
+        clsmascaracampos = new models.ClsMascaraCampos();            
         initComponents();
         setIcon();       
         disableControl();
         precionado = false;
     }
     
+
+        
     // metodos auxiliares para funcionamento da tela
+    
+    
+     
     private void setCarroTipo() {
         jCboTipo.addItem("PASSEIO HATCH");
         jCboTipo.addItem("PASSEIO SEDAN");
@@ -69,7 +79,6 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jCboTipo.setEnabled(false);
         jCboClasse.setEnabled(false);
         jCkbInativar.setEnabled(false);
-        jDateCompra.setEnabled(false);
         jTblVeiculos.setEnabled(false);
         jTxtAnoFabricacao.setEnabled(false);
         jTxtAnoModelo.setEnabled(false);
@@ -102,7 +111,6 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jCboTipo.setEnabled(true);
         jCboClasse.setEnabled(true);
         jCkbInativar.setEnabled(true);
-        jDateCompra.setEnabled(true);
         jTblVeiculos.setEnabled(true);
         jTxtAnoFabricacao.setEnabled(true);
         jTxtAnoModelo.setEnabled(true);
@@ -135,7 +143,6 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jCboTipo.setEnabled(true);
         jCboClasse.setEnabled(true);
         jCkbInativar.setEnabled(true);
-        jDateCompra.setEnabled(true);
         jTblVeiculos.setEnabled(true);
         jTxtAnoFabricacao.setEnabled(true);
         jTxtAnoModelo.setEnabled(true);
@@ -211,9 +218,9 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtAnoFabricacao = new javax.swing.JTextField();
         jCboClasse = new javax.swing.JComboBox<>();
         jCboTipo = new javax.swing.JComboBox<>();
-        jDateCompra = new com.toedter.calendar.JDateChooser();
         jTxtNumeroRenavan = new javax.swing.JTextField();
         jTxtObservacoes = new javax.swing.JTextField();
+        JfTxtData = new javax.swing.JFormattedTextField();
         jLabelCodigo = new javax.swing.JLabel();
         jCkbInativar = new javax.swing.JCheckBox();
         jPanelDadosValores = new javax.swing.JPanel();
@@ -258,6 +265,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         JbtnSalvar.setToolTipText("Clique aqui para salvar veiculo");
         JbtnSalvar.setBorder(null);
         JbtnSalvar.setFocusPainted(false);
+        JbtnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JbtnSalvarActionPerformed(evt);
+            }
+        });
 
         JbtnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/bin_121907.png"))); // NOI18N
         JbtnExcluir.setToolTipText("Clique aqui para excluir veiculo");
@@ -378,9 +390,6 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             }
         });
 
-        jDateCompra.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Compra"));
-        jDateCompra.setToolTipText("Selecione a data da compra do veiculo");
-
         jTxtNumeroRenavan.setBackground(new java.awt.Color(240, 240, 240));
         jTxtNumeroRenavan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtNumeroRenavan.setToolTipText("Digite o numero RENAVAN do veiculo");
@@ -390,6 +399,21 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtObservacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtObservacoes.setToolTipText("Digite breve observação sobre o veiculo");
         jTxtObservacoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Observações/Estado"));
+
+        JfTxtData.setBackground(new java.awt.Color(240, 240, 240));
+        JfTxtData.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Compra"));
+        try {
+            JfTxtData.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        JfTxtData.setToolTipText("");
+        JfTxtData.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        JfTxtData.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JfTxtDataFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPaneDadosGeraisLayout = new javax.swing.GroupLayout(jPaneDadosGerais);
         jPaneDadosGerais.setLayout(jPaneDadosGeraisLayout);
@@ -416,12 +440,12 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                         .addComponent(jTxtChassi, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jTxtKm, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(30, 30, 30)
                         .addComponent(jTxtAnoModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(30, 30, 30)
                         .addComponent(jTxtAnoFabricacao, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jDateCompra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(JfTxtData, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPaneDadosGeraisLayout.createSequentialGroup()
                         .addComponent(jTxtNumeroRenavan, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -439,15 +463,14 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                     .addComponent(jCboClasse, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPaneDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPaneDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTxtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTxtChassi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTxtKm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTxtAnoModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTxtAnoFabricacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jDateCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPaneDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTxtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTxtChassi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTxtKm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTxtAnoModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTxtAnoFabricacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JfTxtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7)
                 .addGroup(jPaneDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtNumeroRenavan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTxtObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -762,11 +785,35 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         if (jTxtAnoFabricacao.getText().length() > 9) {
             msgAdvCampo("AnoFabricacao");
         } else {
-            clscarros.setAnoFabricacao(Integer.parseInt(jTxtAnoFabricacao.getText()));
+            clscarros.setAnoFabricacao(Integer.parseInt(jTxtAnoFabricacao.getText()));           
         }
     }//GEN-LAST:event_jTxtAnoFabricacaoFocusLost
+
+    private void JbtnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnSalvarActionPerformed
+        
+    }//GEN-LAST:event_JbtnSalvarActionPerformed
+
+    private void JfTxtDataFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JfTxtDataFocusLost
+        if(JfTxtData.getText().length() < 1){
+            msgObgCampo("Data Compra");
+        }else{
+        String dataJftxt = JfTxtData.getText();
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
+        LocalDate data = LocalDate.parse(dataJftxt, formato); 
+             
+        
+        System.out.println(formato.format(data));
+        
+        
+       
+            //clscarros.setDataCompra(data);
+            System.out.println(clscarros.getDataCompra());
+        
+        }
+    }//GEN-LAST:event_JfTxtDataFocusLost
+
+        
     
- 
     /**
      * @param args the command line arguments
      */
@@ -777,11 +824,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     private javax.swing.JButton JbtnExcluir;
     private javax.swing.JButton JbtnNovo;
     private javax.swing.JButton JbtnSalvar;
+    private javax.swing.JFormattedTextField JfTxtData;
     private javax.swing.JButton jBtnBuscar;
     private javax.swing.JComboBox<String> jCboClasse;
     private javax.swing.JComboBox<String> jCboTipo;
     private javax.swing.JCheckBox jCkbInativar;
-    private com.toedter.calendar.JDateChooser jDateCompra;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelCodigo;
     private javax.swing.JPanel jPaneDadosGerais;
@@ -810,6 +857,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     private void setIcon() {
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagens/icone_veiculo.png")));
     }
+
+   
 
    
 
