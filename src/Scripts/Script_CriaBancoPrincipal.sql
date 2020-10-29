@@ -61,7 +61,7 @@ id_colaborador int NOT NULL,
 PRIMARY KEY (id),
 UNIQUE KEY placa_UNIQUE (Placa),
 FOREIGN KEY fk_id_colaborador(id_colaborador) references Colaboradores(id)
-)
+);
 
 /*Criando tabela Cidades*/
 CREATE TABLE IF NOT EXISTS Cidades (
@@ -72,4 +72,16 @@ Estado varchar(200),
 Pais varchar(6),
 
 PRIMARY KEY(id)
+);
+
+/*Criando tabela Endereços*/
+CREATE TABLE IF NOT EXISTS Enderecos(
+id int NOT NULL,
+Rua varchar(200) NOT NULL,
+Numero varchar(5) NOT NULL,
+Bairro varchar(100) NOT NULL,
+id_cidade int NOT NULL,
+
+PRIMARY KEY(id),
+FOREIGN KEY fk_id_cidade(id_cidade) references Cidades(id)
 )
