@@ -55,12 +55,8 @@ public class ClsCarros {
         this.id_colaborador = id_colaborador;
     }
 
-    /**
-     * Author: Tiago Teixeira
-     * Responsavel por Carregar a Classe com os dados retornados do banco de dados.
-     * @param clscarros
-     */
-    public ClsCarros(ClsCarros clscarros){
+
+    /*public ClsCarros(ClsCarros clscarros){
         this.Id = clscarros.getId();
         this.Nome = clscarros.getNome();
         this.Marca = clscarros.getMarca();
@@ -82,8 +78,11 @@ public class ClsCarros {
         this.ValorDiariaLoc = clscarros.getValorDiariaLoc();
         this.Status = clscarros.getStatus();
         this.Inativo = clscarros.getInativo();
-        this.id_colaborador = clscarros.getId_colaborador();
+        this.id_colaborador = clscarros.getId_colaborador();    
+    }
+    */
     
+    public ClsCarros(){
     }
 
     public int getId() {

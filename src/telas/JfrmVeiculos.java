@@ -2,17 +2,28 @@
 package telas;
 
 import java.awt.Toolkit;
+import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
 import models.ClsLogin;
+
+
 
 /**
  *
  * @author Tiago Teixeira
  */
 public class JfrmVeiculos extends javax.swing.JFrame {
-  
+    // variaveis responsaveis por herdar os dados da classe de Login
     private String userLoged;
     private int userIdLoged;
     private String CpfUserLoged;
+    
+    // variaveis auxiliares 
+    private boolean editando;
+    private boolean precionado;
+    
+    //variaveis de classes a serem usadas na tela
+    models.ClsCarros clscarros;
 
     public JfrmVeiculos() {
         initComponents();
@@ -22,15 +33,15 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         userLoged = clslogin.getUserLoged();
         userIdLoged = clslogin.getId();
         CpfUserLoged = clslogin.getCpfUserLoged();
+        clscarros = new models.ClsCarros();
         initComponents();
-        setIcon();
-        setCarroTipo();
-        setCarroClasse();
+        setIcon();       
         disableControl();
+        precionado = false;
     }
     
+    // metodos auxiliares para funcionamento da tela
     private void setCarroTipo() {
-        jCboTipo.removeAllItems();
         jCboTipo.addItem("PASSEIO HATCH");
         jCboTipo.addItem("PASSEIO SEDAN");
         jCboTipo.addItem("UTILITARIO SUV");
@@ -38,7 +49,6 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     }
 
     private void setCarroClasse() {
-        jCboClasse.removeAllItems();
         jCboClasse.addItem("POPULAR");
         jCboClasse.addItem("MEDIO");
         jCboClasse.addItem("LUXO");
@@ -112,15 +122,75 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtVeiculo.setEnabled(true);
         
         //desabilitando os controles botões
-        JbtnEditar.setEnabled(true);
-        JbtnExcluir.setEnabled(true);
-        JbtnSalvar.setEnabled(false);
+        JbtnEditar.setEnabled(false);
+        JbtnExcluir.setEnabled(false);
+        JbtnSalvar.setEnabled(true);
         JbtnNovo.setEnabled(true);
         jBtnBuscar.setEnabled(true);
                
     }
+    
+    private void enableControlBusca() {
+        //desabilitando os controles e campos da tela
+        jCboTipo.setEnabled(true);
+        jCboClasse.setEnabled(true);
+        jCkbInativar.setEnabled(true);
+        jDateCompra.setEnabled(true);
+        jTblVeiculos.setEnabled(true);
+        jTxtAnoFabricacao.setEnabled(true);
+        jTxtAnoModelo.setEnabled(true);
+        jTxtChassi.setEnabled(true);
+        jTxtCor.setEnabled(true);
+        jTxtKm.setEnabled(true);
+        jTxtMarca.setEnabled(true);
+        jTxtNome.setEnabled(true);
+        jTxtNumeroRenavan.setEnabled(true);
+        jTxtObservacoes.setEnabled(true);
+        jTxtPlaca.setEnabled(true);
+        jTxtPlacaBusca.setEnabled(true);
+        jTxtValorDiaria.setEnabled(true);
+        jTxtValorKmRodado.setEnabled(true);
+        jTxtValorMercado.setEnabled(true);
+        jTxtValorSeguro.setEnabled(true);
+        jTxtVeiculo.setEnabled(true);
+        
+        //desabilitando os controles botões
+        JbtnEditar.setEnabled(true);
+        JbtnExcluir.setEnabled(true);
+        JbtnSalvar.setEnabled(true);
+        JbtnNovo.setEnabled(true);
+        jBtnBuscar.setEnabled(true);
+               
+    }
+    
+    private void clearTxt(){
+ 
+        jTxtAnoFabricacao.setText("");
+        jTxtAnoModelo.setText("");
+        jTxtChassi.setText("");
+        jTxtCor.setText("");
+        jTxtKm.setText("");
+        jTxtMarca.setText("");
+        jTxtNome.setText("");
+        jTxtNumeroRenavan.setText("");
+        jTxtObservacoes.setText("");
+        jTxtPlaca.setText("");
+        jTxtPlacaBusca.setText("");
+        jTxtValorDiaria.setText("");
+        jTxtValorKmRodado.setText("");
+        jTxtValorMercado.setText("");
+        jTxtValorSeguro.setText("");
+        jTxtVeiculo.setText("");
+    }
+    
+    private void msgObgCampo(String dado){
+        JOptionPane.showMessageDialog(this, "Olá "+userLoged+" esse dado: "+dado+" é obrigatório", "Informação", JOptionPane.INFORMATION_MESSAGE);
+    }
+    private void msgAdvCampo(String dado){
+        JOptionPane.showMessageDialog(this, "Olá "+userLoged+" esse dado: "+dado+" está maior que o permitido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+    }
 
-   
+       
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -173,6 +243,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         JbtnNovo.setToolTipText("Clique aqui para novo veiculo");
         JbtnNovo.setBorder(null);
         JbtnNovo.setFocusPainted(false);
+        JbtnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JbtnNovoActionPerformed(evt);
+            }
+        });
 
         JbtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/new_121792.png"))); // NOI18N
         JbtnEditar.setToolTipText("Clique aqui para editar veiculo");
@@ -195,58 +270,113 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtNome.setToolTipText("Digite o nome do veiculo");
         jTxtNome.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome"));
+        jTxtNome.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtNomeFocusLost(evt);
+            }
+        });
 
         jTxtVeiculo.setBackground(new java.awt.Color(240, 240, 240));
         jTxtVeiculo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtVeiculo.setToolTipText("Digite o modelo do veiculo");
         jTxtVeiculo.setBorder(javax.swing.BorderFactory.createTitledBorder("Modelo"));
+        jTxtVeiculo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtVeiculoFocusLost(evt);
+            }
+        });
 
         jTxtMarca.setBackground(new java.awt.Color(240, 240, 240));
         jTxtMarca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtMarca.setToolTipText("Digite a marca do veiculo");
         jTxtMarca.setBorder(javax.swing.BorderFactory.createTitledBorder("Marca"));
+        jTxtMarca.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtMarcaFocusLost(evt);
+            }
+        });
 
         jTxtCor.setBackground(new java.awt.Color(240, 240, 240));
         jTxtCor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtCor.setToolTipText("Digite a cor do veiculo");
         jTxtCor.setBorder(javax.swing.BorderFactory.createTitledBorder("Cor"));
+        jTxtCor.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtCorFocusLost(evt);
+            }
+        });
 
         jTxtPlaca.setBackground(new java.awt.Color(240, 240, 240));
         jTxtPlaca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtPlaca.setToolTipText("Digite a placa do veiculo");
         jTxtPlaca.setBorder(javax.swing.BorderFactory.createTitledBorder("Placa"));
+        jTxtPlaca.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtPlacaFocusLost(evt);
+            }
+        });
 
         jTxtChassi.setBackground(new java.awt.Color(240, 240, 240));
         jTxtChassi.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtChassi.setToolTipText("Digite o numero do chassi do veiculo");
         jTxtChassi.setBorder(javax.swing.BorderFactory.createTitledBorder("Chassi"));
+        jTxtChassi.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtChassiFocusLost(evt);
+            }
+        });
 
         jTxtKm.setBackground(new java.awt.Color(240, 240, 240));
         jTxtKm.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtKm.setToolTipText("Digite a KM rodada do veiculo");
         jTxtKm.setBorder(javax.swing.BorderFactory.createTitledBorder("Km Rodado"));
+        jTxtKm.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtKmFocusLost(evt);
+            }
+        });
 
         jTxtAnoModelo.setBackground(new java.awt.Color(240, 240, 240));
         jTxtAnoModelo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtAnoModelo.setToolTipText("Digite ano modelo do veiculo");
         jTxtAnoModelo.setBorder(javax.swing.BorderFactory.createTitledBorder("Ano Modelo"));
+        jTxtAnoModelo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtAnoModeloFocusLost(evt);
+            }
+        });
 
         jTxtAnoFabricacao.setBackground(new java.awt.Color(240, 240, 240));
         jTxtAnoFabricacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtAnoFabricacao.setToolTipText("Digite ano fabricação do veiculo");
         jTxtAnoFabricacao.setBorder(javax.swing.BorderFactory.createTitledBorder("Ano Fabricacao"));
+        jTxtAnoFabricacao.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtAnoFabricacaoFocusLost(evt);
+            }
+        });
 
         jCboClasse.setBackground(new java.awt.Color(240, 240, 240));
         jCboClasse.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jCboClasse.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCboClasse.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jCboClasse.setToolTipText("Selecione a classe do veiculo");
         jCboClasse.setBorder(javax.swing.BorderFactory.createTitledBorder("Classe"));
+        jCboClasse.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCboClasseItemStateChanged(evt);
+            }
+        });
 
         jCboTipo.setBackground(new java.awt.Color(240, 240, 240));
         jCboTipo.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jCboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCboTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jCboTipo.setToolTipText("Selecione o Tipo de veiculo");
         jCboTipo.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo"));
+        jCboTipo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCboTipoItemStateChanged(evt);
+            }
+        });
 
         jDateCompra.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Compra"));
         jDateCompra.setToolTipText("Selecione a data da compra do veiculo");
@@ -495,6 +625,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    // eventos dos componentes da tela
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         models.ClsLogin clslogin = new ClsLogin();
         clslogin.setUserLoged(userLoged);
@@ -504,6 +635,138 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
+    private void JbtnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnNovoActionPerformed
+        if(precionado == false){
+          setIconBtnNv(true);
+          enableControl();
+          precionado = true;
+          editando = false;
+          jTxtNome.requestFocus();
+          setCarroClasse();
+          setCarroTipo();
+        }else{
+          setIconBtnNv(false);
+          disableControl();
+          clearTxt();
+          precionado = false;
+          editando = false;
+        }
+        
+    }//GEN-LAST:event_JbtnNovoActionPerformed
+
+    private void jTxtNomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNomeFocusLost
+        if (jTxtNome.getText().length() < 1) {
+            msgObgCampo("Nome");
+        }
+        if (jTxtNome.getText().length() > 49) {
+            msgAdvCampo("Nome");
+        } else {
+            clscarros.setNome(jTxtNome.getText());
+
+        }
+    }//GEN-LAST:event_jTxtNomeFocusLost
+
+    private void jTxtVeiculoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtVeiculoFocusLost
+        if (jTxtVeiculo.getText().length() < 1) {
+            msgObgCampo("Modelo");
+        }
+        if (jTxtVeiculo.getText().length() > 49) {
+            msgAdvCampo("Modelo");
+        } else {
+            clscarros.setModelo(jTxtVeiculo.getText());
+        }
+    }//GEN-LAST:event_jTxtVeiculoFocusLost
+
+    private void jTxtMarcaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtMarcaFocusLost
+        if(jTxtMarca.getText().length() < 1 ){
+           msgObgCampo("Marca");
+       }
+       if(jTxtMarca.getText().length() > 49 ){
+           msgAdvCampo("Marca");
+       }else{
+           clscarros.setMarca(jTxtMarca.getText());          
+       }
+    }//GEN-LAST:event_jTxtMarcaFocusLost
+
+    private void jTxtCorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtCorFocusLost
+        if (jTxtCor.getText().length() < 1) {
+            msgObgCampo("Cor");
+        }
+        if (jTxtCor.getText().length() > 49) {
+            msgAdvCampo("Cor");
+        } else {
+            clscarros.setCor(jTxtCor.getText());
+        }
+    }//GEN-LAST:event_jTxtCorFocusLost
+
+    private void jTxtPlacaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtPlacaFocusLost
+        if (jTxtPlaca.getText().length() < 1) {
+            msgObgCampo("Placa");
+        }
+        if (jTxtPlaca.getText().length() > 7) {
+            msgAdvCampo("Placa");
+        } else {
+            clscarros.setPlaca(jTxtPlaca.getText());
+        }
+    }//GEN-LAST:event_jTxtPlacaFocusLost
+
+    private void jCboTipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCboTipoItemStateChanged
+        if (jCboTipo.getSelectedIndex() > -1) {          
+            clscarros.setTipoVeiculo(jCboTipo.getSelectedItem().toString());
+        }
+    }//GEN-LAST:event_jCboTipoItemStateChanged
+
+    private void jCboClasseItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCboClasseItemStateChanged
+        if (jCboClasse.getSelectedIndex() > -1) {
+            clscarros.setClasse(jCboClasse.getSelectedItem().toString());
+        }
+    }//GEN-LAST:event_jCboClasseItemStateChanged
+
+    private void jTxtChassiFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtChassiFocusLost
+        if (jTxtChassi.getText().length() < 1) {
+            msgObgCampo("Chassi");
+        }
+        if (jTxtChassi.getText().length() > 49) {
+            msgAdvCampo("Chassi");
+        } else {
+            clscarros.setChassi(jTxtChassi.getText());
+        }
+    }//GEN-LAST:event_jTxtChassiFocusLost
+
+    private void jTxtKmFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtKmFocusLost
+        if (jTxtKm.getText().length() < 1) {
+            msgObgCampo("KmRodados");
+        }
+        if (jTxtKm.getText().length() > 9) {
+            msgAdvCampo("KmRodados");
+        } else {
+            clscarros.setKmRodados(Integer.parseInt(jTxtKm.getText()));
+        }
+    }//GEN-LAST:event_jTxtKmFocusLost
+
+    private void jTxtAnoModeloFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtAnoModeloFocusLost
+        if (jTxtAnoModelo.getText().length() < 1) {
+            msgObgCampo("AnoModelo");
+        }
+        if (jTxtAnoModelo.getText().length() > 9) {
+            msgAdvCampo("AnoModelo");
+        } else {
+            clscarros.setAnoModelo(Integer.parseInt(jTxtAnoModelo.getText()));
+        }
+    }//GEN-LAST:event_jTxtAnoModeloFocusLost
+
+    private void jTxtAnoFabricacaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtAnoFabricacaoFocusLost
+        if (jTxtAnoFabricacao.getText().length() < 1) {
+            msgObgCampo("AnoFabricacao");
+        }
+        if (jTxtAnoFabricacao.getText().length() > 9) {
+            msgAdvCampo("AnoFabricacao");
+        } else {
+            clscarros.setAnoFabricacao(Integer.parseInt(jTxtAnoFabricacao.getText()));
+        }
+    }//GEN-LAST:event_jTxtAnoFabricacaoFocusLost
+    
+ 
     /**
      * @param args the command line arguments
      */
