@@ -1,11 +1,10 @@
-
 package DAO;
 
 /**
  * Responsavel pelo CRUD tela de Cadastro e Movimentação de Veiculos
+ *
  * @author Tiago Teixeira
  */
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,16 +12,14 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JOptionPane;
 import models.ClsCarros;
 
-
 public class CarrosDAO {
-    
+
     private String retorno;
     private boolean sucesso;
     SimpleDateFormat formatoBr = new SimpleDateFormat("dd-MM-yyyy");
-    
+
     public boolean isSucesso() {
         return sucesso;
     }
@@ -38,8 +35,8 @@ public class CarrosDAO {
     public void save(ClsCarros clscarros) {
         // variavel com a string do comando SQL para inserção de dados na enticade Colaborador
         String sql = "INSERT INTO carros (Nome,Marca,Modelo,Classe,TipoVeiculo,Cor,Placa,Renavam,ObsEstado,DataCompra,AnoModelo,AnoFabricacao,"
-                                       + "Chassi,KmRodados,ValorMercado,ValorSeguro,ValorKmRd,ValorDiariaLoc,Status,Inativo,id_colaborador) "
-                                        + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                + "Chassi,KmRodados,ValorMercado,ValorSeguro,ValorKmRd,ValorDiariaLoc,Status,Inativo,id_colaborador) "
+                + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -78,7 +75,7 @@ public class CarrosDAO {
             if (e.getErrorCode() == 1062) {
                 retorno = "O Carro já está cadastrado!";
                 sucesso = false;
-                System.out.println("Erro aqui: "+ e);
+                System.out.println("Erro aqui: " + e);
             }
             if (e.getErrorCode() == 1048) {
                 retorno = "Verifique todos os campos se estão preenchidos!";
@@ -189,7 +186,7 @@ public class CarrosDAO {
                 retorno = "Erro ao Deletar: ";
                 sucesso = false;
             }
-           
+
         } finally {
             try {
                 if (ps != null) {
@@ -207,6 +204,7 @@ public class CarrosDAO {
 
     /**
      * Author: Tiago Teixeira
+     *
      * @param placa
      * @return objeto com os dados da classe ClsCarro
      */
@@ -217,9 +215,8 @@ public class CarrosDAO {
                 + "Chassi, KmRodados, ValorMercado, ValorSeguro, ValorKmRd,"
                 + "ValorDiariaLoc, Status, Inativo, id_colaborador 	"
                 + "FROM carros where Placa = ?";
-        ClsCarros carroEcontrado = null;    
-        
-        
+        ClsCarros carroEcontrado = null;
+
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rset = null;
@@ -252,10 +249,7 @@ public class CarrosDAO {
             carroEcontrado.setStatus(rset.getInt("Status"));
             carroEcontrado.setInativo(rset.getInt("Inativo"));
             carroEcontrado.setId_colaborador(rset.getInt("Id_colaborador"));
-            
 
-     
-            
             //ClsCarros incremento = new ClsCarros(carroEcontrado);
             retorno = "Carro Encontrado!";
             sucesso = true;
@@ -283,22 +277,22 @@ public class CarrosDAO {
                 retorno = "Erro: " + e;
             }
         }
-        
+
         return carroEcontrado;
     }
+
     public List<ClsCarros> select() {
-        
+
         List<ClsCarros> carros = new ArrayList<ClsCarros>();
-        
+
         String sql = "SELECT id, Nome, Marca, Modelo, Classe, TipoVeiculo, Cor, "
                 + "Placa, Renavam, ObsEstado,DataCompra,AnoModelo,AnoFabricacao, "
                 + "Chassi, KmRodados, ValorMercado, ValorSeguro, ValorKmRd,"
                 + "ValorDiariaLoc, Status, Inativo, id_colaborador 	"
                 + "FROM carros";
-       
-        ClsCarros carroEcontrado = null;    
-        
-        
+
+        ClsCarros carroEcontrado = null;
+
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rset = null;
@@ -307,30 +301,30 @@ public class CarrosDAO {
             conn = ConexaoDAO.getConexaoDAO();
             ps = conn.prepareStatement(sql);
             rset = ps.executeQuery();
-            while(rset.next()){
-            carroEcontrado.setId(rset.getInt("Id"));
-            carroEcontrado.setNome(rset.getString("Nome"));
-            carroEcontrado.setMarca(rset.getString("Marca"));
-            carroEcontrado.setModelo(rset.getString("Modelo"));
-            carroEcontrado.setClasse(rset.getString("Classe"));
-            carroEcontrado.setTipoVeiculo(rset.getString("TipoVeiculo"));
-            carroEcontrado.setCor(rset.getString("Cor"));
-            carroEcontrado.setPlaca(rset.getString("Placa"));
-            carroEcontrado.setRenavam(rset.getInt("Renavam"));
-            carroEcontrado.setObsEstado(rset.getString("ObsEstado"));
-            carroEcontrado.setDataCompra(formatoBr.format(rset.getDate("DataCompra")));
-            carroEcontrado.setAnoModelo(rset.getInt("AnoModelo"));
-            carroEcontrado.setAnoFabricacao(rset.getInt("AnoFabricacao"));
-            carroEcontrado.setChassi(rset.getString("Chassi"));
-            carroEcontrado.setKmRodados(rset.getInt("KmRodados"));
-            carroEcontrado.setValorMercado(rset.getFloat("ValorMercado"));
-            carroEcontrado.setValorSeguro(rset.getFloat("ValorSeguro"));
-            carroEcontrado.setValorKmRd(rset.getFloat("ValorKmRd"));
-            carroEcontrado.setValorDiariaLoc(rset.getFloat("ValorDiariaLoc"));
-            carroEcontrado.setStatus(rset.getInt("Status"));
-            carroEcontrado.setInativo(rset.getInt("Inativo"));
-            carroEcontrado.setId_colaborador(rset.getInt("Id_colaborador"));
-            carros.add(carroEcontrado);
+            while (rset.next()) {
+                carroEcontrado.setId(rset.getInt("Id"));
+                carroEcontrado.setNome(rset.getString("Nome"));
+                carroEcontrado.setMarca(rset.getString("Marca"));
+                carroEcontrado.setModelo(rset.getString("Modelo"));
+                carroEcontrado.setClasse(rset.getString("Classe"));
+                carroEcontrado.setTipoVeiculo(rset.getString("TipoVeiculo"));
+                carroEcontrado.setCor(rset.getString("Cor"));
+                carroEcontrado.setPlaca(rset.getString("Placa"));
+                carroEcontrado.setRenavam(rset.getInt("Renavam"));
+                carroEcontrado.setObsEstado(rset.getString("ObsEstado"));
+                carroEcontrado.setDataCompra(formatoBr.format(rset.getDate("DataCompra")));
+                carroEcontrado.setAnoModelo(rset.getInt("AnoModelo"));
+                carroEcontrado.setAnoFabricacao(rset.getInt("AnoFabricacao"));
+                carroEcontrado.setChassi(rset.getString("Chassi"));
+                carroEcontrado.setKmRodados(rset.getInt("KmRodados"));
+                carroEcontrado.setValorMercado(rset.getFloat("ValorMercado"));
+                carroEcontrado.setValorSeguro(rset.getFloat("ValorSeguro"));
+                carroEcontrado.setValorKmRd(rset.getFloat("ValorKmRd"));
+                carroEcontrado.setValorDiariaLoc(rset.getFloat("ValorDiariaLoc"));
+                carroEcontrado.setStatus(rset.getInt("Status"));
+                carroEcontrado.setInativo(rset.getInt("Inativo"));
+                carroEcontrado.setId_colaborador(rset.getInt("Id_colaborador"));
+                carros.add(carroEcontrado);
             }
             retorno = "Carro Encontrado!";
             sucesso = true;
@@ -358,10 +352,8 @@ public class CarrosDAO {
                 retorno = "Erro: " + e;
             }
         }
-        
+
         return carros;
     }
 
-    
-    
 }

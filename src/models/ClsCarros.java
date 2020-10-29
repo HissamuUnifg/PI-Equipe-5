@@ -1,12 +1,12 @@
-
 package models;
-
 
 /**
  * Classe dos Patrimonios e Veiculos
+ *
  * @author Tiago Teixeira
  */
 public class ClsCarros {
+
     private int Id;
     private String Nome;
     private String Marca;
@@ -79,9 +79,8 @@ public class ClsCarros {
         this.Inativo = clscarros.getInativo();
         this.id_colaborador = clscarros.getId_colaborador();    
     }
-    */
-    
-    public ClsCarros(){
+     */
+    public ClsCarros() {
     }
 
     public int getId() {
@@ -91,7 +90,7 @@ public class ClsCarros {
     public void setId(int Id) {
         this.Id = Id;
     }
-    
+
     public String getNome() {
         return Nome;
     }
@@ -260,6 +259,4 @@ public class ClsCarros {
         this.id_colaborador = id_colaborador;
     }
 
-  
-    
 }

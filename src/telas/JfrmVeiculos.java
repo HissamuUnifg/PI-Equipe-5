@@ -1,86 +1,73 @@
-
 package telas;
-
 
 import java.awt.Toolkit;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
 import models.ClsControlaCpNumeric;
 import models.ClsLogin;
 
-
-
 /**
- * Barema dos Statuis dos Carros
- * Status 0 Liberado
- * Status 1 Alugado
- * 
- * Inativo true para inativado
- * Inativo false para ativado
- * 
+ * Barema dos Statuis dos Carros Status 0 Liberado Status 1 Alugado
+ *
+ * Inativo true para inativado Inativo false para ativado
+ *
  * @author Tiago Teixeira
  */
 public class JfrmVeiculos extends javax.swing.JFrame {
+
     // variaveis responsaveis por herdar os dados da classe de Login
     private String userLoged;
     private int userIdLoged;
     private String CpfUserLoged;
-    
+
     // variaveis auxiliares 
     private boolean editando;
     private boolean precionado;
-    
+
     //variaveis de classes a serem usadas na tela
     DAO.CarrosDAO carrosDAO;
     models.ClsCarros clscarros;
     models.ClsMascaraCampos clsMascaracampos;
     SimpleDateFormat formatoBr = new SimpleDateFormat("dd-MM-yyyy");
     models.ClsValidacoes clsValidacoes;
-     
- 
+
     public JfrmVeiculos() {
         initComponents();
         setIcon();
     }
+
     public JfrmVeiculos(ClsLogin clslogin) {
         //carregando as variaves de usuario
-        
+
         userLoged = clslogin.getUserLoged();
         userIdLoged = clslogin.getId();
         CpfUserLoged = clslogin.getCpfUserLoged();
-        
+
         //carregando os objetos auxiliares
-        
         carrosDAO = new DAO.CarrosDAO();
         clscarros = new models.ClsCarros();
         clsMascaracampos = new models.ClsMascaraCampos();
         clsValidacoes = new models.ClsValidacoes();
         clscarros.setId_colaborador(userIdLoged);
         // executando componentes e metodos da Jframe
-        
+
         initComponents();
         try {
-            addMascara(); 
+            addMascara();
         } catch (ParseException e) {
             e.printStackTrace();
         }
         controleDigitacao();
-        setIcon();       
+        setIcon();
         disableControl();
         precionado = false;
     }
-    
 
-        
     // metodos auxiliares para funcionamento da tela
-    
-    
-     
     private void setCarroTipo() {
         jCboTipo.addItem("PASSEIO HATCH");
         jCboTipo.addItem("PASSEIO SEDAN");
@@ -93,8 +80,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jCboClasse.addItem("MEDIO");
         jCboClasse.addItem("LUXO");
     }
-    
-    private void setIconBtnNv(boolean funcao){
+
+    private void setIconBtnNv(boolean funcao) {
         if (funcao == true) {
             JbtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_cancelar.png"))); // NOI18N
             JbtnNovo.setToolTipText("Clique aqui para cancelar a operacao");
@@ -103,7 +90,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             JbtnNovo.setToolTipText("Clique aqui para novo Veiculo");
         }
     }
-    
+
     private void disableControl() {
         //desabilitando os controles e campos da tela
         jCboTipo.setEnabled(false);
@@ -126,16 +113,16 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorMercado.setEnabled(false);
         jTxtValorSeguro.setEnabled(false);
         jTxtVeiculo.setEnabled(false);
-        
+
         //desabilitando os controles botões
         JbtnEditar.setEnabled(false);
         JbtnExcluir.setEnabled(false);
         JbtnSalvar.setEnabled(false);
         JbtnNovo.setEnabled(true);
         jBtnBuscar.setEnabled(true);
-               
+
     }
-    
+
     private void enableControl() {
         //desabilitando os controles e campos da tela
         jCboTipo.setEnabled(true);
@@ -158,16 +145,16 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorMercado.setEnabled(true);
         jTxtValorSeguro.setEnabled(true);
         jTxtVeiculo.setEnabled(true);
-        
+
         //desabilitando os controles botões
         JbtnEditar.setEnabled(false);
         JbtnExcluir.setEnabled(false);
         JbtnSalvar.setEnabled(true);
         JbtnNovo.setEnabled(true);
         jBtnBuscar.setEnabled(true);
-               
+
     }
-    
+
     private void enableControlBusca() {
         //desabilitando os controles e campos da tela
         jCboTipo.setEnabled(true);
@@ -190,18 +177,18 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorMercado.setEnabled(true);
         jTxtValorSeguro.setEnabled(true);
         jTxtVeiculo.setEnabled(true);
-        
+
         //desabilitando os controles botões
         JbtnEditar.setEnabled(true);
         JbtnExcluir.setEnabled(true);
         JbtnSalvar.setEnabled(true);
         JbtnNovo.setEnabled(true);
         jBtnBuscar.setEnabled(true);
-               
+
     }
-    
-    private void clearTxt(){
- 
+
+    private void clearTxt() {
+
         jTxtAnoFabricacao.setText("");
         jTxtAnoModelo.setText("");
         jTxtChassi.setText("");
@@ -219,21 +206,21 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorSeguro.setText("");
         jTxtVeiculo.setText("");
     }
-    
-    private void msgObgCampo(String dado){
-        JOptionPane.showMessageDialog(this, "Olá "+userLoged+" esse dado: "+dado+" é obrigatório", "Informação", JOptionPane.INFORMATION_MESSAGE);
+
+    private void msgObgCampo(String dado) {
+        JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " é obrigatório", "Informação", JOptionPane.INFORMATION_MESSAGE);
     }
-    
-    private void msgAdvCampo(String dado){
-        JOptionPane.showMessageDialog(this, "Olá "+userLoged+" esse dado: "+dado+" está maior que o permitido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+
+    private void msgAdvCampo(String dado) {
+        JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " está maior que o permitido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     private void addMascara() throws ParseException {
         JfTxtData.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraData(JfTxtData)));
-       
+
     }
-    
-    private void controleDigitacao(){
+
+    private void controleDigitacao() {
         //todos os Jtext que estiver aqui só vão aceitar numeros e pontos
         jTxtKm.setDocument(new ClsControlaCpNumeric());
         jTxtAnoFabricacao.setDocument(new ClsControlaCpNumeric());
@@ -242,10 +229,10 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorKmRodado.setDocument(new ClsControlaCpNumeric());
         jTxtValorMercado.setDocument(new ClsControlaCpNumeric());
         jTxtValorSeguro.setDocument(new ClsControlaCpNumeric());
-        
+
     }
-    
-    private boolean validaCampos(){
+
+    private boolean validaCampos() {
         //valida campo Nome
         if (jTxtNome.getText().length() < 1) {
             msgObgCampo("Nome");
@@ -254,8 +241,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         }
         if (jTxtNome.getText().length() > 49) {
             msgAdvCampo("Nome");
-              jTxtNome.requestFocus();
-              return false;
+            jTxtNome.requestFocus();
+            return false;
         }
         //valida campo modelo
         if (jTxtVeiculo.getText().length() < 1) {
@@ -322,7 +309,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             msgAdvCampo("KmRodados");
             jTxtKm.requestFocus();
             return false;
-        } 
+        }
         //valida campo AnoModelo
         if (jTxtAnoModelo.getText().length() < 1) {
             msgObgCampo("AnoModelo");
@@ -390,12 +377,9 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             return false;
         }
         return true;
-        
+
     }
-   
-    
-    
-       
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -873,22 +857,22 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void JbtnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnNovoActionPerformed
-        if(precionado == false){
-          setIconBtnNv(true);
-          enableControl();
-          precionado = true;
-          editando = false;
-          jTxtNome.requestFocus();
-          setCarroClasse();
-          setCarroTipo();
-        }else{
-          setIconBtnNv(false);
-          disableControl();
-          clearTxt();
-          precionado = false;
-          editando = false;
+        if (precionado == false) {
+            setIconBtnNv(true);
+            enableControl();
+            precionado = true;
+            editando = false;
+            jTxtNome.requestFocus();
+            setCarroClasse();
+            setCarroTipo();
+        } else {
+            setIconBtnNv(false);
+            disableControl();
+            clearTxt();
+            precionado = false;
+            editando = false;
         }
-        
+
     }//GEN-LAST:event_JbtnNovoActionPerformed
 
     private void jTxtNomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNomeFocusLost
@@ -903,35 +887,35 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         } else {
             clscarros.setModelo(jTxtVeiculo.getText());
         }
- 
+
     }//GEN-LAST:event_jTxtVeiculoFocusLost
 
     private void jTxtMarcaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtMarcaFocusLost
         if ("".equals(jTxtMarca.getText())) {
-        }else{
+        } else {
             clscarros.setMarca(jTxtMarca.getText());
         }
-     
+
     }//GEN-LAST:event_jTxtMarcaFocusLost
 
     private void jTxtCorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtCorFocusLost
         if ("".equals(jTxtCor.getText())) {
-        }else{
+        } else {
             clscarros.setCor(jTxtCor.getText());
         }
-        
+
     }//GEN-LAST:event_jTxtCorFocusLost
 
     private void jTxtPlacaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtPlacaFocusLost
         if ("".equals(jTxtPlaca.getText())) {
-        }else{
+        } else {
             clscarros.setPlaca(jTxtPlaca.getText());
-        }    
-        
+        }
+
     }//GEN-LAST:event_jTxtPlacaFocusLost
 
     private void jCboTipoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCboTipoItemStateChanged
-        if (jCboTipo.getSelectedIndex() > -1) {          
+        if (jCboTipo.getSelectedIndex() > -1) {
             clscarros.setTipoVeiculo(jCboTipo.getSelectedItem().toString());
         }
     }//GEN-LAST:event_jCboTipoItemStateChanged
@@ -944,93 +928,93 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
     private void jTxtChassiFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtChassiFocusLost
         if ("".equals(jTxtChassi.getText())) {
-        }else{
+        } else {
             clscarros.setChassi(jTxtChassi.getText());
         }
-            
-        
+
+
     }//GEN-LAST:event_jTxtChassiFocusLost
 
     private void jTxtKmFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtKmFocusLost
         if ("".equals(Integer.parseInt(jTxtKm.getText()))) {
-        }else{
+        } else {
             clscarros.setKmRodados(Integer.parseInt(jTxtKm.getText()));
         }
-            
-        
+
+
     }//GEN-LAST:event_jTxtKmFocusLost
 
     private void jTxtAnoModeloFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtAnoModeloFocusLost
         if ("".equals(Integer.parseInt(jTxtAnoModelo.getText()))) {
-        }else{
+        } else {
             clscarros.setAnoModelo(Integer.parseInt(jTxtAnoModelo.getText()));
         }
     }//GEN-LAST:event_jTxtAnoModeloFocusLost
 
     private void jTxtAnoFabricacaoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtAnoFabricacaoFocusLost
         if ("".equals(Integer.parseInt(jTxtAnoFabricacao.getText()))) {
-        }else{
-            clscarros.setAnoFabricacao(Integer.parseInt(jTxtAnoFabricacao.getText()));    
+        } else {
+            clscarros.setAnoFabricacao(Integer.parseInt(jTxtAnoFabricacao.getText()));
         }
     }//GEN-LAST:event_jTxtAnoFabricacaoFocusLost
 
     private void JbtnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnSalvarActionPerformed
         boolean validado = validaCampos();
-        if(editando == false && validado == true) {
-        carrosDAO.save(clscarros);
-        JOptionPane.showMessageDialog(this, carrosDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
-        disableControl();
+        if (editando == false && validado == true) {
+            carrosDAO.save(clscarros);
+            JOptionPane.showMessageDialog(this, carrosDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
+            disableControl();
         }
     }//GEN-LAST:event_JbtnSalvarActionPerformed
- 
+
     private void JfTxtDataFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JfTxtDataFocusLost
- 
+
         if (JfTxtData.getText().length() < 1) {
             msgObgCampo("Data Compra");
         } else {
             clscarros.setDataCompra(clsValidacoes.dataFormatoUS(JfTxtData.getText()));
             //System.out.println(clsValidacoes.dataFormatoUS(JfTxtData.getText()));
-           // System.out.println(clsValidacoes.dataFormatoBR(clscarros.getDataCompra()));
+            // System.out.println(clsValidacoes.dataFormatoBR(clscarros.getDataCompra()));
         }
     }//GEN-LAST:event_JfTxtDataFocusLost
 
     private void jTxtValorMercadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtValorMercadoFocusLost
         if ("".equals(jTxtValorMercado.getText())) {
-        }else{
+        } else {
             try {
-              clscarros.setValorMercado(clsValidacoes.formataMoeda(jTxtValorMercado.getText()));
+                clscarros.setValorMercado(clsValidacoes.formataMoeda(jTxtValorMercado.getText()));
             } catch (ParseException ex) {
-               
+
             }
-        } 
+        }
     }//GEN-LAST:event_jTxtValorMercadoFocusLost
 
     private void jTxtValorSeguroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtValorSeguroFocusLost
         if ("".equals(jTxtValorSeguro.getText())) {
-        }else{
-            try {    
+        } else {
+            try {
                 clscarros.setValorSeguro(clsValidacoes.formataMoeda(jTxtValorSeguro.getText()));
             } catch (ParseException ex) {
-                
+
             }
         }
     }//GEN-LAST:event_jTxtValorSeguroFocusLost
 
     private void jTxtValorKmRodadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtValorKmRodadoFocusLost
         if ("".equals(jTxtValorKmRodado.getText())) {
-        }else{
-            try {    
+        } else {
+            try {
                 clscarros.setValorKmRd(clsValidacoes.formataMoeda(jTxtValorKmRodado.getText()));
             } catch (ParseException ex) {
-                
+
             }
         }
     }//GEN-LAST:event_jTxtValorKmRodadoFocusLost
 
     private void jTxtValorDiariaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtValorDiariaFocusLost
         if ("".equals(jTxtValorDiaria.getText())) {
-        }else{
-            try {    
+        } else {
+            try {
                 clscarros.setValorDiariaLoc(clsValidacoes.formataMoeda(jTxtValorDiaria.getText()));
             } catch (ParseException ex) {
                 Logger.getLogger(JfrmVeiculos.class.getName()).log(Level.SEVERE, null, ex);
@@ -1038,12 +1022,9 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTxtValorDiariaFocusLost
 
-        
-    
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton JbtnEditar;
