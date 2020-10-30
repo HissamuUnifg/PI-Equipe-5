@@ -20,7 +20,7 @@
  */
 package models;
 
-import DAO.ConexaoDAO;
+import controls.ConexaoDAO;
 import java.awt.BorderLayout;
 import java.sql.SQLException;
 import java.util.HashMap;

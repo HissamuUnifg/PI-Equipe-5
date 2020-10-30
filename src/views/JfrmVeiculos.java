@@ -1,21 +1,23 @@
-package telas;
+package views;
 
-import DAO.CarregarTableCarroDAO;
+import models.CarregarTableCarro;
 import java.awt.Toolkit;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import javax.swing.JOptionPane;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.text.DefaultFormatterFactory;
+import models.ClsCarros;
 import models.ClsControlaCpNumeric;
 import models.ClsLogin;
 
 /**
- * Barema dos Statuis dos Carros Status 0 Liberado Status 1 Alugado
+ * Barema dos Status dos Carros Status 0 Liberado Status 1 Alugado
  *
- * Inativo true para inativado Inativo false para ativado
+ * Inativo: 1 para inativado,  0 para ativado
  *
  * @author Tiago Teixeira
  */
@@ -29,15 +31,16 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     // variaveis auxiliares 
     private boolean editando;
     private boolean precionado;
-
+    List<ClsCarros> listaCarros;
     //variaveis de classes a serem usadas na tela
-    DAO.CarrosDAO carrosDAO;
+    controls.CarrosDAO carrosDAO;
     models.ClsCarros clscarros;
     models.ClsMascaraCampos clsMascaracampos;
     SimpleDateFormat formatoBr = new SimpleDateFormat("dd-MM-yyyy");
-    Locale locale;  
-    NumberFormat FormatterMoeda;   
+    Locale locale;
+    NumberFormat FormatterMoeda;
     models.ClsValidacoes clsValidacoes;
+    CarregarTableCarro modeloTable;
 
     public JfrmVeiculos() {
         initComponents();
@@ -52,26 +55,39 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         CpfUserLoged = clslogin.getCpfUserLoged();
 
         //carregando os objetos auxiliares
-        carrosDAO = new DAO.CarrosDAO();
+        carrosDAO = new controls.CarrosDAO();
         clscarros = new models.ClsCarros();
         clsMascaracampos = new models.ClsMascaraCampos();
         clsValidacoes = new models.ClsValidacoes();
         clscarros.setId_colaborador(userIdLoged);
         locale = new Locale("pt", "BR");
         FormatterMoeda = NumberFormat.getCurrencyInstance(locale);
+        listaCarros = new ArrayList<ClsCarros>(carrosDAO.selectAll());
+        modeloTable = new CarregarTableCarro(listaCarros);
+        clscarros.setInativo(0);
+        clscarros.setStatus(0);
+
         // executando componentes e metodos da Jframe
-        
         initComponents();
         try {
             addMascara();
         } catch (ParseException e) {
-            e.printStackTrace();
+            System.out.println("Erro aqui: "+ e);
         }
         controleDigitacao();
         setIcon();
         disableControl();
         carregarJtable();
         precionado = false;
+    }
+    
+    //verificando status do cadastro
+    private boolean verificaStatusInativo(int valor){
+        if(clscarros.getInativo() == 0){
+        return false;
+        }else{
+            return true;
+        }
     }
 
     // metodos auxiliares para funcionamento da tela
@@ -219,12 +235,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     }
 
     private void msgAdvCampo(String dado) {
-        JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " está maior que o permitido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " está maior ou menor do que o permitido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
     }
 
     private void addMascara() throws ParseException {
         JfTxtData.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraData(JfTxtData)));
-        //jTxtValorMercado.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraMoeda(jTxtValorMercado)));
     }
 
     private void controleDigitacao() {
@@ -236,6 +251,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorKmRodado.setDocument(new ClsControlaCpNumeric());
         jTxtValorMercado.setDocument(new ClsControlaCpNumeric());
         jTxtValorSeguro.setDocument(new ClsControlaCpNumeric());
+        jTxtNumeroRenavan.setDocument(new ClsControlaCpNumeric());
 
     }
 
@@ -245,165 +261,204 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             msgObgCampo("Nome");
             jTxtNome.requestFocus();
             return false;
-        }
+        }else
         if (jTxtNome.getText().length() > 49) {
             msgAdvCampo("Nome");
             jTxtNome.requestFocus();
             return false;
-        }
+        }else
         //valida campo modelo
         if (jTxtVeiculo.getText().length() < 1) {
             msgObgCampo("Modelo");
             jTxtVeiculo.requestFocus();
             return false;
-        }
+        }else
         if (jTxtVeiculo.getText().length() > 49) {
             msgAdvCampo("Modelo");
             jTxtVeiculo.requestFocus();
             return false;
-        }
+        }else
         //valida campo marca
         if (jTxtMarca.getText().length() < 1) {
             msgObgCampo("Marca");
             jTxtMarca.requestFocus();
             return false;
-        }
+        }else
         if (jTxtMarca.getText().length() > 49) {
             msgAdvCampo("Marca");
             jTxtMarca.requestFocus();
             return false;
-        }
+        }else
         //valida campo cor
         if (jTxtCor.getText().length() < 1) {
             msgObgCampo("Cor");
             jTxtCor.requestFocus();
             return false;
-        }
+        }else
         if (jTxtCor.getText().length() > 49) {
             msgAdvCampo("Cor");
             jTxtCor.requestFocus();
             return false;
-        }
+        }else
         //valida campo marca
         if (jTxtPlaca.getText().length() < 1) {
             msgObgCampo("Placa");
             jTxtPlaca.requestFocus();
             return false;
-        }
+        }else
         if (jTxtPlaca.getText().length() > 7) {
             msgAdvCampo("Placa");
             jTxtPlaca.requestFocus();
             return false;
-        }
+        }else
+        if (jTxtPlaca.getText().length() < 7) {
+            msgAdvCampo("Placa");
+            jTxtPlaca.requestFocus();
+            return false;
+        }else
         //valida campo chassi
+        
         if (jTxtChassi.getText().length() < 1) {
             msgObgCampo("Chassi");
             jTxtChassi.requestFocus();
             return false;
-        }
+        }else
         if (jTxtChassi.getText().length() > 49) {
             msgAdvCampo("Chassi");
             jTxtChassi.requestFocus();
             return false;
-        }
+        }else
         //valida campo km rodado
         if (jTxtKm.getText().length() < 1) {
             msgObgCampo("KmRodados");
             jTxtKm.requestFocus();
             return false;
-        }
+        }else
         if (jTxtKm.getText().length() > 9) {
             msgAdvCampo("KmRodados");
             jTxtKm.requestFocus();
             return false;
-        }
+        }else
         //valida campo AnoModelo
         if (jTxtAnoModelo.getText().length() < 1) {
             msgObgCampo("AnoModelo");
             jTxtAnoModelo.requestFocus();
             return false;
-        }
+        }else
         if (jTxtAnoModelo.getText().length() > 4) {
             msgAdvCampo("AnoModelo");
             jTxtAnoModelo.requestFocus();
             return false;
-        }
+        }else
+        if (jTxtAnoModelo.getText().length() < 4) {
+            msgAdvCampo("AnoModelo");
+            jTxtAnoModelo.requestFocus();
+            return false;
+        }else
         //valida campo AnoFabricacao
         if (jTxtAnoFabricacao.getText().length() < 1) {
             msgObgCampo("AnoFabricacao");
             jTxtAnoFabricacao.requestFocus();
             return false;
-        }
+        }else
         if (jTxtAnoFabricacao.getText().length() > 4) {
             msgAdvCampo("AnoFabricacao");
             jTxtAnoFabricacao.requestFocus();
             return false;
-        }
+        }else
+        if (jTxtAnoFabricacao.getText().length() < 4) {
+            msgAdvCampo("AnoFabricacao");
+            jTxtAnoFabricacao.requestFocus();
+            return false;
+        }else
         //Valida campo ValorMercado
         if (jTxtValorMercado.getText().length() < 1) {
             msgObgCampo("ValorMercado");
             jTxtValorMercado.requestFocus();
             return false;
-        }
+        }else
         if (jTxtValorMercado.getText().length() > 20) {
             msgAdvCampo("ValorMercado");
             jTxtValorMercado.requestFocus();
             return false;
-        }
+        }else
         // valida campo ValorSeguro
         if (jTxtValorSeguro.getText().length() < 1) {
             msgObgCampo("ValorSeguro");
             jTxtValorSeguro.requestFocus();
             return false;
-        }
+        }else
         if (jTxtValorSeguro.getText().length() > 20) {
             msgAdvCampo("ValorSeguro");
             jTxtValorSeguro.requestFocus();
             return false;
-        }
+        }else
         //valida campo ValorKmRodado
         if (jTxtValorKmRodado.getText().length() < 1) {
             msgObgCampo("ValorKmRodado");
             jTxtValorKmRodado.requestFocus();
             return false;
-        }
+        }else
         if (jTxtValorKmRodado.getText().length() > 20) {
             msgAdvCampo("ValorKmRodado");
             jTxtValorKmRodado.requestFocus();
             return false;
-        }
+        }else
         //valida campo ValorDiaria
         if (jTxtValorDiaria.getText().length() < 1) {
             msgObgCampo("ValorDiaria");
             jTxtValorDiaria.requestFocus();
             return false;
-        }
+        }else
         if (jTxtValorDiaria.getText().length() > 20) {
             msgAdvCampo("ValorDiaria");
             jTxtValorDiaria.requestFocus();
             return false;
-        }
+        }else 
+        //valida campo Numero Renavan
+        if (jTxtNumeroRenavan.getText().length() < 1) {
+            msgObgCampo("NumeroRenavan");
+            jTxtNumeroRenavan.requestFocus();
+            return false;
+        }else
+        if (jTxtNumeroRenavan.getText().length() > 30) {
+            msgAdvCampo("NumeroRenavan");
+            jTxtNumeroRenavan.requestFocus();
+            return false;
+        }else
+        if (jTxtNumeroRenavan.getText().length() < 9) {
+            msgAdvCampo("NumeroRenavan");
+            jTxtNumeroRenavan.requestFocus();
+            return false;
+        }else
         return true;
 
     }
-    
-    private void carregarJtable(){         
-        jTblVeiculos.setModel(new CarregarTableCarroDAO(carrosDAO.selectAll()));        
+
+    private void carregarJtable() {
+
+        jTblVeiculos.setModel(modeloTable);
     }
-    
-    private void atualizarJtable(){
-        ((AbstractTableModel) jTblVeiculos.getModel()).fireTableDataChanged();
+
+    private void atualizarJtable() {
+
+        modeloTable.addRow(clscarros);
     }
-    
-    private void carregarFrame(){
-        jTxtAnoFabricacao.setText(""+clscarros.getAnoFabricacao());
-        jTxtAnoModelo.setText(""+clscarros.getAnoModelo());
+
+    private void limpaJtable() {
+        jTblVeiculos.removeAll();
+    }
+
+    private void carregarFrame() {
+        jLabelCodigo.setText("Codigo: " + clscarros.getId());
+        jTxtAnoFabricacao.setText("" + clscarros.getAnoFabricacao());
+        jTxtAnoModelo.setText("" + clscarros.getAnoModelo());
         jTxtChassi.setText(clscarros.getChassi());
         jTxtCor.setText(clscarros.getCor());
-        jTxtKm.setText(""+clscarros.getKmRodados());
+        jTxtKm.setText("" + clscarros.getKmRodados());
         jTxtMarca.setText(clscarros.getMarca());
         jTxtNome.setText(clscarros.getNome());
-        jTxtNumeroRenavan.setText(""+clscarros.getRenavam());
+        jTxtNumeroRenavan.setText("" + clscarros.getRenavam());
         jTxtObservacoes.setText(clscarros.getObsEstado());
         jTxtPlaca.setText(clscarros.getPlaca());
         jTxtValorDiaria.setText(FormatterMoeda.format(clscarros.getValorDiariaLoc()));
@@ -417,8 +472,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jCboTipo.setSelectedItem(clscarros.getTipoVeiculo());
         jCboClasse.setSelectedItem(clscarros.getClasse());
     }
-    
-    private void buscarPelaPlaca(String placa){
+
+    private void buscarPelaPlaca(String placa) {
         boolean encontrado = false;
         for (int i = 1; i > jTblVeiculos.getRowCount(); i++) {
             if (jTblVeiculos.getValueAt(i, 2).toString().equals(placa)) {
@@ -467,14 +522,13 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jPanelBusca = new javax.swing.JPanel();
         jTxtPlacaBusca = new javax.swing.JTextField();
         jBtnBuscar = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTblVeiculos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jTxtValorMercado = new javax.swing.JFormattedTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTblVeiculos = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro e Movimentação de Veiculos/Patrimonios");
-        setPreferredSize(new java.awt.Dimension(1055, 630));
         setResizable(false);
         setSize(new java.awt.Dimension(1055, 630));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -497,6 +551,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         JbtnEditar.setToolTipText("Clique aqui para editar veiculo");
         JbtnEditar.setBorder(null);
         JbtnEditar.setFocusPainted(false);
+        JbtnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JbtnEditarActionPerformed(evt);
+            }
+        });
 
         JbtnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/save_121760.png"))); // NOI18N
         JbtnSalvar.setToolTipText("Clique aqui para salvar veiculo");
@@ -631,11 +690,21 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtNumeroRenavan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtNumeroRenavan.setToolTipText("Digite o numero RENAVAN do veiculo");
         jTxtNumeroRenavan.setBorder(javax.swing.BorderFactory.createTitledBorder("RENAVAN"));
+        jTxtNumeroRenavan.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtNumeroRenavanFocusLost(evt);
+            }
+        });
 
         jTxtObservacoes.setBackground(new java.awt.Color(240, 240, 240));
         jTxtObservacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtObservacoes.setToolTipText("Digite breve observação sobre o veiculo");
         jTxtObservacoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Observações/Estado"));
+        jTxtObservacoes.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtObservacoesFocusLost(evt);
+            }
+        });
 
         JfTxtData.setBackground(new java.awt.Color(240, 240, 240));
         JfTxtData.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Compra"));
@@ -662,7 +731,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                         .addComponent(jTxtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jTxtCor, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
                         .addComponent(jCboTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jCboClasse, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -711,8 +780,14 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jLabelCodigo.setText("Codigo:");
         jLabelCodigo.setToolTipText("");
 
+        jCkbInativar.setMnemonic('0');
         jCkbInativar.setText("Inativar");
         jCkbInativar.setToolTipText("Clique aqui para inativar o veiculo");
+        jCkbInativar.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCkbInativarItemStateChanged(evt);
+            }
+        });
 
         jPanelDadosValores.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados Valores"));
 
@@ -782,9 +857,9 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             .addGroup(jPanelBuscaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTxtPlacaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jBtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(50, 50, 50))
+                .addGap(39, 39, 39))
         );
         jPanelBuscaLayout.setVerticalGroup(
             jPanelBuscaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -794,32 +869,6 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                     .addComponent(jTxtPlacaBusca, javax.swing.GroupLayout.Alignment.LEADING))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-
-        jTblVeiculos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Nome", "Modelo", "Placa", "Marca", "Cor", "Tipo", "Classe", "Ano Modelo", "Ano Fabricacao"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-        jTblVeiculos.setToolTipText("Selecione e use as feramentas da parte superior da tela");
-        jTblVeiculos.setRowSelectionAllowed(true);
-        jTblVeiculos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jTblVeiculos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTblVeiculosMouseClicked(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTblVeiculos);
 
         jLabel1.setText("Patrimonios/Veiculos Cadastrados");
 
@@ -838,6 +887,13 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             }
         });
 
+        jTblVeiculos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTblVeiculosMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTblVeiculos);
+
         javax.swing.GroupLayout jPanelDadosValoresLayout = new javax.swing.GroupLayout(jPanelDadosValores);
         jPanelDadosValores.setLayout(jPanelDadosValoresLayout);
         jPanelDadosValoresLayout.setHorizontalGroup(
@@ -845,19 +901,20 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             .addGroup(jPanelDadosValoresLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
                     .addGroup(jPanelDadosValoresLayout.createSequentialGroup()
-                        .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
-                            .addComponent(jTxtValorMercado, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jTxtValorSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTxtValorKmRodado, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTxtValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanelBusca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(jPanelDadosValoresLayout.createSequentialGroup()
+                                .addComponent(jTxtValorMercado, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTxtValorSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTxtValorKmRodado, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTxtValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(36, 36, 36)
+                        .addComponent(jPanelBusca, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         jPanelDadosValoresLayout.setVerticalGroup(
@@ -877,22 +934,21 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(7, 7, 7)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jCkbInativar))
-                    .addComponent(jPanelDadosValores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(JbtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
                         .addComponent(JbtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -903,7 +959,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabelCodigo)
                         .addGap(40, 40, 40))
-                    .addComponent(jPaneDadosGerais, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPaneDadosGerais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanelDadosValores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -916,13 +973,13 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                     .addComponent(JbtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JbtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelCodigo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jCkbInativar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPaneDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8)
-                .addComponent(jPanelDadosValores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanelDadosValores, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
@@ -935,7 +992,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
         clslogin.setCpfUserLoged(CpfUserLoged);
-        telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal(clslogin);
+        views.JfrmPrincipal telaprincipal = new views.JfrmPrincipal(clslogin);
         telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
@@ -943,6 +1000,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         if (precionado == false) {
             setIconBtnNv(true);
             enableControl();
+            clearTxt();
+            limpaJtable();
             precionado = true;
             editando = false;
             jTxtNome.requestFocus();
@@ -1046,9 +1105,20 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         if (editando == false && validado == true) {
             carrosDAO.save(clscarros);
             JOptionPane.showMessageDialog(this, carrosDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
+            setIconBtnNv(false);
+            precionado = false;
+            editando = false;
             disableControl();
-            carregarJtable();
             atualizarJtable();
+        } else {
+            if (editando == true && validado == true) {
+                carrosDAO.update(clscarros);
+                JOptionPane.showMessageDialog(this, carrosDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
+                setIconBtnNv(false);
+                precionado = false;
+                editando = false;
+                disableControl();
+            }
         }
     }//GEN-LAST:event_JbtnSalvarActionPerformed
 
@@ -1058,8 +1128,6 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             msgObgCampo("Data Compra");
         } else {
             clscarros.setDataCompra(clsValidacoes.dataFormatoUS(JfTxtData.getText()));
-            //System.out.println(clsValidacoes.dataFormatoUS(JfTxtData.getText()));
-            // System.out.println(clsValidacoes.dataFormatoBR(clscarros.getDataCompra()));
         }
     }//GEN-LAST:event_JfTxtDataFocusLost
 
@@ -1094,7 +1162,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                 clscarros.setValorDiariaLoc(clsValidacoes.formataMoeda(jTxtValorDiaria.getText()));
                 jTxtValorDiaria.setText(FormatterMoeda.format(clscarros.getValorDiariaLoc()));
             } catch (ParseException ex) {
-                
+
             }
         }
     }//GEN-LAST:event_jTxtValorDiariaFocusLost
@@ -1128,32 +1196,65 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorDiaria.setText("");
     }//GEN-LAST:event_jTxtValorDiariaMouseClicked
 
-    private void jTblVeiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblVeiculosMouseClicked
-        int linha = jTblVeiculos.getSelectedRow();
-        //System.out.println(jTblVeiculos.getValueAt(linha, 2).toString());
-        clscarros = carrosDAO.select(jTblVeiculos.getValueAt(linha, 2).toString());
-        carregarFrame();
-        enableControlBusca();
-        //((AbstractTableModel) jTblVeiculos.getValueAt(linha,2)).toString();
-        //jTblVeiculos.getValueAt(linha,2).toString();
-        
-    }//GEN-LAST:event_jTblVeiculosMouseClicked
-
     private void jBtnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnBuscarMouseClicked
-        if(jTxtPlacaBusca.getText().equals("") || jTxtPlacaBusca.getText().length() < 7 ) {
+        if (jTxtPlacaBusca.getText().equals("") || jTxtPlacaBusca.getText().length() < 7) {
             JOptionPane.showMessageDialog(this, "Favor digitar ou conferir a placa digitada", "ADVERTÊNCIA", JOptionPane.INFORMATION_MESSAGE);
-        }else{
+        } else {
             clscarros = carrosDAO.select(jTxtPlacaBusca.getText());
-            if(carrosDAO.isSucesso() == true){
-               carregarFrame();
-               enableControl();
-               atualizarJtable();
-            }else{
+            if (carrosDAO.isSucesso() == true) {
+                carregarFrame();
+                enableControl();
+                atualizarJtable();
+                setIconBtnNv(true);
+                editando = true;
+
+            } else {
                 JOptionPane.showMessageDialog(this, carrosDAO.getRetorno(), "ADVERTÊNCIA", JOptionPane.INFORMATION_MESSAGE);
             }
-          
+
         }
     }//GEN-LAST:event_jBtnBuscarMouseClicked
+
+    private void JbtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnEditarActionPerformed
+        precionado = true;
+        editando = true;
+        setIconBtnNv(true);
+        enableControlBusca();
+    }//GEN-LAST:event_JbtnEditarActionPerformed
+
+    private void jTblVeiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblVeiculosMouseClicked
+        precionado = false;
+        setIconBtnNv(false);
+        int linha = jTblVeiculos.getSelectedRow();
+        clscarros = carrosDAO.select(jTblVeiculos.getValueAt(linha, 2).toString());
+        System.out.println(jTblVeiculos.getValueAt(linha, 0).toString() + "Linha" + linha);
+        carregarFrame();
+        JbtnEditar.setEnabled(true);
+        JbtnExcluir.setEnabled(true);
+        JbtnNovo.setEnabled(true);
+        
+
+    }//GEN-LAST:event_jTblVeiculosMouseClicked
+
+    private void jTxtNumeroRenavanFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNumeroRenavanFocusLost
+               if ("".equals(Integer.parseInt(jTxtNumeroRenavan.getText()))) {
+        } else {
+            clscarros.setRenavam(Integer.parseInt(jTxtNumeroRenavan.getText()));
+        }
+    }//GEN-LAST:event_jTxtNumeroRenavanFocusLost
+
+    private void jTxtObservacoesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtObservacoesFocusLost
+        if (jTxtObservacoes.getText().equals("")) {
+            clscarros.setObsEstado(" ");
+        }else{
+        clscarros.setObsEstado(jTxtObservacoes.getText());
+        }
+    }//GEN-LAST:event_jTxtObservacoesFocusLost
+
+    private void jCkbInativarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCkbInativarItemStateChanged
+        System.out.println(jCkbInativar.getActionCommand());
+        System.out.println(jCkbInativar.isCursorSet());
+    }//GEN-LAST:event_jCkbInativarItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -1174,7 +1275,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     private javax.swing.JPanel jPaneDadosGerais;
     private javax.swing.JPanel jPanelBusca;
     private javax.swing.JPanel jPanelDadosValores;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTblVeiculos;
     private javax.swing.JTextField jTxtAnoFabricacao;
     private javax.swing.JTextField jTxtAnoModelo;

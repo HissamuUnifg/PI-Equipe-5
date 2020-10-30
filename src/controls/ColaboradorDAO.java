@@ -1,4 +1,4 @@
-package DAO;
+package controls;
 
 /**
  * Classe responsavel pelo CRUD tela de colaborador

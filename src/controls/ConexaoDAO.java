@@ -1,5 +1,5 @@
 
-package DAO;
+package controls;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

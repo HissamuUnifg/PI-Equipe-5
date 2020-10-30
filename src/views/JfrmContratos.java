@@ -1,5 +1,5 @@
 
-package telas;
+package views;
 
 import java.awt.Toolkit;
 import models.ClsLogin;
@@ -580,7 +580,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
         clslogin.setCpfUserLoged(CpfUserLoged);
-        telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal(clslogin);
+        views.JfrmPrincipal telaprincipal = new views.JfrmPrincipal(clslogin);
         telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 

@@ -1,5 +1,5 @@
 
-package telas;
+package views;
 
 import java.awt.Toolkit;
 import models.ClsLogin;
@@ -69,7 +69,6 @@ public class JfrmClientes extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Clientes");
-        setPreferredSize(new java.awt.Dimension(1055, 630));
         setResizable(false);
         setSize(new java.awt.Dimension(1055, 630));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -412,7 +411,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
         clslogin.setCpfUserLoged(CpfUserLoged);
-        telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal(clslogin);
+        views.JfrmPrincipal telaprincipal = new views.JfrmPrincipal(clslogin);
         telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
     

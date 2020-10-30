@@ -1,5 +1,5 @@
 
-package telas;
+package views;
 
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -24,7 +24,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
     
     //Declaração de objetos a serem usados na tela
     models.ClsColaborador clscolaborador;
-    DAO.ColaboradorDAO colaboradorDAO;
+    controls.ColaboradorDAO colaboradorDAO;
     models.ClsMascaraCampos clsMascaraCampos;
     //declaração de variaveis de controle da tela
     private String userLoged;
@@ -38,7 +38,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         initComponents();
         editando = false;
         clscolaborador = new models.ClsColaborador();
-        colaboradorDAO = new DAO.ColaboradorDAO();
+        colaboradorDAO = new controls.ColaboradorDAO();
         clsMascaraCampos = new models.ClsMascaraCampos();
         getIcon();
         disableControls(); 
@@ -57,7 +57,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         editando = false;
         precionado = false;
         clscolaborador = new models.ClsColaborador();
-        colaboradorDAO = new DAO.ColaboradorDAO();
+        colaboradorDAO = new controls.ColaboradorDAO();
         clsMascaraCampos = new models.ClsMascaraCampos();
         getIcon();
         disableControls(); 
@@ -415,7 +415,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         ClsLogin clslogin = new ClsLogin();
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
-        telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal(clslogin);
+        views.JfrmPrincipal telaprincipal = new views.JfrmPrincipal(clslogin);
         telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 

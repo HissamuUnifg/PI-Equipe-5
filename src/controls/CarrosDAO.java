@@ -1,4 +1,4 @@
-package DAO;
+package controls;
 
 /**
  * Responsavel pelo CRUD tela de Cadastro e Movimentação de Veiculos
@@ -13,11 +13,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import models.ClsCarros;
+import models.ClsValidacoes;
 
 public class CarrosDAO {
 
     private String retorno;
     private boolean sucesso;
+    ClsValidacoes clsval = new ClsValidacoes();
     SimpleDateFormat formatoBr = new SimpleDateFormat("dd-MM-yyyy");
 
     public boolean isSucesso() {
@@ -102,18 +104,20 @@ public class CarrosDAO {
     public void update(ClsCarros clscarros) {
 
         // variavel com a string do comando SQL para atualização dos dados na enticade Colaborador
-        String sql = "update colaboradores set Nome =?, Marca = ?, Modelo = ?, Classe = ?, TipoVeiculo = ?, Cor = ?, Placa = ?, Renavam = ?, ObsEstado = ?,"
-                + "  DataCompra = ?, AnoModelo = ?, AnoFabricacao = ?, Chassi = ?, KmRodados = ?, ValorMercado = ?,ValorSeguro  = ?"
-                + "  , ValorKmRd = ?, ValorDiariaLoc = ?, Status = ?, Inativo = ?, id_colaborador = ? where id = ?";
+        String sql = "update carros set Nome = ?, Marca = ?, Modelo = ?, Classe = ?, TipoVeiculo = ?, Cor = ?, "
+                + "Placa = ?, Renavam = ?, ObsEstado = ?, DataCompra = ?, AnoModelo = ?, AnoFabricacao = ?, Chassi = ?, "
+                + "KmRodados = ?, ValorMercado = ?,ValorSeguro  = ?, ValorKmRd = ?, ValorDiariaLoc = ?, Status = ?, "
+                + "Inativo = ?, id_colaborador = ? where id = ?";
 
         Connection conn = null;
         PreparedStatement ps = null;
-
+       
         try {
             conn = ConexaoDAO.getConexaoDAO();
             ps = conn.prepareStatement(sql);
 
             //adicionando os valores de acordo a ordem dos parametros do string sql
+            
             ps.setString(1, clscarros.getNome());
             ps.setString(2, clscarros.getMarca());
             ps.setString(3, clscarros.getModelo());
@@ -123,7 +127,7 @@ public class CarrosDAO {
             ps.setString(7, clscarros.getPlaca());
             ps.setInt(8, clscarros.getRenavam());
             ps.setString(9, clscarros.getObsEstado());
-            ps.setString(10, clscarros.getDataCompra());
+            ps.setString(10, clsval.dataFormatoUS(clscarros.getDataCompra()));
             ps.setInt(11, clscarros.getAnoModelo());
             ps.setInt(12, clscarros.getAnoFabricacao());
             ps.setString(13, clscarros.getChassi());
@@ -135,6 +139,9 @@ public class CarrosDAO {
             ps.setInt(19, clscarros.getStatus());
             ps.setInt(20, clscarros.getInativo());
             ps.setInt(21, clscarros.getId_colaborador());
+            ps.setInt(22, clscarros.getId());
+           
+            
 
             //executando a instrução com os parametro setados da classe colaborador
             ps.execute();
@@ -290,10 +297,10 @@ public class CarrosDAO {
         String sql = "SELECT Id, Nome, Marca, Modelo, Classe, TipoVeiculo, Cor, "
                 + "Placa, Renavam, ObsEstado,DataCompra,AnoModelo,AnoFabricacao, "
                 + "Chassi, KmRodados, ValorMercado, ValorSeguro, ValorKmRd,"
-                + "ValorDiariaLoc, Status, Inativo, id_colaborador 	"
+                + "ValorDiariaLoc, Status, Inativo, id_colaborador "
                 + "FROM carros";
 
-        ClsCarros carroEcontrado = new ClsCarros();
+        
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -305,6 +312,7 @@ public class CarrosDAO {
             rset = ps.executeQuery();
             
             while (rset.next()) {
+                ClsCarros carroEcontrado = new ClsCarros();
                 carroEcontrado.setId(rset.getInt("Id"));
                 carroEcontrado.setNome(rset.getString("Nome"));
                 carroEcontrado.setMarca(rset.getString("Marca"));

@@ -1,5 +1,5 @@
 
-package telas;
+package views;
 
 import java.awt.Toolkit;
 import models.ClsLogin;
@@ -51,7 +51,6 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal - Locadora App");
         setIconImages(null);
-        setPreferredSize(new java.awt.Dimension(1170, 850));
         setSize(new java.awt.Dimension(1170, 850));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -177,7 +176,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
         clslogin.setCpfUserLoged(CpfUserLoged);
-        telas.JfrmClientes telaclientes = new telas.JfrmClientes(clslogin);
+        views.JfrmClientes telaclientes = new views.JfrmClientes(clslogin);
         this.setVisible(false);
         telaclientes.setVisible(true);
     }//GEN-LAST:event_jMenuCadastroCliActionPerformed
@@ -187,7 +186,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
         clslogin.setCpfUserLoged(CpfUserLoged);
-        telas.JfrmColaborador telacolaborador = new telas.JfrmColaborador(clslogin);
+        views.JfrmColaborador telacolaborador = new views.JfrmColaborador(clslogin);
         this.setVisible(false);
         telacolaborador.setVisible(true);
     }//GEN-LAST:event_jMenuCadColabActionPerformed
@@ -197,7 +196,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
         clslogin.setCpfUserLoged(CpfUserLoged);
-        telas.JfrmVeiculos telaveiculos = new telas.JfrmVeiculos(clslogin);
+        views.JfrmVeiculos telaveiculos = new views.JfrmVeiculos(clslogin);
         this.setVisible(false);
         telaveiculos.setVisible(true);
     }//GEN-LAST:event_jMenuCadMovVeicActionPerformed
@@ -207,7 +206,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
         clslogin.setCpfUserLoged(CpfUserLoged);
-        telas.JfrmContratos telacontrato = new telas.JfrmContratos(clslogin);
+        views.JfrmContratos telacontrato = new views.JfrmContratos(clslogin);
         this.setVisible(false);
         telacontrato.setVisible(true);
     }//GEN-LAST:event_jMenuCadMovContActionPerformed

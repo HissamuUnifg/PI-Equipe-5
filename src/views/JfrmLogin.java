@@ -1,8 +1,8 @@
 
-package telas;
+package views;
 
-import DAO.ConexaoDAO;
-import DAO.LoginDAO;
+import controls.ConexaoDAO;
+import controls.LoginDAO;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -160,7 +160,7 @@ public class JfrmLogin extends javax.swing.JFrame {
                 clslogin.setUserLoged(jCboUsuario.getSelectedItem().toString());
                 this.setVisible(false);
                 //criando o objeto da tela principal
-                telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal(clslogin);
+                views.JfrmPrincipal telaprincipal = new views.JfrmPrincipal(clslogin);
                 telaprincipal.show();
             } else {
                 JOptionPane.showMessageDialog(this, "Senha ou Usuario Incorretos", "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -204,7 +204,7 @@ public class JfrmLogin extends javax.swing.JFrame {
                 clslogin.setUserLoged(jCboUsuario.getSelectedItem().toString());
                 this.setVisible(false);
                 //criando o objeto da tela principal
-                telas.JfrmPrincipal telaprincipal = new telas.JfrmPrincipal(clslogin);
+                views.JfrmPrincipal telaprincipal = new views.JfrmPrincipal(clslogin);
                 telaprincipal.show();
             } else {
                 JOptionPane.showMessageDialog(this, "Senha ou Usuario Incorretos", "ERRO", JOptionPane.ERROR_MESSAGE);
