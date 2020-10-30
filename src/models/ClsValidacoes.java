@@ -63,6 +63,8 @@ public class ClsValidacoes {
     public String replaceDado(String dado) {
         dado = dado.replaceAll("\\.", "");
         dado = dado.replaceAll("-", "");
+        dado = dado.replaceAll("R", "");
+        dado = dado.replaceAll("$", "");             
         return dado;
     }
 

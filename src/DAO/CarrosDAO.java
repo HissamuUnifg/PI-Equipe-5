@@ -210,23 +210,25 @@ public class CarrosDAO {
      */
     public ClsCarros select(String placa) {
 
-        String sql = "SELECT id, Nome, Marca, Modelo, Classe, TipoVeiculo, Cor, "
+        String sql ="SELECT Id, Nome, Marca, Modelo, Classe, TipoVeiculo, Cor, "
                 + "Placa, Renavam, ObsEstado,DataCompra,AnoModelo,AnoFabricacao, "
                 + "Chassi, KmRodados, ValorMercado, ValorSeguro, ValorKmRd,"
                 + "ValorDiariaLoc, Status, Inativo, id_colaborador 	"
-                + "FROM carros where Placa = ?";
-        ClsCarros carroEcontrado = null;
-
+                + "FROM carros where placa = ? ";
+        
+        ClsCarros carroEcontrado= null; 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rset = null;
 
         try {
+            carroEcontrado = new ClsCarros();
             conn = ConexaoDAO.getConexaoDAO();
             ps = conn.prepareStatement(sql);
             ps.setString(1, placa);
             rset = ps.executeQuery();
-
+            
+            while(rset.next()){
             carroEcontrado.setId(rset.getInt("Id"));
             carroEcontrado.setNome(rset.getString("Nome"));
             carroEcontrado.setMarca(rset.getString("Marca"));
@@ -249,14 +251,14 @@ public class CarrosDAO {
             carroEcontrado.setStatus(rset.getInt("Status"));
             carroEcontrado.setInativo(rset.getInt("Inativo"));
             carroEcontrado.setId_colaborador(rset.getInt("Id_colaborador"));
-
+            }
             //ClsCarros incremento = new ClsCarros(carroEcontrado);
             retorno = "Carro Encontrado!";
             sucesso = true;
 
         } catch (SQLException e) {
             retorno = "Erro: " + e;
-            System.out.println(e);
+            System.out.println("Erro aqui: " + e);
             sucesso = false;
         } finally {
 
@@ -285,13 +287,13 @@ public class CarrosDAO {
 
         List<ClsCarros> carros = new ArrayList<ClsCarros>();
 
-        String sql = "SELECT id, Nome, Marca, Modelo, Classe, TipoVeiculo, Cor, "
+        String sql = "SELECT Id, Nome, Marca, Modelo, Classe, TipoVeiculo, Cor, "
                 + "Placa, Renavam, ObsEstado,DataCompra,AnoModelo,AnoFabricacao, "
                 + "Chassi, KmRodados, ValorMercado, ValorSeguro, ValorKmRd,"
                 + "ValorDiariaLoc, Status, Inativo, id_colaborador 	"
                 + "FROM carros";
 
-        ClsCarros carroEcontrado = null;
+        ClsCarros carroEcontrado = new ClsCarros();
 
         Connection conn = null;
         PreparedStatement ps = null;

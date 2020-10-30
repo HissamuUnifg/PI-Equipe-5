@@ -1,12 +1,22 @@
 package telas;
 
+import DAO.CarregarTableCarroDAO;
+import com.mysql.cj.jdbc.result.ResultSetImpl;
+import com.mysql.cj.protocol.Resultset;
 import java.awt.Toolkit;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultFormatterFactory;
+import models.ClsCarros;
 import models.ClsControlaCpNumeric;
 import models.ClsLogin;
 
@@ -33,6 +43,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     models.ClsCarros clscarros;
     models.ClsMascaraCampos clsMascaracampos;
     SimpleDateFormat formatoBr = new SimpleDateFormat("dd-MM-yyyy");
+    Locale locale;  
+    NumberFormat FormatterMoeda;   
     models.ClsValidacoes clsValidacoes;
 
     public JfrmVeiculos() {
@@ -53,8 +65,10 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         clsMascaracampos = new models.ClsMascaraCampos();
         clsValidacoes = new models.ClsValidacoes();
         clscarros.setId_colaborador(userIdLoged);
+        locale = new Locale("pt", "BR");
+        FormatterMoeda = NumberFormat.getCurrencyInstance(locale);
         // executando componentes e metodos da Jframe
-
+        
         initComponents();
         try {
             addMascara();
@@ -64,6 +78,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         controleDigitacao();
         setIcon();
         disableControl();
+        carregarJtable();
         precionado = false;
     }
 
@@ -96,7 +111,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jCboTipo.setEnabled(false);
         jCboClasse.setEnabled(false);
         jCkbInativar.setEnabled(false);
-        jTblVeiculos.setEnabled(false);
+        jTblVeiculos.setEnabled(true);
         jTxtAnoFabricacao.setEnabled(false);
         jTxtAnoModelo.setEnabled(false);
         jTxtChassi.setEnabled(false);
@@ -217,7 +232,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
     private void addMascara() throws ParseException {
         JfTxtData.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraData(JfTxtData)));
-
+        //jTxtValorMercado.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraMoeda(jTxtValorMercado)));
     }
 
     private void controleDigitacao() {
@@ -379,6 +394,55 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         return true;
 
     }
+    
+    private void carregarJtable(){ 
+        
+        jTblVeiculos.setModel(new CarregarTableCarroDAO(carrosDAO.select()));        
+    }
+    
+    private void atualizarJtable(){
+        ((AbstractTableModel) jTblVeiculos.getModel()).fireTableDataChanged();
+    }
+    
+    private void carregarFrame(){
+        jTxtAnoFabricacao.setText(""+clscarros.getAnoFabricacao());
+        jTxtAnoModelo.setText(""+clscarros.getAnoModelo());
+        jTxtChassi.setText(clscarros.getChassi());
+        jTxtCor.setText(clscarros.getCor());
+        jTxtKm.setText(""+clscarros.getKmRodados());
+        jTxtMarca.setText(clscarros.getMarca());
+        jTxtNome.setText(clscarros.getNome());
+        jTxtNumeroRenavan.setText(""+clscarros.getRenavam());
+        jTxtObservacoes.setText(clscarros.getObsEstado());
+        jTxtPlaca.setText(clscarros.getPlaca());
+        jTxtValorDiaria.setText(FormatterMoeda.format(clscarros.getValorDiariaLoc()));
+        jTxtValorKmRodado.setText(FormatterMoeda.format(clscarros.getValorKmRd()));
+        jTxtValorMercado.setText(FormatterMoeda.format(clscarros.getValorMercado()));
+        jTxtValorSeguro.setText(FormatterMoeda.format(clscarros.getValorSeguro()));
+        jTxtVeiculo.setText(clscarros.getModelo());
+        JfTxtData.setText(clsValidacoes.dataFormatoBR(clsValidacoes.dataFormatoUS(clscarros.getDataCompra())));
+        setCarroClasse();
+        setCarroTipo();
+        jCboTipo.setSelectedItem(clscarros.getTipoVeiculo());
+        jCboClasse.setSelectedItem(clscarros.getClasse());
+    }
+    
+    private void buscarPelaPlaca(String placa){
+        boolean encontrado = false;
+        for (int i = 1; i > jTblVeiculos.getRowCount(); i++) {
+            if (jTblVeiculos.getValueAt(i, 2).toString().equals(placa)) {
+                clscarros = carrosDAO.select(jTblVeiculos.getValueAt(i, 2).toString());
+                carregarFrame();
+                enableControlBusca();
+                encontrado = true;
+
+            } else {
+                if (i == jTblVeiculos.getRowCount() && encontrado == false) {
+                    JOptionPane.showMessageDialog(this, "Veiculo não encontrado", "ERRO", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -406,7 +470,6 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jLabelCodigo = new javax.swing.JLabel();
         jCkbInativar = new javax.swing.JCheckBox();
         jPanelDadosValores = new javax.swing.JPanel();
-        jTxtValorMercado = new javax.swing.JTextField();
         jTxtValorSeguro = new javax.swing.JTextField();
         jTxtValorKmRodado = new javax.swing.JTextField();
         jTxtValorDiaria = new javax.swing.JTextField();
@@ -416,6 +479,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTblVeiculos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
+        jTxtValorMercado = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro e Movimentação de Veiculos/Patrimonios");
@@ -584,7 +648,6 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
         JfTxtData.setBackground(new java.awt.Color(240, 240, 240));
         JfTxtData.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Compra"));
-        JfTxtData.setText("");
         JfTxtData.setToolTipText("Inserir data de aquisição do Veiculo!");
         JfTxtData.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         JfTxtData.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -662,16 +725,6 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
         jPanelDadosValores.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados Valores"));
 
-        jTxtValorMercado.setBackground(new java.awt.Color(240, 240, 240));
-        jTxtValorMercado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTxtValorMercado.setToolTipText("Digite valor de mercado do veiculo");
-        jTxtValorMercado.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor Mercado/Bem"));
-        jTxtValorMercado.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTxtValorMercadoFocusLost(evt);
-            }
-        });
-
         jTxtValorSeguro.setBackground(new java.awt.Color(240, 240, 240));
         jTxtValorSeguro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtValorSeguro.setToolTipText("Digite o valor do seguro anual do veiculo");
@@ -679,6 +732,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorSeguro.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtValorSeguroFocusLost(evt);
+            }
+        });
+        jTxtValorSeguro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTxtValorSeguroMouseClicked(evt);
             }
         });
 
@@ -691,6 +749,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                 jTxtValorKmRodadoFocusLost(evt);
             }
         });
+        jTxtValorKmRodado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTxtValorKmRodadoMouseClicked(evt);
+            }
+        });
 
         jTxtValorDiaria.setBackground(new java.awt.Color(240, 240, 240));
         jTxtValorDiaria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -699,6 +762,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorDiaria.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtValorDiariaFocusLost(evt);
+            }
+        });
+        jTxtValorDiaria.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTxtValorDiariaMouseClicked(evt);
             }
         });
 
@@ -710,6 +778,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtPlacaBusca.setBorder(javax.swing.BorderFactory.createTitledBorder("Placa "));
 
         jBtnBuscar.setText("Localizar");
+        jBtnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jBtnBuscarMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelBuscaLayout = new javax.swing.GroupLayout(jPanelBusca);
         jPanelBusca.setLayout(jPanelBuscaLayout);
@@ -718,7 +791,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             .addGroup(jPanelBuscaLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jTxtPlacaBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(jBtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
         );
@@ -733,10 +806,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
         jTblVeiculos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Nome", "Modelo", "Placa", "Marca", "Cor", "Tipo", "Classe", "Ano Modelo", "Ano Fabricacao"
@@ -751,9 +821,31 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             }
         });
         jTblVeiculos.setToolTipText("Selecione e use as feramentas da parte superior da tela");
+        jTblVeiculos.setRowSelectionAllowed(true);
+        jTblVeiculos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTblVeiculos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTblVeiculosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTblVeiculos);
 
         jLabel1.setText("Patrimonios/Veiculos Cadastrados");
+
+        jTxtValorMercado.setBackground(new java.awt.Color(240, 240, 240));
+        jTxtValorMercado.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor Mercado/Bem"));
+        jTxtValorMercado.setToolTipText("Digite valor de mercado do veiculo");
+        jTxtValorMercado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTxtValorMercado.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtValorMercadoFocusLost(evt);
+            }
+        });
+        jTxtValorMercado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTxtValorMercadoMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelDadosValoresLayout = new javax.swing.GroupLayout(jPanelDadosValores);
         jPanelDadosValores.setLayout(jPanelDadosValoresLayout);
@@ -764,9 +856,9 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                 .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1)
                     .addGroup(jPanelDadosValoresLayout.createSequentialGroup()
-                        .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTxtValorMercado)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(jTxtValorMercado, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addComponent(jTxtValorSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -787,10 +879,10 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                     .addGroup(jPanelDadosValoresLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTxtValorMercado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTxtValorSeguro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTxtValorKmRodado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTxtValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jTxtValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTxtValorMercado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1)
                         .addGap(7, 7, 7)))
@@ -978,22 +1070,12 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JfTxtDataFocusLost
 
-    private void jTxtValorMercadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtValorMercadoFocusLost
-        if ("".equals(jTxtValorMercado.getText())) {
-        } else {
-            try {
-                clscarros.setValorMercado(clsValidacoes.formataMoeda(jTxtValorMercado.getText()));
-            } catch (ParseException ex) {
-
-            }
-        }
-    }//GEN-LAST:event_jTxtValorMercadoFocusLost
-
     private void jTxtValorSeguroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtValorSeguroFocusLost
         if ("".equals(jTxtValorSeguro.getText())) {
         } else {
             try {
                 clscarros.setValorSeguro(clsValidacoes.formataMoeda(jTxtValorSeguro.getText()));
+                jTxtValorSeguro.setText(FormatterMoeda.format(clscarros.getValorSeguro()));
             } catch (ParseException ex) {
 
             }
@@ -1005,6 +1087,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         } else {
             try {
                 clscarros.setValorKmRd(clsValidacoes.formataMoeda(jTxtValorKmRodado.getText()));
+                jTxtValorKmRodado.setText(FormatterMoeda.format(clscarros.getValorKmRd()));
             } catch (ParseException ex) {
 
             }
@@ -1016,11 +1099,67 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         } else {
             try {
                 clscarros.setValorDiariaLoc(clsValidacoes.formataMoeda(jTxtValorDiaria.getText()));
+                jTxtValorDiaria.setText(FormatterMoeda.format(clscarros.getValorDiariaLoc()));
             } catch (ParseException ex) {
-                Logger.getLogger(JfrmVeiculos.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
         }
     }//GEN-LAST:event_jTxtValorDiariaFocusLost
+
+    private void jTxtValorMercadoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtValorMercadoFocusLost
+
+        if ("".equals(jTxtValorMercado.getText())) {
+        } else {
+            try {
+                clscarros.setValorMercado(clsValidacoes.formataMoeda(jTxtValorMercado.getText()));
+                jTxtValorMercado.setText(FormatterMoeda.format(clscarros.getValorMercado()));
+            } catch (ParseException ex) {
+
+            }
+        }
+    }//GEN-LAST:event_jTxtValorMercadoFocusLost
+
+    private void jTxtValorMercadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTxtValorMercadoMouseClicked
+        jTxtValorMercado.setText("");
+    }//GEN-LAST:event_jTxtValorMercadoMouseClicked
+
+    private void jTxtValorSeguroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTxtValorSeguroMouseClicked
+        jTxtValorSeguro.setText("");
+    }//GEN-LAST:event_jTxtValorSeguroMouseClicked
+
+    private void jTxtValorKmRodadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTxtValorKmRodadoMouseClicked
+        jTxtValorKmRodado.setText("");
+    }//GEN-LAST:event_jTxtValorKmRodadoMouseClicked
+
+    private void jTxtValorDiariaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTxtValorDiariaMouseClicked
+        jTxtValorDiaria.setText("");
+    }//GEN-LAST:event_jTxtValorDiariaMouseClicked
+
+    private void jTblVeiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblVeiculosMouseClicked
+        int linha = jTblVeiculos.getSelectedRow();
+        //System.out.println(jTblVeiculos.getValueAt(linha, 2).toString());
+        clscarros = carrosDAO.select(jTblVeiculos.getValueAt(linha, 2).toString());
+        carregarFrame();
+        enableControlBusca();
+        //((AbstractTableModel) jTblVeiculos.getValueAt(linha,2)).toString();
+        //jTblVeiculos.getValueAt(linha,2).toString();
+        
+    }//GEN-LAST:event_jTblVeiculosMouseClicked
+
+    private void jBtnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jBtnBuscarMouseClicked
+        if(jTxtPlacaBusca.getText().equals("") || jTxtPlacaBusca.getText().length() < 7 ) {
+            JOptionPane.showMessageDialog(this, "Favor digitar ou conferir a placa digitada", "ADVERTÊNCIA", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            carrosDAO.select(jTxtPlacaBusca.getText());
+            if(carrosDAO.isSucesso() == true){
+               carregarFrame();
+               enableControl();
+            }else{
+                JOptionPane.showMessageDialog(this, carrosDAO.getRetorno(), "ADVERTÊNCIA", JOptionPane.INFORMATION_MESSAGE);
+            }
+          
+        }
+    }//GEN-LAST:event_jBtnBuscarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1056,7 +1195,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     private javax.swing.JTextField jTxtPlacaBusca;
     private javax.swing.JTextField jTxtValorDiaria;
     private javax.swing.JTextField jTxtValorKmRodado;
-    private javax.swing.JTextField jTxtValorMercado;
+    private javax.swing.JFormattedTextField jTxtValorMercado;
     private javax.swing.JTextField jTxtValorSeguro;
     private javax.swing.JTextField jTxtVeiculo;
     // End of variables declaration//GEN-END:variables
