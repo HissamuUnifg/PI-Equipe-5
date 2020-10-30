@@ -303,6 +303,7 @@ public class CarrosDAO {
             conn = ConexaoDAO.getConexaoDAO();
             ps = conn.prepareStatement(sql);
             rset = ps.executeQuery();
+            
             while (rset.next()) {
                 carroEcontrado.setId(rset.getInt("Id"));
                 carroEcontrado.setNome(rset.getString("Nome"));

@@ -11,8 +11,8 @@ import models.ClsCarros;
  */
 public class CarregarTableCarroDAO extends AbstractTableModel {
 
-    private final List<ClsCarros> clscarros;
-    private final String[] colunas = {"Nome","Modelo","Placa","Marca","Tipo","Classe","Ano Modelo", "Ano Fabricacao"};    
+    private  List<ClsCarros> clscarros;
+    private  String[] colunas = {"Nome","Modelo","Placa","Marca","Tipo","Classe","Ano Modelo", "Ano Fabricacao"};    
 
 
     public CarregarTableCarroDAO(List<ClsCarros> clscarros) {
