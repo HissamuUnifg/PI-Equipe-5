@@ -1,22 +1,14 @@
 package telas;
 
 import DAO.CarregarTableCarroDAO;
-import com.mysql.cj.jdbc.result.ResultSetImpl;
-import com.mysql.cj.protocol.Resultset;
 import java.awt.Toolkit;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.text.DefaultFormatterFactory;
-import models.ClsCarros;
 import models.ClsControlaCpNumeric;
 import models.ClsLogin;
 
@@ -395,9 +387,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
     }
     
-    private void carregarJtable(){ 
-        
-        jTblVeiculos.setModel(new CarregarTableCarroDAO(carrosDAO.select()));        
+    private void carregarJtable(){         
+        jTblVeiculos.setModel(new CarregarTableCarroDAO(carrosDAO.selectAll()));        
     }
     
     private void atualizarJtable(){
@@ -1056,6 +1047,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             carrosDAO.save(clscarros);
             JOptionPane.showMessageDialog(this, carrosDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
             disableControl();
+            carregarJtable();
+            atualizarJtable();
         }
     }//GEN-LAST:event_JbtnSalvarActionPerformed
 
@@ -1150,10 +1143,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         if(jTxtPlacaBusca.getText().equals("") || jTxtPlacaBusca.getText().length() < 7 ) {
             JOptionPane.showMessageDialog(this, "Favor digitar ou conferir a placa digitada", "ADVERTÊNCIA", JOptionPane.INFORMATION_MESSAGE);
         }else{
-            carrosDAO.select(jTxtPlacaBusca.getText());
+            clscarros = carrosDAO.select(jTxtPlacaBusca.getText());
             if(carrosDAO.isSucesso() == true){
                carregarFrame();
                enableControl();
+               atualizarJtable();
             }else{
                 JOptionPane.showMessageDialog(this, carrosDAO.getRetorno(), "ADVERTÊNCIA", JOptionPane.INFORMATION_MESSAGE);
             }

@@ -60,10 +60,5 @@ public class CarregarTableCarroDAO extends AbstractTableModel {
 
 
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 8089116544555428084L;
-
 
 }

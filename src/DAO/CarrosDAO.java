@@ -283,7 +283,7 @@ public class CarrosDAO {
         return carroEcontrado;
     }
 
-    public List<ClsCarros> select() {
+    public List<ClsCarros> selectAll() {
 
         List<ClsCarros> carros = new ArrayList<ClsCarros>();
 
