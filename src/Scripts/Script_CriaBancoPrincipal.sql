@@ -108,3 +108,25 @@ UNIQUE KEY cpf_Unique(Cpf), cnpj_Unique(Cnpj), ie_Unique(IE), rg_Unique(RG), cnh
 FOREIGN KEY fk_id_endereco(id_endereco) references Endereco(id),
 FOREIGN KEY fk_id_colaborador(id_colaborador) references Colaboradores(id)
 )
+
+/*Criando tabela Contratos*/
+CREATE TABLE IF NOT EXISTS Contratos(
+id int NOT NULL AUTO_INCREMENT,
+id_cliente int NOT NULL,
+id_carro int NOT NULL,
+id_colaborador int NOT NULL,
+Observacoes varchar(1000),
+QuantidadeDiarias int(3),
+QuantidadeKmRet int(9),
+ValorExtra FLOAT,
+ValorTotal FLOAT,
+TipoLocacao char(1) NOT NULL,
+DataSaida date NOT NULL,
+DataChegada date,
+DataContrato date NOT NULL,
+Status varchar(15) NOT NULL,
+
+FOREIGN KEY fk_id_cliente(id_cliente) references Clientes(id),
+FOREIGN KEY fk_id_carro(id_carro) references Carros(id),
+FOREIGN KEY fk_id_colaborador(id_colaborador) references Colaboradores(id)
+)
