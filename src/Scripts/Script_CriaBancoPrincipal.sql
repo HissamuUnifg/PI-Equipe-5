@@ -85,3 +85,26 @@ id_cidade int NOT NULL,
 PRIMARY KEY(id),
 FOREIGN KEY fk_id_cidade(id_cidade) references Cidades(id)
 )
+
+/*Criando tabela Clientes*/
+CREATE TABLE IF NOT EXISTS Clientes(
+id int NOT NULL,
+Nome varchar(200),
+Cpf varchar(11),
+RazaoSocial(200),
+Cnpj(14),
+IE varchar(20),
+RG varchar(20),
+DataNascimento date,
+Telefone varchar(12) NOT NULL,
+Celular varchar(12) NOT NULL,
+CNH varchar(20) NOT NULL,
+id_endereco int NOT NULL,
+id_colaborador int NOT NULL,
+Inativo int(1) NOT NULL,
+
+PRIMARY KEY (id),
+UNIQUE KEY cpf_Unique(Cpf), cnpj_Unique(Cnpj), ie_Unique(IE), rg_Unique(RG), cnh_Unique(CNH)
+FOREIGN KEY fk_id_endereco(id_endereco) references Endereco(id),
+FOREIGN KEY fk_id_colaborador(id_colaborador) references Colaboradores(id)
+)
