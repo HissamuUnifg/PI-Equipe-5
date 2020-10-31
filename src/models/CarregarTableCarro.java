@@ -85,9 +85,14 @@ public class CarregarTableCarro extends AbstractTableModel {
                 
     }
     
-    public void addRow(ClsCarros carros){
-    this.clscarros.add(carros);
-    this.fireTableDataChanged();
+    public void addRow(ClsCarros carros) {
+        this.clscarros.add(carros);
+        this.fireTableDataChanged();
+    }
+    
+    public void deleteRow(int indice){
+        this.clscarros.remove(indice);
+        this.fireTableRowsDeleted(0, getRowCount());
     }
 
 

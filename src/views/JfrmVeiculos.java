@@ -92,6 +92,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
     // metodos auxiliares para funcionamento da tela
     private void setCarroTipo() {
+        //jCboTipo.removeAllItems();
+        jCboTipo.addItem("Selecione");
         jCboTipo.addItem("PASSEIO HATCH");
         jCboTipo.addItem("PASSEIO SEDAN");
         jCboTipo.addItem("UTILITARIO SUV");
@@ -99,6 +101,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     }
 
     private void setCarroClasse() {
+        //jCboClasse.removeAllItems();
+        jCboClasse.addItem("Selecione");
         jCboClasse.addItem("POPULAR");
         jCboClasse.addItem("MEDIO");
         jCboClasse.addItem("LUXO");
@@ -136,6 +140,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorMercado.setEnabled(false);
         jTxtValorSeguro.setEnabled(false);
         jTxtVeiculo.setEnabled(false);
+        JfTxtData.setEnabled(false);
 
         //desabilitando os controles botões
         JbtnEditar.setEnabled(false);
@@ -168,6 +173,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorMercado.setEnabled(true);
         jTxtValorSeguro.setEnabled(true);
         jTxtVeiculo.setEnabled(true);
+        JfTxtData.setEnabled(true);
 
         //desabilitando os controles botões
         JbtnEditar.setEnabled(false);
@@ -200,6 +206,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorMercado.setEnabled(true);
         jTxtValorSeguro.setEnabled(true);
         jTxtVeiculo.setEnabled(true);
+        JfTxtData.setEditable(true);
 
         //desabilitando os controles botões
         JbtnEditar.setEnabled(true);
@@ -439,6 +446,10 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
         jTblVeiculos.setModel(modeloTable);
     }
+    private void removeLinhaJtable(int indice) {
+        
+        modeloTable.deleteRow(indice);
+    }
 
     private void atualizarJtable() {
 
@@ -571,6 +582,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         JbtnExcluir.setToolTipText("Clique aqui para excluir veiculo");
         JbtnExcluir.setBorder(null);
         JbtnExcluir.setFocusPainted(false);
+        JbtnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JbtnExcluirActionPerformed(evt);
+            }
+        });
 
         jPaneDadosGerais.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados Gerais"));
 
@@ -1200,17 +1216,28 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         if (jTxtPlacaBusca.getText().equals("") || jTxtPlacaBusca.getText().length() < 7) {
             JOptionPane.showMessageDialog(this, "Favor digitar ou conferir a placa digitada", "ADVERTÊNCIA", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            clscarros = carrosDAO.select(jTxtPlacaBusca.getText());
-            if (carrosDAO.isSucesso() == true) {
-                carregarFrame();
-                enableControl();
-                atualizarJtable();
-                setIconBtnNv(true);
-                editando = true;
-
-            } else {
-                JOptionPane.showMessageDialog(this, carrosDAO.getRetorno(), "ADVERTÊNCIA", JOptionPane.INFORMATION_MESSAGE);
+            //jTblVeiculos.addRowSelectionInterval(0,0);
+            //table.addRowSelectionInterval(0,0);
+            System.out.println(""+jTblVeiculos.getRowCount());
+            jTblVeiculos.removeRowSelectionInterval(0, jTblVeiculos.getRowCount());
+            int i;
+            for ( i = 0; i < jTblVeiculos.getRowCount(); i++) {
+                if (jTblVeiculos.getValueAt(i, 2).toString().equals(jTxtPlacaBusca.getText())) {
+                    jTblVeiculos.addRowSelectionInterval(i,i);
+                    break;
+                }
             }
+            //clscarros = carrosDAO.select(jTxtPlacaBusca.getText());
+//            if (carrosDAO.isSucesso() == true) {
+//                carregarFrame();
+//                enableControl();
+//                atualizarJtable();
+//                setIconBtnNv(true);
+//                editando = true;
+//
+//            } else {
+//                JOptionPane.showMessageDialog(this, carrosDAO.getRetorno(), "ADVERTÊNCIA", JOptionPane.INFORMATION_MESSAGE);
+//            }
 
         }
     }//GEN-LAST:event_jBtnBuscarMouseClicked
@@ -1255,6 +1282,26 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         System.out.println(jCkbInativar.getActionCommand());
         System.out.println(jCkbInativar.isCursorSet());
     }//GEN-LAST:event_jCkbInativarItemStateChanged
+
+    private void JbtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnExcluirActionPerformed
+        int deletar = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir?", "Atenção", JOptionPane.YES_NO_OPTION);
+        if(deletar == 0){
+            carrosDAO.delete(clscarros.getId());
+            if(carrosDAO.isSucesso() == true){
+                clearTxt();
+                disableControl();
+                removeLinhaJtable(jTblVeiculos.getSelectedRow());
+                setIconBtnNv(false);
+                precionado = false;
+            }else{
+                JOptionPane.showMessageDialog(this, carrosDAO.getRetorno() + "O usuario "+userLoged+""
+                                              + " não tem permissao para deletar!", "Erro", JOptionPane.ERROR_MESSAGE);
+                setIconBtnNv(true);
+                precionado = true;
+            }
+            
+        }
+    }//GEN-LAST:event_JbtnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
