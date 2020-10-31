@@ -65,23 +65,91 @@ FOREIGN KEY fk_id_colaborador(id_colaborador) references Colaboradores(id)
 
 /*Criando tabela Cidades*/
 CREATE TABLE IF NOT EXISTS Cidades (
-id int NOT NULL,
-NomeCidade varchar(200),
-SiglaEstado varchar(2),
-Estado varchar(200),
-Pais varchar(6),
-
+id int NOT NULL AUTO_INCREMENT,
+NomeCidade varchar(200) NOT NULL,
+SiglaEstado varchar(2) NOT NULL,
+Estado varchar(200) NOT NULL,
+Pais varchar(6) NOT NULL,
 PRIMARY KEY(id)
+
 );
 
-/*Criando tabela Endereços*/
+
+/*Criando a tabela Endereços*/
 CREATE TABLE IF NOT EXISTS Enderecos(
-id int NOT NULL,
+id int NOT NULL AUTO_INCREMENT,
 Rua varchar(200) NOT NULL,
 Numero varchar(5) NOT NULL,
 Bairro varchar(100) NOT NULL,
 id_cidade int NOT NULL,
-
 PRIMARY KEY(id),
-FOREIGN KEY fk_id_cidade(id_cidade) references Cidades(id)
-)
+  CONSTRAINT Enderecos_cidades FOREIGN KEY (id_cidade) REFERENCES Cidades (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+
+);
+
+/*Criando a tabela clientes */
+
+/*Nessa tabela a coluna Id fica como chave primaria 
+  e auto incremento, e a coluna Cpf e CnPJ fica como chave
+  unica evitando assim um CPF ou CNPJ duplicado nos registros*/
+
+CREATE TABLE IF NOT EXISTS Clientes (
+  Id INT NOT NULL AUTO_INCREMENT,
+  Nome VARCHAR(200) NULL,
+  Cpf VARCHAR(11) NULL,
+  RazaoSocial VARCHAR(200) NULL,
+  Cnpj VARCHAR(14) NULL,
+  IE INT(20) NULL,
+  RG INT(20) NULL,
+  DataNascimento DATE  NULL,
+  Telefone VARCHAR(12) NOT NULL,
+  Celular VARCHAR(12) DEFAULT NULL,
+  CNH INT(20)  NULL,
+  id_endereco INT NOT NULL,
+  id_colaborador INT NOT NULL,
+  Inativo INT NOT NULL,
+   
+  UNIQUE KEY Cpf_Cnpj (Cpf,Cnpj),
+  PRIMARY KEY (id),
+  CONSTRAINT colaboradores_clientes  FOREIGN KEY (id_colaborador) REFERENCES Colaboradores (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT enderecos_clientes FOREIGN KEY (id_endereco) REFERENCES Enderecos (id)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION
+);
+
+
+/*criando tabela contrato*/
+
+
+
+CREATE TABLE IF NOT EXISTS Contratos (
+  id INT NOT NULL AUTO_INCREMENT,
+  id_cliente INT NOT NULL,
+  id_carro INT NOT NULL,
+  id_colaborador INT NOT NULL,
+  Observacoes VARCHAR(1000) NULL,
+  QuantidadeDiarias INT(3) NULL,
+  QuantidadeKmRet INT(9) NULL,
+  ValorExtra FLOAT NULL,
+  ValorTotal FLOAT NULL,
+  TipoLocacao VARCHAR(15) NOT NULL,
+  DataSaida DATE NOT NULL,
+  DataChegada DATE NULL,
+  DataContrato DATE NOT NULL,
+  Status VARCHAR(15) NOT NULL,
+  PRIMARY KEY (id),
+  CONSTRAINT colaboradores_contratos FOREIGN KEY (id_colaborador)  REFERENCES Colaboradores (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT clientes_contratos FOREIGN KEY (id_cliente) REFERENCES Clientes (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT carro_contrato  FOREIGN KEY (id_carro)  REFERENCES Carros (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);
+
