@@ -65,7 +65,7 @@ FOREIGN KEY fk_id_colaborador(id_colaborador) references Colaboradores(id)
 
 /*Criando tabela Cidades*/
 CREATE TABLE IF NOT EXISTS Cidades (
-id int NOT NULL,
+id int NOT NULL AUTO_INCRMENET,
 NomeCidade varchar(200),
 SiglaEstado varchar(2),
 Estado varchar(200),
@@ -76,7 +76,7 @@ PRIMARY KEY(id)
 
 /*Criando tabela Endereços*/
 CREATE TABLE IF NOT EXISTS Enderecos(
-id int NOT NULL,
+id int NOT NULL AUTO_INCREMENT,
 Rua varchar(200) NOT NULL,
 Numero varchar(5) NOT NULL,
 Bairro varchar(100) NOT NULL,
@@ -88,7 +88,7 @@ FOREIGN KEY fk_id_cidade(id_cidade) references Cidades(id)
 
 /*Criando tabela Clientes*/
 CREATE TABLE IF NOT EXISTS Clientes(
-id int NOT NULL,
+id int NOT NULL AUTO_INCRMENET,
 Nome varchar(200),
 Cpf varchar(11),
 RazaoSocial(200),
