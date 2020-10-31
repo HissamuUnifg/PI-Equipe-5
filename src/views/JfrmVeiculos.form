@@ -47,8 +47,11 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="JbtnExcluir" min="-2" pref="75" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="jLabelCodigo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabelCodigo" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelStatus" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jPaneDadosGerais" alignment="0" max="32767" attributes="0"/>
                   <Component id="jPanelDadosValores" alignment="0" max="32767" attributes="0"/>
@@ -66,7 +69,11 @@
                   <Component id="JbtnExcluir" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
                   <Component id="JbtnEditar" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
                   <Component id="JbtnNovo" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
-                  <Component id="jLabelCodigo" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="jLabelCodigo" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jLabelStatus" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
               <Component id="jCkbInativar" min="-2" max="-2" attributes="0"/>
@@ -520,6 +527,9 @@
       <Events>
         <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jCkbInativarItemStateChanged"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
+      </AuxValues>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanelDadosValores">
       <Properties>
@@ -747,5 +757,11 @@
         </Container>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="jLabelStatus">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Status:"/>
+        <Property name="toolTipText" type="java.lang.String" value=""/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

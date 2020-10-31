@@ -1,6 +1,7 @@
 
 package models;
 
+
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 
@@ -93,6 +94,10 @@ public class CarregarTableCarro extends AbstractTableModel {
     public void deleteRow(int indice){
         this.clscarros.remove(indice);
         this.fireTableRowsDeleted(0, getRowCount());
+    }
+    
+    public void updatedRow(int indiceI, int indiceF){
+        this.fireTableRowsUpdated(indiceI, indiceF);
     }
 
 

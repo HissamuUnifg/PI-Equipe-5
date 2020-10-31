@@ -54,7 +54,7 @@ public class CarrosDAO {
             ps.setString(4, clscarros.getClasse());
             ps.setString(5, clscarros.getTipoVeiculo());
             ps.setString(6, clscarros.getCor());
-            ps.setString(7, clscarros.getPlaca());
+            ps.setString(7, clscarros.getPlaca().toUpperCase());
             ps.setInt(8, clscarros.getRenavam());
             ps.setString(9, clscarros.getObsEstado());
             ps.setString(10, clscarros.getDataCompra());
@@ -124,7 +124,7 @@ public class CarrosDAO {
             ps.setString(4, clscarros.getClasse());
             ps.setString(5, clscarros.getTipoVeiculo());
             ps.setString(6, clscarros.getCor());
-            ps.setString(7, clscarros.getPlaca());
+            ps.setString(7, clscarros.getPlaca().toUpperCase());
             ps.setInt(8, clscarros.getRenavam());
             ps.setString(9, clscarros.getObsEstado());
             ps.setString(10, clsval.dataFormatoUS(clscarros.getDataCompra()));

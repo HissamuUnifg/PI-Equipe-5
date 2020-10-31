@@ -1,5 +1,6 @@
 package views;
 
+import java.awt.Color;
 import models.CarregarTableCarro;
 import java.awt.Toolkit;
 import java.text.NumberFormat;
@@ -32,6 +33,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     private boolean editando;
     private boolean precionado;
     List<ClsCarros> listaCarros;
+    private int linhaIndice;
+    
     //variaveis de classes a serem usadas na tela
     controls.CarrosDAO carrosDAO;
     models.ClsCarros clscarros;
@@ -206,7 +209,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorMercado.setEnabled(true);
         jTxtValorSeguro.setEnabled(true);
         jTxtVeiculo.setEnabled(true);
-        JfTxtData.setEditable(true);
+        JfTxtData.setEnabled(true);
 
         //desabilitando os controles botões
         JbtnEditar.setEnabled(true);
@@ -446,6 +449,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
         jTblVeiculos.setModel(modeloTable);
     }
+    
     private void removeLinhaJtable(int indice) {
         
         modeloTable.deleteRow(indice);
@@ -455,12 +459,18 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
         modeloTable.addRow(clscarros);
     }
-
-    private void limpaJtable() {
-        jTblVeiculos.removeAll();
+    
+    private void atualizaListaCarros(int indice){
+        listaCarros.set(indice, clscarros);
+        modeloTable.updatedRow(indice, indice);
     }
-
+    
+    private void limpaJtable() {
+        jTblVeiculos.setModel(modeloTable);
+    }
+    
     private void carregarFrame() {
+
         jLabelCodigo.setText("Codigo: " + clscarros.getId());
         jTxtAnoFabricacao.setText("" + clscarros.getAnoFabricacao());
         jTxtAnoModelo.setText("" + clscarros.getAnoModelo());
@@ -482,6 +492,47 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         setCarroTipo();
         jCboTipo.setSelectedItem(clscarros.getTipoVeiculo());
         jCboClasse.setSelectedItem(clscarros.getClasse());
+    }
+    
+    private void carregarFrameLista(int indice) {
+        //o indice é o objeto selecionado dentro da lista
+        jLabelCodigo.setText("Codigo: " + listaCarros.get(indice).getId());
+        jTxtAnoFabricacao.setText("" + listaCarros.get(indice).getAnoFabricacao());
+        jTxtAnoModelo.setText("" + listaCarros.get(indice).getAnoModelo());
+        jTxtChassi.setText(listaCarros.get(indice).getChassi());
+        jTxtCor.setText(listaCarros.get(indice).getCor());
+        jTxtKm.setText("" + listaCarros.get(indice).getKmRodados());
+        jTxtMarca.setText(listaCarros.get(indice).getMarca());
+        jTxtNome.setText(listaCarros.get(indice).getNome());
+        jTxtNumeroRenavan.setText("" + listaCarros.get(indice).getRenavam());
+        jTxtObservacoes.setText(listaCarros.get(indice).getObsEstado());
+        jTxtPlaca.setText(listaCarros.get(indice).getPlaca());
+        jTxtValorDiaria.setText(FormatterMoeda.format(listaCarros.get(indice).getValorDiariaLoc()));
+        jTxtValorKmRodado.setText(FormatterMoeda.format(listaCarros.get(indice).getValorKmRd()));
+        jTxtValorMercado.setText(FormatterMoeda.format(listaCarros.get(indice).getValorMercado()));
+        jTxtValorSeguro.setText(FormatterMoeda.format(listaCarros.get(indice).getValorSeguro()));
+        jTxtVeiculo.setText(listaCarros.get(indice).getModelo());
+        JfTxtData.setText(clsValidacoes.dataFormatoBR(clsValidacoes.dataFormatoUS(listaCarros.get(indice).getDataCompra())));
+        setCarroClasse();
+        setCarroTipo();
+        jCboTipo.setSelectedItem(listaCarros.get(indice).getTipoVeiculo());
+        jCboClasse.setSelectedItem(listaCarros.get(indice).getClasse());
+        if(listaCarros.get(indice).getInativo()==1){
+            jCkbInativar.setSelected(true);
+             jLabelStatus.setText("Status: Veiculo Inativado");
+            jLabelStatus.setForeground(Color.RED);
+           
+        }else if (listaCarros.get(indice).getInativo()==0){
+            jCkbInativar.setSelected(false);
+        }
+        if(listaCarros.get(indice).getStatus() == 0 && listaCarros.get(indice).getInativo()==0){
+            jLabelStatus.setText("Status: Liberado");
+            jLabelStatus.setForeground(Color.GREEN);
+  
+        }else if (listaCarros.get(indice).getStatus() == 1){
+            jLabelStatus.setText("Status: Alugado");
+            jLabelStatus.setForeground(Color.BLUE);
+        }
     }
 
     private void buscarPelaPlaca(String placa) {
@@ -537,6 +588,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorMercado = new javax.swing.JFormattedTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTblVeiculos = new javax.swing.JTable();
+        jLabelStatus = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro e Movimentação de Veiculos/Patrimonios");
@@ -954,6 +1006,9 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabelStatus.setText("Status:");
+        jLabelStatus.setToolTipText("");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -973,8 +1028,10 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JbtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabelCodigo)
-                        .addGap(40, 40, 40))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabelCodigo)
+                            .addComponent(jLabelStatus))
+                        .addGap(47, 47, 47))
                     .addComponent(jPaneDadosGerais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanelDadosValores, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -988,7 +1045,10 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                     .addComponent(JbtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JbtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JbtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelCodigo))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelCodigo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelStatus)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jCkbInativar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1129,6 +1189,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         } else {
             if (editando == true && validado == true) {
                 carrosDAO.update(clscarros);
+                atualizaListaCarros(jTblVeiculos.getSelectedRow());
+                carregarFrameLista(linhaIndice);
                 JOptionPane.showMessageDialog(this, carrosDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
                 setIconBtnNv(false);
                 precionado = false;
@@ -1216,51 +1278,40 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         if (jTxtPlacaBusca.getText().equals("") || jTxtPlacaBusca.getText().length() < 7) {
             JOptionPane.showMessageDialog(this, "Favor digitar ou conferir a placa digitada", "ADVERTÊNCIA", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            //jTblVeiculos.addRowSelectionInterval(0,0);
-            //table.addRowSelectionInterval(0,0);
-            System.out.println(""+jTblVeiculos.getRowCount());
-            jTblVeiculos.removeRowSelectionInterval(0, jTblVeiculos.getRowCount());
-            int i;
-            for ( i = 0; i < jTblVeiculos.getRowCount(); i++) {
-                if (jTblVeiculos.getValueAt(i, 2).toString().equals(jTxtPlacaBusca.getText())) {
-                    jTblVeiculos.addRowSelectionInterval(i,i);
+            jTxtPlacaBusca.setText(jTxtPlacaBusca.getText().toUpperCase());
+            jTblVeiculos.clearSelection();
+            //jTblVeiculos.removeRowSelectionInterval(indiceSelJtble, indiceSelJtble);
+
+            for (int i = 0; i < jTblVeiculos.getRowCount(); i++) {
+
+                if (jTblVeiculos.getValueAt(i, 2).toString().equals(jTxtPlacaBusca.getText().toUpperCase())) {
+                    jTblVeiculos.addRowSelectionInterval(i, i);
                     break;
                 }
             }
-            //clscarros = carrosDAO.select(jTxtPlacaBusca.getText());
-//            if (carrosDAO.isSucesso() == true) {
-//                carregarFrame();
-//                enableControl();
-//                atualizarJtable();
-//                setIconBtnNv(true);
-//                editando = true;
-//
-//            } else {
-//                JOptionPane.showMessageDialog(this, carrosDAO.getRetorno(), "ADVERTÊNCIA", JOptionPane.INFORMATION_MESSAGE);
-//            }
-
         }
     }//GEN-LAST:event_jBtnBuscarMouseClicked
 
     private void JbtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnEditarActionPerformed
+        clscarros = listaCarros.get(linhaIndice);
         precionado = true;
         editando = true;
         setIconBtnNv(true);
-        enableControlBusca();
+        enableControl();
     }//GEN-LAST:event_JbtnEditarActionPerformed
 
     private void jTblVeiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblVeiculosMouseClicked
         precionado = false;
         setIconBtnNv(false);
-        int linha = jTblVeiculos.getSelectedRow();
-        clscarros = carrosDAO.select(jTblVeiculos.getValueAt(linha, 2).toString());
-        System.out.println(jTblVeiculos.getValueAt(linha, 0).toString() + "Linha" + linha);
-        carregarFrame();
+        linhaIndice = jTblVeiculos.getSelectedRow();
+        //clscarros = carrosDAO.select(jTblVeiculos.getValueAt(linhaIndice, 2).toString());
+        //System.out.println(jTblVeiculos.getValueAt(linha, 0).toString() + "Linha" + linha);
+        carregarFrameLista(linhaIndice);
+        clscarros = listaCarros.get(linhaIndice);
         JbtnEditar.setEnabled(true);
         JbtnExcluir.setEnabled(true);
         JbtnNovo.setEnabled(true);
         
-
     }//GEN-LAST:event_jTblVeiculosMouseClicked
 
     private void jTxtNumeroRenavanFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNumeroRenavanFocusLost
@@ -1279,8 +1330,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     }//GEN-LAST:event_jTxtObservacoesFocusLost
 
     private void jCkbInativarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCkbInativarItemStateChanged
-        System.out.println(jCkbInativar.getActionCommand());
-        System.out.println(jCkbInativar.isCursorSet());
+        if (jCkbInativar.isSelected() == true) {
+            clscarros.setInativo(1);
+        } else if (jCkbInativar.isSelected() == false) {
+            clscarros.setInativo(0);
+        }
     }//GEN-LAST:event_jCkbInativarItemStateChanged
 
     private void JbtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnExcluirActionPerformed
@@ -1319,6 +1373,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     private javax.swing.JCheckBox jCkbInativar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelCodigo;
+    private javax.swing.JLabel jLabelStatus;
     private javax.swing.JPanel jPaneDadosGerais;
     private javax.swing.JPanel jPanelBusca;
     private javax.swing.JPanel jPanelDadosValores;
