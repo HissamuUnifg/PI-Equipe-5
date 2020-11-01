@@ -18,7 +18,7 @@ import models.ClsLogin;
 /**
  * Barema dos Status dos Carros Status 0 Liberado Status 1 Alugado
  *
- * Inativo: 1 para inativado,  0 para ativado
+ * Inativo: 1 para inativado, 0 para ativado
  *
  * @author Tiago Teixeira
  */
@@ -34,7 +34,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     private boolean precionado;
     List<ClsCarros> listaCarros;
     private int linhaIndice;
-    
+
     //variaveis de classes a serem usadas na tela
     controls.CarrosDAO carrosDAO;
     models.ClsCarros clscarros;
@@ -75,7 +75,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         try {
             addMascara();
         } catch (ParseException e) {
-            System.out.println("Erro aqui: "+ e);
+            System.out.println("Erro aqui: " + e);
         }
         controleDigitacao();
         setIcon();
@@ -83,12 +83,12 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         carregarJtable();
         precionado = false;
     }
-    
+
     //verificando status do cadastro
-    private boolean verificaStatusInativo(int valor){
-        if(clscarros.getInativo() == 0){
-        return false;
-        }else{
+    private boolean verificaStatusInativo(int valor) {
+        if (clscarros.getInativo() == 0) {
+            return false;
+        } else {
             return true;
         }
     }
@@ -96,7 +96,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     // metodos auxiliares para funcionamento da tela
     private void setCarroTipo() {
         //jCboTipo.removeAllItems();
-        jCboTipo.addItem("Selecione");
+
         jCboTipo.addItem("PASSEIO HATCH");
         jCboTipo.addItem("PASSEIO SEDAN");
         jCboTipo.addItem("UTILITARIO SUV");
@@ -105,7 +105,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
     private void setCarroClasse() {
         //jCboClasse.removeAllItems();
-        jCboClasse.addItem("Selecione");
+
         jCboClasse.addItem("POPULAR");
         jCboClasse.addItem("MEDIO");
         jCboClasse.addItem("LUXO");
@@ -159,7 +159,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jCboTipo.setEnabled(true);
         jCboClasse.setEnabled(true);
         jCkbInativar.setEnabled(true);
-        jTblVeiculos.setEnabled(true);
+        jTblVeiculos.setEnabled(false);
         jTxtAnoFabricacao.setEnabled(true);
         jTxtAnoModelo.setEnabled(true);
         jTxtChassi.setEnabled(true);
@@ -271,177 +271,146 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             msgObgCampo("Nome");
             jTxtNome.requestFocus();
             return false;
-        }else
-        if (jTxtNome.getText().length() > 49) {
+        } else if (jTxtNome.getText().length() > 49) {
             msgAdvCampo("Nome");
             jTxtNome.requestFocus();
             return false;
-        }else
-        //valida campo modelo
+        } else //valida campo modelo
         if (jTxtVeiculo.getText().length() < 1) {
             msgObgCampo("Modelo");
             jTxtVeiculo.requestFocus();
             return false;
-        }else
-        if (jTxtVeiculo.getText().length() > 49) {
+        } else if (jTxtVeiculo.getText().length() > 49) {
             msgAdvCampo("Modelo");
             jTxtVeiculo.requestFocus();
             return false;
-        }else
-        //valida campo marca
+        } else //valida campo marca
         if (jTxtMarca.getText().length() < 1) {
             msgObgCampo("Marca");
             jTxtMarca.requestFocus();
             return false;
-        }else
-        if (jTxtMarca.getText().length() > 49) {
+        } else if (jTxtMarca.getText().length() > 49) {
             msgAdvCampo("Marca");
             jTxtMarca.requestFocus();
             return false;
-        }else
-        //valida campo cor
+        } else //valida campo cor
         if (jTxtCor.getText().length() < 1) {
             msgObgCampo("Cor");
             jTxtCor.requestFocus();
             return false;
-        }else
-        if (jTxtCor.getText().length() > 49) {
+        } else if (jTxtCor.getText().length() > 49) {
             msgAdvCampo("Cor");
             jTxtCor.requestFocus();
             return false;
-        }else
-        //valida campo marca
+        } else //valida campo marca
         if (jTxtPlaca.getText().length() < 1) {
             msgObgCampo("Placa");
             jTxtPlaca.requestFocus();
             return false;
-        }else
-        if (jTxtPlaca.getText().length() > 7) {
+        } else if (jTxtPlaca.getText().length() > 7) {
             msgAdvCampo("Placa");
             jTxtPlaca.requestFocus();
             return false;
-        }else
-        if (jTxtPlaca.getText().length() < 7) {
+        } else if (jTxtPlaca.getText().length() < 7) {
             msgAdvCampo("Placa");
             jTxtPlaca.requestFocus();
             return false;
-        }else
-        //valida campo chassi
-        
+        } else //valida campo chassi
         if (jTxtChassi.getText().length() < 1) {
             msgObgCampo("Chassi");
             jTxtChassi.requestFocus();
             return false;
-        }else
-        if (jTxtChassi.getText().length() > 49) {
+        } else if (jTxtChassi.getText().length() > 49) {
             msgAdvCampo("Chassi");
             jTxtChassi.requestFocus();
             return false;
-        }else
-        //valida campo km rodado
+        } else //valida campo km rodado
         if (jTxtKm.getText().length() < 1) {
             msgObgCampo("KmRodados");
             jTxtKm.requestFocus();
             return false;
-        }else
-        if (jTxtKm.getText().length() > 9) {
+        } else if (jTxtKm.getText().length() > 9) {
             msgAdvCampo("KmRodados");
             jTxtKm.requestFocus();
             return false;
-        }else
-        //valida campo AnoModelo
+        } else //valida campo AnoModelo
         if (jTxtAnoModelo.getText().length() < 1) {
             msgObgCampo("AnoModelo");
             jTxtAnoModelo.requestFocus();
             return false;
-        }else
-        if (jTxtAnoModelo.getText().length() > 4) {
+        } else if (jTxtAnoModelo.getText().length() > 4) {
             msgAdvCampo("AnoModelo");
             jTxtAnoModelo.requestFocus();
             return false;
-        }else
-        if (jTxtAnoModelo.getText().length() < 4) {
+        } else if (jTxtAnoModelo.getText().length() < 4) {
             msgAdvCampo("AnoModelo");
             jTxtAnoModelo.requestFocus();
             return false;
-        }else
-        //valida campo AnoFabricacao
+        } else //valida campo AnoFabricacao
         if (jTxtAnoFabricacao.getText().length() < 1) {
             msgObgCampo("AnoFabricacao");
             jTxtAnoFabricacao.requestFocus();
             return false;
-        }else
-        if (jTxtAnoFabricacao.getText().length() > 4) {
+        } else if (jTxtAnoFabricacao.getText().length() > 4) {
             msgAdvCampo("AnoFabricacao");
             jTxtAnoFabricacao.requestFocus();
             return false;
-        }else
-        if (jTxtAnoFabricacao.getText().length() < 4) {
+        } else if (jTxtAnoFabricacao.getText().length() < 4) {
             msgAdvCampo("AnoFabricacao");
             jTxtAnoFabricacao.requestFocus();
             return false;
-        }else
-        //Valida campo ValorMercado
+        } else //Valida campo ValorMercado
         if (jTxtValorMercado.getText().length() < 1) {
             msgObgCampo("ValorMercado");
             jTxtValorMercado.requestFocus();
             return false;
-        }else
-        if (jTxtValorMercado.getText().length() > 20) {
+        } else if (jTxtValorMercado.getText().length() > 20) {
             msgAdvCampo("ValorMercado");
             jTxtValorMercado.requestFocus();
             return false;
-        }else
-        // valida campo ValorSeguro
+        } else // valida campo ValorSeguro
         if (jTxtValorSeguro.getText().length() < 1) {
             msgObgCampo("ValorSeguro");
             jTxtValorSeguro.requestFocus();
             return false;
-        }else
-        if (jTxtValorSeguro.getText().length() > 20) {
+        } else if (jTxtValorSeguro.getText().length() > 20) {
             msgAdvCampo("ValorSeguro");
             jTxtValorSeguro.requestFocus();
             return false;
-        }else
-        //valida campo ValorKmRodado
+        } else //valida campo ValorKmRodado
         if (jTxtValorKmRodado.getText().length() < 1) {
             msgObgCampo("ValorKmRodado");
             jTxtValorKmRodado.requestFocus();
             return false;
-        }else
-        if (jTxtValorKmRodado.getText().length() > 20) {
+        } else if (jTxtValorKmRodado.getText().length() > 20) {
             msgAdvCampo("ValorKmRodado");
             jTxtValorKmRodado.requestFocus();
             return false;
-        }else
-        //valida campo ValorDiaria
+        } else //valida campo ValorDiaria
         if (jTxtValorDiaria.getText().length() < 1) {
             msgObgCampo("ValorDiaria");
             jTxtValorDiaria.requestFocus();
             return false;
-        }else
-        if (jTxtValorDiaria.getText().length() > 20) {
+        } else if (jTxtValorDiaria.getText().length() > 20) {
             msgAdvCampo("ValorDiaria");
             jTxtValorDiaria.requestFocus();
             return false;
-        }else 
-        //valida campo Numero Renavan
+        } else //valida campo Numero Renavan
         if (jTxtNumeroRenavan.getText().length() < 1) {
             msgObgCampo("NumeroRenavan");
             jTxtNumeroRenavan.requestFocus();
             return false;
-        }else
-        if (jTxtNumeroRenavan.getText().length() > 30) {
+        } else if (jTxtNumeroRenavan.getText().length() > 30) {
             msgAdvCampo("NumeroRenavan");
             jTxtNumeroRenavan.requestFocus();
             return false;
-        }else
-        if (jTxtNumeroRenavan.getText().length() < 9) {
+        } else if (jTxtNumeroRenavan.getText().length() < 9) {
             msgAdvCampo("NumeroRenavan");
             jTxtNumeroRenavan.requestFocus();
             return false;
-        }else
-        return true;
+        } else {
+            return true;
+        }
 
     }
 
@@ -449,9 +418,9 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
         jTblVeiculos.setModel(modeloTable);
     }
-    
+
     private void removeLinhaJtable(int indice) {
-        
+
         modeloTable.deleteRow(indice);
     }
 
@@ -459,16 +428,16 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
         modeloTable.addRow(clscarros);
     }
-    
-    private void atualizaListaCarros(int indice){
+
+    private void atualizaListaCarros(int indice) {
         listaCarros.set(indice, clscarros);
         modeloTable.updatedRow(indice, indice);
     }
-    
+
     private void limpaJtable() {
         jTblVeiculos.setModel(modeloTable);
     }
-    
+
     private void carregarFrame() {
 
         jLabelCodigo.setText("Codigo: " + clscarros.getId());
@@ -493,7 +462,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jCboTipo.setSelectedItem(clscarros.getTipoVeiculo());
         jCboClasse.setSelectedItem(clscarros.getClasse());
     }
-    
+
     private void carregarFrameLista(int indice) {
         //o indice é o objeto selecionado dentro da lista
         jLabelCodigo.setText("Codigo: " + listaCarros.get(indice).getId());
@@ -517,19 +486,19 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         setCarroTipo();
         jCboTipo.setSelectedItem(listaCarros.get(indice).getTipoVeiculo());
         jCboClasse.setSelectedItem(listaCarros.get(indice).getClasse());
-        if(listaCarros.get(indice).getInativo()==1){
+        if (listaCarros.get(indice).getInativo() == 1) {
             jCkbInativar.setSelected(true);
-             jLabelStatus.setText("Status: Veiculo Inativado");
+            jLabelStatus.setText("Status: Veiculo Inativado");
             jLabelStatus.setForeground(Color.RED);
-           
-        }else if (listaCarros.get(indice).getInativo()==0){
+
+        } else if (listaCarros.get(indice).getInativo() == 0) {
             jCkbInativar.setSelected(false);
         }
-        if(listaCarros.get(indice).getStatus() == 0 && listaCarros.get(indice).getInativo()==0){
+        if (listaCarros.get(indice).getStatus() == 0 && listaCarros.get(indice).getInativo() == 0) {
             jLabelStatus.setText("Status: Liberado");
             jLabelStatus.setForeground(Color.GREEN);
-  
-        }else if (listaCarros.get(indice).getStatus() == 1){
+
+        } else if (listaCarros.get(indice).getStatus() == 1) {
             jLabelStatus.setText("Status: Alugado");
             jLabelStatus.setForeground(Color.BLUE);
         }
@@ -955,6 +924,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             }
         });
 
+        jTblVeiculos.setRequestFocusEnabled(false);
         jTblVeiculos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTblVeiculosMouseClicked(evt);
@@ -1074,6 +1044,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
     private void JbtnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnNovoActionPerformed
         if (precionado == false) {
+            clscarros.ClsCarrosClear();
+            jTblVeiculos.setEnabled(false);
             setIconBtnNv(true);
             enableControl();
             clearTxt();
@@ -1084,6 +1056,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             setCarroClasse();
             setCarroTipo();
         } else {
+            jTblVeiculos.setEnabled(true);
             setIconBtnNv(false);
             disableControl();
             clearTxt();
@@ -1180,22 +1153,47 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         boolean validado = validaCampos();
         if (editando == false && validado == true) {
             carrosDAO.save(clscarros);
-            JOptionPane.showMessageDialog(this, carrosDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
-            setIconBtnNv(false);
-            precionado = false;
-            editando = false;
-            disableControl();
-            atualizarJtable();
-        } else {
-            if (editando == true && validado == true) {
-                carrosDAO.update(clscarros);
-                atualizaListaCarros(jTblVeiculos.getSelectedRow());
-                carregarFrameLista(linhaIndice);
+            if (carrosDAO.isSucesso() == true) {
                 JOptionPane.showMessageDialog(this, carrosDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
+                jTblVeiculos.setEnabled(true);
                 setIconBtnNv(false);
                 precionado = false;
                 editando = false;
                 disableControl();
+                atualizarJtable();
+            } else if (carrosDAO.isSucesso() == false) {
+                JOptionPane.showMessageDialog(this, carrosDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
+                jTblVeiculos.setEnabled(true);
+                setIconBtnNv(false);
+                precionado = false;
+                editando = false;
+                disableControl();
+                clearTxt();
+            }
+
+        } else {
+            if (editando == true && validado == true) {
+                carrosDAO.update(clscarros);
+                if (carrosDAO.isSucesso() == true) {
+                    jTblVeiculos.setEnabled(true);
+                    atualizaListaCarros(jTblVeiculos.getSelectedRow());
+                    carregarFrameLista(linhaIndice);
+                    JOptionPane.showMessageDialog(this, carrosDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
+                    setIconBtnNv(false);
+                    precionado = false;
+                    editando = false;
+                    disableControl();
+                } else if (carrosDAO.isSucesso() == false) {
+                    JOptionPane.showMessageDialog(this, carrosDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
+                    jTblVeiculos.setEnabled(true);
+                    atualizaListaCarros(jTblVeiculos.getSelectedRow());
+                    carregarFrameLista(linhaIndice);
+                    setIconBtnNv(false);
+                    precionado = false;
+                    editando = false;
+                    disableControl();
+                    clearTxt();
+                }
             }
         }
     }//GEN-LAST:event_JbtnSalvarActionPerformed
@@ -1294,6 +1292,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
     private void JbtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnEditarActionPerformed
         clscarros = listaCarros.get(linhaIndice);
+        jTblVeiculos.setEnabled(false);
         precionado = true;
         editando = true;
         setIconBtnNv(true);
@@ -1304,18 +1303,18 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         precionado = false;
         setIconBtnNv(false);
         linhaIndice = jTblVeiculos.getSelectedRow();
+        clscarros = listaCarros.get(linhaIndice);
         //clscarros = carrosDAO.select(jTblVeiculos.getValueAt(linhaIndice, 2).toString());
         //System.out.println(jTblVeiculos.getValueAt(linha, 0).toString() + "Linha" + linha);
         carregarFrameLista(linhaIndice);
-        clscarros = listaCarros.get(linhaIndice);
         JbtnEditar.setEnabled(true);
         JbtnExcluir.setEnabled(true);
         JbtnNovo.setEnabled(true);
-        
+
     }//GEN-LAST:event_jTblVeiculosMouseClicked
 
     private void jTxtNumeroRenavanFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNumeroRenavanFocusLost
-               if ("".equals(Integer.parseInt(jTxtNumeroRenavan.getText()))) {
+        if ("".equals(Integer.parseInt(jTxtNumeroRenavan.getText()))) {
         } else {
             clscarros.setRenavam(Integer.parseInt(jTxtNumeroRenavan.getText()));
         }
@@ -1324,8 +1323,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     private void jTxtObservacoesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtObservacoesFocusLost
         if (jTxtObservacoes.getText().equals("")) {
             clscarros.setObsEstado(" ");
-        }else{
-        clscarros.setObsEstado(jTxtObservacoes.getText());
+        } else {
+            clscarros.setObsEstado(jTxtObservacoes.getText());
         }
     }//GEN-LAST:event_jTxtObservacoesFocusLost
 
@@ -1339,21 +1338,21 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
     private void JbtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnExcluirActionPerformed
         int deletar = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir?", "Atenção", JOptionPane.YES_NO_OPTION);
-        if(deletar == 0){
+        if (deletar == 0) {
             carrosDAO.delete(clscarros.getId());
-            if(carrosDAO.isSucesso() == true){
+            if (carrosDAO.isSucesso() == true) {
                 clearTxt();
                 disableControl();
                 removeLinhaJtable(jTblVeiculos.getSelectedRow());
                 setIconBtnNv(false);
                 precionado = false;
-            }else{
-                JOptionPane.showMessageDialog(this, carrosDAO.getRetorno() + "O usuario "+userLoged+""
-                                              + " não tem permissao para deletar!", "Erro", JOptionPane.ERROR_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, carrosDAO.getRetorno() + "O usuario " + userLoged + ""
+                        + " não tem permissao para deletar!", "Erro", JOptionPane.ERROR_MESSAGE);
                 setIconBtnNv(true);
                 precionado = true;
             }
-            
+
         }
     }//GEN-LAST:event_JbtnExcluirActionPerformed
 

@@ -55,31 +55,28 @@ public class ClsCarros {
     }
 
 
-    /*public ClsCarros(ClsCarros clscarros){
-        this.Id = clscarros.getId();
-        this.Nome = clscarros.getNome();
-        this.Marca = clscarros.getMarca();
-        this.Modelo = clscarros.getModelo();
-        this.Classe = clscarros.getClasse();
-        this.TipoVeiculo = clscarros.getTipoVeiculo();
-        this.Cor = clscarros.getCor();
-        this.Placa = clscarros.getPlaca();
-        this.Renavam = clscarros.getRenavam();
-        this.ObsEstado = clscarros.getObsEstado();
-        this.DataCompra = clscarros.getDataCompra();
-        this.AnoModelo = clscarros.getAnoModelo();
-        this.AnoFabricacao = clscarros.getAnoFabricacao();
-        this.Chassi = clscarros.getChassi();
-        this.KmRodados = clscarros.getKmRodados();
-        this.ValorMercado = clscarros.getValorMercado();
-        this.ValorSeguro = clscarros.getValorSeguro();
-        this.ValorKmRd = clscarros.getValorKmRd();
-        this.ValorDiariaLoc = clscarros.getValorDiariaLoc();
-        this.Status = clscarros.getStatus();
-        this.Inativo = clscarros.getInativo();
-        this.id_colaborador = clscarros.getId_colaborador();    
+    public void ClsCarrosClear(){
+        this.Id = 0;
+        this.Nome = "";
+        this.Marca = "";
+        this.Modelo = "";
+        this.Classe = "";
+        this.TipoVeiculo = "";
+        this.Cor = "";
+        this.Placa = "";
+        this.Renavam = 0;
+        this.ObsEstado = "";
+        this.DataCompra = "";
+        this.AnoModelo = 0;
+        this.AnoFabricacao = 0;
+        this.Chassi = "";
+        this.KmRodados = 0;
+        this.ValorMercado = 0;
+        this.ValorSeguro = 0;
+        this.ValorKmRd = 0;
+        this.ValorDiariaLoc = 0;           
     }
-     */
+     
     public ClsCarros() {
     }
 

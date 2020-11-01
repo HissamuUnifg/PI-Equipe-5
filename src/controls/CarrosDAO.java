@@ -74,17 +74,22 @@ public class CarrosDAO {
             retorno = "Gravado com sucesso!";
             sucesso = true;
         } catch (SQLException e) {
-            if (e.getErrorCode() == 1062) {
-                retorno = "O Carro já está cadastrado!";
-                sucesso = false;
-                System.out.println("Erro aqui: " + e);
-            }
-            if (e.getErrorCode() == 1048) {
-                retorno = "Verifique todos os campos se estão preenchidos!";
-                sucesso = false;
+            switch (e.getErrorCode()) {
+                case 1048:
+                    retorno = "Verifique todos os campos se estão preenchidos!";
+                    sucesso = false;
+                    break;
+                case 1062:
+                    retorno = "Carro ja cadastrado!";
+                    sucesso = false;
+                    break;
+                default:
+                    retorno = "Erro ao atualizar: " + e;
+                    sucesso = false;
+                    break;
             }
 
-            System.out.println("" + e.getErrorCode() + "" + e);
+            //System.out.println("" + e.getErrorCode() + "" + e);
 
         } finally {
             try {
@@ -148,12 +153,20 @@ public class CarrosDAO {
             retorno = "Atualizado com sucesso!";
             sucesso = true;
         } catch (SQLException e) {
-            if (e.getErrorCode() == 1048) {
-                retorno = "Verifique todos os campos se estão preenchidos!";
-                sucesso = false;
-            } else {
-                retorno = "Erro ao atualizar: " + e;
-                sucesso = false;
+            //System.out.println("Codigo do Erro: "+ e.getErrorCode());
+            switch (e.getErrorCode()) {
+                case 1048:
+                    retorno = "Verifique todos os campos se estão preenchidos!";
+                    sucesso = false;
+                    break;
+                case 1062:
+                    retorno = "Carro ja cadastrado!";
+                    sucesso = false;
+                    break;
+                default:
+                    retorno = "Erro ao atualizar: " + e;
+                    sucesso = false;
+                    break;
             }
         } finally {
             try {

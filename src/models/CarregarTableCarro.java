@@ -99,7 +99,10 @@ public class CarregarTableCarro extends AbstractTableModel {
     public void updatedRow(int indiceI, int indiceF){
         this.fireTableRowsUpdated(indiceI, indiceF);
     }
-
+    
+    public void clearList(){
+    this.clscarros.clear();
+    }
 
 
 
