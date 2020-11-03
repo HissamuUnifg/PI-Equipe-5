@@ -70,5 +70,14 @@ public class ClsMascaraCampos {
         mask.install(textfield);
         return mask;
     }
+    public MaskFormatter mascaraDataAno(JFormattedTextField textfield) throws ParseException {
+        MaskFormatter mask = null;
+        mask = new MaskFormatter("####");
+        mask.setOverwriteMode(true);
+        mask.setValidCharacters("0123456789");
+        mask.setPlaceholderCharacter('_');
+        mask.install(textfield);
+        return mask;
+    }
 
 }

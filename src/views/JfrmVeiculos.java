@@ -110,7 +110,12 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jCboClasse.addItem("MEDIO");
         jCboClasse.addItem("LUXO");
     }
-
+    
+    private void cleanCarroTipoClasse() {
+        jCboClasse.removeAllItems();
+        jCboTipo.removeAllItems();
+    }
+    
     private void setIconBtnNv(boolean funcao) {
         if (funcao == true) {
             JbtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_cancelar.png"))); // NOI18N
@@ -238,6 +243,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorMercado.setText("");
         jTxtValorSeguro.setText("");
         jTxtVeiculo.setText("");
+        jLabelCodigo.setText("");
+        jLabelStatus.setText("");
     }
 
     private void msgObgCampo(String dado) {
@@ -250,6 +257,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
     private void addMascara() throws ParseException {
         JfTxtData.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraData(JfTxtData)));
+       // JfTxtData.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraDataAno(JfTxtData)));
+       // JfTxtData.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraDataAno(JfTxtData)));
     }
 
     private void controleDigitacao() {
@@ -482,6 +491,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorSeguro.setText(FormatterMoeda.format(listaCarros.get(indice).getValorSeguro()));
         jTxtVeiculo.setText(listaCarros.get(indice).getModelo());
         JfTxtData.setText(clsValidacoes.dataFormatoBR(clsValidacoes.dataFormatoUS(listaCarros.get(indice).getDataCompra())));
+        cleanCarroTipoClasse();
         setCarroClasse();
         setCarroTipo();
         jCboTipo.setSelectedItem(listaCarros.get(indice).getTipoVeiculo());
@@ -1053,6 +1063,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             precionado = true;
             editando = false;
             jTxtNome.requestFocus();
+            cleanCarroTipoClasse();
             setCarroClasse();
             setCarroTipo();
         } else {
