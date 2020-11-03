@@ -5,7 +5,7 @@ package models;
  *
  * @author Tiago Teixeira
  */
-public class ClsClientes extends ClsUsuarios {
+public class ClsClientes extends ClsUsuarios{
    
     protected String cnpj;
     protected String rg;
@@ -15,11 +15,25 @@ public class ClsClientes extends ClsUsuarios {
     protected String Email;
     protected String Observacoes;
 
+    @Override   
     public boolean isValido() {
         return valido;
     }
     
+    public void cleanClientes() {
+        this.id = 0;
+        this.nome = "";
+        this.cpf = "";
+        this.telefone = "";
+        this.cnpj = "";
+        this.rg = "";
+        this.ie = "";
+        this.cnh = "";
+        this.celular = "";
+        this.Email = "";
+        this.Observacoes = "";
     
+    }
 
     public ClsClientes( int id, String nome, String nomeLogin, String cpf, String telefone,
                         String cnpj, String rg, String ie, String cnh, String celular,

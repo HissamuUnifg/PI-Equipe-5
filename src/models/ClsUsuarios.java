@@ -57,8 +57,7 @@ public class ClsUsuarios {
             this.cpf = cpf_reformatado;
         }else{
             valido = false;
-        }
-
+        }       
     }
 
     public String getTelefone() {

@@ -12,6 +12,7 @@ package models;
     private String senha;
     
 
+    @Override
     public boolean isValido() {
         return valido;
     }

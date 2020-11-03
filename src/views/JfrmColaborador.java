@@ -552,13 +552,14 @@ public class JfrmColaborador extends javax.swing.JFrame {
     }//GEN-LAST:event_jTxtFoneKeyPressed
 
     private void jTxtCpfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtCpfFocusLost
-       
-        clscolaborador.setCpf(jTxtCpf.getText());
+        clscolaborador.setCpf(jTxtCpf.getText());       
         if (jTxtCpf.getText().length() < 11) {
             JOptionPane.showMessageDialog(this, "O numero do CPF é invalido, tamanho menor que 11 digitos!", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
             jTxtCpf.setText("");
-        }
-        if (clscolaborador.isValido() == false) {
+        }else if (jTxtCpf.getText().length() < 11) {
+            JOptionPane.showMessageDialog(this, "O numero do CPF é invalido, tamanho não pode sermaior que 11 digitos!", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+            jTxtCpf.setText("");
+        }else if (clscolaborador.isValido() == false) {
             JOptionPane.showMessageDialog(this, "O numero do CPF é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
             jTxtCpf.setText("");
         } else {

@@ -16,6 +16,7 @@ public class JfrmLogin extends javax.swing.JFrame {
 
     private boolean loginsucess;
     private boolean usarOffline;
+    private String senhaDigitada;
     
     
     
@@ -89,6 +90,11 @@ public class JfrmLogin extends javax.swing.JFrame {
 
         jPassSenha.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jPassSenha.setToolTipText("Digite a sua senha!");
+        jPassSenha.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jPassSenhaFocusLost(evt);
+            }
+        });
         jPassSenha.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jPassSenhaActionPerformed(evt);
@@ -154,8 +160,8 @@ public class JfrmLogin extends javax.swing.JFrame {
     private void jBtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLoginActionPerformed
 
         if (jCboUsuario.getSelectedIndex() > 0) {
-            models.ClsLogin clslogin = new models.ClsLogin();
-            loginsucess = clslogin.validarlogin(jCboUsuario.getSelectedItem().toString(), new String(jPassSenha.getPassword()));
+            senhaDigitada =  new String(jPassSenha.getPassword());
+            loginsucess = clslogin.validarlogin(jCboUsuario.getSelectedItem().toString(), senhaDigitada);
             if (loginsucess == true) {
                 clslogin.setUserLoged(jCboUsuario.getSelectedItem().toString());
                 this.setVisible(false);
@@ -175,19 +181,15 @@ public class JfrmLogin extends javax.swing.JFrame {
         if (jCboUsuario.getSelectedIndex() > -1) {
             jPassSenha.setEnabled(true);
             jPassSenha.requestFocus();
-            if(usarOffline == true){
+            if (usarOffline == true) {
                 loadUser();
-            }else{
-               List<ClsLogin> ResultSet = loginDAO.select(jCboUsuario.getSelectedItem().toString());
-               clslogin.ClsLogin(ResultSet.get(0).getId(),jCboUsuario.getSelectedItem().toString(),
-                                ResultSet.get(0).getSenhaDAO(),ResultSet.get(0).getCpfUserLoged());
-               
-               //clslogin.setId(ResultSet.get(0).getId());
-               //clslogin.setSenhaDAO(ResultSet.get(0).getSenhaDAO());
-               //clslogin.setUsuarioDAO(jCboUsuario.getSelectedItem().toString());
-               //clslogin.setCpfUserLoged(ResultSet.get(0).getCpfUserLoged());
+            } else {
+                List<ClsLogin> ResultSet = loginDAO.select(jCboUsuario.getSelectedItem().toString());
+                clslogin.ClsLogin(ResultSet.get(0).getId(), jCboUsuario.getSelectedItem().toString(),
+                        ResultSet.get(0).getSenhaDAO(), ResultSet.get(0).getCpfUserLoged());
+
             }
-            
+
         }
     }//GEN-LAST:event_jCboUsuarioItemStateChanged
 
@@ -199,7 +201,8 @@ public class JfrmLogin extends javax.swing.JFrame {
         jBtnLogin.setEnabled(true);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
             jBtnLogin.requestFocus();
-            loginsucess = clslogin.validarlogin(jCboUsuario.getSelectedItem().toString(), new String(jPassSenha.getPassword()));
+            senhaDigitada =  new String(jPassSenha.getPassword());
+            loginsucess = clslogin.validarlogin(jCboUsuario.getSelectedItem().toString(), senhaDigitada);
             if (loginsucess == true) {
                 clslogin.setUserLoged(jCboUsuario.getSelectedItem().toString());
                 this.setVisible(false);
@@ -211,6 +214,13 @@ public class JfrmLogin extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jPassSenhaKeyPressed
+
+    private void jPassSenhaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jPassSenhaFocusLost
+        senhaDigitada = new String(jPassSenha.getPassword());
+        jBtnLogin.setEnabled(true);
+        jBtnLogin.requestFocus();
+       
+    }//GEN-LAST:event_jPassSenhaFocusLost
 
   
                
