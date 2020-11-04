@@ -31,28 +31,35 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <Component id="JbtnNovo" min="-2" pref="75" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-              <Component id="JbtnEditar" min="-2" pref="75" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="JbtnSalvar" min="-2" pref="75" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="JbtnImprimir" min="-2" pref="75" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="JbtnBuscar" min="-2" pref="75" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="JbtnExcluir" min="-2" pref="75" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="jLabelCodigo" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
-          </Group>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="jPanelDadosEnderecos" max="32767" attributes="0"/>
-                  <Component id="jPanDadosGerais" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jPanelObservacoes" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="JbtnNovo" min="-2" pref="75" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+                      <Component id="JbtnEditar" min="-2" pref="75" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="JbtnSalvar" min="-2" pref="75" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="JbtnImprimir" min="-2" pref="75" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="JbtnBuscar" min="-2" pref="75" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="JbtnExcluir" min="-2" pref="75" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabelCodigo" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCkb_inativar" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Component id="jPanelDadosEnderecos" max="32767" attributes="0"/>
+                          <Component id="jPanDadosGerais" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jPanelObservacoes" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -71,6 +78,8 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabelCodigo" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="31" max="32767" attributes="0"/>
+                      <Component id="jCkb_inativar" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -79,7 +88,7 @@
               <Component id="jPanelObservacoes" min="-2" pref="128" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanelDadosEnderecos" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace pref="22" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -177,24 +186,27 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="jTxtNome" max="32767" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTxtCPF_CNPJ" min="-2" pref="137" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTxt_rg_ie" min="-2" pref="137" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTxtCNH" min="-2" pref="137" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
                           <Component id="jFtxtFone" min="-2" pref="151" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jFtxtCelular" min="-2" pref="151" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jTxtEmail" max="32767" attributes="0"/>
                       </Group>
+                      <Group type="102" attributes="0">
+                          <Component id="jTxtNome" min="-2" pref="410" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="jRadioBtnCnpj" min="-2" max="-2" attributes="0"/>
+                              <Component id="jRadioBtnCpf" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jTxtCPF_CNPJ" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Component id="jTxt_rg_ie" min="-2" pref="137" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jTxtCNH" min="-2" pref="137" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jCkb_inativar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -202,11 +214,22 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jTxtCPF_CNPJ" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTxt_rg_ie" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTxtCNH" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTxtNome" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jTxtCPF_CNPJ" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jTxt_rg_ie" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jTxtCNH" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jTxtNome" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <Component id="jRadioBtnCpf" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jRadioBtnCnpj" min="-2" max="-2" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -214,10 +237,6 @@
                       <Component id="jFtxtCelular" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTxtEmail" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-              </Group>
-              <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jCkb_inativar" min="-2" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -269,12 +288,6 @@
                 <TitledBorder title="CNH"/>
               </Border>
             </Property>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JCheckBox" name="jCkb_inativar">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Inativar"/>
-            <Property name="toolTipText" type="java.lang.String" value="Marque aqui caso deseje Inativar o cliente"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jFtxtFone">
@@ -339,6 +352,18 @@
                 <TitledBorder title="Nome"/>
               </Border>
             </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="jRadioBtnCpf">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="CPF"/>
+            <Property name="toolTipText" type="java.lang.String" value="Marque para pessoa fisica!"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="jRadioBtnCnpj">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="CNPJ"/>
+            <Property name="toolTipText" type="java.lang.String" value="Marque para pessoa Juridica!"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -675,6 +700,12 @@
     <Component class="javax.swing.JLabel" name="jLabelCodigo">
       <Properties>
         <Property name="text" type="java.lang.String" value="Codigo:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JCheckBox" name="jCkb_inativar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Inativar"/>
+        <Property name="toolTipText" type="java.lang.String" value="Marque aqui caso deseje Inativar o cliente"/>
       </Properties>
     </Component>
   </SubComponents>

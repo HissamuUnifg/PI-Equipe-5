@@ -1,19 +1,38 @@
 
 package models;
 
+
 /**
  *
  * @author Tiago Teixeira
  */
 public class ClsClientes extends ClsUsuarios{
    
-    protected String cnpj;
-    protected String rg;
-    protected String ie;
-    protected String cnh;
-    protected String celular;
-    protected String Email;
-    protected String Observacoes;
+    private String cnpj;
+    private String RazaoSocial;
+    private String rg;
+    private String ie;
+    private String cnh;
+    private String celular;
+    private String Email;
+    private String Observacoes;
+    private String DataNascimento;
+
+    public String getRazaoSocial() {
+        return RazaoSocial;
+    }
+
+    public void setRazaoSocial(String RazaoSocial) {
+        this.RazaoSocial = RazaoSocial;
+    }
+
+    public String getDataNascimento() {
+        return DataNascimento;
+    }
+
+    public void setDataNascimento(String DataNascimento) {
+        this.DataNascimento = DataNascimento;
+    }
 
     @Override   
     public boolean isValido() {
@@ -32,12 +51,14 @@ public class ClsClientes extends ClsUsuarios{
         this.celular = "";
         this.Email = "";
         this.Observacoes = "";
+        this.RazaoSocial = "";
+        this.DataNascimento = "";
     
     }
 
     public ClsClientes( int id, String nome, String nomeLogin, String cpf, String telefone,
                         String cnpj, String rg, String ie, String cnh, String celular,
-                        String Email, String Observacoes) {
+                        String Email, String Observacoes, String RazaoSocial, String DataNascimento) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
@@ -49,6 +70,8 @@ public class ClsClientes extends ClsUsuarios{
         this.celular = celular;
         this.Email = Email;
         this.Observacoes = Observacoes;
+        this.RazaoSocial = RazaoSocial;
+        this.DataNascimento = DataNascimento;
     }
 
     
