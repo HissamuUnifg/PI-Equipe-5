@@ -3,6 +3,8 @@ package views;
 import java.awt.Color;
 import models.ClsCarregarTableCarro;
 import java.awt.Toolkit;
+import java.io.File;
+import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,7 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
 import models.ClsCarros;
 import models.ClsControlaCpNumeric;
+import models.ClsImpressao;
 import models.ClsLogin;
+import net.sf.jasperreports.engine.JRException;
 
 /**
  * Barema dos Status dos Carros Status 0 Liberado Status 1 Alugado
@@ -153,6 +157,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jBtnSalvar.setEnabled(false);
         jBtnNovo.setEnabled(true);
         jBtnBuscar.setEnabled(true);
+        JbtnImprimir.setEnabled(false);
 
     }
 
@@ -517,6 +522,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTblVeiculos = new javax.swing.JTable();
         jLabelStatus = new javax.swing.JLabel();
+        JbtnImprimir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro e Movimentação de Veiculos/Patrimonios");
@@ -938,6 +944,16 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jLabelStatus.setText("Status:");
         jLabelStatus.setToolTipText("");
 
+        JbtnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/print_121773.png"))); // NOI18N
+        JbtnImprimir.setToolTipText("Clique aqui para imprimir Relatorio Colaborador");
+        JbtnImprimir.setBorder(null);
+        JbtnImprimir.setFocusPainted(false);
+        JbtnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JbtnImprimirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -956,6 +972,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                         .addComponent(jBtnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jBtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(JbtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelCodigo)
@@ -977,7 +995,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelCodigo)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelStatus)))
+                        .addComponent(jLabelStatus))
+                    .addComponent(JbtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jCkbInativar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1271,6 +1290,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jBtnEditar.setEnabled(true);
         jBtnExcluir.setEnabled(true);
         jBtnNovo.setEnabled(true);
+        JbtnImprimir.setEnabled(true);
 
     }//GEN-LAST:event_jTblVeiculosMouseClicked
 
@@ -1317,11 +1337,24 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
+    private void JbtnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnImprimirActionPerformed
+        File directory = new File("./src/relatorios/relVeiculos.jrxml");
+        // passa o caminho do relatorio e o parametro para carregar o relatorio.
+        try {
+            ClsImpressao clsimpressao = new ClsImpressao();
+            clsimpressao.ClsImpressao(directory.getAbsolutePath(), "Placa", listaCarros.get(linhaIndice).getPlaca().toUpperCase(), "Cadastro do Veiculo");
+        } catch (ClassNotFoundException | SQLException | JRException e) {
+            JOptionPane.showMessageDialog(this, "Erro foi aqui" + e, "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+        
+    }//GEN-LAST:event_JbtnImprimirActionPerformed
+
     /**
      * @param args the command line arguments
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton JbtnImprimir;
     private javax.swing.JFormattedTextField JfTxtData;
     private javax.swing.JButton jBtnBuscar;
     private javax.swing.JButton jBtnEditar;

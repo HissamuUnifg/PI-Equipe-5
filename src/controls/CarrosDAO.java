@@ -272,7 +272,7 @@ public class CarrosDAO {
             carroEcontrado.setInativo(rset.getInt("Inativo"));
             carroEcontrado.setId_colaborador(rset.getInt("Id_colaborador"));
             }
-            //ClsCarros incremento = new ClsCarros(carroEcontrado);
+           
             retorno = "Carro Encontrado!";
             sucesso = true;
 
