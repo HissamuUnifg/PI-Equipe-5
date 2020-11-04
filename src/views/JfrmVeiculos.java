@@ -375,15 +375,15 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             return false;
         } else //valida campo Numero Renavan
         if (jTxtNumeroRenavan.getText().length() < 1) {
-            msgObgCampo("NumeroRenavan");
+            msgObgCampo("Numero Renavan");
             jTxtNumeroRenavan.requestFocus();
             return false;
         } else if (jTxtNumeroRenavan.getText().length() > 30) {
-            msgAdvCampo("NumeroRenavan");
+            msgAdvCampo("Numero Renavan");
             jTxtNumeroRenavan.requestFocus();
             return false;
         } else if (jTxtNumeroRenavan.getText().length() < 9) {
-            msgAdvCampo("NumeroRenavan");
+            msgAdvCampo("Numero Renavan");
             jTxtNumeroRenavan.requestFocus();
             return false;
         } else {
@@ -436,7 +436,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorMercado.setText(FormatterMoeda.format(clscarros.getValorMercado()));
         jTxtValorSeguro.setText(FormatterMoeda.format(clscarros.getValorSeguro()));
         jTxtVeiculo.setText(clscarros.getModelo());
-        JfTxtData.setText(clsValidacoes.dataFormatoBR(clsValidacoes.dataFormatoUS(clscarros.getDataCompra())));
+        JfTxtData.setText(clsValidacoes.dataFormatoBR(clscarros.getDataCompra()));
         jCboTipo.setSelectedItem(clscarros.getTipoVeiculo());
         jCboClasse.setSelectedItem(clscarros.getClasse());
     }
@@ -459,7 +459,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorMercado.setText(FormatterMoeda.format(listaCarros.get(indice).getValorMercado()));
         jTxtValorSeguro.setText(FormatterMoeda.format(listaCarros.get(indice).getValorSeguro()));
         jTxtVeiculo.setText(listaCarros.get(indice).getModelo());
-        JfTxtData.setText(clsValidacoes.dataFormatoBR(clsValidacoes.dataFormatoUS(listaCarros.get(indice).getDataCompra())));
+        JfTxtData.setText(clsValidacoes.dataFormatoBR(listaCarros.get(indice).getDataCompra()));
         jCboTipo.setSelectedItem(listaCarros.get(indice).getTipoVeiculo());
         jCboClasse.setSelectedItem(listaCarros.get(indice).getClasse());
         if (listaCarros.get(indice).getInativo() == 1) {

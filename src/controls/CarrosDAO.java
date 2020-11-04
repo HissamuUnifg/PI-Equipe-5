@@ -20,7 +20,7 @@ public class CarrosDAO {
     private String retorno;
     private boolean sucesso;
     ClsValidacoes clsval = new ClsValidacoes();
-    SimpleDateFormat formatoBr = new SimpleDateFormat("dd-MM-yyyy");
+    SimpleDateFormat formatoUS = new SimpleDateFormat("yyyy-MM-dd");
 
     public boolean isSucesso() {
         return sucesso;
@@ -259,7 +259,7 @@ public class CarrosDAO {
             carroEcontrado.setPlaca(rset.getString("Placa"));
             carroEcontrado.setRenavam(rset.getInt("Renavam"));
             carroEcontrado.setObsEstado(rset.getString("ObsEstado"));
-            carroEcontrado.setDataCompra(formatoBr.format(rset.getDate("DataCompra")));
+            carroEcontrado.setDataCompra(formatoUS.format(rset.getDate("DataCompra")));
             carroEcontrado.setAnoModelo(rset.getInt("AnoModelo"));
             carroEcontrado.setAnoFabricacao(rset.getInt("AnoFabricacao"));
             carroEcontrado.setChassi(rset.getString("Chassi"));
@@ -336,7 +336,7 @@ public class CarrosDAO {
                 carroEcontrado.setPlaca(rset.getString("Placa"));
                 carroEcontrado.setRenavam(rset.getInt("Renavam"));
                 carroEcontrado.setObsEstado(rset.getString("ObsEstado"));
-                carroEcontrado.setDataCompra(formatoBr.format(rset.getDate("DataCompra")));
+                carroEcontrado.setDataCompra(formatoUS.format(rset.getDate("DataCompra")));
                 carroEcontrado.setAnoModelo(rset.getInt("AnoModelo"));
                 carroEcontrado.setAnoFabricacao(rset.getInt("AnoFabricacao"));
                 carroEcontrado.setChassi(rset.getString("Chassi"));
