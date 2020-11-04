@@ -30,30 +30,30 @@ public class JfrmContratos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        JbtnNovo = new javax.swing.JButton();
-        JbtnEditar = new javax.swing.JButton();
-        JbtnSalvar = new javax.swing.JButton();
-        JbtnImprimir = new javax.swing.JButton();
-        JbtnBuscar = new javax.swing.JButton();
-        JbtnExcluir = new javax.swing.JButton();
-        JbtnRecalcular = new javax.swing.JButton();
+        jBtnNovo = new javax.swing.JButton();
+        jBtnEditar = new javax.swing.JButton();
+        jBtnSalvar = new javax.swing.JButton();
+        jBtnImprimir = new javax.swing.JButton();
+        jBtnBuscar = new javax.swing.JButton();
+        jBtnExcluir = new javax.swing.JButton();
+        jBtnRecalcular = new javax.swing.JButton();
         jPanDadosGerais = new javax.swing.JPanel();
-        jTxt_rg_ie = new javax.swing.JTextField();
-        jTxtCPF_CNPJ = new javax.swing.JTextField();
-        jTxtCNH = new javax.swing.JTextField();
         jFtxtFone = new javax.swing.JFormattedTextField();
         jFtxtCelular = new javax.swing.JFormattedTextField();
         jTxtEmail = new javax.swing.JTextField();
         jCboNome = new javax.swing.JComboBox<>();
+        jFTxtCpfCnpj = new javax.swing.JFormattedTextField();
+        jFtxtRgIe = new javax.swing.JFormattedTextField();
+        javax.swing.JFormattedTextField jFtxtCnh = new javax.swing.JFormattedTextField();
         jPanelDadosEnderecos = new javax.swing.JPanel();
         jTxtRua = new javax.swing.JTextField();
         jTxtNumero = new javax.swing.JTextField();
-        jTxtCEP = new javax.swing.JTextField();
         jTxtBairro = new javax.swing.JTextField();
         jTxtEstado = new javax.swing.JTextField();
         jTxtReferencia = new javax.swing.JTextField();
         jTxtCidade = new javax.swing.JTextField();
         jTxtTipoEnd = new javax.swing.JTextField();
+        jFtxtCep = new javax.swing.JFormattedTextField();
         jPaneDadosVeiculos = new javax.swing.JPanel();
         jTxtNome = new javax.swing.JTextField();
         jTxtMarca = new javax.swing.JTextField();
@@ -74,11 +74,11 @@ public class JfrmContratos extends javax.swing.JFrame {
         jCboStatusContrato = new javax.swing.JComboBox<>();
         jTxtValorKmFinal = new javax.swing.JTextField();
         jTxtQtdDias = new javax.swing.JTextField();
-        jDateSaidaContrato = new com.toedter.calendar.JDateChooser();
-        jDateChegada = new com.toedter.calendar.JDateChooser();
         jTextObservacoes = new javax.swing.JTextField();
-        jTxtValorDiaria1 = new javax.swing.JTextField();
+        jTxtValorDiaria = new javax.swing.JTextField();
         jTxtValorExtra = new javax.swing.JTextField();
+        JfTxtDataChegada = new javax.swing.JFormattedTextField();
+        JfTxtDataSaida = new javax.swing.JFormattedTextField();
         jLabelCodigo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -90,57 +90,42 @@ public class JfrmContratos extends javax.swing.JFrame {
             }
         });
 
-        JbtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add_121935.png"))); // NOI18N
-        JbtnNovo.setToolTipText("Clique aqui para novo Contrato");
-        JbtnNovo.setBorder(null);
-        JbtnNovo.setFocusPainted(false);
+        jBtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add_121935.png"))); // NOI18N
+        jBtnNovo.setToolTipText("Clique aqui para novo Contrato");
+        jBtnNovo.setBorder(null);
+        jBtnNovo.setFocusPainted(false);
 
-        JbtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/new_121792.png"))); // NOI18N
-        JbtnEditar.setToolTipText("Clique aqui para editar Contrato");
-        JbtnEditar.setBorder(null);
-        JbtnEditar.setFocusPainted(false);
+        jBtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/new_121792.png"))); // NOI18N
+        jBtnEditar.setToolTipText("Clique aqui para editar Contrato");
+        jBtnEditar.setBorder(null);
+        jBtnEditar.setFocusPainted(false);
 
-        JbtnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/save_121760.png"))); // NOI18N
-        JbtnSalvar.setToolTipText("Clique aqui para salvar Contrato");
-        JbtnSalvar.setBorder(null);
-        JbtnSalvar.setFocusPainted(false);
+        jBtnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/save_121760.png"))); // NOI18N
+        jBtnSalvar.setToolTipText("Clique aqui para salvar Contrato");
+        jBtnSalvar.setBorder(null);
+        jBtnSalvar.setFocusPainted(false);
 
-        JbtnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/print_121773.png"))); // NOI18N
-        JbtnImprimir.setToolTipText("Clique aqui para imprimir Contrato");
-        JbtnImprimir.setBorder(null);
-        JbtnImprimir.setFocusPainted(false);
+        jBtnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/print_121773.png"))); // NOI18N
+        jBtnImprimir.setToolTipText("Clique aqui para imprimir Contrato");
+        jBtnImprimir.setBorder(null);
+        jBtnImprimir.setFocusPainted(false);
 
-        JbtnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/search_121759.png"))); // NOI18N
-        JbtnBuscar.setToolTipText("Clique aqui para buscar Contrato");
-        JbtnBuscar.setBorder(null);
-        JbtnBuscar.setFocusPainted(false);
+        jBtnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/search_121759.png"))); // NOI18N
+        jBtnBuscar.setToolTipText("Clique aqui para buscar Contrato");
+        jBtnBuscar.setBorder(null);
+        jBtnBuscar.setFocusPainted(false);
 
-        JbtnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/bin_121907.png"))); // NOI18N
-        JbtnExcluir.setToolTipText("Clique aqui para excluir Contrato");
-        JbtnExcluir.setBorder(null);
-        JbtnExcluir.setFocusPainted(false);
+        jBtnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/bin_121907.png"))); // NOI18N
+        jBtnExcluir.setToolTipText("Clique aqui para excluir Contrato");
+        jBtnExcluir.setBorder(null);
+        jBtnExcluir.setFocusPainted(false);
 
-        JbtnRecalcular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/rotate_121763.png"))); // NOI18N
-        JbtnRecalcular.setToolTipText("Clique aqui para recalcular Contrato");
-        JbtnRecalcular.setBorder(null);
-        JbtnRecalcular.setFocusPainted(false);
+        jBtnRecalcular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/rotate_121763.png"))); // NOI18N
+        jBtnRecalcular.setToolTipText("Clique aqui para recalcular Contrato");
+        jBtnRecalcular.setBorder(null);
+        jBtnRecalcular.setFocusPainted(false);
 
         jPanDadosGerais.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("Dados Gerais"), "Dados Gerais"));
-
-        jTxt_rg_ie.setBackground(new java.awt.Color(240, 240, 240));
-        jTxt_rg_ie.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTxt_rg_ie.setToolTipText("Exibição do RG ou IE do cliente");
-        jTxt_rg_ie.setBorder(javax.swing.BorderFactory.createTitledBorder("RG/IE"));
-
-        jTxtCPF_CNPJ.setBackground(new java.awt.Color(240, 240, 240));
-        jTxtCPF_CNPJ.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTxtCPF_CNPJ.setToolTipText("Exibição do CPF ou CNPJ do cliente");
-        jTxtCPF_CNPJ.setBorder(javax.swing.BorderFactory.createTitledBorder("CPF/CNPJ"));
-
-        jTxtCNH.setBackground(new java.awt.Color(240, 240, 240));
-        jTxtCNH.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTxtCNH.setToolTipText("Exibição do Numero do CNH do cliente");
-        jTxtCNH.setBorder(javax.swing.BorderFactory.createTitledBorder("CNH"));
 
         jFtxtFone.setBackground(new java.awt.Color(240, 240, 240));
         jFtxtFone.setBorder(javax.swing.BorderFactory.createTitledBorder("Fone"));
@@ -163,6 +148,21 @@ public class JfrmContratos extends javax.swing.JFrame {
         jCboNome.setToolTipText("Selecione o cliente para iniciar o contrato");
         jCboNome.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome"));
 
+        jFTxtCpfCnpj.setBackground(new java.awt.Color(240, 240, 240));
+        jFTxtCpfCnpj.setBorder(javax.swing.BorderFactory.createTitledBorder("CPF/CNPJ"));
+        jFTxtCpfCnpj.setToolTipText("Escolha entre CPF ou CNPJ e insira o dado!");
+        jFTxtCpfCnpj.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jFtxtRgIe.setBackground(new java.awt.Color(240, 240, 240));
+        jFtxtRgIe.setBorder(javax.swing.BorderFactory.createTitledBorder("RG/IE"));
+        jFtxtRgIe.setToolTipText("Insira o RG caso seja pessoa fisica ou IE caso seja pessoa juridica");
+        jFtxtRgIe.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        jFtxtCnh.setBackground(new java.awt.Color(240, 240, 240));
+        jFtxtCnh.setBorder(javax.swing.BorderFactory.createTitledBorder("CNH"));
+        jFtxtCnh.setToolTipText("Numero da CNH do cliente");
+        jFtxtCnh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
         javax.swing.GroupLayout jPanDadosGeraisLayout = new javax.swing.GroupLayout(jPanDadosGerais);
         jPanDadosGerais.setLayout(jPanDadosGeraisLayout);
         jPanDadosGeraisLayout.setHorizontalGroup(
@@ -170,31 +170,30 @@ public class JfrmContratos extends javax.swing.JFrame {
             .addGroup(jPanDadosGeraisLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanDadosGeraisLayout.createSequentialGroup()
-                        .addComponent(jCboNome, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(56, 56, 56))
+                    .addComponent(jCboNome, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanDadosGeraisLayout.createSequentialGroup()
                         .addComponent(jFtxtFone, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jFtxtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)))
+                        .addComponent(jFtxtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanDadosGeraisLayout.createSequentialGroup()
-                        .addComponent(jTxtCPF_CNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(jTxt_rg_ie, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(jTxtCNH, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jFTxtCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jFtxtRgIe, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jFtxtCnh, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jTxtEmail))
                 .addContainerGap())
         );
         jPanDadosGeraisLayout.setVerticalGroup(
             jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanDadosGeraisLayout.createSequentialGroup()
-                .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTxtCPF_CNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxt_rg_ie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtCNH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jFTxtCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jFtxtRgIe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jFtxtCnh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jCboNome, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -214,11 +213,6 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtNumero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtNumero.setToolTipText("Exibição do Numero");
         jTxtNumero.setBorder(javax.swing.BorderFactory.createTitledBorder("Numero"));
-
-        jTxtCEP.setBackground(new java.awt.Color(240, 240, 240));
-        jTxtCEP.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTxtCEP.setToolTipText("Exibição do CEP");
-        jTxtCEP.setBorder(javax.swing.BorderFactory.createTitledBorder("CEP"));
 
         jTxtBairro.setBackground(new java.awt.Color(240, 240, 240));
         jTxtBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -245,6 +239,10 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtTipoEnd.setToolTipText("Exibição do tipo de endereço");
         jTxtTipoEnd.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo de Endereço"));
 
+        jFtxtCep.setBackground(new java.awt.Color(240, 240, 240));
+        jFtxtCep.setBorder(javax.swing.BorderFactory.createTitledBorder("CEP"));
+        jFtxtCep.setToolTipText("Nuero do CEP do endereço do cliente");
+
         javax.swing.GroupLayout jPanelDadosEnderecosLayout = new javax.swing.GroupLayout(jPanelDadosEnderecos);
         jPanelDadosEnderecos.setLayout(jPanelDadosEnderecosLayout);
         jPanelDadosEnderecosLayout.setHorizontalGroup(
@@ -262,13 +260,12 @@ public class JfrmContratos extends javax.swing.JFrame {
                         .addComponent(jTxtRua, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jTxtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(jTxtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTxtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTxtCidade)
                         .addGap(18, 18, 18)
-                        .addComponent(jTxtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(jTxtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jFtxtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanelDadosEnderecosLayout.setVerticalGroup(
@@ -277,9 +274,9 @@ public class JfrmContratos extends javax.swing.JFrame {
                 .addGroup(jPanelDadosEnderecosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTxtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtCEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTxtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTxtCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFtxtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelDadosEnderecosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -362,8 +359,8 @@ public class JfrmContratos extends javax.swing.JFrame {
                     .addGroup(jPaneDadosVeiculosLayout.createSequentialGroup()
                         .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTxtVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTxtVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jTxtKm, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jTxtAnoModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -375,12 +372,12 @@ public class JfrmContratos extends javax.swing.JFrame {
                         .addComponent(jCboPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTxtChassi, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(14, 14, 14)
                         .addComponent(jTxtMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTxtCor, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTxtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTxtTipo)
                         .addGap(18, 18, 18)
                         .addComponent(jTxtClasse, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
@@ -406,7 +403,8 @@ public class JfrmContratos extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanelDadosValores.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados Vaores"));
+        jPanelDadosValores.setBorder(javax.swing.BorderFactory.createTitledBorder("Dados Valores e Finalização Contrato"));
+        jPanelDadosValores.setToolTipText("Selecionar informações do tipo de contrato, valores, diarias, status do contrato!");
 
         jTxtValorKmRodado.setBackground(new java.awt.Color(240, 240, 240));
         jTxtValorKmRodado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -440,24 +438,29 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtQtdDias.setToolTipText("Digite a quantidade de dias que será alugado o veiculo");
         jTxtQtdDias.setBorder(javax.swing.BorderFactory.createTitledBorder("Dias Alugados"));
 
-        jDateSaidaContrato.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Saida/Contrato"));
-        jDateSaidaContrato.setToolTipText("Selecione a data de contrato/saida do veiculo");
-
-        jDateChegada.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Chegada"));
-        jDateChegada.setToolTipText("Selecione a data de chegada do veiculo");
-
+        jTextObservacoes.setBackground(new java.awt.Color(240, 240, 240));
         jTextObservacoes.setToolTipText("Breve observação caso houver sobre o veiculo");
         jTextObservacoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Observações"));
 
-        jTxtValorDiaria1.setBackground(new java.awt.Color(240, 240, 240));
-        jTxtValorDiaria1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTxtValorDiaria1.setToolTipText("Exibição do valor da diária desse veiculo");
-        jTxtValorDiaria1.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor Diaria"));
+        jTxtValorDiaria.setBackground(new java.awt.Color(240, 240, 240));
+        jTxtValorDiaria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTxtValorDiaria.setToolTipText("Exibição do valor da diária desse veiculo");
+        jTxtValorDiaria.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor Diaria"));
 
         jTxtValorExtra.setBackground(new java.awt.Color(240, 240, 240));
         jTxtValorExtra.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtValorExtra.setToolTipText("Campo para digitação de despesas extras, como multas, avarias e etc.");
         jTxtValorExtra.setBorder(javax.swing.BorderFactory.createTitledBorder("Valores Extras"));
+
+        JfTxtDataChegada.setBackground(new java.awt.Color(240, 240, 240));
+        JfTxtDataChegada.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Chegada"));
+        JfTxtDataChegada.setToolTipText("Inserir data de chegada do Veiculo!");
+        JfTxtDataChegada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+
+        JfTxtDataSaida.setBackground(new java.awt.Color(240, 240, 240));
+        JfTxtDataSaida.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Saida"));
+        JfTxtDataSaida.setToolTipText("Inserir data de saida do Veiculo!");
+        JfTxtDataSaida.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanelDadosValoresLayout = new javax.swing.GroupLayout(jPanelDadosValores);
         jPanelDadosValores.setLayout(jPanelDadosValoresLayout);
@@ -469,48 +472,50 @@ public class JfrmContratos extends javax.swing.JFrame {
                     .addComponent(jCboTipoContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCboStatusContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanelDadosValoresLayout.createSequentialGroup()
+                .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jTextObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelDadosValoresLayout.createSequentialGroup()
                         .addComponent(jTxtValorKmRodado, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTxtValorDiaria1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTxtValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jTxtValorKmFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTxtQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jDateSaidaContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelDadosValoresLayout.createSequentialGroup()
-                        .addComponent(jTextObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 573, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTxtValorExtra, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTxtQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jDateChegada, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(46, Short.MAX_VALUE))
+                    .addComponent(JfTxtDataSaida, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                    .addComponent(jTxtValorExtra))
+                .addGap(18, 18, 18)
+                .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(JfTxtDataChegada, javax.swing.GroupLayout.DEFAULT_SIZE, 126, Short.MAX_VALUE)
+                    .addComponent(jTxtValorTotal))
+                .addGap(15, 15, 15))
         );
         jPanelDadosValoresLayout.setVerticalGroup(
             jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelDadosValoresLayout.createSequentialGroup()
                 .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTxtValorKmRodado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jCboTipoContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTxtValorKmFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTxtQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTxtValorDiaria1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jDateChegada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jDateSaidaContrato, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanelDadosValoresLayout.createSequentialGroup()
+                        .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTxtValorKmRodado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCboTipoContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTxtValorKmFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTxtQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTxtValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(7, 7, 7))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDadosValoresLayout.createSequentialGroup()
+                        .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(JfTxtDataChegada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(JfTxtDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jCboStatusContrato)
                     .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jTextObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTxtValorExtra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTxtValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 17, Short.MAX_VALUE))
+                .addGap(0, 18, Short.MAX_VALUE))
         );
 
         jLabelCodigo.setText("Codigo:");
@@ -521,19 +526,19 @@ public class JfrmContratos extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(JbtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(JbtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JbtnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JbtnRecalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnRecalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JbtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JbtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(JbtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jBtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelCodigo)
                 .addGap(74, 74, 74))
@@ -550,13 +555,13 @@ public class JfrmContratos extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JbtnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JbtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JbtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JbtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JbtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JbtnRecalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JbtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnRecalcular, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabelCodigo)))
@@ -590,21 +595,24 @@ public class JfrmContratos extends javax.swing.JFrame {
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton JbtnBuscar;
-    private javax.swing.JButton JbtnEditar;
-    private javax.swing.JButton JbtnExcluir;
-    private javax.swing.JButton JbtnImprimir;
-    private javax.swing.JButton JbtnNovo;
-    private javax.swing.JButton JbtnRecalcular;
-    private javax.swing.JButton JbtnSalvar;
+    private javax.swing.JFormattedTextField JfTxtDataChegada;
+    private javax.swing.JFormattedTextField JfTxtDataSaida;
+    private javax.swing.JButton jBtnBuscar;
+    private javax.swing.JButton jBtnEditar;
+    private javax.swing.JButton jBtnExcluir;
+    private javax.swing.JButton jBtnImprimir;
+    private javax.swing.JButton jBtnNovo;
+    private javax.swing.JButton jBtnRecalcular;
+    private javax.swing.JButton jBtnSalvar;
     private javax.swing.JComboBox<String> jCboNome;
     private javax.swing.JComboBox<String> jCboPlaca;
     private javax.swing.JComboBox<String> jCboStatusContrato;
     private javax.swing.JComboBox<String> jCboTipoContrato;
-    private com.toedter.calendar.JDateChooser jDateChegada;
-    private com.toedter.calendar.JDateChooser jDateSaidaContrato;
+    private javax.swing.JFormattedTextField jFTxtCpfCnpj;
     private javax.swing.JFormattedTextField jFtxtCelular;
+    private javax.swing.JFormattedTextField jFtxtCep;
     private javax.swing.JFormattedTextField jFtxtFone;
+    private javax.swing.JFormattedTextField jFtxtRgIe;
     private javax.swing.JLabel jLabelCodigo;
     private javax.swing.JPanel jPanDadosGerais;
     private javax.swing.JPanel jPaneDadosVeiculos;
@@ -614,9 +622,6 @@ public class JfrmContratos extends javax.swing.JFrame {
     private javax.swing.JTextField jTxtAnoFabricacao;
     private javax.swing.JTextField jTxtAnoModelo;
     private javax.swing.JTextField jTxtBairro;
-    private javax.swing.JTextField jTxtCEP;
-    private javax.swing.JTextField jTxtCNH;
-    private javax.swing.JTextField jTxtCPF_CNPJ;
     private javax.swing.JTextField jTxtChassi;
     private javax.swing.JTextField jTxtCidade;
     private javax.swing.JTextField jTxtClasse;
@@ -633,13 +638,12 @@ public class JfrmContratos extends javax.swing.JFrame {
     private javax.swing.JTextField jTxtRua;
     private javax.swing.JTextField jTxtTipo;
     private javax.swing.JTextField jTxtTipoEnd;
-    private javax.swing.JTextField jTxtValorDiaria1;
+    private javax.swing.JTextField jTxtValorDiaria;
     private javax.swing.JTextField jTxtValorExtra;
     private javax.swing.JTextField jTxtValorKmFinal;
     private javax.swing.JTextField jTxtValorKmRodado;
     private javax.swing.JTextField jTxtValorTotal;
     private javax.swing.JTextField jTxtVeiculo;
-    private javax.swing.JTextField jTxt_rg_ie;
     // End of variables declaration//GEN-END:variables
 
     private void setIcon() {

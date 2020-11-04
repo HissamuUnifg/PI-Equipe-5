@@ -34,23 +34,25 @@
           <Group type="102" alignment="1" attributes="0">
               <Group type="103" groupAlignment="1" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="JbtnNovo" min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="jBbtnNovo" min="-2" pref="75" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                      <Component id="JbtnEditar" min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="jBtnEditar" min="-2" pref="75" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="JbtnSalvar" min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="jBtnSalvar" min="-2" pref="75" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="JbtnImprimir" min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="jBtnImprimir" min="-2" pref="75" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="JbtnBuscar" min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="jBtnBuscar" min="-2" pref="75" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="JbtnExcluir" min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="jBtnExcluir" min="-2" pref="75" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jLabelCodigo" min="-2" max="-2" attributes="0"/>
-                          <Component id="jCkb_inativar" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCkb_inativar" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="jLabelCodigo" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
@@ -69,16 +71,16 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="JbtnSalvar" min="-2" pref="65" max="-2" attributes="0"/>
-                  <Component id="JbtnExcluir" min="-2" pref="65" max="-2" attributes="0"/>
-                  <Component id="JbtnEditar" min="-2" pref="65" max="-2" attributes="0"/>
-                  <Component id="JbtnImprimir" min="-2" pref="65" max="-2" attributes="0"/>
-                  <Component id="JbtnNovo" min="-2" pref="65" max="-2" attributes="0"/>
-                  <Component id="JbtnBuscar" min="-2" pref="65" max="-2" attributes="0"/>
+                  <Component id="jBtnSalvar" min="-2" pref="65" max="-2" attributes="0"/>
+                  <Component id="jBtnExcluir" min="-2" pref="65" max="-2" attributes="0"/>
+                  <Component id="jBtnEditar" min="-2" pref="65" max="-2" attributes="0"/>
+                  <Component id="jBtnImprimir" min="-2" pref="65" max="-2" attributes="0"/>
+                  <Component id="jBbtnNovo" min="-2" pref="65" max="-2" attributes="0"/>
+                  <Component id="jBtnBuscar" min="-2" pref="65" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabelCodigo" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="31" max="32767" attributes="0"/>
+                      <EmptySpace pref="46" max="32767" attributes="0"/>
                       <Component id="jCkb_inativar" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -88,13 +90,13 @@
               <Component id="jPanelObservacoes" min="-2" pref="128" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jPanelDadosEnderecos" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="22" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="JbtnSalvar">
+    <Component class="javax.swing.JButton" name="jBtnSalvar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/imagens/save_121760.png"/>
@@ -106,7 +108,7 @@
         <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="JbtnNovo">
+    <Component class="javax.swing.JButton" name="jBbtnNovo">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/imagens/add_121935.png"/>
@@ -118,7 +120,7 @@
         <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="JbtnExcluir">
+    <Component class="javax.swing.JButton" name="jBtnExcluir">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/imagens/bin_121907.png"/>
@@ -130,7 +132,7 @@
         <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="JbtnImprimir">
+    <Component class="javax.swing.JButton" name="jBtnImprimir">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/imagens/print_121773.png"/>
@@ -142,7 +144,7 @@
         <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="JbtnEditar">
+    <Component class="javax.swing.JButton" name="jBtnEditar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/imagens/new_121792.png"/>
@@ -154,7 +156,7 @@
         <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="JbtnBuscar">
+    <Component class="javax.swing.JButton" name="jBtnBuscar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/imagens/search_121759.png"/>
@@ -200,11 +202,11 @@
                               <Component id="jRadioBtnCpf" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTxtCPF_CNPJ" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Component id="jTxt_rg_ie" min="-2" pref="137" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jTxtCNH" min="-2" pref="137" max="-2" attributes="0"/>
+                          <Component id="jFTxtCpfCnpj" min="-2" pref="179" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jFtxtRgIe" min="-2" pref="141" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jFtxtCnh" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -215,20 +217,20 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTxtCPF_CNPJ" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTxt_rg_ie" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTxtCNH" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTxtNome" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
                           <Component id="jRadioBtnCpf" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jRadioBtnCnpj" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jTxtNome" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jFTxtCpfCnpj" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jFtxtRgIe" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jFtxtCnh" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -242,54 +244,6 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="jTxt_rg_ie">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f0" green="f0" red="f0" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Numero do RG ou IE do cliente"/>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="RG/IE"/>
-              </Border>
-            </Property>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTxtCPF_CNPJ">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f0" green="f0" red="f0" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Numero do CPF ou CNPJ do cliente"/>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="CPF/CNPJ"/>
-              </Border>
-            </Property>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTxtCNH">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f0" green="f0" red="f0" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" value="Numero do CNH do cliente"/>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="CNH"/>
-              </Border>
-            </Property>
-          </Properties>
-        </Component>
         <Component class="javax.swing.JFormattedTextField" name="jFtxtFone">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -366,6 +320,58 @@
             <Property name="toolTipText" type="java.lang.String" value="Marque para pessoa Juridica!"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JFormattedTextField" name="jFTxtCpfCnpj">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="f0" green="f0" red="f0" type="rgb"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder title="CPF/CNPJ"/>
+              </Border>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Escolha entre CPF ou CNPJ e insira o dado!"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="jFtxtRgIe">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="f0" green="f0" red="f0" type="rgb"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder title="RG/IE"/>
+              </Border>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Insira o RG caso seja pessoa fisica ou IE caso seja pessoa juridica"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="jFtxtCnh">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="f0" green="f0" red="f0" type="rgb"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder title="CNH"/>
+              </Border>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Numero da CNH do cliente"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
+            <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
+          </AuxValues>
+        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="jPanelObservacoes">
@@ -437,27 +443,30 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jTxtReferencia" max="32767" attributes="0"/>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <Component id="jTxtRua" min="-2" pref="402" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTxtNumero" min="-2" pref="68" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jCboCidade" min="-2" pref="150" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTxtEstado1" min="-2" pref="141" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Component id="jTxtCEP" min="-2" pref="141" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                          <Component id="jBtn_Adcionar_end" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jBtn_Editar_End" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Component id="jBtn_Salvar_End" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jBtn_excluir_end" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jBtn_Adcionar_end" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="jBtn_Editar_End" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                  <Component id="jBtn_Salvar_End" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="jBtn_excluir_end" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jTxtRua" min="-2" pref="375" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jTxtNumero" min="-2" pref="68" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jCboCidade" min="-2" pref="197" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jTxtEstado1" min="-2" pref="180" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="jFtxtCep" min="-2" pref="118" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -470,9 +479,9 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jTxtRua" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jTxtNumero" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTxtCEP" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jCboCidade" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
                       <Component id="jTxtEstado1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jFtxtCep" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -552,22 +561,6 @@
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTxtCEP">
-          <Properties>
-            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="f0" green="f0" red="f0" type="rgb"/>
-            </Property>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="14" style="0"/>
-            </Property>
-            <Property name="toolTipText" type="java.lang.String" value="CEP da Residencia"/>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="CEP"/>
-              </Border>
-            </Property>
-          </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtBairro">
           <Properties>
@@ -693,6 +686,19 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Editar"/>
             <Property name="toolTipText" type="java.lang.String" value="Clique para editar o endere&#xe7;o selecionado"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="jFtxtCep">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="f0" green="f0" red="f0" type="rgb"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder title="CEP"/>
+              </Border>
+            </Property>
+            <Property name="toolTipText" type="java.lang.String" value="Nuero do CEP do endere&#xe7;o do cliente"/>
           </Properties>
         </Component>
       </SubComponents>

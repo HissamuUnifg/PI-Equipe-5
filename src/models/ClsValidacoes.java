@@ -2,6 +2,7 @@ package models;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 /**
@@ -14,6 +15,7 @@ public class ClsValidacoes {
     private static final int[] pesoCPF = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};
     private static final int[] pesoCNPJ = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
 
+    //entra com uma string e valida se é valido ou nâo o CPF ou CNPJ
     public boolean isValid(String cpfCnpj) {
         return (isValidCPF(cpfCnpj) || isValidCNPJ(cpfCnpj));
     }
@@ -60,6 +62,9 @@ public class ClsValidacoes {
         return cnpj.equals(cnpj.substring(0, 12) + digito1.toString() + digito2.toString());
     }
 
+    
+    
+    //entra uma string e retira os dados em qualquer parte que esteja
     public String replaceDado(String dado) {
         dado = dado.replaceAll("\\.", "");
         dado = dado.replaceAll("-", "");
@@ -67,7 +72,8 @@ public class ClsValidacoes {
         dado = dado.replaceAll("$", "");             
         return dado;
     }
-
+    
+    //entra uma string no formato BR e retorna em formato US
     public String dataFormatoUS(String dataEntrada) {
         //10-10-2010
         String dia = dataEntrada.substring(0, 2);
@@ -76,7 +82,8 @@ public class ClsValidacoes {
         String dataSaida = ano + "/" + mes + "/" + dia;
         return dataSaida;
     }
-
+    
+    //entra uma string no formato US e retorna em formato BR
     public String dataFormatoBR(String dataEntrada) {
         //2001-01-01 10-10-2010
         String ano = dataEntrada.substring(0, 4);
@@ -84,6 +91,22 @@ public class ClsValidacoes {
         String dia = dataEntrada.substring(8);
         String dataSaida = dia + "/" + mes + "/" + ano;
         return dataSaida;
+    }
+    
+    //entra uma string de data e retorna se e valida ou não (true ou false)
+    public boolean validaDataFormatoBR(String data) {
+      try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            
+            sdf.setLenient(false);
+            
+            sdf.parse(data);
+            
+            return true;
+        } catch (ParseException ex) {
+            
+            return false;
+        }
     }
 
     public float formataMoeda(String arg) throws ParseException {

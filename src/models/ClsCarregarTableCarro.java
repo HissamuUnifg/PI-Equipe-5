@@ -9,14 +9,14 @@ import javax.swing.table.AbstractTableModel;
  *
  * @author Tiago Teixeira
  */
-public class CarregarTableCarro extends AbstractTableModel {
+public class ClsCarregarTableCarro extends AbstractTableModel {
     
     private static final long serialVersionUID = 1L;
 
     private final  List<ClsCarros> clscarros;
     private final  String[] colunas = {"Nome","Modelo","Placa","Marca","Tipo","Classe","Ano Modelo", "Ano Fabricacao"};    
 
-    public CarregarTableCarro(List<ClsCarros> clscarros) {
+    public ClsCarregarTableCarro(List<ClsCarros> clscarros) {
         this.clscarros = clscarros; 
     }
 
@@ -98,6 +98,9 @@ public class CarregarTableCarro extends AbstractTableModel {
     
     public void updatedRow(int indiceI, int indiceF){
         this.fireTableRowsUpdated(indiceI, indiceF);
+    }
+    public void updatedListRow(int indiceI, ClsCarros clscarros){
+        this.clscarros.set(indiceI, clscarros);
     }
     
     public void clearList(){

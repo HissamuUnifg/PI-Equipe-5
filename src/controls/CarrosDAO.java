@@ -132,7 +132,7 @@ public class CarrosDAO {
             ps.setString(7, clscarros.getPlaca().toUpperCase());
             ps.setInt(8, clscarros.getRenavam());
             ps.setString(9, clscarros.getObsEstado());
-            ps.setString(10, clsval.dataFormatoUS(clscarros.getDataCompra()));
+            ps.setString(10, clscarros.getDataCompra());
             ps.setInt(11, clscarros.getAnoModelo());
             ps.setInt(12, clscarros.getAnoFabricacao());
             ps.setString(13, clscarros.getChassi());

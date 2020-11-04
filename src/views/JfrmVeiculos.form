@@ -39,13 +39,13 @@
                       <Component id="jCkbInativar" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="JbtnNovo" min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="jBtnNovo" min="-2" pref="75" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                      <Component id="JbtnEditar" min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="jBtnEditar" min="-2" pref="75" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="JbtnSalvar" min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="jBtnSalvar" min="-2" pref="75" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="JbtnExcluir" min="-2" pref="75" max="-2" attributes="0"/>
+                      <Component id="jBtnExcluir" min="-2" pref="75" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabelCodigo" min="-2" max="-2" attributes="0"/>
@@ -65,10 +65,10 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="JbtnSalvar" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
-                  <Component id="JbtnExcluir" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
-                  <Component id="JbtnEditar" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
-                  <Component id="JbtnNovo" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
+                  <Component id="jBtnSalvar" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
+                  <Component id="jBtnExcluir" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
+                  <Component id="jBtnEditar" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
+                  <Component id="jBtnNovo" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jLabelCodigo" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -87,7 +87,7 @@
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="JbtnNovo">
+    <Component class="javax.swing.JButton" name="jBtnNovo">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/imagens/add_121935.png"/>
@@ -99,10 +99,10 @@
         <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JbtnNovoActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnNovoActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="JbtnEditar">
+    <Component class="javax.swing.JButton" name="jBtnEditar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/imagens/new_121792.png"/>
@@ -114,10 +114,10 @@
         <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JbtnEditarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnEditarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="JbtnSalvar">
+    <Component class="javax.swing.JButton" name="jBtnSalvar">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/imagens/save_121760.png"/>
@@ -129,10 +129,10 @@
         <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JbtnSalvarActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnSalvarActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="JbtnExcluir">
+    <Component class="javax.swing.JButton" name="jBtnExcluir">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/imagens/bin_121907.png"/>
@@ -144,7 +144,7 @@
         <Property name="focusPainted" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="JbtnExcluirActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnExcluirActionPerformed"/>
       </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="jPaneDadosGerais">
@@ -169,9 +169,9 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jTxtMarca" min="-2" pref="164" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTxtCor" min="-2" pref="164" max="-2" attributes="0"/>
-                          <EmptySpace pref="17" max="32767" attributes="0"/>
-                          <Component id="jCboTipo" min="-2" pref="114" max="-2" attributes="0"/>
+                          <Component id="jTxtCor" min="-2" pref="117" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jCboTipo" max="32767" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="jCboClasse" min="-2" pref="114" max="-2" attributes="0"/>
                       </Group>
@@ -185,7 +185,7 @@
                           <Component id="jTxtAnoModelo" min="-2" pref="95" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                           <Component id="jTxtAnoFabricacao" min="-2" pref="98" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="36" max="32767" attributes="0"/>
                           <Component id="JfTxtData" min="-2" pref="148" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
