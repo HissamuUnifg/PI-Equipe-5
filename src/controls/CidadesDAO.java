@@ -15,6 +15,7 @@ import java.util.List;
 import models.ClsCidades;
 
 
+
 public class CidadesDAO {
     
     public CidadesDAO(){
@@ -37,7 +38,7 @@ public class CidadesDAO {
      */
     public List<ClsCidades> selectALL() {
     
-        String sql = "select Id, NomeCidade, SiglaEstado, Estado, Pais from locadora.cidades";
+        String sql = "select Id, NomeCidade, SiglaEstado, Estado, Pais from locadora.cidades order by NomeCidade";
         
         List<ClsCidades> listClsCidades = new ArrayList<ClsCidades>();
         

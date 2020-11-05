@@ -81,6 +81,8 @@ id int NOT NULL AUTO_INCREMENT,
 Rua varchar(200) NOT NULL,
 Numero varchar(5) NOT NULL,
 Bairro varchar(100) NOT NULL,
+Cep varchar(10) NOT NULL,
+TipoEndereco varchar(20) NOT NULL,
 id_cidade int NOT NULL,
 PRIMARY KEY(id),
   CONSTRAINT Enderecos_cidades FOREIGN KEY (id_cidade) REFERENCES Cidades (id)

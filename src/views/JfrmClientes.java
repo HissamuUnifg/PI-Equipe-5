@@ -5,9 +5,13 @@ package views;
 import models.ClsCidades;
 import models.ClsEnderecos;
 import models.ClsLogin;
+import models.ClsClientes;
 import controls.CidadesDAO;
+import controls.EnderecosDAO;
 import java.awt.Toolkit;
 import java.util.List;
+import javax.swing.JOptionPane;
+import models.ClsCarregarTableEndereco;
 
 
 
@@ -21,9 +25,17 @@ public class JfrmClientes extends javax.swing.JFrame {
    private int userIdLoged;
    private String CpfUserLoged;
    
+   EnderecosDAO enderecosDAO;
    ClsEnderecos clsEnderecos;
    ClsCidades clsCidades;
    CidadesDAO cidadesDAO;
+   ClsClientes clsClientes;
+   boolean precionado;
+   boolean editando;
+   private int selectedIdCidade;
+   
+   List<ClsCidades> listCidadesBD;
+   List<ClsEnderecos> listEnderecosBD;
    
    public JfrmClientes() {
         initComponents();
@@ -32,28 +44,154 @@ public class JfrmClientes extends javax.swing.JFrame {
     
     public JfrmClientes(ClsLogin clslogin) {
         
+        initComponents();
+        setIcon();
+        
         userLoged = clslogin.getUserLoged();
         userIdLoged = clslogin.getId();
         CpfUserLoged = clslogin.getCpfUserLoged();
+        
         clsEnderecos = new ClsEnderecos();
         clsCidades = new ClsCidades();
         cidadesDAO = new CidadesDAO();
+        clsClientes = new ClsClientes();
+        enderecosDAO = new EnderecosDAO();
+        
+        listCidadesBD = cidadesDAO.selectALL();
+        listEnderecosBD = enderecosDAO.selectALL();
+        
+        precionado = false;
+        editando = false;
+        
         loadCidades();
-        initComponents();
-        setIcon();
+        loadEnderecoTipo();
+        disableControl();
+        carregarJtable();
+               
     }
     
     private void loadCidades(){
-        List<ClsCidades> listCidades = cidadesDAO.selectALL();
-
-        if (listCidades.size() < 1) {
-            System.out.println("Não conseguiu carregar a lista do DB");
+        
+        jCboCidade.setSelectedIndex(0);
+        jCboCidade.setSelectedItem("Selecione");
+        if (listCidadesBD.size() < 0) {
+            JOptionPane.showMessageDialog(this, "Erro ao carregar lista de Cidades, falha no banco de dados!", "ERRO", JOptionPane.ERROR_MESSAGE);
         } else {
-            for (ClsCidades clsCidade : cidadesDAO.selectALL()) {
+            for (ClsCidades clsCidade : listCidadesBD) {
                 jCboCidade.addItem(clsCidade.getNomeCidade());
             }
         }
 
+    }
+    
+    private void loadEnderecoTipo() {
+        jCboTipoEnd.addItem("RESIDENCIAL");
+        jCboTipoEnd.addItem("TRABALHO");
+        jCboTipoEnd.addItem("COBRANCA");        
+    }
+    
+    private void disableControl() {
+        //desabilitando os comboBox
+        jCboCidade.setEnabled(false);
+        jCboTipoEnd.setEnabled(false);
+        //desabilitando os botoes
+        jBtnEditar.setEnabled(false);
+        jBtnExcluir.setEnabled(false);
+        jBtnImprimir.setEnabled(false);
+        jBtnSalvar.setEnabled(false);
+        jBtnBuscar.setEnabled(true);
+        jBtn_Editar_End.setEnabled(false);
+        jBtn_excluir_end.setEnabled(false);
+        jBtn_Salvar_End.setEnabled(false);
+        jBtn_Adcionar_end.setEnabled(false);
+        jRadioBtnCpf.setEnabled(false);
+        jRadioBtnCnpj.setEnabled(false);
+        jCkb_inativar.setEnabled(false);
+        //desabilitando campos de texto
+        jTextObservacoes.setEnabled(false);
+        jTxtBairro.setEnabled(false);
+        jTxtEmail.setEnabled(false);
+        jTxtEstado.setEnabled(false);
+        jTxtNome.setEnabled(false);
+        jTxtNumero.setEnabled(false);
+        jTxtReferencia.setEnabled(false);
+        jTxtRua.setEnabled(false);
+        jFTxtCpfCnpj.setEnabled(false);
+        jFtxtCelular.setEnabled(false);
+        jFtxtCep.setEnabled(false);
+        jFtxtDataNascimento.setEnabled(false);
+        jFtxtFone.setEnabled(false);
+        jFtxtRgIe.setEnabled(false);
+        jFtxtCnh.setEnabled(false);
+
+    }
+    
+    private void enableControl() {
+        //habilitando JcomboBox
+        jCboCidade.setEnabled(true);
+        jCboTipoEnd.setEnabled(true);
+        //habilitando os botoes
+        jBtnEditar.setEnabled(false);
+        jBtnExcluir.setEnabled(false);
+        jBtnImprimir.setEnabled(false);
+        jBtnSalvar.setEnabled(true);
+        jBtnBuscar.setEnabled(false);
+        jBtn_Editar_End.setEnabled(false);
+        jBtn_excluir_end.setEnabled(false);
+        jBtn_Salvar_End.setEnabled(false);
+        jBtn_Adcionar_end.setEnabled(true);
+        jRadioBtnCpf.setEnabled(true);
+        jRadioBtnCnpj.setEnabled(true);
+        jCkb_inativar.setEnabled(true);
+        //habilitando campos de texto
+        jTextObservacoes.setEnabled(true);
+        jTxtBairro.setEnabled(true);
+        jTxtEmail.setEnabled(true);
+        jTxtEstado.setEnabled(false);
+        jTxtNome.setEnabled(true);
+        jTxtNumero.setEnabled(true);
+        jTxtReferencia.setEnabled(true);
+        jTxtRua.setEnabled(true);
+        jFTxtCpfCnpj.setEnabled(true);
+        jFtxtCelular.setEnabled(true);
+        jFtxtCep.setEnabled(true);
+        jFtxtDataNascimento.setEnabled(true);
+        jFtxtFone.setEnabled(true);
+        jFtxtRgIe.setEnabled(true);
+        jFtxtCnh.setEnabled(true);
+    }
+    
+    private void setIconBtnNv(boolean funcao) {
+        if (funcao == true) {
+            jBtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_cancelar.png"))); // NOI18N
+            jBtnNovo.setToolTipText("Clique aqui para cancelar a operacao");
+        } else {
+            jBtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add_121935.png"))); // NOI18N
+            jBtnNovo.setToolTipText("Clique aqui para novo Veiculo");
+        }
+    }
+    
+    private void clearTxt() {
+        jTextObservacoes.setText("");
+        jTxtBairro.setText("");
+        jTxtEmail.setText("");
+        jTxtEstado.setText("");
+        jTxtNome.setText("");
+        jTxtNumero.setText("");
+        jTxtReferencia.setText("");
+        jTxtRua.setText("");
+        jFTxtCpfCnpj.setText("");
+        jFtxtCelular.setText("");
+        jFtxtCep.setText("");
+        jFtxtDataNascimento.setText("");
+        jFtxtFone.setText("");
+        jFtxtRgIe.setText("");
+        jFtxtCnh.setText("");
+    }
+    
+    //funções relacionadas a Jtable que exibe os endereços
+    public void carregarJtable() {
+     jTblEnderecos.setModel(new ClsCarregarTableEndereco(listEnderecosBD));
     }
     
     @SuppressWarnings("unchecked")
@@ -61,7 +199,7 @@ public class JfrmClientes extends javax.swing.JFrame {
     private void initComponents() {
 
         jBtnSalvar = new javax.swing.JButton();
-        jBbtnNovo = new javax.swing.JButton();
+        jBtnNovo = new javax.swing.JButton();
         jBtnExcluir = new javax.swing.JButton();
         jBtnImprimir = new javax.swing.JButton();
         jBtnEditar = new javax.swing.JButton();
@@ -75,7 +213,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jRadioBtnCnpj = new javax.swing.JRadioButton();
         jFTxtCpfCnpj = new javax.swing.JFormattedTextField();
         jFtxtRgIe = new javax.swing.JFormattedTextField();
-        javax.swing.JFormattedTextField jFtxtCnh = new javax.swing.JFormattedTextField();
+        jFtxtCnh = new javax.swing.JFormattedTextField();
         jFtxtDataNascimento = new javax.swing.JFormattedTextField();
         jPanelObservacoes = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -85,7 +223,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jTxtNumero = new javax.swing.JTextField();
         jCboCidade = new javax.swing.JComboBox<>();
         jTxtBairro = new javax.swing.JTextField();
-        jTxtEstado1 = new javax.swing.JTextField();
+        jTxtEstado = new javax.swing.JTextField();
         jCboTipoEnd = new javax.swing.JComboBox<>();
         jTxtReferencia = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -113,10 +251,15 @@ public class JfrmClientes extends javax.swing.JFrame {
         jBtnSalvar.setBorder(null);
         jBtnSalvar.setFocusPainted(false);
 
-        jBbtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add_121935.png"))); // NOI18N
-        jBbtnNovo.setToolTipText("Clique aqui para novo Cliente");
-        jBbtnNovo.setBorder(null);
-        jBbtnNovo.setFocusPainted(false);
+        jBtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add_121935.png"))); // NOI18N
+        jBtnNovo.setToolTipText("Clique aqui para novo Cliente");
+        jBtnNovo.setBorder(null);
+        jBtnNovo.setFocusPainted(false);
+        jBtnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnNovoActionPerformed(evt);
+            }
+        });
 
         jBtnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/bin_121907.png"))); // NOI18N
         jBtnExcluir.setToolTipText("Clique aqui para excluir Cliente");
@@ -190,11 +333,6 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtDataNascimento.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Nascimento"));
         jFtxtDataNascimento.setToolTipText("Data nascimento do cliente!");
         jFtxtDataNascimento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jFtxtDataNascimento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jFtxtDataNascimentoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanDadosGeraisLayout = new javax.swing.GroupLayout(jPanDadosGerais);
         jPanDadosGerais.setLayout(jPanDadosGeraisLayout);
@@ -291,22 +429,32 @@ public class JfrmClientes extends javax.swing.JFrame {
         jCboCidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jCboCidade.setToolTipText("Selecione a cidade do cliente");
         jCboCidade.setBorder(javax.swing.BorderFactory.createTitledBorder("Cidade"));
+        jCboCidade.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCboCidadeItemStateChanged(evt);
+            }
+        });
 
         jTxtBairro.setBackground(new java.awt.Color(240, 240, 240));
         jTxtBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtBairro.setToolTipText("Bairro da Residencia");
         jTxtBairro.setBorder(javax.swing.BorderFactory.createTitledBorder("Bairro"));
 
-        jTxtEstado1.setBackground(new java.awt.Color(240, 240, 240));
-        jTxtEstado1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTxtEstado1.setToolTipText("Estado da Residencia");
-        jTxtEstado1.setBorder(javax.swing.BorderFactory.createTitledBorder("Estado"));
+        jTxtEstado.setBackground(new java.awt.Color(240, 240, 240));
+        jTxtEstado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTxtEstado.setToolTipText("Estado da Residencia");
+        jTxtEstado.setBorder(javax.swing.BorderFactory.createTitledBorder("Estado"));
 
         jCboTipoEnd.setBackground(new java.awt.Color(240, 240, 240));
         jCboTipoEnd.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jCboTipoEnd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCboTipoEnd.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jCboTipoEnd.setToolTipText("Selecione o tipo de endereço do cliente");
         jCboTipoEnd.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo Endereço"));
+        jCboTipoEnd.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCboTipoEndItemStateChanged(evt);
+            }
+        });
 
         jTxtReferencia.setBackground(new java.awt.Color(240, 240, 240));
         jTxtReferencia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -384,7 +532,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jCboCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTxtEstado1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTxtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jFtxtCep, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
@@ -396,7 +544,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                     .addComponent(jTxtRua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTxtNumero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCboCidade, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtEstado1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTxtEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jFtxtCep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelDadosEnderecosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -425,7 +573,7 @@ public class JfrmClientes extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jBbtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jBtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
                         .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -458,7 +606,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                     .addComponent(jBtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBbtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jBtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jBtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -488,12 +636,49 @@ public class JfrmClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
- 
+            
     }//GEN-LAST:event_jBtnBuscarActionPerformed
 
-    private void jFtxtDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFtxtDataNascimentoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jFtxtDataNascimentoActionPerformed
+    private void jCboTipoEndItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCboTipoEndItemStateChanged
+        if(jCboTipoEnd.getSelectedIndex() > -1) {
+          clsEnderecos.setTipoEndereco(jCboTipoEnd.getSelectedItem().toString());
+        }
+    }//GEN-LAST:event_jCboTipoEndItemStateChanged
+
+    private void jCboCidadeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCboCidadeItemStateChanged
+        if (jCboCidade.getSelectedIndex() > -1) {
+            clsEnderecos.setNomeCidade(jCboCidade.getSelectedItem().toString());
+            for (int i = 0; i < listCidadesBD.size(); i++) {
+                if (listCidadesBD.get(i).getNomeCidade().equals(jCboCidade.getSelectedItem().toString())) {
+                    String sigla = listCidadesBD.get(i).getSiglaEstado();
+                    selectedIdCidade = listCidadesBD.get(i).getIdCidade();
+                    jTxtEstado.setText("" + sigla + " - " + listCidadesBD.get(i).getEstado());
+                }
+            }
+        }
+    }//GEN-LAST:event_jCboCidadeItemStateChanged
+
+    private void jBtnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnNovoActionPerformed
+               if (precionado == false) {
+            jTblEnderecos.setEnabled(false);
+            setIconBtnNv(true);
+            enableControl();
+            clearTxt();
+            precionado = true;
+            editando = false;
+            jTxtNome.requestFocus();
+            
+            
+        } else {
+            jTblEnderecos.setEnabled(true);
+            setIconBtnNv(false);
+            disableControl();
+            clearTxt();
+            precionado = false;
+            editando = false;
+        }
+        
+    }//GEN-LAST:event_jBtnNovoActionPerformed
     
     /**
      * @param args the command line arguments
@@ -502,11 +687,11 @@ public class JfrmClientes extends javax.swing.JFrame {
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jBbtnNovo;
     private javax.swing.JButton jBtnBuscar;
     private javax.swing.JButton jBtnEditar;
     private javax.swing.JButton jBtnExcluir;
     private javax.swing.JButton jBtnImprimir;
+    private javax.swing.JButton jBtnNovo;
     private javax.swing.JButton jBtnSalvar;
     private javax.swing.JButton jBtn_Adcionar_end;
     private javax.swing.JButton jBtn_Editar_End;
@@ -518,6 +703,7 @@ public class JfrmClientes extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jFTxtCpfCnpj;
     private javax.swing.JFormattedTextField jFtxtCelular;
     private javax.swing.JFormattedTextField jFtxtCep;
+    private javax.swing.JFormattedTextField jFtxtCnh;
     private javax.swing.JFormattedTextField jFtxtDataNascimento;
     private javax.swing.JFormattedTextField jFtxtFone;
     private javax.swing.JFormattedTextField jFtxtRgIe;
@@ -533,7 +719,7 @@ public class JfrmClientes extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextObservacoes;
     private javax.swing.JTextField jTxtBairro;
     private javax.swing.JTextField jTxtEmail;
-    private javax.swing.JTextField jTxtEstado1;
+    private javax.swing.JTextField jTxtEstado;
     private javax.swing.JTextField jTxtNome;
     private javax.swing.JTextField jTxtNumero;
     private javax.swing.JTextField jTxtReferencia;
@@ -543,4 +729,6 @@ public class JfrmClientes extends javax.swing.JFrame {
     private void setIcon() {
        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/imagens/icone_menu_clientes.png")));
     }
+
+
 }

@@ -55,6 +55,10 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     }
 
     public JfrmVeiculos(ClsLogin clslogin) {
+        
+        // executando componentes e metodos da Jframe
+        initComponents();
+        
         //carregando as variaves de usuario
 
         userLoged = clslogin.getUserLoged();
@@ -74,8 +78,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         clscarros.setInativo(0);
         clscarros.setStatus(0);
 
-        // executando componentes e metodos da Jframe
-        initComponents();
+        
         try {
             addMascara();
         } catch (ParseException e) {
@@ -205,7 +208,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtNome.setText("");
         jTxtNumeroRenavan.setText("");
         jTxtObservacoes.setText("");
-        jTxtPlaca.setText("");
+        jTxtPlaca.setText("");        
         jTxtPlacaBusca.setText("");
         jTxtValorDiaria.setText("");
         jTxtValorKmRodado.setText("");
@@ -397,6 +400,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
     }
 
+    //funcoes de apoio a Jtable
     private void carregarJtable() {
 
         jTblVeiculos.setModel(modeloTable);
@@ -408,23 +412,22 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     }
 
     private void atualizarJtable() {
-
         modeloTable.addRow(clscarros);
     }
 
     private void atualizaListaCarros(int indice) {
         listaCarros.set(indice, clscarros);
         modeloTable.updatedListRow(indice, clscarros);
-        modeloTable.updatedRow(indice, indice);
-        
+        modeloTable.updatedRow(indice, indice);        
     }
-
+    
     private void limpaJtable() {
         jTblVeiculos.setModel(modeloTable);
     }
-
+    
+    //funções de apoio a jframe
+    
     private void carregarFrame() {
-
         jLabelCodigo.setText("Codigo: " + clscarros.getId());
         jTxtAnoFabricacao.setText("" + clscarros.getAnoFabricacao());
         jTxtAnoModelo.setText("" + clscarros.getAnoModelo());

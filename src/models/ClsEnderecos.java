@@ -5,14 +5,24 @@ package models;
  *
  * @author Tiago Teixeira
  */
-public class ClsEnderecos   {
-    private int Id;
-    private String Rua;
-    private String Numero;
-    private String Bairro;
-    private  int Id_cidade;
+public class ClsEnderecos extends ClsCidades {
+    protected int Id;
+    protected String Rua;
+    protected String Numero;
+    protected String Bairro;
+    protected String TipoEndereco;
+    protected String Cep;
+    protected  int Id_cidade;
                     
     public ClsEnderecos() {
+    }
+
+    public String getTipoEndereco() {
+        return TipoEndereco;
+    }
+
+    public void setTipoEndereco(String TipoEndereco) {
+        this.TipoEndereco = TipoEndereco;
     }
     
     
@@ -22,7 +32,7 @@ public class ClsEnderecos   {
         this.Numero = Numero;
         this.Bairro = Bairro;
         this.Id_cidade = Id_cidade;
-             
+                 
     }
       
        
@@ -60,6 +70,15 @@ public class ClsEnderecos   {
         this.Bairro = Bairro;
     }
 
+    public String getCep() {
+        return Cep;
+    }
+
+    public void setCep(String Cep) {
+        this.Cep = Cep;
+    }
+    
+    
     public int getId_cidade() {
         return Id_cidade;
     }

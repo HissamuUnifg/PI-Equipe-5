@@ -6,11 +6,11 @@ package models;
  * @author Tiago Teixeira
  */
 public class ClsCidades {
-    private int IdCidade;
-    private String NomeCidade;
-    private String SiglaEstado;
-    private String Estado;
-    private String Pais;
+    protected int IdCidade;
+    protected String NomeCidade;
+    protected String SiglaEstado;
+    protected String Estado;
+    protected String Pais;
 
     
     public ClsCidades() {
