@@ -413,19 +413,19 @@ FROM locadora.carros c
 				<textFieldExpression><![CDATA[$F{Chassi}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="40" y="41" width="70" height="20" uuid="b50f6e43-b5df-4279-a869-b9edfe0d6242">
+				<reportElement x="40" y="39" width="70" height="20" uuid="b50f6e43-b5df-4279-a869-b9edfe0d6242">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="a986d71b-74f2-4d03-b0c3-9a59672ebdff"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{KmRodados}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
-				<reportElement x="110" y="41" width="80" height="20" uuid="49c3b093-88db-490e-a49e-a82ce6f8cd5e">
+				<reportElement x="110" y="39" width="80" height="20" uuid="49c3b093-88db-490e-a49e-a82ce6f8cd5e">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f3fc8d7c-c0ba-40ed-93e9-ac2db077e00b"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{ValorMercado}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
-				<reportElement x="190" y="40" width="70" height="20" uuid="7fa10ac4-e2aa-4b3d-b668-3d205b7afee9">
+				<reportElement x="190" y="39" width="70" height="20" uuid="7fa10ac4-e2aa-4b3d-b668-3d205b7afee9">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="14c58415-aec2-481e-99ce-033a10a8d55a"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{ValorSeguro}]]></textFieldExpression>
