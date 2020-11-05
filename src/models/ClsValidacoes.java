@@ -64,7 +64,13 @@ public class ClsValidacoes {
 
     
     
-    //entra uma string e retira os dados em qualquer parte que esteja
+
+
+    /**
+     * entra uma string e retira os dados em qualquer parte que esteja
+     * @param dado
+     * @return
+     */
     public String replaceDado(String dado) {
         dado = dado.replaceAll("\\.", "");
         dado = dado.replaceAll("-", "");
@@ -73,7 +79,14 @@ public class ClsValidacoes {
         return dado;
     }
     
-    //entra uma string no formato BR e retorna em formato US
+
+   
+
+    /**
+     * entra uma string no formato BR 01/05/2010 e retorna em formato US
+     * @param dataEntrada
+     * @return Retorna DATA formatada em formato US 2010-05-01
+     */
     public String dataFormatoUS(String dataEntrada) {
         //10-10-2010
         String dia = dataEntrada.substring(0, 2);
@@ -83,7 +96,13 @@ public class ClsValidacoes {
         return dataSaida;
     }
     
-    //entra uma string no formato US e retorna em formato BR
+    //
+
+    /**
+     * entra uma string no formato US 2010-05-01 e retorna em formato BR
+     * @param dataEntrada
+     * @return  string com data formatada em formato BR 01/05/2020
+     */
     public String dataFormatoBR(String dataEntrada) {
         //2001-01-01 10-10-2010
         String ano = dataEntrada.substring(0, 4);

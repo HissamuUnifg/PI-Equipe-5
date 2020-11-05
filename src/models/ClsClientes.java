@@ -2,6 +2,7 @@
 package models;
 
 
+
 /**
  *
  * @author Tiago Teixeira
@@ -27,11 +28,13 @@ public class ClsClientes extends ClsUsuarios{
     }
 
     public String getDataNascimento() {
-        return DataNascimento;
+        ClsValidacoes clsval = new ClsValidacoes();
+        return clsval.dataFormatoBR(DataNascimento);
     }
 
     public void setDataNascimento(String DataNascimento) {
-        this.DataNascimento = DataNascimento;
+        ClsValidacoes clsval = new ClsValidacoes();
+        this.DataNascimento = clsval.dataFormatoUS(DataNascimento);        
     }
 
     @Override   
@@ -73,14 +76,15 @@ public class ClsClientes extends ClsUsuarios{
         this.RazaoSocial = RazaoSocial;
         this.DataNascimento = DataNascimento;
     }
-
+    public ClsClientes() {
+    }
     
     public String getCnpj() {
         return cnpj;
     }
 
     public void setCnpj(String cnpj) {
-        models.ClsValidacoes clsvalidacoes = new models.ClsValidacoes();
+        ClsValidacoes clsvalidacoes = new ClsValidacoes();
         String cnpj_reformatado = clsvalidacoes.replaceDado(cnpj);
         this.valido = clsvalidacoes.isValid(cnpj_reformatado);
         if (valido == true) {

@@ -1,32 +1,60 @@
 
 package views;
 
-import java.awt.Toolkit;
-import models.ClsLogin;
 
+import models.ClsCidades;
+import models.ClsEnderecos;
+import models.ClsLogin;
+import controls.CidadesDAO;
+import java.awt.Toolkit;
+import java.util.List;
 
 
 
 /**
- *
+ * 
  * @author Tiago Teixeira
  */
 public class JfrmClientes extends javax.swing.JFrame {
+   
    private String userLoged;
    private int userIdLoged;
    private String CpfUserLoged;
-    public JfrmClientes() {
+   
+   ClsEnderecos clsEnderecos;
+   ClsCidades clsCidades;
+   CidadesDAO cidadesDAO;
+   
+   public JfrmClientes() {
         initComponents();
         setIcon();
-    }
+   }
+    
     public JfrmClientes(ClsLogin clslogin) {
+        
         userLoged = clslogin.getUserLoged();
         userIdLoged = clslogin.getId();
         CpfUserLoged = clslogin.getCpfUserLoged();
+        clsEnderecos = new ClsEnderecos();
+        clsCidades = new ClsCidades();
+        cidadesDAO = new CidadesDAO();
+        loadCidades();
         initComponents();
         setIcon();
     }
+    
+    private void loadCidades(){
+        List<ClsCidades> listCidades = cidadesDAO.selectALL();
 
+        if (listCidades.size() < 1) {
+            System.out.println("Não conseguiu carregar a lista do DB");
+        } else {
+            for (ClsCidades clsCidade : cidadesDAO.selectALL()) {
+                jCboCidade.addItem(clsCidade.getNomeCidade());
+            }
+        }
+
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -108,6 +136,11 @@ public class JfrmClientes extends javax.swing.JFrame {
         jBtnBuscar.setToolTipText("Clique aqui para buscar Cliente");
         jBtnBuscar.setBorder(null);
         jBtnBuscar.setFocusPainted(false);
+        jBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnBuscarActionPerformed(evt);
+            }
+        });
 
         jPanDadosGerais.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("Dados Gerais"), "Dados Gerais"));
 
@@ -238,7 +271,7 @@ public class JfrmClientes extends javax.swing.JFrame {
 
         jCboCidade.setBackground(new java.awt.Color(240, 240, 240));
         jCboCidade.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jCboCidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCboCidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jCboCidade.setToolTipText("Selecione a cidade do cliente");
         jCboCidade.setBorder(javax.swing.BorderFactory.createTitledBorder("Cidade"));
 
@@ -436,6 +469,10 @@ public class JfrmClientes extends javax.swing.JFrame {
         views.JfrmPrincipal telaprincipal = new views.JfrmPrincipal(clslogin);
         telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
+
+    private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
+ 
+    }//GEN-LAST:event_jBtnBuscarActionPerformed
     
     /**
      * @param args the command line arguments
