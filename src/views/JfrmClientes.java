@@ -76,6 +76,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFTxtCpfCnpj = new javax.swing.JFormattedTextField();
         jFtxtRgIe = new javax.swing.JFormattedTextField();
         javax.swing.JFormattedTextField jFtxtCnh = new javax.swing.JFormattedTextField();
+        jFtxtDataNascimento = new javax.swing.JFormattedTextField();
         jPanelObservacoes = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextObservacoes = new javax.swing.JTextArea();
@@ -185,6 +186,16 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtCnh.setToolTipText("Numero da CNH do cliente");
         jFtxtCnh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
+        jFtxtDataNascimento.setBackground(new java.awt.Color(240, 240, 240));
+        jFtxtDataNascimento.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Nascimento"));
+        jFtxtDataNascimento.setToolTipText("Data nascimento do cliente!");
+        jFtxtDataNascimento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jFtxtDataNascimento.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jFtxtDataNascimentoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanDadosGeraisLayout = new javax.swing.GroupLayout(jPanDadosGerais);
         jPanDadosGerais.setLayout(jPanDadosGeraisLayout);
         jPanDadosGeraisLayout.setHorizontalGroup(
@@ -193,6 +204,8 @@ public class JfrmClientes extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanDadosGeraisLayout.createSequentialGroup()
+                        .addComponent(jFtxtDataNascimento, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(jFtxtFone, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jFtxtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -217,7 +230,7 @@ public class JfrmClientes extends javax.swing.JFrame {
             .addGroup(jPanDadosGeraisLayout.createSequentialGroup()
                 .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanDadosGeraisLayout.createSequentialGroup()
-                        .addGap(0, 1, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jRadioBtnCpf)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioBtnCnpj))
@@ -229,10 +242,14 @@ public class JfrmClientes extends javax.swing.JFrame {
                             .addComponent(jFtxtCnh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGap(18, 18, 18)
-                .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jFtxtFone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jFtxtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanDadosGeraisLayout.createSequentialGroup()
+                        .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jFtxtFone)
+                            .addComponent(jFtxtDataNascimento)
+                            .addComponent(jFtxtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
         );
 
         jPanelObservacoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Observações"));
@@ -473,6 +490,10 @@ public class JfrmClientes extends javax.swing.JFrame {
     private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
  
     }//GEN-LAST:event_jBtnBuscarActionPerformed
+
+    private void jFtxtDataNascimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jFtxtDataNascimentoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jFtxtDataNascimentoActionPerformed
     
     /**
      * @param args the command line arguments
@@ -497,6 +518,7 @@ public class JfrmClientes extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jFTxtCpfCnpj;
     private javax.swing.JFormattedTextField jFtxtCelular;
     private javax.swing.JFormattedTextField jFtxtCep;
+    private javax.swing.JFormattedTextField jFtxtDataNascimento;
     private javax.swing.JFormattedTextField jFtxtFone;
     private javax.swing.JFormattedTextField jFtxtRgIe;
     private javax.swing.JLabel jLabelCodigo;
