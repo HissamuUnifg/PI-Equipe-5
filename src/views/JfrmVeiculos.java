@@ -227,7 +227,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " está maior ou menor do que o permitido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
     }
     
-        private void msgErrCampo(String dado) {
+    private void msgErrCampo(String dado) {
         JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " é invalido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
     }
     

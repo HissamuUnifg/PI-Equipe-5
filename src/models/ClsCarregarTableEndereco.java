@@ -12,6 +12,7 @@ public class ClsCarregarTableEndereco extends AbstractTableModel{
     
     private final List<ClsEnderecos> clsEnderecos;
     private final String[] colunas = {"Rua","Numero","Cidade","Estado","Bairro","Cep","Tipo"};
+
     
     public ClsCarregarTableEndereco(List<ClsEnderecos> clsEnderecos) {
         this.clsEnderecos = clsEnderecos;

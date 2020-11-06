@@ -105,15 +105,7 @@ public class ClsClientes extends ClsUsuarios{
     }
 
     public void setCnpj(String cnpj) {
-        ClsValidacoes clsvalidacoes = new ClsValidacoes();
-        String cnpj_reformatado = clsvalidacoes.replaceDado(cnpj);
-        this.valido = clsvalidacoes.isValid(cnpj_reformatado);
-        if (valido == true) {
-            this.cnpj = cnpj_reformatado;
-        }else{
-            this.valido = false;
-        }
-
+        this.cnpj = cnpj;       
     }
  
     public int getRg() {

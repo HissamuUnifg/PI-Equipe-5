@@ -14,7 +14,17 @@ public class ClsValidacoes {
 
     private static final int[] pesoCPF = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};
     private static final int[] pesoCNPJ = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+    //false CNPJ -- true CPF
+    private static boolean tipoCpfCnpj;
 
+    /**
+     *  //false CNPJ -- true CPF
+     * @return 
+     */
+    public  boolean isTipoCpfCnpj() {
+        return tipoCpfCnpj;
+    }
+    
     //entra com uma string e valida se é valido ou nâo o CPF ou CNPJ
     public boolean isValid(String cpfCnpj) {
         return (isValidCPF(cpfCnpj) || isValidCNPJ(cpfCnpj));
@@ -48,7 +58,10 @@ public class ClsValidacoes {
 
         Integer digito1 = calcularDigito(cpf.substring(0, 9), pesoCPF);
         Integer digito2 = calcularDigito(cpf.substring(0, 9) + digito1, pesoCPF);
+        tipoCpfCnpj = true;
         return cpf.equals(cpf.substring(0, 9) + digito1.toString() + digito2.toString());
+       
+        
     }
 
     private static boolean isValidCNPJ(String cnpj) {
@@ -59,6 +72,7 @@ public class ClsValidacoes {
 
         Integer digito1 = calcularDigito(cnpj.substring(0, 12), pesoCNPJ);
         Integer digito2 = calcularDigito(cnpj.substring(0, 12) + digito1, pesoCNPJ);
+        tipoCpfCnpj = false;
         return cnpj.equals(cnpj.substring(0, 12) + digito1.toString() + digito2.toString());
     }
 

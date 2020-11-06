@@ -327,12 +327,18 @@
             <Property name="text" type="java.lang.String" value="CPF"/>
             <Property name="toolTipText" type="java.lang.String" value="Marque para pessoa fisica!"/>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jRadioBtnCpfItemStateChanged"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioBtnCnpj">
           <Properties>
             <Property name="text" type="java.lang.String" value="CNPJ"/>
             <Property name="toolTipText" type="java.lang.String" value="Marque para pessoa Juridica!"/>
           </Properties>
+          <Events>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jRadioBtnCnpjItemStateChanged"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jFTxtCpfCnpj">
           <Properties>

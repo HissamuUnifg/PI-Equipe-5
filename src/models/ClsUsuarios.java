@@ -43,14 +43,7 @@ public class ClsUsuarios {
     }
 
     public void setCpf(String cpf) {
-     models.ClsValidacoes clsvalidacoes = new models.ClsValidacoes();
-        String cpf_reformatado = clsvalidacoes.replaceDado(cpf);
-        valido = clsvalidacoes.isValid(cpf_reformatado);
-        if (valido == true) {
-            this.cpf = cpf_reformatado;
-        }else{
-            valido = false;
-        }       
+        this.cpf = cpf;
     }
 
     public String getTelefone() {

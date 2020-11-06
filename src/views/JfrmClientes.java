@@ -10,9 +10,13 @@ import controls.CidadesDAO;
 import controls.ClientesDAO;
 import controls.EnderecosDAO;
 import java.awt.Toolkit;
+import java.text.ParseException;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.text.DefaultFormatterFactory;
 import models.ClsCarregarTableEndereco;
+import models.ClsValidacoes;
+import models.ClsMascaraCampos;
 
 
 
@@ -33,9 +37,13 @@ public class JfrmClientes extends javax.swing.JFrame {
    CidadesDAO cidadesDAO;
    ClientesDAO clientesDAO;
    ClsClientes clsClientes;
+   ClsValidacoes clsValidacoes;
    boolean precionado;
    boolean editando;
-   private int selectedIdCidade;
+   ClsCarregarTableEndereco clsCarregarTableEndereco;
+   ClsMascaraCampos clsMascaracampos;
+   private int tipoCliente; // 0 o programa vai gravar o CNPJ 1 o programa grava CPF
+   
    
    List<ClsCidades> listCidadesBD;
    List<ClsEnderecos> listEnderecosBD;
@@ -47,30 +55,60 @@ public class JfrmClientes extends javax.swing.JFrame {
    }
     
     public JfrmClientes(ClsLogin clslogin) {
-        
+
         initComponents();
         setIcon();
-        
+
         userLoged = clslogin.getUserLoged();
         userIdLoged = clslogin.getId();
         CpfUserLoged = clslogin.getCpfUserLoged();
-        
+
         clsEnderecos = new ClsEnderecos();
         clsCidades = new ClsCidades();
         cidadesDAO = new CidadesDAO();
         clsClientes = new ClsClientes();
         enderecosDAO = new EnderecosDAO();
-   
-        listCidadesBD = cidadesDAO.selectALL();  
-        
+        clsValidacoes = new ClsValidacoes();
+        listCidadesBD = cidadesDAO.selectALL();
+        clsMascaracampos = new ClsMascaraCampos();
+
+        try {
+            addMascara();
+        } catch (ParseException ex) {
+            System.out.println("Erro ao aplicar mascaras: " + ex);
+        }
+
         precionado = false;
         editando = false;
-        
+
         loadCidades();
         loadEnderecoTipo();
         disableControl();
-        
+
                
+    }
+    
+    private void addMascara() throws ParseException {
+        jFtxtDataNascimento.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraData(jFtxtDataNascimento)));
+        jFtxtCep.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraCep(jFtxtCep)));
+        jFtxtFone.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraTelefone(jFtxtFone)));
+        jFtxtCelular.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraCelular(jFtxtCelular)));
+        jFtxtCnh.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraCNH(jFtxtCnh)));
+    }
+    
+    /**
+     * Passando o valor true ele vai formatar um CPF
+     * Passando o valor false ele vai formatar um CNPJ
+     * @param tipo
+     * @throws ParseException 
+     */
+    private void addMascaraCpfCnpj(boolean tipo) throws ParseException {
+        //se for true aplica a mascara CPF // se for false aplica a mascara cnpj
+        if (tipo == true) {
+                jFTxtCpfCnpj.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraCpf(jFTxtCpfCnpj))); 
+        } else if (tipo == false) {
+                jFTxtCpfCnpj.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraCnpj(jFTxtCpfCnpj)));
+        }
     }
     
     private void loadCidades(){
@@ -173,33 +211,66 @@ public class JfrmClientes extends javax.swing.JFrame {
             jBtnNovo.setToolTipText("Clique aqui para novo Veiculo");
         }
     }
-    
+    /**
+     * usado no evento do botao "Buscar", valida o cpf/cnpj inserido e se for valido executa a busca 
+     * na lista pre carregada com os dados do BD
+     */
     private void buscaCliente(){
-        String cpf = JOptionPane.showInputDialog("Digite o CPF para procurar");
-        clsClientes.setCpf(cpf);
-        boolean valido = clsClientes.isValido();
-        if (valido == true) {
+        String cpf = JOptionPane.showInputDialog("Digite o CPF/CNPJ para procurar");
+        boolean valido = clsValidacoes.isValid(cpf);
+        boolean tipo = clsValidacoes.isTipoCpfCnpj(); //tipo true é CPF tipo false é CNPJ
+        if (valido == true && tipo == true) {
             if (listClientesBD.size() < 1) {
                 JOptionPane.showMessageDialog(this, "Erro: CPF não Cadastrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
                 buscaCliente();
             } else {
-                for (int i = 0; i < listClientesBD.size(); i ++) {
-                    if(listClientesBD.get(i).getCpf().equals(cpf)) {
-                     carregarListaEnd(listClientesBD.get(i).getId());
-                     carregarJtable();
-                     loadBlocoEnd(-1);
+                for (int i = 0; i < listClientesBD.size(); i++) {
+                    if (listClientesBD.get(i).getCpf().equals(cpf)) {
+                        carregarListaEnd(listClientesBD.get(i).getId());
+                        carregarJtable();
+                        try {
+                            addMascaraCpfCnpj(tipo);
+                        } catch (ParseException ex) {
+                            System.out.println("Erro ao aplicar: "+ex);
+                        }
+                        loadBlocoCliente(i);
+                        loadBlocoEnd(-1);
+
                     }
-                    
+
                 }
-                
+
+                precionado = true;
+            }
+        } else if (valido == true && tipo == false) {
+            if (listClientesBD.size() < 1) {
+                JOptionPane.showMessageDialog(this, "Erro: CNPJ não Cadastrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
+                buscaCliente();
+            } else {
+                   for (int i = 0; i < listClientesBD.size(); i++) {
+                    if (listClientesBD.get(i).getCnpj().equals(cpf)) {
+                        carregarListaEnd(listClientesBD.get(i).getId());
+                        carregarJtable();
+                        try {
+                            addMascaraCpfCnpj(tipo);
+                        } catch (ParseException ex) {
+                            System.out.println("Erro ao aplicar: "+ex);
+                        }
+                        loadBlocoCliente(i);
+                        loadBlocoEnd(-1);
+
+                    }
+
+                }
+
                 precionado = true;
             }
         } else {
-            JOptionPane.showMessageDialog(this, "O CPF digitado é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "O CPF/CNPJ digitado é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
             buscaCliente();
-       }
+        }
     }
-    
+
     private void clearTxt() {
         jTextObservacoes.setText("");
         jTxtBairro.setText("");
@@ -220,7 +291,9 @@ public class JfrmClientes extends javax.swing.JFrame {
         jCboTipoEnd.setSelectedItem("Selecione");
     }
     
-    //funções relacionadas a Jtable que exibe os endereços
+    //funções relacionadas a Jtable que exibe os endereços //
+    
+    
     public void carregarListaEnd(int idCliente){
     listEnderecosBD = enderecosDAO.selectALL(idCliente);
     }
@@ -229,7 +302,28 @@ public class JfrmClientes extends javax.swing.JFrame {
      jTblEnderecos.setModel(new ClsCarregarTableEndereco(listEnderecosBD));
     }
     
-    //funções responsaveis por carregar os componentes da tela
+    public void atualizaListEnd(int Indice){
+       listEnderecosBD.set(Indice, clsEnderecos);
+       clsCarregarTableEndereco.updatedListRow(Indice, clsEnderecos);
+       clsCarregarTableEndereco.updatedRow(Indice, Indice);
+       
+    }
+    
+    public void removeRowList(int indice) {
+        listEnderecosBD.remove(indice);
+        clsCarregarTableEndereco.deleteRow(indice);
+    }
+    
+    public void addRowTable(){
+        clsCarregarTableEndereco.addRow(clsEnderecos);
+    }
+    
+    
+    
+    
+    //funções responsaveis por carregar os componentes da tela //
+    
+    
     
     /**
      * Recebe -1 para primeiro endereço da lista ou a linha selecionada para carregar 
@@ -251,6 +345,49 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtCep.setText(listEnderecosBD.get(indiceB).getCep());
         jTxtNumero.setText(listEnderecosBD.get(indiceB).getNumero());
         jCboTipoEnd.setSelectedItem(listEnderecosBD.get(indiceB).getTipoEndereco());
+    }
+    
+    /**
+     * Carrega o Bloco do enderço do cliente usando como parametro o indice 
+     * que ele se encontra "listClienteBD".
+     * Os RadiosButton vao ser ativados e desativados de acordo com o tipo de cadastro.
+     * No CheckBox Inativar se no banco estiver 0 estará desmarcado e 1 estará marcado
+     * @param indice
+     */
+    public void loadBlocoCliente(int indice) {
+        jLabelCodigo.setText("Codigo: "+listClientesBD.get(indice).getId());
+        jTextObservacoes.setText(listClientesBD.get(indice).getObservacoes());
+        jTxtEmail.setText(listClientesBD.get(indice).getEmail());
+        if(listClientesBD.get(indice).getNome() == null || listClientesBD.get(indice).getNome().equals("")){
+            jTxtNome.setText(listClientesBD.get(indice).getRazaoSocial());
+            jRadioBtnCpf.setEnabled(false);
+            jRadioBtnCnpj.setEnabled(true);
+            jRadioBtnCnpj.setSelected(true);
+        } else if (listClientesBD.get(indice).getRazaoSocial() == null || listClientesBD.get(indice).getRazaoSocial().equals("")) {
+            jTxtNome.setText(listClientesBD.get(indice).getNome());
+            jRadioBtnCpf.setEnabled(true);
+            jRadioBtnCpf.setSelected(true);
+            jRadioBtnCnpj.setEnabled(false);
+        }      
+        if(listClientesBD.get(indice).getCpf() == null || listClientesBD.get(indice).getCpf().equals("")) {
+            jFTxtCpfCnpj.setText(listClientesBD.get(indice).getCnpj());
+        } else if (listClientesBD.get(indice).getCnpj() == null || listClientesBD.get(indice).getCnpj().equals("")) {
+            jFTxtCpfCnpj.setText(listClientesBD.get(indice).getCpf());
+        }
+        jFtxtCelular.setText(listClientesBD.get(indice).getCelular());
+        jFtxtDataNascimento.setText(listClientesBD.get(indice).getDataNascimento());      
+        jFtxtFone.setText(listClientesBD.get(indice).getTelefone());
+        if(listClientesBD.get(indice).getRg() == 0){
+            jFtxtRgIe.setText(""+listClientesBD.get(indice).getIe());
+        } else if(listClientesBD.get(indice).getIe() == 0){
+            jFtxtRgIe.setText(""+listClientesBD.get(indice).getRg());
+        }        
+        jFtxtCnh.setText(""+listClientesBD.get(indice).getCnh());
+        if (listClientesBD.get(indice).getInativo() == 0) {
+            jCkb_inativar.setSelected(false);
+        } else if (listClientesBD.get(indice).getInativo() == 1) {
+            jCkb_inativar.setSelected(true);
+        }
     }
     
     @SuppressWarnings("unchecked")
@@ -369,9 +506,19 @@ public class JfrmClientes extends javax.swing.JFrame {
 
         jRadioBtnCpf.setText("CPF");
         jRadioBtnCpf.setToolTipText("Marque para pessoa fisica!");
+        jRadioBtnCpf.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioBtnCpfItemStateChanged(evt);
+            }
+        });
 
         jRadioBtnCnpj.setText("CNPJ");
         jRadioBtnCnpj.setToolTipText("Marque para pessoa Juridica!");
+        jRadioBtnCnpj.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jRadioBtnCnpjItemStateChanged(evt);
+            }
+        });
 
         jFTxtCpfCnpj.setBackground(new java.awt.Color(240, 240, 240));
         jFTxtCpfCnpj.setBorder(javax.swing.BorderFactory.createTitledBorder("CPF/CNPJ"));
@@ -694,8 +841,8 @@ public class JfrmClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
-        controls.ClientesDAO cliDAO = new controls.ClientesDAO();
-        listClientesBD =  cliDAO.selectAll();
+        ClientesDAO cliDBA = new ClientesDAO();                
+        listClientesBD =  cliDBA.selectAll();
         buscaCliente();
     }//GEN-LAST:event_jBtnBuscarActionPerformed
 
@@ -711,7 +858,8 @@ public class JfrmClientes extends javax.swing.JFrame {
             for (int i = 0; i < listCidadesBD.size(); i++) {
                 if (listCidadesBD.get(i).getNomeCidade().equals(jCboCidade.getSelectedItem().toString())) {
                     String sigla = listCidadesBD.get(i).getSiglaEstado();
-                    selectedIdCidade = listCidadesBD.get(i).getIdCidade();
+                    clsEnderecos.setIdCidade(listCidadesBD.get(i).getIdCidade());
+                    clsEnderecos.setEstado(listCidadesBD.get(i).getEstado());
                     jTxtEstado.setText("" + sigla + " - " + listCidadesBD.get(i).getEstado());
                 }
             }
@@ -739,6 +887,46 @@ public class JfrmClientes extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jBtnNovoActionPerformed
+
+    private void jRadioBtnCpfItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioBtnCpfItemStateChanged
+        if (jRadioBtnCpf.isSelected() == true) {
+            jRadioBtnCnpj.setEnabled(false);
+            tipoCliente = 1;
+            try {
+                jFTxtCpfCnpj.setText("");
+                addMascaraCpfCnpj(true);
+            } catch (ParseException ex) {
+                System.out.println("Erro ao aplicar mascara: " + ex);
+            }
+        } else if (jRadioBtnCpf.isSelected() == false) {
+            jRadioBtnCnpj.setEnabled(true);
+            try {
+                jFTxtCpfCnpj.setText("");
+                addMascaraCpfCnpj(true);
+            } catch (ParseException ex) {
+                System.out.println("Erro ao aplicar mascara: " + ex);
+            }
+        }
+    }//GEN-LAST:event_jRadioBtnCpfItemStateChanged
+
+    private void jRadioBtnCnpjItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioBtnCnpjItemStateChanged
+        if (jRadioBtnCnpj.isSelected() == true) {
+            jRadioBtnCpf.setEnabled(false);
+            tipoCliente = 0;
+            try {
+                addMascaraCpfCnpj(false);
+            } catch (ParseException ex) {
+                System.out.println("Erro ao aplicar mascara: " + ex);
+            }
+        } else if (jRadioBtnCnpj.isSelected() == false) {
+            jRadioBtnCpf.setEnabled(true);
+            try {
+                addMascaraCpfCnpj(true);
+            } catch (ParseException ex) {
+                System.out.println("Erro ao aplicar mascara: " + ex);
+            }
+        }
+    }//GEN-LAST:event_jRadioBtnCnpjItemStateChanged
     
     /**
      * @param args the command line arguments
