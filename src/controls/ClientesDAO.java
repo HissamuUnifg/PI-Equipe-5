@@ -19,7 +19,13 @@ public class ClientesDAO {
     SimpleDateFormat formatoUS = new SimpleDateFormat("yyyy-MM-dd");
     private String retorno;
     private boolean sucesso;
+    private int idRetornado;
 
+    public int getIdRetornado() {
+        return idRetornado;
+    }
+
+ 
     public String getRetorno() {
         return retorno;
     }
@@ -31,11 +37,13 @@ public class ClientesDAO {
     public ClientesDAO() {
     }
 
-    public void save(models.ClsClientes clsClientes, int idEndereco, int idColaborador){
+    public void save(models.ClsClientes clsClientes){
         String sql = "insert into Clientes (nome, cpf, razaosocial, cnpj, ie, rg, datanascimento, "
-                  + " telefone, celular, email, observacoes, cnh, id_endereco,id_colaborador, inativo ) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                  + " telefone, celular, email, observacoes, cnh, id_colaborador, inativo ) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sqlId = "select max(id) as Id from Clientes";
         Connection conn = null;
         PreparedStatement ps = null;
+        ResultSet rs = null;
         
         try {
             conn = ConexaoDAO.getConexaoDAO();
@@ -52,12 +60,18 @@ public class ClientesDAO {
             ps.setString(9, clsClientes.getCelular());
             ps.setString(10, clsClientes.getEmail());
             ps.setString(11, clsClientes.getObservacoes());
-            ps.setInt(12, clsClientes.getCnh());
-            ps.setInt(13, idEndereco);
-            ps.setInt(14, idColaborador);
-            ps.setInt(15, clsClientes.getInativo());
+            ps.setInt(12, clsClientes.getCnh());            
+            ps.setInt(13, clsClientes.getIdColaborador());
+            ps.setInt(14, clsClientes.getInativo());            
             
             ps.execute();
+            //buscando o id que gerou no banco
+            ps = conn.prepareStatement(sqlId);
+            rs = ps.executeQuery();
+            
+            while (rs.next()){
+                idRetornado = rs.getInt("id");
+            }
             
             retorno = "Cliente gravado com sucerro!";
             sucesso = true;
@@ -74,7 +88,7 @@ public class ClientesDAO {
     
     public void update(models.ClsClientes clsClientes){
         String sql = " update Clientes set nome = ?, cpf = ?, razaosocial = ?, cnpj = ?, ie = ?, rg = ?, datanascimento = ?, "
-                   + " telefone = ?, celular = ?, email = ?, observacoes = ?, cnh = ?, id_endereco = ?,id_colaborador = ?, inativo = ? where id = ? ";
+                   + " telefone = ?, celular = ?, email = ?, observacoes = ?, cnh = ?,id_colaborador = ?, inativo = ? where id = ? ";
         Connection conn = null;
         PreparedStatement ps = null;
         
@@ -94,10 +108,9 @@ public class ClientesDAO {
             ps.setString(10, clsClientes.getEmail());
             ps.setString(11, clsClientes.getObservacoes());
             ps.setInt(12, clsClientes.getCnh());
-            ps.setInt(13, clsClientes.getIdEndereco());
-            ps.setInt(14, clsClientes.getIdColaborador());
-            ps.setInt(15, clsClientes.getInativo());
-            ps.setInt(16, clsClientes.getId());
+            ps.setInt(13, clsClientes.getIdColaborador());
+            ps.setInt(14, clsClientes.getInativo());
+            ps.setInt(15, clsClientes.getId());
             
             ps.execute();
             
@@ -122,11 +135,13 @@ public class ClientesDAO {
         try {
             conn = ConexaoDAO.getConexaoDAO();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, idCliente);
-            
+            ps.setInt(1, idCliente);            
             ps.execute();
+            EnderecosDAO endDAO = new EnderecosDAO();
+            //ao deletar o cliente os endereços também serão deletados
+            endDAO.deleteTodos(idCliente);
             
-            retorno = "Cliente Deletado com sucesso!";
+            retorno = "Cliente Deletado com sucesso! "+endDAO.getRetorno();
             sucesso = true;
            
         } catch (SQLException e) {
@@ -143,7 +158,7 @@ public class ClientesDAO {
        
         List<models.ClsClientes> rClsClientes = new ArrayList<models.ClsClientes>();
         
-        String sql = "Select id, nome, cpf, razaosocial, cnpj, ie, rg, datanascimento, telefone, celular, email, observacoes, cnh, id_endereco, id_colaborador, inativo  from locadora.Clientes";
+        String sql = "Select id, nome, cpf, razaosocial, cnpj, ie, rg, datanascimento, telefone, celular, email, observacoes, cnh,  id_colaborador, inativo  from locadora.Clientes";
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -171,7 +186,6 @@ public class ClientesDAO {
                 clsClientes.setEmail(rs.getString("Email"));
                 clsClientes.setObservacoes(rs.getString("observacoes"));
                 clsClientes.setCnh(rs.getInt("cnh"));
-                clsClientes.setIdEndereco(rs.getInt("id_endereco"));
                 clsClientes.setIdColaborador(rs.getInt("id_colaborador"));
                 clsClientes.setInativo(rs.getInt("inativo"));
                 rClsClientes.add(clsClientes);

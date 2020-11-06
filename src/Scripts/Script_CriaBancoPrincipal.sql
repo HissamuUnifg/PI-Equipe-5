@@ -74,27 +74,6 @@ PRIMARY KEY(id)
 
 );
 
-
-/*Criando a tabela Endereços*/
-CREATE TABLE IF NOT EXISTS Enderecos(
-id int NOT NULL AUTO_INCREMENT,
-Rua varchar(200) NOT NULL,
-Numero varchar(5) NOT NULL,
-Bairro varchar(100) NOT NULL,
-Cep varchar(10) NOT NULL,
-TipoEndereco varchar(20) NOT NULL,
-id_cidade int NOT NULL,
-id_cliente int NOT NULL,
-PRIMARY KEY(id),
-  CONSTRAINT Enderecos_cidades FOREIGN KEY (id_cidade) REFERENCES Cidades (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
-  CONSTRAINT enderecos_clientes FOREIGN KEY (id_cliente) REFERENCES Clientes (id)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION
-
-);
-
 /*Criando a tabela clientes */
 
 /*Nessa tabela a coluna Id fica como chave primaria 
@@ -122,9 +101,31 @@ CREATE TABLE IF NOT EXISTS Clientes (
   PRIMARY KEY (id),
   CONSTRAINT colaboradores_clientes  FOREIGN KEY (id_colaborador) REFERENCES Colaboradores (id)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+);
+
+
+/*Criando a tabela Endereços*/
+CREATE TABLE IF NOT EXISTS Enderecos(
+id int NOT NULL AUTO_INCREMENT,
+Rua varchar(200) NOT NULL,
+Numero varchar(5) NOT NULL,
+Bairro varchar(100) NOT NULL,
+Cep varchar(10) NOT NULL,
+TipoEndereco varchar(20) NOT NULL,
+id_cidade int NOT NULL,
+id_cliente int NOT NULL,
+PRIMARY KEY(id),
+CONSTRAINT Clientes_enderecos FOREIGN KEY (id_cliente) REFERENCES clientes (Id)
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
+CONSTRAINT Enderecos_cidades FOREIGN KEY (id_cidade) REFERENCES Cidades (id)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+
 
 );
+
 
 
 /*criando tabela contrato*/

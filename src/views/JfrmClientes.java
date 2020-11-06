@@ -539,7 +539,6 @@ public class JfrmClientes extends javax.swing.JFrame {
             }
         });
         jTblEnderecos.setToolTipText("Selecione o endereço para usar as opções");
-        jTblEnderecos.setCellSelectionEnabled(true);
         jTblEnderecos.setName(""); // NOI18N
         jScrollPane2.setViewportView(jTblEnderecos);
 
@@ -697,7 +696,6 @@ public class JfrmClientes extends javax.swing.JFrame {
     private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
         controls.ClientesDAO cliDAO = new controls.ClientesDAO();
         listClientesBD =  cliDAO.selectAll();
-            
         buscaCliente();
     }//GEN-LAST:event_jBtnBuscarActionPerformed
 

@@ -684,7 +684,6 @@
                   </Table>
                 </Property>
                 <Property name="toolTipText" type="java.lang.String" value="Selecione o endere&#xe7;o para usar as op&#xe7;&#xf5;es"/>
-                <Property name="cellSelectionEnabled" type="boolean" value="true"/>
                 <Property name="name" type="java.lang.String" value="" noResource="true"/>
               </Properties>
             </Component>

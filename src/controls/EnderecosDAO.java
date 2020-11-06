@@ -39,9 +39,9 @@ public class EnderecosDAO {
     
     }
     
-    public void save(ClsEnderecos clsEnderecos, int id_cidade){
+    public void save(ClsEnderecos clsEnderecos){
     
-    String sql = "insert into Enderecos (Rua, Numero, Bairro, TipoEndereco, Referencia, Cep, Id_cidade) values (?,?,?,?,?,?,?)";
+    String sql = "insert into Enderecos (Rua, Numero, Bairro, TipoEndereco, Referencia, Cep, Id_cidade, id_cliente) values (?,?,?,?,?,?,?,?)";
     String sqlId = "select MAX(id) as Id from Enderecos";
    
     Connection conn = null;
@@ -58,7 +58,8 @@ public class EnderecosDAO {
             ps.setString(4, clsEnderecos.getTipoEndereco());
             ps.setString(5, clsEnderecos.getReferencia());
             ps.setString(6, clsEnderecos.getCep());
-            ps.setInt(7, id_cidade);
+            ps.setInt(7, clsEnderecos.getIdCidade());
+            ps.setInt(8, clsEnderecos.getIdCliente());
             
             ps.execute();
             ps = conn.prepareStatement(sqlId);
@@ -82,7 +83,7 @@ public class EnderecosDAO {
     
     public void update(ClsEnderecos clsEnderecos){
     
-    String sql = "update Enderecos set Rua = ? , Numero = ?, Bairro = ?, TipoEndereco = ? , Cep = ?, Id_cidade = ?, referencia = ? where id = ?";
+    String sql = "update Enderecos set Rua = ? , Numero = ?, Bairro = ?, TipoEndereco = ? , Cep = ?, Id_cidade = ?, referencia = ?, id_cliente = ? where id = ?";
    
    
     Connection conn = null;
@@ -100,7 +101,9 @@ public class EnderecosDAO {
             ps.setString(5, clsEnderecos.getCep());
             ps.setInt(6, clsEnderecos.getIdCidade());
             ps.setString(7, clsEnderecos.getReferencia());
-            ps.setInt(8, clsEnderecos.getId());
+            ps.setInt(8, clsEnderecos.getIdCliente());
+            ps.setInt(9, clsEnderecos.getId());
+            
             
             ps.execute();
                         
@@ -120,9 +123,9 @@ public class EnderecosDAO {
         List<ClsEnderecos> clsEndereco = new ArrayList<ClsEnderecos>();
         
         String sql = "select end.id as id, end.rua as rua,end.numero as numero,end.bairro as bairro, end.referencia as referencia, "
-                   + " cde.nomecidade as nomecidade,cde.estado as estado,end.cep as cep, end.tipoendereco as tipoendereco, "
+                   + " cde.nomecidade as nomecidade,cde.estado as estado,end.cep as cep, end.tipoendereco as tipoendereco, cl.id as idcliente, "
                    + " cde.id as id_cidade from enderecos end inner join cidades cde on cde.id = end.id_cidade "
-                   + " inner join Clientes cl on cl.id_endereco = end.id where cl.id = ?";
+                   + " inner join Clientes cl on cl.id = end.id_cliente where cl.id = ?";
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -147,6 +150,7 @@ public class EnderecosDAO {
                 clsend.setCep(rs.getString("Cep"));
                 clsend.setTipoEndereco(rs.getString("TipoEndereco"));                
                 clsend.setId_cidade(rs.getInt("Id_cidade"));
+                clsend.setIdCliente(rs.getInt("idcliente"));
                 clsEndereco.add(clsend);
             }
             retorno = "Carregado lista com sucesso";
@@ -176,6 +180,31 @@ public class EnderecosDAO {
             ps.execute();
             
             retorno = "deletado com sucesso!";
+            sucesso = true;
+        } catch (SQLException e) {
+            retorno = "Erro ao deletar!"+ e;
+            sucesso = false;
+        } 
+        finally 
+        {
+            ConexaoDAO.FecharConexao();
+        }
+        
+    }
+    
+    public void deleteTodos(int idCliente){
+    String sql = "delete from Enderecos where id_cliente = ?";
+    
+    Connection conn = null;
+    PreparedStatement ps = null;
+    
+        try {
+            conn = ConexaoDAO.getConexaoDAO();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, idCliente);
+            ps.execute();
+            
+            retorno = "Endereços deletados com sucesso!";
             sucesso = true;
         } catch (SQLException e) {
             retorno = "Erro ao deletar!"+ e;

@@ -15,10 +15,9 @@ public class ClsClientes extends ClsUsuarios{
     private int ie;
     private int cnh;
     private String celular;
-    private String Email; //null
-    private String Observacoes; //null
+    private String Email; 
+    private String Observacoes; 
     private String DataNascimento;
-    private int idEndereco;
     private int idColaborador;
     private int Inativo;
 
@@ -36,8 +35,7 @@ public class ClsClientes extends ClsUsuarios{
     }
 
     public void setDataNascimento(String DataNascimento) {
-//        ClsValidacoes clsval = new ClsValidacoes();
-//        this.DataNascimento = clsval.dataFormatoUS(DataNascimento);   
+
            this.DataNascimento = DataNascimento;
     }
 
@@ -117,17 +115,7 @@ public class ClsClientes extends ClsUsuarios{
         }
 
     }
-
-    public int getIdEndereco() {
-        return idEndereco;
-    }
-
-    public void setIdEndereco(int idEndereco) {
-        this.idEndereco = idEndereco;
-    }
-
-    
-    
+ 
     public int getRg() {
         return rg;
     }

@@ -14,7 +14,9 @@ public class ClsEnderecos extends ClsCidades {
     protected String Referencia;
     protected String Cep;
     protected  int Id_cidade;
-                    
+    protected  int idCliente;
+                 
+    
     public ClsEnderecos() {
     }
 
@@ -97,4 +99,14 @@ public class ClsEnderecos extends ClsCidades {
     public void setId_cidade(int Id_cidade) {
         this.Id_cidade = Id_cidade;
     }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+    
+    
 }
