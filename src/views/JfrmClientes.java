@@ -7,11 +7,13 @@ import models.ClsEnderecos;
 import models.ClsLogin;
 import models.ClsClientes;
 import controls.CidadesDAO;
+import controls.ClientesDAO;
 import controls.EnderecosDAO;
 import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.JOptionPane;
 import models.ClsCarregarTableEndereco;
+
 
 
 
@@ -29,6 +31,7 @@ public class JfrmClientes extends javax.swing.JFrame {
    ClsEnderecos clsEnderecos;
    ClsCidades clsCidades;
    CidadesDAO cidadesDAO;
+   ClientesDAO clientesDAO;
    ClsClientes clsClientes;
    boolean precionado;
    boolean editando;
@@ -36,6 +39,7 @@ public class JfrmClientes extends javax.swing.JFrame {
    
    List<ClsCidades> listCidadesBD;
    List<ClsEnderecos> listEnderecosBD;
+   List<ClsClientes> listClientesBD;
    
    public JfrmClientes() {
         initComponents();
@@ -56,9 +60,8 @@ public class JfrmClientes extends javax.swing.JFrame {
         cidadesDAO = new CidadesDAO();
         clsClientes = new ClsClientes();
         enderecosDAO = new EnderecosDAO();
-        
-        listCidadesBD = cidadesDAO.selectALL();
-        listEnderecosBD = enderecosDAO.selectALL();
+   
+        listCidadesBD = cidadesDAO.selectALL();  
         
         precionado = false;
         editando = false;
@@ -66,7 +69,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         loadCidades();
         loadEnderecoTipo();
         disableControl();
-        carregarJtable();
+        
                
     }
     
@@ -163,12 +166,38 @@ public class JfrmClientes extends javax.swing.JFrame {
     
     private void setIconBtnNv(boolean funcao) {
         if (funcao == true) {
-            jBtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_cancelar.png"))); // NOI18N
+            jBtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_cancelar.png"))); 
             jBtnNovo.setToolTipText("Clique aqui para cancelar a operacao");
         } else {
-            jBtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add_121935.png"))); // NOI18N
+            jBtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add_121935.png"))); 
             jBtnNovo.setToolTipText("Clique aqui para novo Veiculo");
         }
+    }
+    
+    private void buscaCliente(){
+        String cpf = JOptionPane.showInputDialog("Digite o CPF para procurar");
+        clsClientes.setCpf(cpf);
+        boolean valido = clsClientes.isValido();
+        if (valido == true) {
+            if (listClientesBD.size() < 1) {
+                JOptionPane.showMessageDialog(this, "Erro: CPF não Cadastrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
+                buscaCliente();
+            } else {
+                for (int i = 0; i < listClientesBD.size(); i ++) {
+                    if(listClientesBD.get(i).getCpf().equals(cpf)) {
+                     carregarListaEnd(listClientesBD.get(i).getId());
+                     carregarJtable();
+                     loadBlocoEnd(-1);
+                    }
+                    
+                }
+                
+                precionado = true;
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "O CPF digitado é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+            buscaCliente();
+       }
     }
     
     private void clearTxt() {
@@ -187,11 +216,41 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtFone.setText("");
         jFtxtRgIe.setText("");
         jFtxtCnh.setText("");
+        jCboCidade.setSelectedItem("Selecione");
+        jCboTipoEnd.setSelectedItem("Selecione");
     }
     
     //funções relacionadas a Jtable que exibe os endereços
+    public void carregarListaEnd(int idCliente){
+    listEnderecosBD = enderecosDAO.selectALL(idCliente);
+    }
+    
     public void carregarJtable() {
      jTblEnderecos.setModel(new ClsCarregarTableEndereco(listEnderecosBD));
+    }
+    
+    //funções responsaveis por carregar os componentes da tela
+    
+    /**
+     * Recebe -1 para primeiro endereço da lista ou a linha selecionada para carregar 
+     * o bloco de endereços na Jframe
+     * @param indice 
+     */
+    public void loadBlocoEnd(int indice){
+        int indiceB;
+        if (indice < 0) {
+            indiceB = 0;
+        } else {
+            indiceB = indice;
+        }
+        jTxtBairro.setText(listEnderecosBD.get(indiceB).getBairro());
+        jTxtEstado.setText(listEnderecosBD.get(indiceB).getEstado());
+        jCboCidade.setSelectedItem(listEnderecosBD.get(indiceB).getNomeCidade());
+        jTxtRua.setText(listEnderecosBD.get(indiceB).getRua());
+        jTxtReferencia.setText(listEnderecosBD.get(indiceB).getReferencia());
+        jFtxtCep.setText(listEnderecosBD.get(indiceB).getCep());
+        jTxtNumero.setText(listEnderecosBD.get(indiceB).getNumero());
+        jCboTipoEnd.setSelectedItem(listEnderecosBD.get(indiceB).getTipoEndereco());
     }
     
     @SuppressWarnings("unchecked")
@@ -636,7 +695,10 @@ public class JfrmClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
+        controls.ClientesDAO cliDAO = new controls.ClientesDAO();
+        listClientesBD =  cliDAO.selectAll();
             
+        buscaCliente();
     }//GEN-LAST:event_jBtnBuscarActionPerformed
 
     private void jCboTipoEndItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCboTipoEndItemStateChanged

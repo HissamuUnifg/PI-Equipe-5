@@ -10,8 +10,8 @@ public class ClsUsuarios {
     protected String nome;
     protected String cpf;
     protected String telefone;
-    protected boolean valido;
-    protected String Cpf_funCadastro;
+    protected boolean valido; //retorno da verificação do CPF
+    
 
     public boolean isValido() {
         return valido;
@@ -21,14 +21,7 @@ public class ClsUsuarios {
         this.valido = valido;
     }
 
-    public String getCpf_funCadastro() {
-        return Cpf_funCadastro;
-    }
-
-    public void setCpf_funCadastro(String Cpf_funCadastro) {
-        this.Cpf_funCadastro = Cpf_funCadastro;
-    }
-    
+  
     public int getId() {
         return id;
     }

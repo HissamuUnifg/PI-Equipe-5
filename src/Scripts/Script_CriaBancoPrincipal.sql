@@ -84,9 +84,13 @@ Bairro varchar(100) NOT NULL,
 Cep varchar(10) NOT NULL,
 TipoEndereco varchar(20) NOT NULL,
 id_cidade int NOT NULL,
+id_cliente int NOT NULL,
 PRIMARY KEY(id),
   CONSTRAINT Enderecos_cidades FOREIGN KEY (id_cidade) REFERENCES Cidades (id)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+  CONSTRAINT enderecos_clientes FOREIGN KEY (id_cliente) REFERENCES Clientes (id)
+    ON DELETE CASCADE
     ON UPDATE NO ACTION
 
 );
@@ -108,8 +112,9 @@ CREATE TABLE IF NOT EXISTS Clientes (
   DataNascimento DATE  NULL,
   Telefone VARCHAR(12) NOT NULL,
   Celular VARCHAR(12) DEFAULT NULL,
+  Email VARCHAR(250) NOT NULL,
+  Observacoes VARCHAR(1000) DEFAULT NULL,
   CNH VARCHAR(20)  NULL,
-  id_endereco INT NOT NULL,
   id_colaborador INT NOT NULL,
   Inativo INT NOT NULL,
    
@@ -118,9 +123,7 @@ CREATE TABLE IF NOT EXISTS Clientes (
   CONSTRAINT colaboradores_clientes  FOREIGN KEY (id_colaborador) REFERENCES Colaboradores (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT enderecos_clientes FOREIGN KEY (id_endereco) REFERENCES Enderecos (id)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION
+
 );
 
 

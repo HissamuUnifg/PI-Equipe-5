@@ -11,20 +11,14 @@ public class ClsEnderecos extends ClsCidades {
     protected String Numero;
     protected String Bairro;
     protected String TipoEndereco;
+    protected String Referencia;
     protected String Cep;
     protected  int Id_cidade;
                     
     public ClsEnderecos() {
     }
 
-    public String getTipoEndereco() {
-        return TipoEndereco;
-    }
 
-    public void setTipoEndereco(String TipoEndereco) {
-        this.TipoEndereco = TipoEndereco;
-    }
-    
     
     public ClsEnderecos(int Id, String Rua, String Numero, String Bairro, int Id_cidade) {
         this.Id = Id;
@@ -77,6 +71,23 @@ public class ClsEnderecos extends ClsCidades {
     public void setCep(String Cep) {
         this.Cep = Cep;
     }
+    
+    public String getTipoEndereco() {
+        return TipoEndereco;
+    }
+
+    public void setTipoEndereco(String TipoEndereco) {
+        this.TipoEndereco = TipoEndereco;
+    }
+
+    public String getReferencia() {
+        return Referencia;
+    }
+
+    public void setReferencia(String Referencia) {
+        this.Referencia = Referencia;
+    }
+    
     
     
     public int getId_cidade() {

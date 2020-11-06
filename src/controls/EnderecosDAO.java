@@ -41,7 +41,7 @@ public class EnderecosDAO {
     
     public void save(ClsEnderecos clsEnderecos, int id_cidade){
     
-    String sql = "insert into Enderecos (Rua, Numero, Bairro, TipoEndereco, Cep, Id_cidade) values (?,?,?,?,?,?)";
+    String sql = "insert into Enderecos (Rua, Numero, Bairro, TipoEndereco, Referencia, Cep, Id_cidade) values (?,?,?,?,?,?,?)";
     String sqlId = "select MAX(id) as Id from Enderecos";
    
     Connection conn = null;
@@ -56,8 +56,9 @@ public class EnderecosDAO {
             ps.setString(2, clsEnderecos.getNumero());
             ps.setString(3, clsEnderecos.getBairro());
             ps.setString(4, clsEnderecos.getTipoEndereco());
-            ps.setString(5, clsEnderecos.getCep());
-            ps.setInt(6, id_cidade);
+            ps.setString(5, clsEnderecos.getReferencia());
+            ps.setString(6, clsEnderecos.getCep());
+            ps.setInt(7, id_cidade);
             
             ps.execute();
             ps = conn.prepareStatement(sqlId);
@@ -81,7 +82,7 @@ public class EnderecosDAO {
     
     public void update(ClsEnderecos clsEnderecos){
     
-    String sql = "update Enderecos set Rua = ? , Numero = ?, Bairro = ?, TipoEndereco = ? , Cep = ?, Id_cidade = ? where id = ?";
+    String sql = "update Enderecos set Rua = ? , Numero = ?, Bairro = ?, TipoEndereco = ? , Cep = ?, Id_cidade = ?, referencia = ? where id = ?";
    
    
     Connection conn = null;
@@ -98,7 +99,8 @@ public class EnderecosDAO {
             ps.setString(4, clsEnderecos.getTipoEndereco());
             ps.setString(5, clsEnderecos.getCep());
             ps.setInt(6, clsEnderecos.getIdCidade());
-            ps.setInt(7, clsEnderecos.getId());
+            ps.setString(7, clsEnderecos.getReferencia());
+            ps.setInt(8, clsEnderecos.getId());
             
             ps.execute();
                         
@@ -114,20 +116,23 @@ public class EnderecosDAO {
 
     }
     
-    public List<ClsEnderecos> selectALL() {
+    public List<ClsEnderecos> selectALL(int idCliente) {
         List<ClsEnderecos> clsEndereco = new ArrayList<ClsEnderecos>();
-
-        String sql = "select end.id, end.rua,end.numero,end.bairro,cde.nomecidade,cde.estado, "
-        + " end.cep,end.tipoendereco,cde.id from enderecos end inner join cidades cde on cde.id = end.id_cidade";
+        
+        String sql = "select end.id as id, end.rua as rua,end.numero as numero,end.bairro as bairro, end.referencia as referencia, "
+                   + " cde.nomecidade as nomecidade,cde.estado as estado,end.cep as cep, end.tipoendereco as tipoendereco, "
+                   + " cde.id as id_cidade from enderecos end inner join cidades cde on cde.id = end.id_cidade "
+                   + " inner join Clientes cl on cl.id_endereco = end.id where cl.id = ?";
 
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-
+        
         try {
 
             conn = ConexaoDAO.getConexaoDAO();
             ps = conn.prepareStatement(sql);
+            ps.setInt(1, idCliente);
             rs = ps.executeQuery();
 
             while (rs.next()) {
@@ -136,10 +141,11 @@ public class EnderecosDAO {
                 clsend.setRua(rs.getString("rua"));
                 clsend.setNumero(rs.getString("Numero"));
                 clsend.setBairro(rs.getString("Bairro"));
+                clsend.setTipoEndereco(rs.getString("Referencia"));
                 clsend.setNomeCidade(rs.getString("NomeCidade"));
                 clsend.setEstado(rs.getString("Estado"));
                 clsend.setCep(rs.getString("Cep"));
-                clsend.setTipoEndereco(rs.getString("TipoEndereco"));
+                clsend.setTipoEndereco(rs.getString("TipoEndereco"));                
                 clsend.setId_cidade(rs.getInt("Id_cidade"));
                 clsEndereco.add(clsend);
             }

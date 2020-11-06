@@ -11,13 +11,16 @@ public class ClsClientes extends ClsUsuarios{
    
     private String cnpj;
     private String RazaoSocial;
-    private String rg;
-    private String ie;
-    private String cnh;
+    private int rg;
+    private int ie;
+    private int cnh;
     private String celular;
-    private String Email;
-    private String Observacoes;
+    private String Email; //null
+    private String Observacoes; //null
     private String DataNascimento;
+    private int idEndereco;
+    private int idColaborador;
+    private int Inativo;
 
     public String getRazaoSocial() {
         return RazaoSocial;
@@ -33,8 +36,9 @@ public class ClsClientes extends ClsUsuarios{
     }
 
     public void setDataNascimento(String DataNascimento) {
-        ClsValidacoes clsval = new ClsValidacoes();
-        this.DataNascimento = clsval.dataFormatoUS(DataNascimento);        
+//        ClsValidacoes clsval = new ClsValidacoes();
+//        this.DataNascimento = clsval.dataFormatoUS(DataNascimento);   
+           this.DataNascimento = DataNascimento;
     }
 
     @Override   
@@ -48,9 +52,9 @@ public class ClsClientes extends ClsUsuarios{
         this.cpf = "";
         this.telefone = "";
         this.cnpj = "";
-        this.rg = "";
-        this.ie = "";
-        this.cnh = "";
+        this.rg = 0;
+        this.ie = 0;
+        this.cnh = 0;
         this.celular = "";
         this.Email = "";
         this.Observacoes = "";
@@ -60,7 +64,7 @@ public class ClsClientes extends ClsUsuarios{
     }
 
     public ClsClientes( int id, String nome, String nomeLogin, String cpf, String telefone,
-                        String cnpj, String rg, String ie, String cnh, String celular,
+                        String cnpj, int rg, int ie, int cnh, String celular,
                         String Email, String Observacoes, String RazaoSocial, String DataNascimento) {
         this.id = id;
         this.nome = nome;
@@ -76,8 +80,27 @@ public class ClsClientes extends ClsUsuarios{
         this.RazaoSocial = RazaoSocial;
         this.DataNascimento = DataNascimento;
     }
+    
     public ClsClientes() {
     }
+
+    public int getIdColaborador() {
+        return idColaborador;
+    }
+
+    public void setIdColaborador(int idColaborador) {
+        this.idColaborador = idColaborador;
+    }
+
+    
+    public int getInativo() {
+        return Inativo;
+    }
+
+    public void setInativo(int Inativo) {
+        this.Inativo = Inativo;
+    }
+    
     
     public String getCnpj() {
         return cnpj;
@@ -95,27 +118,37 @@ public class ClsClientes extends ClsUsuarios{
 
     }
 
-    public String getRg() {
+    public int getIdEndereco() {
+        return idEndereco;
+    }
+
+    public void setIdEndereco(int idEndereco) {
+        this.idEndereco = idEndereco;
+    }
+
+    
+    
+    public int getRg() {
         return rg;
     }
 
-    public void setRg(String rg) {
+    public void setRg(int rg) {
         this.rg = rg;
     }
 
-    public String getIe() {
+    public int getIe() {
         return ie;
     }
 
-    public void setIe(String ie) {
+    public void setIe(int ie) {
         this.ie = ie;
     }
 
-    public String getCnh() {
+    public int getCnh() {
         return cnh;
     }
 
-    public void setCnh(String cnh) {
+    public void setCnh(int cnh) {
         this.cnh = cnh;
     }
 
