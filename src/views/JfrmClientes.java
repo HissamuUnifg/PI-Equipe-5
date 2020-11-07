@@ -38,10 +38,14 @@ public class JfrmClientes extends javax.swing.JFrame {
    ClientesDAO clientesDAO;
    ClsClientes clsClientes;
    ClsValidacoes clsValidacoes;
-   boolean precionado;
-   boolean editando;
    ClsCarregarTableEndereco clsCarregarTableEndereco = null;
    ClsMascaraCampos clsMascaracampos;
+   boolean precionado;
+   boolean editando;
+   boolean buscando;
+   boolean precionadoEnd;
+   boolean editandoEnd;
+   boolean buscandoEnd;
    private int tipoCliente; // 0 o programa vai gravar o CNPJ 1 o programa grava CPF
    private int linhaIndice;
    
@@ -82,7 +86,12 @@ public class JfrmClientes extends javax.swing.JFrame {
 
         precionado = false;
         editando = false;
-
+        buscando = false;
+        
+        precionadoEnd = false;
+        editandoEnd = false;
+        buscandoEnd = false;
+        
         loadCidades();
         loadEnderecoTipo();
         disableControl();
@@ -232,6 +241,60 @@ public class JfrmClientes extends javax.swing.JFrame {
             jBtnNovo.setToolTipText("Clique aqui para novo Veiculo");
         }
     }
+    
+    private void setIconBtnAdd(boolean funcao) {
+        if (funcao == true) {
+            jBtn_Adcionar_end.setText("Cancelar");
+            jBtn_Adcionar_end.setToolTipText("Clique aqui para cancelar a operacao");
+        } else {
+            jBtn_Adcionar_end.setText("Adicionar");
+            jBtn_Adcionar_end.setToolTipText("Clique aqui para novo Endereço");
+        }
+    }
+    
+    private void msgObgCampo(String dado) {
+        JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " é obrigatório", "Informação", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void msgAdvCampo(String dado) {
+        JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " está maior ou menor do que o permitido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private void msgErrCampo(String dado) {
+        JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " é invalido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    /**
+     * Usado junco a a funcão de "buscaCliente" para verificar se o CPF é cadastrado
+     * @param cpf
+     * @return 
+     */
+    private boolean listBuscaCPF(String cpf){
+        boolean encontrado = false;
+        for (int i = 0; i < listClientesBD.size(); i++) {
+            if (listClientesBD.get(i).getCpf().equals(cpf)) {
+                encontrado = true;
+                break;
+            }
+        }
+        return encontrado;
+    }
+    
+    /**
+     * Usado junco a a funcão de "buscaCliente" para verificar se o CNPJ é cadastrado
+     * @param cpf
+     * @return 
+     */
+     private boolean listBuscaCNPJ(String cpf){
+        boolean encontrado = false;
+        for (int i = 0; i < listClientesBD.size(); i++) {
+            if (listClientesBD.get(i).getCnpj().equals(cpf)) {
+                encontrado = true;
+                break;
+            }
+        }
+        return encontrado;
+    }
     /**
      * usado no evento do botao "Buscar", valida o cpf/cnpj inserido e se for valido executa a busca 
      * na lista pre carregada com os dados do BD
@@ -241,7 +304,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         boolean valido = clsValidacoes.isValid(cpf);
         boolean tipo = clsValidacoes.isTipoCpfCnpj(); //tipo true é CPF tipo false é CNPJ
         if (valido == true && tipo == true) {
-            if (listClientesBD.size() < 1) {
+            if (listBuscaCPF(cpf) == false) {
                 JOptionPane.showMessageDialog(this, "Erro: CPF não Cadastrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
                 buscaCliente();
             } else {
@@ -258,15 +321,14 @@ public class JfrmClientes extends javax.swing.JFrame {
                         loadBlocoCliente(i);
                         loadBlocoEnd(-1);
                         enableControlBusca();
-
+                        clsClientes = listClientesBD.get(i);
+                        tipoCliente = 1;
                     }
-
                 }
-
                 precionado = true;
             }
         } else if (valido == true && tipo == false) {
-            if (listClientesBD.size() < 1) {
+            if (listBuscaCNPJ(cpf) == false) {
                 JOptionPane.showMessageDialog(this, "Erro: CNPJ não Cadastrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
                 buscaCliente();
             } else {
@@ -283,11 +345,10 @@ public class JfrmClientes extends javax.swing.JFrame {
                         loadBlocoCliente(i);
                         loadBlocoEnd(-1);
                         enableControlBusca();
-
+                        tipoCliente = 0;
+                        clsClientes = listClientesBD.get(i);
                     }
-
                 }
-
                 precionado = true;
             }
         } else {
@@ -295,7 +356,11 @@ public class JfrmClientes extends javax.swing.JFrame {
             buscaCliente();
         }
     }
-
+    
+    /**
+     * Função responsavel por limpar os campos de texto e seleção do sistema
+     * Usada quando o botão cancelar é precionado ou ao excluir um cadastro
+     */
     private void clearTxt() {
         jTextObservacoes.setText("");
         jTxtBairro.setText("");
@@ -314,6 +379,20 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtCnh.setText("");
         jCboCidade.setSelectedItem("Selecione");
         jCboTipoEnd.setSelectedItem("Selecione");
+        jRadioBtnCnpj.setSelected(false);
+        jRadioBtnCpf.setSelected(false);
+        jCkb_inativar.setSelected(false);
+    }
+    
+    private void clearTxtEnd() {
+        jTxtBairro.setText("");
+        jTxtEstado.setText("");
+        jTxtNumero.setText("");
+        jTxtReferencia.setText("");
+        jTxtRua.setText("");
+        jFtxtCep.setText("");
+        jCboCidade.setSelectedItem("Selecione");
+        jCboTipoEnd.setSelectedItem("Selecione");
     }
     
     //funções relacionadas a Jtable que exibe os endereços //
@@ -327,20 +406,12 @@ public class JfrmClientes extends javax.swing.JFrame {
      jTblEnderecos.setModel(new ClsCarregarTableEndereco(listEnderecosBD));
     }
     
-    public void atualizaListEnd(int Indice){
-       listEnderecosBD.set(Indice, clsEnderecos);
-       clsCarregarTableEndereco.updatedListRow(Indice, clsEnderecos);
-       clsCarregarTableEndereco.updatedRow(Indice, Indice);
-       
-    }
+  
     
-    public void removeRowList(int indice) {
-        listEnderecosBD.remove(indice);
-        clsCarregarTableEndereco.deleteRow(indice);
-    }
-    
-    public void addRowTable(){
-        clsCarregarTableEndereco.addRow(clsEnderecos);
+    public void reloadTable(){
+        listEnderecosBD.clear();
+        listEnderecosBD = enderecosDAO.selectALL(clsClientes.getId());
+        jTblEnderecos.setModel(new ClsCarregarTableEndereco(listEnderecosBD)); 
     }
     
     public void removeTable() {
@@ -360,7 +431,7 @@ public class JfrmClientes extends javax.swing.JFrame {
      * o bloco de endereços na Jframe
      * @param indice 
      */
-    public void loadBlocoEnd(int indice){
+    private void loadBlocoEnd(int indice){
         int indiceB;
         if (indice < 0) {
             indiceB = 0;
@@ -376,6 +447,49 @@ public class JfrmClientes extends javax.swing.JFrame {
         jTxtNumero.setText(listEnderecosBD.get(indiceB).getNumero());
         jCboTipoEnd.setSelectedItem(listEnderecosBD.get(indiceB).getTipoEndereco());
     }
+    /**
+     * ativa os campos de texto e jcombobox do bloco de endereço
+     * usado no evento de click do Jtable
+     */
+    private void enableBlocoEnd() {
+        jTxtBairro.setEnabled(true);
+        jTxtEstado.setEnabled(false);
+        jCboCidade.setEnabled(true);
+        jTxtRua.setEnabled(true);
+        jTxtReferencia.setEnabled(true);
+        jFtxtCep.setEnabled(true);
+        jTxtNumero.setEnabled(true);
+        jCboTipoEnd.setEnabled(true);
+        jCboCidade.setEnabled(true);
+        jBtn_Editar_End.setEnabled(true);
+        jBtn_excluir_end.setEnabled(true);
+        jBtn_Salvar_End.setEnabled(true);
+    }
+    
+    private void enableBtnBlocoEnd() {
+        jBtn_Editar_End.setEnabled(true);
+        jBtn_excluir_end.setEnabled(true);
+        jBtn_Salvar_End.setEnabled(true);
+    }
+    
+    /**
+     * desativa os campos de texto e jcombobox do bloco de endereços
+     * usado no evendo do botão cancelar do bloco de endereço
+     */
+    private void disableBlocoEnd() {
+        jTxtBairro.setEnabled(false);
+        jTxtEstado.setEnabled(false);
+        jCboCidade.setEnabled(false);
+        jTxtRua.setEnabled(false);
+        jTxtReferencia.setEnabled(false);
+        jFtxtCep.setEnabled(false);
+        jTxtNumero.setEnabled(false);
+        jCboTipoEnd.setEnabled(false);
+        jCboCidade.setEnabled(false);
+        jBtn_Editar_End.setEnabled(false);
+        jBtn_excluir_end.setEnabled(false);
+        jBtn_Salvar_End.setEnabled(false);
+    }
     
     /**
      * Carrega o Bloco do enderço do cliente usando como parametro o indice 
@@ -385,10 +499,10 @@ public class JfrmClientes extends javax.swing.JFrame {
      * @param indice
      */
     public void loadBlocoCliente(int indice) {
-        jLabelCodigo.setText("Codigo: "+listClientesBD.get(indice).getId());
+        jLabelCodigo.setText("Codigo: " + listClientesBD.get(indice).getId());
         jTextObservacoes.setText(listClientesBD.get(indice).getObservacoes());
         jTxtEmail.setText(listClientesBD.get(indice).getEmail());
-        if(listClientesBD.get(indice).getNome() == null || listClientesBD.get(indice).getNome().equals("")){
+        if (listClientesBD.get(indice).getNome() == null || listClientesBD.get(indice).getNome().equals("")) {
             jTxtNome.setText(listClientesBD.get(indice).getRazaoSocial());
             jRadioBtnCpf.setEnabled(false);
             jRadioBtnCnpj.setEnabled(true);
@@ -398,22 +512,27 @@ public class JfrmClientes extends javax.swing.JFrame {
             jRadioBtnCpf.setEnabled(true);
             jRadioBtnCpf.setSelected(true);
             jRadioBtnCnpj.setEnabled(false);
-        }      
-        if(listClientesBD.get(indice).getCpf() == null || listClientesBD.get(indice).getCpf().equals("")) {
+        }
+        if (listClientesBD.get(indice).getCpf() == null || listClientesBD.get(indice).getCpf().equals("")) {
             jFTxtCpfCnpj.setText(listClientesBD.get(indice).getCnpj());
-            System.out.println(listClientesBD.get(indice).getCnpj());
+            jRadioBtnCpf.setEnabled(false);
+            jRadioBtnCnpj.setEnabled(true);
+            jRadioBtnCnpj.setSelected(true);
         } else if (listClientesBD.get(indice).getCnpj() == null || listClientesBD.get(indice).getCnpj().equals("")) {
             jFTxtCpfCnpj.setText(listClientesBD.get(indice).getCpf());
+            jRadioBtnCpf.setEnabled(true);
+            jRadioBtnCpf.setSelected(true);
+            jRadioBtnCnpj.setEnabled(false);
         }
         jFtxtCelular.setText(listClientesBD.get(indice).getCelular());
-        jFtxtDataNascimento.setText(listClientesBD.get(indice).getDataNascimento());      
+        jFtxtDataNascimento.setText(listClientesBD.get(indice).getDataNascimento());
         jFtxtFone.setText(listClientesBD.get(indice).getTelefone());
-        if(listClientesBD.get(indice).getRg() == 0){
-            jFtxtRgIe.setText(""+listClientesBD.get(indice).getIe());
-        } else if(listClientesBD.get(indice).getIe() == 0){
-            jFtxtRgIe.setText(""+listClientesBD.get(indice).getRg());
-        }        
-        jFtxtCnh.setText(""+listClientesBD.get(indice).getCnh());
+        if (listClientesBD.get(indice).getRg() == 0) {
+            jFtxtRgIe.setText("" + listClientesBD.get(indice).getIe());
+        } else if (listClientesBD.get(indice).getIe() == 0) {
+            jFtxtRgIe.setText("" + listClientesBD.get(indice).getRg());
+        }
+        jFtxtCnh.setText("" + listClientesBD.get(indice).getCnh());
         if (listClientesBD.get(indice).getInativo() == 0) {
             jCkb_inativar.setSelected(false);
         } else if (listClientesBD.get(indice).getInativo() == 1) {
@@ -524,21 +643,41 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtFone.setBorder(javax.swing.BorderFactory.createTitledBorder("Fone"));
         jFtxtFone.setToolTipText("Adicione aqui o numero de telefone fixo do cliente");
         jFtxtFone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jFtxtFone.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFtxtFoneFocusLost(evt);
+            }
+        });
 
         jFtxtCelular.setBackground(new java.awt.Color(240, 240, 240));
         jFtxtCelular.setBorder(javax.swing.BorderFactory.createTitledBorder("Celular"));
         jFtxtCelular.setToolTipText("Adicione aqui o numero de telefone celular do cliente");
         jFtxtCelular.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jFtxtCelular.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFtxtCelularFocusLost(evt);
+            }
+        });
 
         jTxtEmail.setBackground(new java.awt.Color(240, 240, 240));
         jTxtEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtEmail.setToolTipText("Adicione o Email do Cliente do Cliente");
         jTxtEmail.setBorder(javax.swing.BorderFactory.createTitledBorder("E-mail"));
+        jTxtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtEmailFocusLost(evt);
+            }
+        });
 
         jTxtNome.setBackground(new java.awt.Color(240, 240, 240));
         jTxtNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtNome.setToolTipText("Nome completo do Cliente");
         jTxtNome.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome"));
+        jTxtNome.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtNomeFocusLost(evt);
+            }
+        });
 
         jRadioBtnCpf.setText("CPF");
         jRadioBtnCpf.setToolTipText("Marque para pessoa fisica!");
@@ -560,21 +699,41 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFTxtCpfCnpj.setBorder(javax.swing.BorderFactory.createTitledBorder("CPF/CNPJ"));
         jFTxtCpfCnpj.setToolTipText("Escolha entre CPF ou CNPJ e insira o dado!");
         jFTxtCpfCnpj.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jFTxtCpfCnpj.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFTxtCpfCnpjFocusLost(evt);
+            }
+        });
 
         jFtxtRgIe.setBackground(new java.awt.Color(240, 240, 240));
         jFtxtRgIe.setBorder(javax.swing.BorderFactory.createTitledBorder("RG/IE"));
         jFtxtRgIe.setToolTipText("Insira o RG caso seja pessoa fisica ou IE caso seja pessoa juridica");
         jFtxtRgIe.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jFtxtRgIe.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFtxtRgIeFocusLost(evt);
+            }
+        });
 
         jFtxtCnh.setBackground(new java.awt.Color(240, 240, 240));
         jFtxtCnh.setBorder(javax.swing.BorderFactory.createTitledBorder("CNH"));
         jFtxtCnh.setToolTipText("Numero da CNH do cliente");
         jFtxtCnh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jFtxtCnh.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFtxtCnhFocusLost(evt);
+            }
+        });
 
         jFtxtDataNascimento.setBackground(new java.awt.Color(240, 240, 240));
         jFtxtDataNascimento.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Nascimento"));
         jFtxtDataNascimento.setToolTipText("Data nascimento do cliente!");
         jFtxtDataNascimento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jFtxtDataNascimento.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFtxtDataNascimentoFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanDadosGeraisLayout = new javax.swing.GroupLayout(jPanDadosGerais);
         jPanDadosGerais.setLayout(jPanDadosGeraisLayout);
@@ -636,6 +795,11 @@ public class JfrmClientes extends javax.swing.JFrame {
 
         jTextObservacoes.setColumns(20);
         jTextObservacoes.setRows(5);
+        jTextObservacoes.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextObservacoesFocusLost(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTextObservacoes);
 
         javax.swing.GroupLayout jPanelObservacoesLayout = new javax.swing.GroupLayout(jPanelObservacoes);
@@ -660,11 +824,21 @@ public class JfrmClientes extends javax.swing.JFrame {
         jTxtRua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtRua.setToolTipText("Nome da rua do cliente");
         jTxtRua.setBorder(javax.swing.BorderFactory.createTitledBorder("Rua"));
+        jTxtRua.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtRuaFocusLost(evt);
+            }
+        });
 
         jTxtNumero.setBackground(new java.awt.Color(240, 240, 240));
         jTxtNumero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtNumero.setToolTipText("Numero da Residencia");
         jTxtNumero.setBorder(javax.swing.BorderFactory.createTitledBorder("Numero"));
+        jTxtNumero.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtNumeroFocusLost(evt);
+            }
+        });
 
         jCboCidade.setBackground(new java.awt.Color(240, 240, 240));
         jCboCidade.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -681,6 +855,11 @@ public class JfrmClientes extends javax.swing.JFrame {
         jTxtBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtBairro.setToolTipText("Bairro da Residencia");
         jTxtBairro.setBorder(javax.swing.BorderFactory.createTitledBorder("Bairro"));
+        jTxtBairro.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtBairroFocusLost(evt);
+            }
+        });
 
         jTxtEstado.setBackground(new java.awt.Color(240, 240, 240));
         jTxtEstado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -702,6 +881,11 @@ public class JfrmClientes extends javax.swing.JFrame {
         jTxtReferencia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtReferencia.setToolTipText("Breve ponto de referencia");
         jTxtReferencia.setBorder(javax.swing.BorderFactory.createTitledBorder("Referencia"));
+        jTxtReferencia.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtReferenciaFocusLost(evt);
+            }
+        });
 
         jTblEnderecos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -723,23 +907,53 @@ public class JfrmClientes extends javax.swing.JFrame {
         });
         jTblEnderecos.setToolTipText("Selecione o endereço para usar as opções");
         jTblEnderecos.setName(""); // NOI18N
+        jTblEnderecos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTblEnderecosMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTblEnderecos);
 
         jBtn_Adcionar_end.setText("Adicionar");
         jBtn_Adcionar_end.setToolTipText("Clique para adicionar um endereço");
+        jBtn_Adcionar_end.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtn_Adcionar_endActionPerformed(evt);
+            }
+        });
 
         jBtn_Salvar_End.setText("Salvar");
         jBtn_Salvar_End.setToolTipText("Clique para salvar o endereço");
+        jBtn_Salvar_End.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtn_Salvar_EndActionPerformed(evt);
+            }
+        });
 
         jBtn_excluir_end.setText("Excluir");
         jBtn_excluir_end.setToolTipText("Clique para excluir o endereço selecionado");
+        jBtn_excluir_end.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtn_excluir_endActionPerformed(evt);
+            }
+        });
 
         jBtn_Editar_End.setText("Editar");
         jBtn_Editar_End.setToolTipText("Clique para editar o endereço selecionado");
+        jBtn_Editar_End.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtn_Editar_EndActionPerformed(evt);
+            }
+        });
 
         jFtxtCep.setBackground(new java.awt.Color(240, 240, 240));
         jFtxtCep.setBorder(javax.swing.BorderFactory.createTitledBorder("CEP"));
         jFtxtCep.setToolTipText("Nuero do CEP do endereço do cliente");
+        jFtxtCep.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jFtxtCepFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelDadosEnderecosLayout = new javax.swing.GroupLayout(jPanelDadosEnderecos);
         jPanelDadosEnderecos.setLayout(jPanelDadosEnderecosLayout);
@@ -877,6 +1091,7 @@ public class JfrmClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
+        buscando = true;
         ClientesDAO cliDBA = new ClientesDAO();                
         listClientesBD =  cliDBA.selectAll();
         buscaCliente();
@@ -903,7 +1118,7 @@ public class JfrmClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jCboCidadeItemStateChanged
 
     private void jBtnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnNovoActionPerformed
-               if (precionado == false) {
+        if (precionado == false) {
             jTblEnderecos.setEnabled(false);
             setIconBtnNv(true);
             enableControl();
@@ -911,18 +1126,17 @@ public class JfrmClientes extends javax.swing.JFrame {
             precionado = true;
             editando = false;
             jTxtNome.requestFocus();
-            
-            
         } else {
             jTblEnderecos.setEnabled(true);
             setIconBtnNv(false);
             disableControl();
             clearTxt();
-            removeTable();
+            if (buscando == true || editando == true) {
+                removeTable();
+            }
             precionado = false;
             editando = false;
         }
-        
     }//GEN-LAST:event_jBtnNovoActionPerformed
 
     private void jRadioBtnCpfItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioBtnCpfItemStateChanged
@@ -972,9 +1186,197 @@ public class JfrmClientes extends javax.swing.JFrame {
         jTblEnderecos.setEnabled(false);
         setIconBtnNv(true);
         enableControl();
-        
     }//GEN-LAST:event_jBtnEditarActionPerformed
-    
+
+    private void jTxtNomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNomeFocusLost
+       if(jTxtNome.getText().length() > 1){
+           clsClientes.setNome(jTxtNome.getText());
+       }
+    }//GEN-LAST:event_jTxtNomeFocusLost
+
+    private void jFTxtCpfCnpjFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFTxtCpfCnpjFocusLost
+        if (jFTxtCpfCnpj.getText().length() > 1 && jRadioBtnCnpj.isSelected() == true && jRadioBtnCpf.isSelected() == false) {
+            clsClientes.setCnpj(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()));
+            clsClientes.setCpf("");
+        } else if (jFTxtCpfCnpj.getText().length() > 1 && jRadioBtnCpf.isSelected() == true && jRadioBtnCnpj.isSelected() == false) {
+            clsClientes.setCpf(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()));
+            clsClientes.setCnpj("");
+        }
+    }//GEN-LAST:event_jFTxtCpfCnpjFocusLost
+
+    private void jFtxtRgIeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFtxtRgIeFocusLost
+        if (jFtxtRgIe.getText().length() > 1 && jRadioBtnCnpj.isSelected() == true && jRadioBtnCpf.isSelected() == false) {
+            clsClientes.setIe(Integer.parseInt(jFtxtRgIe.getText()));
+            clsClientes.setRg(0);
+        } else if (jFtxtRgIe.getText().length() > 1 && jRadioBtnCpf.isSelected() == true && jRadioBtnCnpj.isSelected() == false) {
+            clsClientes.setRg(Integer.parseInt(jFtxtRgIe.getText()));
+            clsClientes.setIe(0);
+        }
+    }//GEN-LAST:event_jFtxtRgIeFocusLost
+
+    private void jFtxtCnhFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFtxtCnhFocusLost
+        if(jFtxtCnh.getText().length() > 1){
+            clsClientes.setCnh(Integer.parseInt(jFtxtCnh.getText()));
+        }
+    }//GEN-LAST:event_jFtxtCnhFocusLost
+
+    private void jFtxtDataNascimentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFtxtDataNascimentoFocusLost
+        if(jFtxtDataNascimento.getText().length() > 1 && clsValidacoes.validaDataFormatoBR(jFtxtDataNascimento.getText()) == true){
+            clsClientes.setDataNascimento(clsValidacoes.dataFormatoUS(jFtxtDataNascimento.getText()));
+        }
+    }//GEN-LAST:event_jFtxtDataNascimentoFocusLost
+
+    private void jFtxtFoneFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFtxtFoneFocusLost
+        if(jFtxtFone.getText().length() > 1) {
+             clsClientes.setTelefone(jFtxtFone.getText());
+        }
+    }//GEN-LAST:event_jFtxtFoneFocusLost
+
+    private void jFtxtCelularFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFtxtCelularFocusLost
+        if (jFtxtCelular.getText().length() > 1) {
+            clsClientes.setCelular(jFtxtCelular.getText());
+        }
+    }//GEN-LAST:event_jFtxtCelularFocusLost
+
+    private void jTxtEmailFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtEmailFocusLost
+        if (jTxtEmail.getText().length() > 1) {
+            if (clsValidacoes.isValidEmailAddressRegex(jTxtEmail.getText()) == true) {
+                clsClientes.setEmail(jTxtEmail.getText());
+            } else {
+                msgErrCampo("Email");
+            }
+        }
+    }//GEN-LAST:event_jTxtEmailFocusLost
+
+    private void jTextObservacoesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextObservacoesFocusLost
+        if(jTextObservacoes.getText().length() >1) {
+            clsClientes.setObservacoes(jTextObservacoes.getText());
+        } else if (jTextObservacoes.getText().length() > 999) {
+            msgAdvCampo("Observacoes");
+        }
+    }//GEN-LAST:event_jTextObservacoesFocusLost
+
+    private void jTxtRuaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtRuaFocusLost
+        if (jTxtRua.getText().length() >1) {
+            clsEnderecos.setRua(jTxtRua.getText());
+        }
+    }//GEN-LAST:event_jTxtRuaFocusLost
+
+    private void jTxtNumeroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNumeroFocusLost
+        if (jTxtNumero.getText().length() > 0 ) {
+            clsEnderecos.setNumero(jTxtNumero.getText());
+        }
+    }//GEN-LAST:event_jTxtNumeroFocusLost
+
+    private void jFtxtCepFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFtxtCepFocusLost
+        if (jFtxtCep.getText().length() > 1) {
+            clsEnderecos.setCep(jFtxtCep.getText());
+        }
+    }//GEN-LAST:event_jFtxtCepFocusLost
+
+    private void jTxtBairroFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtBairroFocusLost
+        if (jTxtBairro.getText().length() > 1) {
+            clsEnderecos.setBairro(jTxtBairro.getText());
+        }
+    }//GEN-LAST:event_jTxtBairroFocusLost
+
+    private void jTxtReferenciaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtReferenciaFocusLost
+        if (jTxtReferencia.getText().length() > 1) {
+            clsEnderecos.setReferencia(jTxtReferencia.getText());
+        }
+    }//GEN-LAST:event_jTxtReferenciaFocusLost
+
+    private void jTblEnderecosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTblEnderecosMouseClicked
+        clsEnderecos = listEnderecosBD.get(jTblEnderecos.getSelectedRow());
+        if (editandoEnd == true || buscando == true) {
+            int rowSelected = jTblEnderecos.getSelectedRow();
+            loadBlocoEnd(rowSelected);            
+            enableBtnBlocoEnd();
+            setIconBtnAdd(false);
+            precionadoEnd = false;
+            editandoEnd = true;            
+        }
+               
+    }//GEN-LAST:event_jTblEnderecosMouseClicked
+
+    private void jBtn_Adcionar_endActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_Adcionar_endActionPerformed
+        if (precionadoEnd == false) {
+            clsEnderecos.setIdCliente(clsClientes.getId());
+            enableBlocoEnd();
+            clearTxtEnd();
+            setIconBtnAdd(true);
+            precionadoEnd = true;
+            editandoEnd = false;
+            
+        } else {
+            setIconBtnAdd(false);
+            disableBlocoEnd();
+            clearTxtEnd();
+            precionadoEnd = false;
+            editandoEnd = false;
+        }
+    }//GEN-LAST:event_jBtn_Adcionar_endActionPerformed
+
+    private void jBtn_Salvar_EndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_Salvar_EndActionPerformed
+        if (editandoEnd == false) {
+            enderecosDAO.save(clsEnderecos);
+            if (enderecosDAO.isSucesso() == true) {
+                JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+                disableBlocoEnd();
+                reloadTable();
+                setIconBtnAdd(false);
+            } else {
+                JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
+                disableBlocoEnd();
+                clearTxtEnd();
+                setIconBtnAdd(false);
+            }
+        } else {
+            enderecosDAO.update(clsEnderecos);
+            if (enderecosDAO.isSucesso() == true) {
+                JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+                disableBlocoEnd();
+                reloadTable();
+                setIconBtnAdd(false);
+            } else {
+                JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
+                disableBlocoEnd();
+                clearTxtEnd();
+                setIconBtnAdd(false);
+            }
+        }
+
+    }//GEN-LAST:event_jBtn_Salvar_EndActionPerformed
+
+    private void jBtn_excluir_endActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_excluir_endActionPerformed
+        int deletar = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir?", "Atenção", JOptionPane.YES_NO_OPTION);
+        if (deletar == 0) {
+            enderecosDAO.delete(clsEnderecos.getId());
+            if (enderecosDAO.isSucesso() == true) {
+                JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+                clearTxtEnd();
+                disableBlocoEnd();
+                reloadTable();
+                setIconBtnAdd(false);
+                precionadoEnd = false;
+            } else {
+                JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno() + "O usuario " + userLoged + ""
+                        + " não tem permissao para deletar!", "Erro", JOptionPane.ERROR_MESSAGE);
+                setIconBtnAdd(true);
+                precionadoEnd = true;
+            }
+
+        }
+    }//GEN-LAST:event_jBtn_excluir_endActionPerformed
+
+    private void jBtn_Editar_EndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_Editar_EndActionPerformed
+        clsEnderecos = listEnderecosBD.get(jTblEnderecos.getSelectedRow());
+        precionadoEnd = true;
+        editandoEnd = true;
+        setIconBtnAdd(true);
+        enableBlocoEnd();
+    }//GEN-LAST:event_jBtn_Editar_EndActionPerformed
+     
     /**
      * @param args the command line arguments
      */

@@ -12,7 +12,7 @@ public class ClsCarregarTableEndereco extends AbstractTableModel{
     
      
     private final List<ClsEnderecos> clsEnderecos;
-    private final String[] colunas = {"Rua","Numero","Cidade","Estado","Bairro","Cep","Tipo"};
+    private final String[] colunas = {"Codigo","Rua","Numero","Cidade","Estado","Bairro","Cep","Tipo"};
 
 
     
@@ -40,18 +40,20 @@ public class ClsCarregarTableEndereco extends AbstractTableModel{
         ClsEnderecos clsEnd = clsEnderecos.get(linha);
         switch (coluna) {
             case 0:
-                return clsEnd.getRua();
+                return clsEnd.getId();
             case 1:
-                return clsEnd.getNumero();
+                return clsEnd.getRua();
             case 2:
-                return clsEnd.getNomeCidade();
+                return clsEnd.getNumero();
             case 3:
-                return clsEnd.getEstado();
+                return clsEnd.getNomeCidade();
             case 4:
-                return clsEnd.getBairro();
+                return clsEnd.getEstado();
             case 5:
-                return clsEnd.getCep();
+                return clsEnd.getBairro();
             case 6:
+                return clsEnd.getCep();
+            case 7:
                 return clsEnd.getTipoEndereco();
             default:
                 return null;
@@ -62,12 +64,13 @@ public class ClsCarregarTableEndereco extends AbstractTableModel{
     
     public Class getColClass(int coluna){
       switch (coluna) {
+            
             case 0:
-                return String.class;
+              return int.class;
             case 1:
-                return String.class;  
-            case 2:
                 return String.class;
+            case 2:
+                return String.class;  
             case 3:
                 return String.class;
             case 4:
@@ -75,6 +78,8 @@ public class ClsCarregarTableEndereco extends AbstractTableModel{
             case 5:
                 return String.class;
             case 6:
+                return String.class;
+            case 7:
                 return String.class;
             default:
                 return null;

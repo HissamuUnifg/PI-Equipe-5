@@ -4,6 +4,8 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Classe responsavel por validacoes de CPF e CNPJ
@@ -149,5 +151,23 @@ public class ClsValidacoes {
         float number = nf.parse(arg).floatValue();
         return number;
     }
+    
+    /**
+     * Recebe uma String de Email e valida retornando false para invalido e true para valido
+     * @param email - formato email@dominio.com
+     * @return - true Valido, false Invalido
+     */
+    public  boolean isValidEmailAddressRegex(String email) {
+    boolean isEmailIdValid = false;
+    if (email != null && email.length() > 0) {
+        String expressao = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expressao, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        if (matcher.matches()) {
+            isEmailIdValid = true;
+        }
+    }
+    return isEmailIdValid;
+}
 
 }

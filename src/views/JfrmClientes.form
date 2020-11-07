@@ -276,6 +276,9 @@
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jFtxtFoneFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jFtxtCelular">
           <Properties>
@@ -292,6 +295,9 @@
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jFtxtCelularFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtEmail">
           <Properties>
@@ -308,6 +314,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtEmailFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtNome">
           <Properties>
@@ -324,6 +333,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtNomeFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioBtnCpf">
           <Properties>
@@ -358,6 +370,9 @@
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jFTxtCpfCnpjFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jFtxtRgIe">
           <Properties>
@@ -374,6 +389,9 @@
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jFtxtRgIeFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jFtxtCnh">
           <Properties>
@@ -390,6 +408,9 @@
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jFtxtCnhFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jFtxtDataNascimento">
           <Properties>
@@ -406,6 +427,9 @@
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jFtxtDataNascimentoFocusLost"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -450,6 +474,9 @@
                 <Property name="columns" type="int" value="20"/>
                 <Property name="rows" type="int" value="5"/>
               </Properties>
+              <Events>
+                <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTextObservacoesFocusLost"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -553,6 +580,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtRuaFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtNumero">
           <Properties>
@@ -569,6 +599,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtNumeroFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JComboBox" name="jCboCidade">
           <Properties>
@@ -612,6 +645,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtBairroFocusLost"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtEstado">
           <Properties>
@@ -671,6 +707,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtReferenciaFocusLost"/>
+          </Events>
         </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">
           <AuxValues>
@@ -695,6 +734,9 @@
                 <Property name="toolTipText" type="java.lang.String" value="Selecione o endere&#xe7;o para usar as op&#xe7;&#xf5;es"/>
                 <Property name="name" type="java.lang.String" value="" noResource="true"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTblEnderecosMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -703,24 +745,36 @@
             <Property name="text" type="java.lang.String" value="Adicionar"/>
             <Property name="toolTipText" type="java.lang.String" value="Clique para adicionar um endere&#xe7;o"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtn_Adcionar_endActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jBtn_Salvar_End">
           <Properties>
             <Property name="text" type="java.lang.String" value="Salvar"/>
             <Property name="toolTipText" type="java.lang.String" value="Clique para salvar o endere&#xe7;o"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtn_Salvar_EndActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jBtn_excluir_end">
           <Properties>
             <Property name="text" type="java.lang.String" value="Excluir"/>
             <Property name="toolTipText" type="java.lang.String" value="Clique para excluir o endere&#xe7;o selecionado"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtn_excluir_endActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jBtn_Editar_End">
           <Properties>
             <Property name="text" type="java.lang.String" value="Editar"/>
             <Property name="toolTipText" type="java.lang.String" value="Clique para editar o endere&#xe7;o selecionado"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtn_Editar_EndActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jFtxtCep">
           <Properties>
@@ -734,6 +788,9 @@
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Nuero do CEP do endere&#xe7;o do cliente"/>
           </Properties>
+          <Events>
+            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jFtxtCepFocusLost"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
