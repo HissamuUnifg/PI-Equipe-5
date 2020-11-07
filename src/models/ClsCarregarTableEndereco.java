@@ -10,8 +10,10 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ClsCarregarTableEndereco extends AbstractTableModel{
     
+     
     private final List<ClsEnderecos> clsEnderecos;
     private final String[] colunas = {"Rua","Numero","Cidade","Estado","Bairro","Cep","Tipo"};
+
 
     
     public ClsCarregarTableEndereco(List<ClsEnderecos> clsEnderecos) {
@@ -97,7 +99,9 @@ public class ClsCarregarTableEndereco extends AbstractTableModel{
     }
     
     public void clearList(){
-    this.clsEnderecos.clear();
+        this.clsEnderecos.removeAll(clsEnderecos);
+        this.fireTableRowsDeleted(0, getRowCount());
+        
     }
     
 }

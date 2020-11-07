@@ -40,9 +40,10 @@ public class JfrmClientes extends javax.swing.JFrame {
    ClsValidacoes clsValidacoes;
    boolean precionado;
    boolean editando;
-   ClsCarregarTableEndereco clsCarregarTableEndereco;
+   ClsCarregarTableEndereco clsCarregarTableEndereco = null;
    ClsMascaraCampos clsMascaracampos;
    private int tipoCliente; // 0 o programa vai gravar o CNPJ 1 o programa grava CPF
+   private int linhaIndice;
    
    
    List<ClsCidades> listCidadesBD;
@@ -71,6 +72,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         clsValidacoes = new ClsValidacoes();
         listCidadesBD = cidadesDAO.selectALL();
         clsMascaracampos = new ClsMascaraCampos();
+        
 
         try {
             addMascara();
@@ -88,6 +90,10 @@ public class JfrmClientes extends javax.swing.JFrame {
                
     }
     
+    /**
+     * Pssando as mascaras responsaveis por formatar os dados inseridos
+     * @throws ParseException 
+     */
     private void addMascara() throws ParseException {
         jFtxtDataNascimento.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraData(jFtxtDataNascimento)));
         jFtxtCep.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraCep(jFtxtCep)));
@@ -167,6 +173,21 @@ public class JfrmClientes extends javax.swing.JFrame {
 
     }
     
+    private void enableControlBusca() {
+        jBtnEditar.setEnabled(true);
+        jBtnExcluir.setEnabled(true);
+        jBtnImprimir.setEnabled(true);
+        jBtnSalvar.setEnabled(false);
+        jBtnBuscar.setEnabled(true);
+        jBtn_Editar_End.setEnabled(false);
+        jBtn_excluir_end.setEnabled(false);
+        jBtn_Salvar_End.setEnabled(false);
+        jBtn_Adcionar_end.setEnabled(true);
+        jRadioBtnCpf.setEnabled(false);
+        jRadioBtnCnpj.setEnabled(false);
+        jCkb_inativar.setEnabled(false);
+    }
+    
     private void enableControl() {
         //habilitando JcomboBox
         jCboCidade.setEnabled(true);
@@ -227,6 +248,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                 for (int i = 0; i < listClientesBD.size(); i++) {
                     if (listClientesBD.get(i).getCpf().equals(cpf)) {
                         carregarListaEnd(listClientesBD.get(i).getId());
+                        linhaIndice = i;
                         carregarJtable();
                         try {
                             addMascaraCpfCnpj(tipo);
@@ -235,6 +257,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                         }
                         loadBlocoCliente(i);
                         loadBlocoEnd(-1);
+                        enableControlBusca();
 
                     }
 
@@ -250,6 +273,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                    for (int i = 0; i < listClientesBD.size(); i++) {
                     if (listClientesBD.get(i).getCnpj().equals(cpf)) {
                         carregarListaEnd(listClientesBD.get(i).getId());
+                        linhaIndice = i;
                         carregarJtable();
                         try {
                             addMascaraCpfCnpj(tipo);
@@ -258,6 +282,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                         }
                         loadBlocoCliente(i);
                         loadBlocoEnd(-1);
+                        enableControlBusca();
 
                     }
 
@@ -318,6 +343,11 @@ public class JfrmClientes extends javax.swing.JFrame {
         clsCarregarTableEndereco.addRow(clsEnderecos);
     }
     
+    public void removeTable() {
+       listEnderecosBD.clear();
+       jTblEnderecos.setModel(new ClsCarregarTableEndereco(listEnderecosBD)); 
+    }
+    
     
     
     
@@ -371,6 +401,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         }      
         if(listClientesBD.get(indice).getCpf() == null || listClientesBD.get(indice).getCpf().equals("")) {
             jFTxtCpfCnpj.setText(listClientesBD.get(indice).getCnpj());
+            System.out.println(listClientesBD.get(indice).getCnpj());
         } else if (listClientesBD.get(indice).getCnpj() == null || listClientesBD.get(indice).getCnpj().equals("")) {
             jFTxtCpfCnpj.setText(listClientesBD.get(indice).getCpf());
         }
@@ -471,6 +502,11 @@ public class JfrmClientes extends javax.swing.JFrame {
         jBtnEditar.setToolTipText("Clique aqui para editar Cliente");
         jBtnEditar.setBorder(null);
         jBtnEditar.setFocusPainted(false);
+        jBtnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnEditarActionPerformed(evt);
+            }
+        });
 
         jBtnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/search_121759.png"))); // NOI18N
         jBtnBuscar.setToolTipText("Clique aqui para buscar Cliente");
@@ -882,6 +918,7 @@ public class JfrmClientes extends javax.swing.JFrame {
             setIconBtnNv(false);
             disableControl();
             clearTxt();
+            removeTable();
             precionado = false;
             editando = false;
         }
@@ -927,6 +964,16 @@ public class JfrmClientes extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jRadioBtnCnpjItemStateChanged
+
+    private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
+        precionado = true;
+        editando = true;
+        clsClientes = listClientesBD.get(linhaIndice);
+        jTblEnderecos.setEnabled(false);
+        setIconBtnNv(true);
+        enableControl();
+        
+    }//GEN-LAST:event_jBtnEditarActionPerformed
     
     /**
      * @param args the command line arguments
