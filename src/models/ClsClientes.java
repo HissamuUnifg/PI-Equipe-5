@@ -11,9 +11,9 @@ public class ClsClientes extends ClsUsuarios{
    
     private String cnpj;
     private String RazaoSocial;
-    private int rg;
-    private int ie;
-    private int cnh;
+    private String rg;
+    private String ie;
+    private String cnh;
     private String celular;
     private String Email; 
     private String Observacoes; 
@@ -39,10 +39,7 @@ public class ClsClientes extends ClsUsuarios{
            this.DataNascimento = DataNascimento;
     }
 
-    @Override   
-    public boolean isValido() {
-        return valido;
-    }
+
     
     public void cleanClientes() {
         this.id = 0;
@@ -50,9 +47,9 @@ public class ClsClientes extends ClsUsuarios{
         this.cpf = "";
         this.telefone = "";
         this.cnpj = "";
-        this.rg = 0;
-        this.ie = 0;
-        this.cnh = 0;
+        this.rg = "";
+        this.ie = "";
+        this.cnh = "";
         this.celular = "";
         this.Email = "";
         this.Observacoes = "";
@@ -62,15 +59,15 @@ public class ClsClientes extends ClsUsuarios{
     }
 
     public ClsClientes( int id, String nome, String nomeLogin, String cpf, String telefone,
-                        String cnpj, int rg, int ie, int cnh, String celular,
+                        String cnpj, int rg, String ie, String cnh, String celular,
                         String Email, String Observacoes, String RazaoSocial, String DataNascimento) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.telefone = telefone;
         this.cnpj = cnpj;
-        this.rg = rg;
-        this.ie = ie;
+        this.rg = "";
+        this.ie = "";
         this.cnh = cnh;
         this.celular = celular;
         this.Email = Email;
@@ -108,27 +105,27 @@ public class ClsClientes extends ClsUsuarios{
         this.cnpj = cnpj;       
     }
  
-    public int getRg() {
+    public String getRg() {
         return rg;
     }
 
-    public void setRg(int rg) {
+    public void setRg(String rg) {
         this.rg = rg;
     }
 
-    public int getIe() {
+    public String getIe() {
         return ie;
     }
 
-    public void setIe(int ie) {
+    public void setIe(String ie) {
         this.ie = ie;
     }
 
-    public int getCnh() {
+    public String getCnh() {
         return cnh;
     }
 
-    public void setCnh(int cnh) {
+    public void setCnh(String cnh) {
         this.cnh = cnh;
     }
 

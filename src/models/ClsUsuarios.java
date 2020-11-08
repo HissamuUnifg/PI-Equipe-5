@@ -10,18 +10,8 @@ public class ClsUsuarios {
     protected String nome;
     protected String cpf;
     protected String telefone;
-    protected boolean valido; //retorno da verificação do CPF
     
-
-    public boolean isValido() {
-        return valido;
-    }
-
-    public void setValido(boolean valido) {
-        this.valido = valido;
-    }
-
-  
+      
     public int getId() {
         return id;
     }

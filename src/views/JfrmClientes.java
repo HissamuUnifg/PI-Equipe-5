@@ -219,7 +219,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jTxtBairro.setEnabled(true);
         jTxtEmail.setEnabled(true);
         jTxtEstado.setEnabled(false);
-        jTxtNome.setEnabled(true);
+        jTxtNome.setEnabled(false);
         jTxtNumero.setEnabled(true);
         jTxtReferencia.setEnabled(true);
         jTxtRua.setEnabled(true);
@@ -498,7 +498,7 @@ public class JfrmClientes extends javax.swing.JFrame {
      * No CheckBox Inativar se no banco estiver 0 estará desmarcado e 1 estará marcado
      * @param indice
      */
-    public void loadBlocoCliente(int indice) {
+    private void loadBlocoCliente(int indice) {
         jLabelCodigo.setText("Codigo: " + listClientesBD.get(indice).getId());
         jTextObservacoes.setText(listClientesBD.get(indice).getObservacoes());
         jTxtEmail.setText(listClientesBD.get(indice).getEmail());
@@ -525,11 +525,11 @@ public class JfrmClientes extends javax.swing.JFrame {
             jRadioBtnCnpj.setEnabled(false);
         }
         jFtxtCelular.setText(listClientesBD.get(indice).getCelular());
-        jFtxtDataNascimento.setText(listClientesBD.get(indice).getDataNascimento());
+        jFtxtDataNascimento.setText(clsValidacoes.dataFormatoBR(listClientesBD.get(indice).getDataNascimento()));
         jFtxtFone.setText(listClientesBD.get(indice).getTelefone());
-        if (listClientesBD.get(indice).getRg() == 0) {
+        if (listClientesBD.get(indice).getRg() == "") {
             jFtxtRgIe.setText("" + listClientesBD.get(indice).getIe());
-        } else if (listClientesBD.get(indice).getIe() == 0) {
+        } else if (listClientesBD.get(indice).getIe() == "") {
             jFtxtRgIe.setText("" + listClientesBD.get(indice).getRg());
         }
         jFtxtCnh.setText("" + listClientesBD.get(indice).getCnh());
@@ -540,6 +540,125 @@ public class JfrmClientes extends javax.swing.JFrame {
         }
     }
     
+    private boolean validaBlocoCliente() {
+        //valida campo Nome
+        if (jTxtNome.getText().length() < 1) {
+            msgObgCampo("Nome");
+            jTxtNome.requestFocus();
+            return false;
+        } else if (jTxtNome.getText().length() > 200) {
+            msgAdvCampo("Nome");
+            jTxtNome.requestFocus();
+            return false;
+        } else  if (jFTxtCpfCnpj.getText().length() < 1) {
+            msgObgCampo("CpfCnpj");
+            jFTxtCpfCnpj.requestFocus();
+            return false;
+        } else if (jFTxtCpfCnpj.getText().length() > 18) {
+            msgAdvCampo("CpfCnpj");
+            jFTxtCpfCnpj.requestFocus();
+            return false;
+        } else    if (jFtxtRgIe.getText().length() < 1) {
+            msgObgCampo("Rg/Ie");
+            jFtxtRgIe.requestFocus();
+            return false;
+        } else if (jFtxtRgIe.getText().length() > 20) {
+            msgAdvCampo("Rg/Ie");
+            jFtxtRgIe.requestFocus();
+            return false;
+        } else    if (jFtxtCnh.getText().length() < 1) {
+            msgObgCampo("CNH");
+            jFtxtCnh.requestFocus();
+            return false;
+        } else if (jFtxtCnh.getText().length() > 20) {
+            msgAdvCampo("CNH");
+            jFtxtCnh.requestFocus();
+            return false;
+        } else if (jFtxtDataNascimento.getText().length() < 1) {
+            msgObgCampo("DataNascimento");
+            jFtxtDataNascimento.requestFocus();
+            return false;
+        } else if (jFtxtDataNascimento.getText().length() > 10) {
+            msgAdvCampo("DataNascimento");
+            jFtxtDataNascimento.requestFocus();
+            return false;
+        } else if (jFtxtFone.getText().length() < 1) {
+            msgObgCampo("Telefone");
+            jFtxtFone.requestFocus();
+            return false;
+        } else if (jFtxtFone.getText().length() > 13) {
+            msgAdvCampo("Telefone");
+            jFtxtFone.requestFocus();
+            return false;
+        } else if (jFtxtCelular.getText().length() < 1) {
+            msgObgCampo("Celular");
+            jFtxtCelular.requestFocus();
+            return false;
+        } else if (jFtxtCelular.getText().length() > 14) {
+            msgAdvCampo("Celular");
+            jFtxtCelular.requestFocus();
+            return false;
+        } else if (jTxtEmail.getText().length() < 1) {
+            msgObgCampo("Email");
+            jTxtEmail.requestFocus();
+            return false;
+        } else if (jTxtEmail.getText().length() > 250) {
+            msgAdvCampo("Email");
+            jTxtEmail.requestFocus();
+            return false;
+        }
+        return true;
+    }
+    
+    private boolean validaBlocoEnd() {
+        if (jTxtRua.getText().length() < 1) {
+            msgObgCampo("Rua");
+            jTxtRua.requestFocus();
+            return false;
+        } else if (jTxtRua.getText().length() > 200) {
+            msgAdvCampo("Rua");
+            jTxtRua.requestFocus();
+            return false;
+        } else if (jTxtNumero.getText().length() < 1) {
+            msgObgCampo("Numero");
+            jTxtNumero.requestFocus();
+            return false;
+        } else if (jTxtNumero.getText().length() > 5) {
+            msgAdvCampo("Numero");
+            jTxtNumero.requestFocus();
+            return false;
+        } else if (jTxtEstado.getText().length() < 1) {
+            msgObgCampo("Cidade/Estado");
+            jTxtEstado.requestFocus();
+            return false;
+        } else if (jTxtEstado.getText().length() > 100) {
+            msgAdvCampo("Cidade/Estado");
+            jTxtEstado.requestFocus();
+            return false;
+        } else if (jFtxtCep.getText().length() < 1) {
+            msgObgCampo("Cep");
+            jFtxtCep.requestFocus();
+            return false;
+        } else if (jFtxtCep.getText().length() > 10) {
+            msgAdvCampo("Cep");
+            jFtxtCep.requestFocus();
+            return false;
+        } else if (jTxtBairro.getText().length() < 1) {
+            msgObgCampo("Bairro");
+            jTxtBairro.requestFocus();
+            return false;
+        } else if (jTxtBairro.getText().length() > 100) {
+            msgAdvCampo("Bairro");
+            jTxtBairro.requestFocus();
+            return false;
+        } else if (jCboTipoEnd.getSelectedItem() == "Selecione"){
+            msgObgCampo("Tipo Endereco");
+            jCboTipoEnd.requestFocus();
+            return false;
+        }
+       
+        return true;
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -561,6 +680,8 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtRgIe = new javax.swing.JFormattedTextField();
         jFtxtCnh = new javax.swing.JFormattedTextField();
         jFtxtDataNascimento = new javax.swing.JFormattedTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jPanelObservacoes = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextObservacoes = new javax.swing.JTextArea();
@@ -596,6 +717,11 @@ public class JfrmClientes extends javax.swing.JFrame {
         jBtnSalvar.setToolTipText("Clique aqui para salvar Cliente");
         jBtnSalvar.setBorder(null);
         jBtnSalvar.setFocusPainted(false);
+        jBtnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnSalvarActionPerformed(evt);
+            }
+        });
 
         jBtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add_121935.png"))); // NOI18N
         jBtnNovo.setToolTipText("Clique aqui para novo Cliente");
@@ -679,7 +805,8 @@ public class JfrmClientes extends javax.swing.JFrame {
             }
         });
 
-        jRadioBtnCpf.setText("CPF");
+        jRadioBtnCpf.setSelected(true);
+        jRadioBtnCpf.setText("Fisica");
         jRadioBtnCpf.setToolTipText("Marque para pessoa fisica!");
         jRadioBtnCpf.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -687,7 +814,7 @@ public class JfrmClientes extends javax.swing.JFrame {
             }
         });
 
-        jRadioBtnCnpj.setText("CNPJ");
+        jRadioBtnCnpj.setText("Juridica");
         jRadioBtnCnpj.setToolTipText("Marque para pessoa Juridica!");
         jRadioBtnCnpj.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -735,6 +862,10 @@ public class JfrmClientes extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Pessoa");
+
+        jLabel2.setText("Pessoa");
+
         javax.swing.GroupLayout jPanDadosGeraisLayout = new javax.swing.GroupLayout(jPanDadosGerais);
         jPanDadosGerais.setLayout(jPanDadosGeraisLayout);
         jPanDadosGeraisLayout.setHorizontalGroup(
@@ -751,36 +882,39 @@ public class JfrmClientes extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jTxtEmail))
                     .addGroup(jPanDadosGeraisLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jRadioBtnCpf)
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jRadioBtnCnpj)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(jPanDadosGeraisLayout.createSequentialGroup()
                         .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jRadioBtnCnpj)
-                            .addComponent(jRadioBtnCpf))
-                        .addGap(18, 18, 18)
+                        .addGap(38, 38, 38)
                         .addComponent(jFTxtCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jFtxtRgIe, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jFtxtCnh)))
                 .addContainerGap())
         );
         jPanDadosGeraisLayout.setVerticalGroup(
             jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanDadosGeraisLayout.createSequentialGroup()
-                .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanDadosGeraisLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jRadioBtnCpf)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jRadioBtnCnpj))
-                    .addGroup(jPanDadosGeraisLayout.createSequentialGroup()
-                        .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFTxtCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFtxtRgIe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFtxtCnh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
+                .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioBtnCnpj)
+                    .addComponent(jRadioBtnCpf)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFTxtCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFtxtRgIe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFtxtCnh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jTxtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanDadosGeraisLayout.createSequentialGroup()
@@ -1057,18 +1191,21 @@ public class JfrmClientes extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jBtnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jBtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jBtnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jBtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabelCodigo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jCkb_inativar)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(19, 19, 19)
                 .addComponent(jPanDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1146,17 +1283,13 @@ public class JfrmClientes extends javax.swing.JFrame {
             try {
                 jFTxtCpfCnpj.setText("");
                 addMascaraCpfCnpj(true);
+                jTxtNome.setEnabled(true);
             } catch (ParseException ex) {
                 System.out.println("Erro ao aplicar mascara: " + ex);
             }
         } else if (jRadioBtnCpf.isSelected() == false) {
             jRadioBtnCnpj.setEnabled(true);
-            try {
-                jFTxtCpfCnpj.setText("");
-                addMascaraCpfCnpj(true);
-            } catch (ParseException ex) {
-                System.out.println("Erro ao aplicar mascara: " + ex);
-            }
+            jFTxtCpfCnpj.setText("");
         }
     }//GEN-LAST:event_jRadioBtnCpfItemStateChanged
 
@@ -1166,16 +1299,13 @@ public class JfrmClientes extends javax.swing.JFrame {
             tipoCliente = 0;
             try {
                 addMascaraCpfCnpj(false);
+                jTxtNome.setEnabled(true);
             } catch (ParseException ex) {
                 System.out.println("Erro ao aplicar mascara: " + ex);
             }
         } else if (jRadioBtnCnpj.isSelected() == false) {
             jRadioBtnCpf.setEnabled(true);
-            try {
-                addMascaraCpfCnpj(true);
-            } catch (ParseException ex) {
-                System.out.println("Erro ao aplicar mascara: " + ex);
-            }
+            jFTxtCpfCnpj.setText("");
         }
     }//GEN-LAST:event_jRadioBtnCnpjItemStateChanged
 
@@ -1183,6 +1313,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         precionado = true;
         editando = true;
         clsClientes = listClientesBD.get(linhaIndice);
+        clsEnderecos.setIdCliente(clsClientes.getId());
         jTblEnderecos.setEnabled(false);
         setIconBtnNv(true);
         enableControl();
@@ -1190,7 +1321,14 @@ public class JfrmClientes extends javax.swing.JFrame {
 
     private void jTxtNomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNomeFocusLost
        if(jTxtNome.getText().length() > 1){
-           clsClientes.setNome(jTxtNome.getText());
+           if(jRadioBtnCpf.isSelected() == true && jRadioBtnCnpj.isSelected() == false){
+             clsClientes.setNome(jTxtNome.getText());
+             clsClientes.setRazaoSocial("");
+           }else if (jRadioBtnCpf.isSelected() == false && jRadioBtnCnpj.isSelected() == true) {
+             clsClientes.setNome("");
+             clsClientes.setRazaoSocial(jTxtNome.getText());
+           }
+           
        }
     }//GEN-LAST:event_jTxtNomeFocusLost
 
@@ -1206,23 +1344,23 @@ public class JfrmClientes extends javax.swing.JFrame {
 
     private void jFtxtRgIeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFtxtRgIeFocusLost
         if (jFtxtRgIe.getText().length() > 1 && jRadioBtnCnpj.isSelected() == true && jRadioBtnCpf.isSelected() == false) {
-            clsClientes.setIe(Integer.parseInt(jFtxtRgIe.getText()));
-            clsClientes.setRg(0);
+            clsClientes.setIe(jFtxtRgIe.getText());
+            clsClientes.setRg("");
         } else if (jFtxtRgIe.getText().length() > 1 && jRadioBtnCpf.isSelected() == true && jRadioBtnCnpj.isSelected() == false) {
-            clsClientes.setRg(Integer.parseInt(jFtxtRgIe.getText()));
-            clsClientes.setIe(0);
+            clsClientes.setRg(jFtxtRgIe.getText());
+            clsClientes.setIe("");
         }
     }//GEN-LAST:event_jFtxtRgIeFocusLost
 
     private void jFtxtCnhFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFtxtCnhFocusLost
         if(jFtxtCnh.getText().length() > 1){
-            clsClientes.setCnh(Integer.parseInt(jFtxtCnh.getText()));
+            clsClientes.setCnh(jFtxtCnh.getText());
         }
     }//GEN-LAST:event_jFtxtCnhFocusLost
 
     private void jFtxtDataNascimentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFtxtDataNascimentoFocusLost
         if(jFtxtDataNascimento.getText().length() > 1 && clsValidacoes.validaDataFormatoBR(jFtxtDataNascimento.getText()) == true){
-            clsClientes.setDataNascimento(clsValidacoes.dataFormatoUS(jFtxtDataNascimento.getText()));
+            clsClientes.setDataNascimento(jFtxtDataNascimento.getText());
         }
     }//GEN-LAST:event_jFtxtDataNascimentoFocusLost
 
@@ -1320,32 +1458,35 @@ public class JfrmClientes extends javax.swing.JFrame {
     private void jBtn_Salvar_EndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_Salvar_EndActionPerformed
         if (editandoEnd == false) {
             enderecosDAO.save(clsEnderecos);
-            if (enderecosDAO.isSucesso() == true) {
-                JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
-                disableBlocoEnd();
-                reloadTable();
-                setIconBtnAdd(false);
-            } else {
-                JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
-                disableBlocoEnd();
-                clearTxtEnd();
-                setIconBtnAdd(false);
+            if (validaBlocoEnd() == true) {
+                if (enderecosDAO.isSucesso() == true) {
+                    JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+                    disableBlocoEnd();
+                    reloadTable();
+                    setIconBtnAdd(false);
+                } else {
+                    JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
+                    disableBlocoEnd();
+                    clearTxtEnd();
+                    setIconBtnAdd(false);
+                }
             }
         } else {
-            enderecosDAO.update(clsEnderecos);
-            if (enderecosDAO.isSucesso() == true) {
-                JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
-                disableBlocoEnd();
-                reloadTable();
-                setIconBtnAdd(false);
-            } else {
-                JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
-                disableBlocoEnd();
-                clearTxtEnd();
-                setIconBtnAdd(false);
+            if (validaBlocoEnd() == true) {
+                enderecosDAO.update(clsEnderecos);
+                if (enderecosDAO.isSucesso() == true) {
+                    JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+                    disableBlocoEnd();
+                    reloadTable();
+                    setIconBtnAdd(false);
+                } else {
+                    JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
+                    disableBlocoEnd();
+                    clearTxtEnd();
+                    setIconBtnAdd(false);
+                }
             }
         }
-
     }//GEN-LAST:event_jBtn_Salvar_EndActionPerformed
 
     private void jBtn_excluir_endActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_excluir_endActionPerformed
@@ -1376,6 +1517,51 @@ public class JfrmClientes extends javax.swing.JFrame {
         setIconBtnAdd(true);
         enableBlocoEnd();
     }//GEN-LAST:event_jBtn_Editar_EndActionPerformed
+
+    private void jBtnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSalvarActionPerformed
+        if (editando == false) {
+            if (validaBlocoEnd() == true && validaBlocoCliente() == true) {
+                clsClientes.setIdColaborador(userIdLoged);
+                ClientesDAO clientesDAO = new ClientesDAO();
+                clientesDAO.save(clsClientes);
+                clsEnderecos.setIdCliente(clientesDAO.getIdRetornado());
+                enderecosDAO.save(clsEnderecos);
+                if (enderecosDAO.isSucesso() == true && clientesDAO.isSucesso() == true) {
+                    JOptionPane.showMessageDialog(this, "Endereco: " + enderecosDAO.getRetorno() + "Cliente: " + clientesDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+                    disableControl();
+                    listEnderecosBD = enderecosDAO.selectALL(clsClientes.getId());
+                    reloadTable();
+                    setIconBtnAdd(false);
+                    setIconBtnNv(false);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Endereco: " + enderecosDAO.getRetorno() + "Cliente: " + clientesDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
+                    disableControl();
+                    clearTxt();
+                    setIconBtnAdd(false);
+                    setIconBtnNv(false);
+                }
+            }
+        } else {
+            if (validaBlocoEnd() == true && validaBlocoCliente() == true) {
+                clientesDAO.update(clsClientes);
+                enderecosDAO.update(clsEnderecos);
+                if (enderecosDAO.isSucesso() == true && clientesDAO.isSucesso() == true) {
+                    JOptionPane.showMessageDialog(this, "Endereco: " + enderecosDAO.getRetorno() + "Cliente: " + clientesDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+                    disableControl();
+                    listEnderecosBD = enderecosDAO.selectALL(clsClientes.getId());
+                    reloadTable();
+                    setIconBtnAdd(false);
+                    setIconBtnNv(false);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Endereco: " + enderecosDAO.getRetorno() + "Cliente: " + clientesDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
+                    disableControl();
+                    clearTxt();
+                    setIconBtnAdd(false);
+                    setIconBtnNv(false);
+                }
+            }
+        }
+    }//GEN-LAST:event_jBtnSalvarActionPerformed
      
     /**
      * @param args the command line arguments
@@ -1404,6 +1590,8 @@ public class JfrmClientes extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jFtxtDataNascimento;
     private javax.swing.JFormattedTextField jFtxtFone;
     private javax.swing.JFormattedTextField jFtxtRgIe;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelCodigo;
     private javax.swing.JPanel jPanDadosGerais;
     private javax.swing.JPanel jPanelDadosEnderecos;

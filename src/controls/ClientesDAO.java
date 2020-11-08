@@ -53,14 +53,14 @@ public class ClientesDAO {
             ps.setString(2, clsClientes.getCpf());
             ps.setString(3, clsClientes.getRazaoSocial());
             ps.setString(4, clsClientes.getCnpj());
-            ps.setInt(5, clsClientes.getIe());
-            ps.setInt(6, clsClientes.getRg());
+            ps.setString(5, clsClientes.getIe());
+            ps.setString(6, clsClientes.getRg());
             ps.setString(7, clsClientes.getDataNascimento());
             ps.setString(8, clsClientes.getTelefone());
             ps.setString(9, clsClientes.getCelular());
             ps.setString(10, clsClientes.getEmail());
             ps.setString(11, clsClientes.getObservacoes());
-            ps.setInt(12, clsClientes.getCnh());            
+            ps.setString(12, clsClientes.getCnh());            
             ps.setInt(13, clsClientes.getIdColaborador());
             ps.setInt(14, clsClientes.getInativo());            
             
@@ -76,7 +76,7 @@ public class ClientesDAO {
             retorno = "Cliente gravado com sucerro!";
             sucesso = true;
         } catch (SQLException e) {
-            retorno = "Erro ao salvar Cliente!";
+            retorno = "Erro ao salvar Cliente!" +e;
             sucesso = false;
         }
         finally
@@ -100,14 +100,14 @@ public class ClientesDAO {
             ps.setString(2, clsClientes.getCpf());
             ps.setString(3, clsClientes.getRazaoSocial());
             ps.setString(4, clsClientes.getCnpj());
-            ps.setInt(5, clsClientes.getIe());
-            ps.setInt(6, clsClientes.getRg());
+            ps.setString(5, clsClientes.getIe());
+            ps.setString(6, clsClientes.getRg());
             ps.setString(7, clsClientes.getDataNascimento());
             ps.setString(8, clsClientes.getTelefone());
             ps.setString(9, clsClientes.getCelular());
             ps.setString(10, clsClientes.getEmail());
             ps.setString(11, clsClientes.getObservacoes());
-            ps.setInt(12, clsClientes.getCnh());
+            ps.setString(12, clsClientes.getCnh());
             ps.setInt(13, clsClientes.getIdColaborador());
             ps.setInt(14, clsClientes.getInativo());
             ps.setInt(15, clsClientes.getId());
@@ -178,14 +178,14 @@ public class ClientesDAO {
                 clsClientes.setCpf(rs.getString("cpf"));
                 clsClientes.setRazaoSocial(rs.getString("razaosocial"));
                 clsClientes.setCnpj(rs.getString("cnpj"));
-                clsClientes.setIe(rs.getInt("ie"));
-                clsClientes.setRg(rs.getInt("rg"));
+                clsClientes.setIe(rs.getString("ie"));
+                clsClientes.setRg(rs.getString("rg"));
                 clsClientes.setDataNascimento(formatoUS.format(rs.getDate("datanascimento")));
                 clsClientes.setTelefone(rs.getString("telefone"));
                 clsClientes.setCelular(rs.getString("celular"));
                 clsClientes.setEmail(rs.getString("Email"));
                 clsClientes.setObservacoes(rs.getString("observacoes"));
-                clsClientes.setCnh(rs.getInt("cnh"));
+                clsClientes.setCnh(rs.getString("cnh"));
                 clsClientes.setIdColaborador(rs.getInt("id_colaborador"));
                 clsClientes.setInativo(rs.getInt("inativo"));
                 rClsClientes.add(clsClientes);

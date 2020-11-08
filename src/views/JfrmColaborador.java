@@ -559,7 +559,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         }else if (jTxtCpf.getText().length() < 11) {
             JOptionPane.showMessageDialog(this, "O numero do CPF é invalido, tamanho não pode sermaior que 11 digitos!", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
             jTxtCpf.setText("");
-        }else if (clscolaborador.isValido() == false) {
+        }else if (new ClsValidacoes().isValid(jTxtCpf.getText()) == false) {
             JOptionPane.showMessageDialog(this, "O numero do CPF é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
             jTxtCpf.setText("");
         } else {

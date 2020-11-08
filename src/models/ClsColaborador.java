@@ -12,12 +12,6 @@ package models;
     private String senha;
     private String Cpf_funCadastro;
     
-
-    @Override
-    public boolean isValido() {
-        return valido;
-    }
-
     public String getCpf_funCadastro() {
         return Cpf_funCadastro;
     }
@@ -25,9 +19,6 @@ package models;
     public void setCpf_funCadastro(String Cpf_funCadastro) {
         this.Cpf_funCadastro = Cpf_funCadastro;
     }
-    
-        
-    
     
     public void setNomeLogin(String nomeLogin_){
         this.nomeLogin = nomeLogin_;
