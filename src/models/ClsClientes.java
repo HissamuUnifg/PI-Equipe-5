@@ -30,13 +30,12 @@ public class ClsClientes extends ClsUsuarios{
     }
 
     public String getDataNascimento() {
-        ClsValidacoes clsval = new ClsValidacoes();
-        return clsval.dataFormatoBR(DataNascimento);
+        return DataNascimento;
     }
 
     public void setDataNascimento(String DataNascimento) {
-
-           this.DataNascimento = DataNascimento;
+           ClsValidacoes clsval = new ClsValidacoes(); 
+           this.DataNascimento = clsval.dataFormatoBR(DataNascimento);
     }
 
 

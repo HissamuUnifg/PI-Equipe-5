@@ -122,10 +122,7 @@ CONSTRAINT Clientes_enderecos FOREIGN KEY (id_cliente) REFERENCES clientes (Id)
 CONSTRAINT Enderecos_cidades FOREIGN KEY (id_cidade) REFERENCES Cidades (id)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION
-
-
 );
-
 
 
 /*criando tabela contrato*/

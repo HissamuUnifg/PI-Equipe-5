@@ -9,12 +9,15 @@ import models.ClsClientes;
 import controls.CidadesDAO;
 import controls.ClientesDAO;
 import controls.EnderecosDAO;
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
 import models.ClsCarregarTableEndereco;
+import models.ClsControlaCpNumericCliente;
 import models.ClsValidacoes;
 import models.ClsMascaraCampos;
 
@@ -40,6 +43,8 @@ public class JfrmClientes extends javax.swing.JFrame {
    ClsValidacoes clsValidacoes;
    ClsCarregarTableEndereco clsCarregarTableEndereco = null;
    ClsMascaraCampos clsMascaracampos;
+   
+   //Variáveis que auxiliam nas ações dos botões
    boolean precionado;
    boolean editando;
    boolean buscando;
@@ -95,6 +100,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         loadCidades();
         loadEnderecoTipo();
         disableControl();
+        controleDigitacao();
 
                
     }
@@ -126,6 +132,16 @@ public class JfrmClientes extends javax.swing.JFrame {
         }
     }
     
+    /**
+     * Controla a digitação permintindo apenas numeros
+     */
+    private void controleDigitacao() {
+        jFtxtRgIe.setDocument(new ClsControlaCpNumericCliente());
+    }
+    /**
+     * Responsavel por arregar uma lista de cidades obtidas no BD 
+     * E em seguida adiciona todos os dados no jCoboBox "JcboCidade"
+     */
     private void loadCidades(){
         
         jCboCidade.setSelectedIndex(0);
@@ -139,13 +155,19 @@ public class JfrmClientes extends javax.swing.JFrame {
         }
 
     }
-    
+    /**
+     * Responsave por carregar o jComboBox "jCboTipo
+     * Para uso no cadastro do endereço
+     */
     private void loadEnderecoTipo() {
         jCboTipoEnd.addItem("RESIDENCIAL");
         jCboTipoEnd.addItem("TRABALHO");
         jCboTipoEnd.addItem("COBRANCA");        
     }
-    
+    /**
+     * Responsavel por desabilitar todos os jFormattedTextField e jTextField
+     * Desabilita alguns botoes de controle e habiita outros
+     */
     private void disableControl() {
         //desabilitando os comboBox
         jCboCidade.setEnabled(false);
@@ -181,7 +203,11 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtCnh.setEnabled(false);
 
     }
-    
+    /**
+     * Responsavel por habilitar os controles da tela
+     * Caso a busca encontre um registro ele é chamado
+     * Usado junto com a função "buscaCliente"
+     */
     private void enableControlBusca() {
         jBtnEditar.setEnabled(true);
         jBtnExcluir.setEnabled(true);
@@ -196,7 +222,10 @@ public class JfrmClientes extends javax.swing.JFrame {
         jRadioBtnCnpj.setEnabled(false);
         jCkb_inativar.setEnabled(false);
     }
-    
+    /**
+     * Responsavel por habilitar toda a tela ao clicar no "jBtnEditar"
+     * Libea a ediçao de todos os campos
+     */
     private void enableControl() {
         //habilitando JcomboBox
         jCboCidade.setEnabled(true);
@@ -231,17 +260,26 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtRgIe.setEnabled(true);
         jFtxtCnh.setEnabled(true);
     }
-    
+    /**
+     * Ao passar um valor "true" o botão muda o icone para a função de Cancelar
+     * Ao passar um valor "false" o botão muda o icone para a função de Novo Registro
+     * @param funcao 
+     */
     private void setIconBtnNv(boolean funcao) {
         if (funcao == true) {
             jBtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_cancelar.png"))); 
             jBtnNovo.setToolTipText("Clique aqui para cancelar a operacao");
         } else {
             jBtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add_121935.png"))); 
-            jBtnNovo.setToolTipText("Clique aqui para novo Veiculo");
+            jBtnNovo.setToolTipText("Clique aqui para novo Cliente");
         }
     }
-    
+    /**
+     * Usado nos controles do bloco de Endereço
+     * Ao passar um valor "true" o botão muda o texto para a função de Cancelar
+     * Ao passar um valor "false" o botão muda o texto para a função de Novo Registro
+     * @param funcao 
+     */
     private void setIconBtnAdd(boolean funcao) {
         if (funcao == true) {
             jBtn_Adcionar_end.setText("Cancelar");
@@ -251,15 +289,27 @@ public class JfrmClientes extends javax.swing.JFrame {
             jBtn_Adcionar_end.setToolTipText("Clique aqui para novo Endereço");
         }
     }
-    
+    /**
+     * Mostra um JOptionPane formatado com uma menssagen de Campo Obrigatório
+     * Passa uma String com o nome do campo
+     * @param dado 
+     */
     private void msgObgCampo(String dado) {
         JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " é obrigatório", "Informação", JOptionPane.INFORMATION_MESSAGE);
     }
-
+     /**
+     * Mostra um JOptionPane formatado com uma menssagen de Informação de inconsistência no Dado
+     * Passa uma String com o nome do campo
+     * @param dado 
+     */
     private void msgAdvCampo(String dado) {
         JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " está maior ou menor do que o permitido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
     }
-    
+     /**
+     * Mostra um JOptionPane formatado com uma menssagen de Erro de inconsistência no Dado
+     * Passa uma String com o nome do campo
+     * @param dado 
+     */
     private void msgErrCampo(String dado) {
         JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " é invalido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -300,6 +350,7 @@ public class JfrmClientes extends javax.swing.JFrame {
      * na lista pre carregada com os dados do BD
      */
     private void buscaCliente(){
+        clsClientes.cleanClientes();
         String cpf = JOptionPane.showInputDialog("Digite o CPF/CNPJ para procurar");
         boolean valido = clsValidacoes.isValid(cpf);
         boolean tipo = clsValidacoes.isTipoCpfCnpj(); //tipo true é CPF tipo false é CNPJ
@@ -325,7 +376,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                         tipoCliente = 1;
                     }
                 }
-                precionado = true;
+                precionado = false;
             }
         } else if (valido == true && tipo == false) {
             if (listBuscaCNPJ(cpf) == false) {
@@ -349,7 +400,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                         clsClientes = listClientesBD.get(i);
                     }
                 }
-                precionado = true;
+                precionado = false;
             }
         } else {
             JOptionPane.showMessageDialog(this, "O CPF/CNPJ digitado é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
@@ -383,7 +434,9 @@ public class JfrmClientes extends javax.swing.JFrame {
         jRadioBtnCpf.setSelected(false);
         jCkb_inativar.setSelected(false);
     }
-    
+    /**
+     * Responsavel por lipar os Campos de texto e seleção jComboBox do bloco de endereços
+     */
     private void clearTxtEnd() {
         jTxtBairro.setText("");
         jTxtEstado.setText("");
@@ -397,36 +450,42 @@ public class JfrmClientes extends javax.swing.JFrame {
     
     //funções relacionadas a Jtable que exibe os endereços //
     
-    
+    /**
+     * Carrega a lista de endereço do cliente encontrado na Busca
+     * Passa o idCliente para a busca, com isso traz apenas os endereços
+     * do próprio cliente
+     * @param idCliente 
+     */
     public void carregarListaEnd(int idCliente){
     EnderecosDAO endDAO = new EnderecosDAO();
     listEnderecosBD = endDAO.selectALL(idCliente);
     }
-    
+    /**
+     * Carrega uma nova jTable com a lista de Endereços carregada 
+     * pela a função "carregarListaEnd"
+     */
     public void carregarJtable() {
      jTblEnderecos.setModel(new ClsCarregarTableEndereco(listEnderecosBD));
     }
-    
-  
-    
+    /**
+     * Usado para recriar a jTable, nas atualizações, exclusões e adições
+     * Usado junto com os controles do bloco de endereços
+     */
     public void reloadTable(){
         listEnderecosBD.clear();
         EnderecosDAO endDAO = new EnderecosDAO();
         listEnderecosBD = endDAO.selectALL(clsClientes.getId());
         jTblEnderecos.setModel(new ClsCarregarTableEndereco(listEnderecosBD)); 
     }
-    
+    /**
+     * Responsável por imar a lista de endereços e em seguida carrega a jTble com
+     * a lista vazia.
+     * Usado quando o "jBtnNovo" em modo cancelar é clicado.
+     */
     public void removeTable() {
        listEnderecosBD.clear();
        jTblEnderecos.setModel(new ClsCarregarTableEndereco(listEnderecosBD)); 
     }
-    
-    
-    
-    
-    //funções responsaveis por carregar os componentes da tela //
-    
-    
     
     /**
      * Recebe -1 para primeiro endereço da lista ou a linha selecionada para carregar 
@@ -483,6 +542,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jBtnEditar.setEnabled(true);
         jBtnImprimir.setEnabled(true);
         jBtnExcluir.setEnabled(true);
+        jTblEnderecos.setEnabled(true);
     
     }
     
@@ -545,19 +605,29 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtCelular.setText(listClientesBD.get(indice).getCelular());
         jFtxtDataNascimento.setText(listClientesBD.get(indice).getDataNascimento());
         jFtxtFone.setText(listClientesBD.get(indice).getTelefone());
-        if (listClientesBD.get(indice).getRg() == "") {
+        if (listClientesBD.get(indice).getRg().equals("") || listClientesBD.get(indice).getRg() == null) {
             jFtxtRgIe.setText("" + listClientesBD.get(indice).getIe());
-        } else if (listClientesBD.get(indice).getIe() == "") {
+        } else if (listClientesBD.get(indice).getIe().equals("") || listClientesBD.get(indice).getIe() == null) {
             jFtxtRgIe.setText("" + listClientesBD.get(indice).getRg());
         }
         jFtxtCnh.setText("" + listClientesBD.get(indice).getCnh());
         if (listClientesBD.get(indice).getInativo() == 0) {
             jCkb_inativar.setSelected(false);
+            jLabelStatus.setText("Cliente Liberado");
+            jLabelStatus.setForeground(Color.BLUE);
         } else if (listClientesBD.get(indice).getInativo() == 1) {
             jCkb_inativar.setSelected(true);
+            jLabelStatus.setText("Cliente Bloqueado");
+            jLabelStatus.setForeground(Color.RED);
         }
+        
     }
     
+    /**
+     * Responsavel por validar campo a campo Bloco Cliente, seguindo a regra de negócio
+     * levando em considerão o tamamnho e consistência dos dados
+     * @return 
+     */
     private boolean validaBlocoCliente() {
         //valida campo Nome
         if (jTxtNome.getText().length() < 1) {
@@ -627,7 +697,11 @@ public class JfrmClientes extends javax.swing.JFrame {
         }
         return true;
     }
-    
+        /**
+     * Responsavel por validar campo a campo Bloco Endereços, seguindo a regra de negócio
+     * levando em considerão o tamamnho e consistência dos dados
+     * @return 
+     */
     private boolean validaBlocoEnd() {
         if (jTxtRua.getText().length() < 1) {
             msgObgCampo("Rua");
@@ -720,6 +794,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtCep = new javax.swing.JFormattedTextField();
         jLabelCodigo = new javax.swing.JLabel();
         jCkb_inativar = new javax.swing.JCheckBox();
+        jLabelStatus = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Clientes");
@@ -1002,9 +1077,9 @@ public class JfrmClientes extends javax.swing.JFrame {
         jCboCidade.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jCboCidade.setToolTipText("Selecione a cidade do cliente");
         jCboCidade.setBorder(javax.swing.BorderFactory.createTitledBorder("Cidade"));
-        jCboCidade.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jCboCidadeItemStateChanged(evt);
+        jCboCidade.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jCboCidadeFocusLost(evt);
             }
         });
 
@@ -1046,16 +1121,14 @@ public class JfrmClientes extends javax.swing.JFrame {
 
         jTblEnderecos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+
             },
             new String [] {
-                "Rua", "Numero", "Cidade", "Estado", "Bairro", "CEP", "Tipo"
+                "Codigo", "Rua", "Numero", "Cidade", "Estado", "Bairro", "CEP", "Tipo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1177,11 +1250,14 @@ public class JfrmClientes extends javax.swing.JFrame {
 
         jCkb_inativar.setText("Inativar");
         jCkb_inativar.setToolTipText("Marque aqui caso deseje Inativar o cliente");
-        jCkb_inativar.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jCkb_inativarItemStateChanged(evt);
+        jCkb_inativar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jCkb_inativarMouseClicked(evt);
             }
         });
+
+        jLabelStatus.setText("Sataus");
+        jLabelStatus.setToolTipText("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1205,8 +1281,10 @@ public class JfrmClientes extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jCkb_inativar, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabelCodigo)
-                                .addGap(48, 48, 48))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabelStatus)
+                                    .addComponent(jLabelCodigo))
+                                .addGap(16, 16, 16))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1227,13 +1305,15 @@ public class JfrmClientes extends javax.swing.JFrame {
                             .addComponent(jBtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 6, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabelCodigo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelStatus)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jCkb_inativar)))
-                .addGap(19, 19, 19)
+                        .addComponent(jCkb_inativar)
+                        .addGap(19, 19, 19)))
                 .addComponent(jPanDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1255,6 +1335,8 @@ public class JfrmClientes extends javax.swing.JFrame {
         telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
+    /*EM SEGUIDA SÃO OS AÇÕES E EVENTOS DOS CONTROLES DA TELA*/
+    
     private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
         buscando = true;
         ClientesDAO cliDBA = new ClientesDAO();                
@@ -1268,26 +1350,15 @@ public class JfrmClientes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jCboTipoEndItemStateChanged
 
-    private void jCboCidadeItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCboCidadeItemStateChanged
-        if (jCboCidade.getSelectedIndex() > -1) {
-            clsEnderecos.setNomeCidade(jCboCidade.getSelectedItem().toString());
-            for (int i = 0; i < listCidadesBD.size(); i++) {
-                if (listCidadesBD.get(i).getNomeCidade().equals(jCboCidade.getSelectedItem().toString())) {
-                    String sigla = listCidadesBD.get(i).getSiglaEstado();
-                    clsEnderecos.setIdCidade(listCidadesBD.get(i).getIdCidade());
-                    clsEnderecos.setEstado(listCidadesBD.get(i).getEstado());
-                    jTxtEstado.setText("" + sigla + " - " + listCidadesBD.get(i).getEstado());
-                }
-            }
-        }
-    }//GEN-LAST:event_jCboCidadeItemStateChanged
-
     private void jBtnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnNovoActionPerformed
         if (precionado == false) {
             jTblEnderecos.setEnabled(false);
             setIconBtnNv(true);
             enableControl();
             clearTxt();
+            if (buscando == true || editando == true) {
+                removeTable();
+            }
             precionado = true;
             editando = false;
             jTxtNome.setEnabled(false);
@@ -1365,7 +1436,6 @@ public class JfrmClientes extends javax.swing.JFrame {
     private void jFTxtCpfCnpjFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFTxtCpfCnpjFocusLost
         if (jFTxtCpfCnpj.getText().length() > 1 && jRadioBtnCnpj.isSelected() == true && jRadioBtnCpf.isSelected() == false) {
             clsClientes.setCnpj(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()));
-            System.out.println(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()));
             clsClientes.setCpf("");
         } else if (jFTxtCpfCnpj.getText().length() > 1 && jRadioBtnCpf.isSelected() == true && jRadioBtnCnpj.isSelected() == false) {
             clsClientes.setCpf(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()));
@@ -1390,8 +1460,16 @@ public class JfrmClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jFtxtCnhFocusLost
 
     private void jFtxtDataNascimentoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFtxtDataNascimentoFocusLost
-        if(jFtxtDataNascimento.getText().length() > 1 && clsValidacoes.validaDataFormatoBR(jFtxtDataNascimento.getText()) == true){
-            clsClientes.setDataNascimento(jFtxtDataNascimento.getText());
+
+        if(jFtxtDataNascimento.getText().length() > 1){
+            if(clsValidacoes.validaDataFormatoBR(jFtxtDataNascimento.getText()) == false){
+                JOptionPane.showMessageDialog(this, "A data: "+jFtxtDataNascimento.getText()+" é invalida, tente novamente!", "Informação", 
+                JOptionPane.INFORMATION_MESSAGE);
+                jFtxtDataNascimento.requestFocus();
+            }else{
+                clsClientes.setDataNascimento(clsValidacoes.dataFormatoUS(jFtxtDataNascimento.getText()));
+            }
+            
         }
     }//GEN-LAST:event_jFtxtDataNascimentoFocusLost
 
@@ -1488,18 +1566,20 @@ public class JfrmClientes extends javax.swing.JFrame {
 
     private void jBtn_Salvar_EndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_Salvar_EndActionPerformed
         if (editandoEnd == false) {
-            EnderecosDAO endDAO = new EnderecosDAO();
-            endDAO.save(clsEnderecos);
             if (validaBlocoEnd() == true) {
+                EnderecosDAO endDAO = new EnderecosDAO();
+                endDAO.save(clsEnderecos);
                 if (endDAO.isSucesso() == true) {
                     JOptionPane.showMessageDialog(this, endDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
                     disableBlocoEnd();
                     reloadTable();
+                    jTblEnderecos.setEnabled(true);
                     setIconBtnAdd(false);
                 } else {
                     JOptionPane.showMessageDialog(this, endDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
                     disableBlocoEnd();
                     clearTxtEnd();
+                    jTblEnderecos.setEnabled(false);
                     setIconBtnAdd(false);
                 }
             }
@@ -1511,11 +1591,13 @@ public class JfrmClientes extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(this, endDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
                     disableBlocoEnd();
                     reloadTable();
+                    jTblEnderecos.setEnabled(true);
                     setIconBtnAdd(false);
                 } else {
                     JOptionPane.showMessageDialog(this, endDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
                     disableBlocoEnd();
                     clearTxtEnd();
+                    jTblEnderecos.setEnabled(false);
                     setIconBtnAdd(false);
                 }
             }
@@ -1561,12 +1643,13 @@ public class JfrmClientes extends javax.swing.JFrame {
                 clsEnderecos.setIdCliente(cliDAO.getIdRetornado());
                 clsClientes.setId(cliDAO.getIdRetornado());
                 EnderecosDAO endDAO = new EnderecosDAO();
-                enderecosDAO.save(clsEnderecos);
+                endDAO.save(clsEnderecos);
                 if (endDAO.isSucesso() == true && cliDAO.isSucesso() == true) {
                     JOptionPane.showMessageDialog(this, "Endereco: " + endDAO.getRetorno() + "Cliente: " + cliDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
                     disableControl();
                     enableBtnPrincipal();
                     listEnderecosBD = endDAO.selectALL(clsClientes.getId());
+                    listClientesBD.add(clsClientes);
                     reloadTable();
                     setIconBtnAdd(false);
                     setIconBtnNv(false);
@@ -1589,6 +1672,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                     disableControl();
                     enableBtnPrincipal();
                     listEnderecosBD = endDAO.selectALL(clsClientes.getId());
+                    listClientesBD.add(clsClientes);
                     reloadTable();
                     setIconBtnAdd(false);
                     setIconBtnNv(false);
@@ -1625,9 +1709,36 @@ public class JfrmClientes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBtnExcluirActionPerformed
 
-    private void jCkb_inativarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCkb_inativarItemStateChanged
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCkb_inativarItemStateChanged
+    private void jCkb_inativarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jCkb_inativarMouseClicked
+       if (jCkb_inativar.isSelected() == false) {
+            clsClientes.setInativo(0);
+            jLabelStatus.setText("Cliente Liberado");
+            jLabelStatus.setForeground(Color.BLUE);
+        } else if (jCkb_inativar.isSelected() == true) {
+            int deletar = JOptionPane.showConfirmDialog(this, "Ao inativar o cliente ele ficará invisível para os demais módulos. \n Deseja inativa o cliente?", "Atenção", JOptionPane.YES_NO_OPTION);
+            if (deletar == 0) {
+                JOptionPane.showMessageDialog(this, "Cliente Inativado do Sistema", "Antenção", JOptionPane.INFORMATION_MESSAGE);
+                clsClientes.setInativo(1);
+                jLabelStatus.setText("Cliente Bloqueado");
+                jLabelStatus.setForeground(Color.RED);
+                jCkb_inativar.setSelected(true);
+            }
+        }
+    }//GEN-LAST:event_jCkb_inativarMouseClicked
+
+    private void jCboCidadeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jCboCidadeFocusLost
+        if (jCboCidade.getSelectedIndex() != 0) {
+            clsEnderecos.setNomeCidade(jCboCidade.getSelectedItem().toString());
+            for (int i = 0; i < listCidadesBD.size(); i++) {
+                if (listCidadesBD.get(i).getNomeCidade().equals(jCboCidade.getSelectedItem().toString())) {
+                    String sigla = listCidadesBD.get(i).getSiglaEstado();
+                    clsEnderecos.setId_cidade(listCidadesBD.get(i).getIdCidade());
+                    clsEnderecos.setEstado(listCidadesBD.get(i).getEstado());
+                    jTxtEstado.setText("" + sigla + " - " + listCidadesBD.get(i).getEstado());
+                }
+            }
+        }
+    }//GEN-LAST:event_jCboCidadeFocusLost
      
     /**
      * @param args the command line arguments
@@ -1659,6 +1770,7 @@ public class JfrmClientes extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabelCodigo;
+    private javax.swing.JLabel jLabelStatus;
     private javax.swing.JPanel jPanDadosGerais;
     private javax.swing.JPanel jPanelDadosEnderecos;
     private javax.swing.JPanel jPanelObservacoes;

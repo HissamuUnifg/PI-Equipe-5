@@ -89,7 +89,7 @@ public class CarrosDAO {
                     break;
             }
 
-            //System.out.println("" + e.getErrorCode() + "" + e);
+           
 
         } finally {
             try {
