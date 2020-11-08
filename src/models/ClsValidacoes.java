@@ -91,7 +91,8 @@ public class ClsValidacoes {
         dado = dado.replaceAll("\\.", "");
         dado = dado.replaceAll("-", "");
         dado = dado.replaceAll("R", "");
-        dado = dado.replaceAll("$", "");             
+        dado = dado.replaceAll("$", "");
+        dado = dado.replaceAll("/", "");
         return dado;
     }
     

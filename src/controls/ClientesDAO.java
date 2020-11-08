@@ -76,8 +76,21 @@ public class ClientesDAO {
             retorno = "Cliente gravado com sucerro!";
             sucesso = true;
         } catch (SQLException e) {
-            retorno = "Erro ao salvar Cliente!" +e;
-            sucesso = false;
+            switch (e.getErrorCode()) {
+                case 1048:
+                    retorno = "Verifique todos os campos se estão preenchidos!";
+                    sucesso = false;
+                    break;
+                case 1062:
+                    retorno = "Carro ja cadastrado!";
+                    sucesso = false;
+                    break;
+                default:
+                    retorno = "Erro ao salvar Cliente" + e;
+                    sucesso = false;
+                    break;
+            }
+          
         }
         finally
         {
@@ -117,8 +130,20 @@ public class ClientesDAO {
             retorno = "Cliente atualizado com sucesso!";
             sucesso = true;
         } catch (SQLException e) {
-            retorno = "Erro ao atualizar cliente" + e;
-            sucesso = false;
+            switch (e.getErrorCode()) {
+                case 1048:
+                    retorno = "Verifique todos os campos se estão preenchidos!";
+                    sucesso = false;
+                    break;
+                case 1062:
+                    retorno = "Carro ja cadastrado!";
+                    sucesso = false;
+                    break;
+                default:
+                    retorno = "Erro ao atualizar: " + e;
+                    sucesso = false;
+                    break;
+            }
         }
         finally
         {
@@ -133,16 +158,23 @@ public class ClientesDAO {
         PreparedStatement ps = null;
         
         try {
-            conn = ConexaoDAO.getConexaoDAO();
-            ps = conn.prepareStatement(sql);
-            ps.setInt(1, idCliente);            
-            ps.execute();
             EnderecosDAO endDAO = new EnderecosDAO();
-            //ao deletar o cliente os endereços também serão deletados
             endDAO.deleteTodos(idCliente);
+            if (endDAO.isSucesso() == true) {
+
+                conn = ConexaoDAO.getConexaoDAO();
+                ps = conn.prepareStatement(sql);
+                ps.setInt(1, idCliente);
+                ps.execute();
+                retorno = "Cliente Deletado com sucesso! " + endDAO.getRetorno();
+                sucesso = true;
+            }
+
             
-            retorno = "Cliente Deletado com sucesso! "+endDAO.getRetorno();
-            sucesso = true;
+            //ao deletar o cliente os endereços também serão deletados
+            
+            
+            
            
         } catch (SQLException e) {
             retorno = "Erro ao deletar cliente!" + e;

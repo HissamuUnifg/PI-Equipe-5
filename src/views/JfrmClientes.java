@@ -219,7 +219,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jTxtBairro.setEnabled(true);
         jTxtEmail.setEnabled(true);
         jTxtEstado.setEnabled(false);
-        jTxtNome.setEnabled(false);
+        jTxtNome.setEnabled(true);
         jTxtNumero.setEnabled(true);
         jTxtReferencia.setEnabled(true);
         jTxtRua.setEnabled(true);
@@ -399,7 +399,8 @@ public class JfrmClientes extends javax.swing.JFrame {
     
     
     public void carregarListaEnd(int idCliente){
-    listEnderecosBD = enderecosDAO.selectALL(idCliente);
+    EnderecosDAO endDAO = new EnderecosDAO();
+    listEnderecosBD = endDAO.selectALL(idCliente);
     }
     
     public void carregarJtable() {
@@ -410,7 +411,8 @@ public class JfrmClientes extends javax.swing.JFrame {
     
     public void reloadTable(){
         listEnderecosBD.clear();
-        listEnderecosBD = enderecosDAO.selectALL(clsClientes.getId());
+        EnderecosDAO endDAO = new EnderecosDAO();
+        listEnderecosBD = endDAO.selectALL(clsClientes.getId());
         jTblEnderecos.setModel(new ClsCarregarTableEndereco(listEnderecosBD)); 
     }
     
@@ -466,10 +468,22 @@ public class JfrmClientes extends javax.swing.JFrame {
         jBtn_Salvar_End.setEnabled(true);
     }
     
+    /**
+     * Habilita os botoes apos salvar um endereço adicional em um cliente ja cadastrado
+     */
     private void enableBtnBlocoEnd() {
         jBtn_Editar_End.setEnabled(true);
         jBtn_excluir_end.setEnabled(true);
         jBtn_Salvar_End.setEnabled(true);
+    }
+    /**
+     * Habilita os botoes apos salvar um cliente novo
+     */
+    private void enableBtnPrincipal() {
+        jBtnEditar.setEnabled(true);
+        jBtnImprimir.setEnabled(true);
+        jBtnExcluir.setEnabled(true);
+    
     }
     
     /**
@@ -505,6 +519,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         if (listClientesBD.get(indice).getNome() == null || listClientesBD.get(indice).getNome().equals("")) {
             jTxtNome.setText(listClientesBD.get(indice).getRazaoSocial());
             jRadioBtnCpf.setEnabled(false);
+            jRadioBtnCpf.setSelected(false);
             jRadioBtnCnpj.setEnabled(true);
             jRadioBtnCnpj.setSelected(true);
         } else if (listClientesBD.get(indice).getRazaoSocial() == null || listClientesBD.get(indice).getRazaoSocial().equals("")) {
@@ -512,10 +527,12 @@ public class JfrmClientes extends javax.swing.JFrame {
             jRadioBtnCpf.setEnabled(true);
             jRadioBtnCpf.setSelected(true);
             jRadioBtnCnpj.setEnabled(false);
+            jRadioBtnCnpj.setSelected(false);
         }
         if (listClientesBD.get(indice).getCpf() == null || listClientesBD.get(indice).getCpf().equals("")) {
             jFTxtCpfCnpj.setText(listClientesBD.get(indice).getCnpj());
             jRadioBtnCpf.setEnabled(false);
+            jRadioBtnCpf.setSelected(false);
             jRadioBtnCnpj.setEnabled(true);
             jRadioBtnCnpj.setSelected(true);
         } else if (listClientesBD.get(indice).getCnpj() == null || listClientesBD.get(indice).getCnpj().equals("")) {
@@ -523,9 +540,10 @@ public class JfrmClientes extends javax.swing.JFrame {
             jRadioBtnCpf.setEnabled(true);
             jRadioBtnCpf.setSelected(true);
             jRadioBtnCnpj.setEnabled(false);
+            jRadioBtnCnpj.setSelected(false);
         }
         jFtxtCelular.setText(listClientesBD.get(indice).getCelular());
-        jFtxtDataNascimento.setText(clsValidacoes.dataFormatoBR(listClientesBD.get(indice).getDataNascimento()));
+        jFtxtDataNascimento.setText(listClientesBD.get(indice).getDataNascimento());
         jFtxtFone.setText(listClientesBD.get(indice).getTelefone());
         if (listClientesBD.get(indice).getRg() == "") {
             jFtxtRgIe.setText("" + listClientesBD.get(indice).getIe());
@@ -737,6 +755,11 @@ public class JfrmClientes extends javax.swing.JFrame {
         jBtnExcluir.setToolTipText("Clique aqui para excluir Cliente");
         jBtnExcluir.setBorder(null);
         jBtnExcluir.setFocusPainted(false);
+        jBtnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnExcluirActionPerformed(evt);
+            }
+        });
 
         jBtnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/print_121773.png"))); // NOI18N
         jBtnImprimir.setToolTipText("Clique aqui para imprimir Cliente");
@@ -1154,6 +1177,11 @@ public class JfrmClientes extends javax.swing.JFrame {
 
         jCkb_inativar.setText("Inativar");
         jCkb_inativar.setToolTipText("Marque aqui caso deseje Inativar o cliente");
+        jCkb_inativar.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jCkb_inativarItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -1262,6 +1290,7 @@ public class JfrmClientes extends javax.swing.JFrame {
             clearTxt();
             precionado = true;
             editando = false;
+            jTxtNome.setEnabled(false);
             jTxtNome.requestFocus();
         } else {
             jTblEnderecos.setEnabled(true);
@@ -1315,6 +1344,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         clsClientes = listClientesBD.get(linhaIndice);
         clsEnderecos.setIdCliente(clsClientes.getId());
         jTblEnderecos.setEnabled(false);
+        jTxtNome.setEnabled(true);
         setIconBtnNv(true);
         enableControl();
     }//GEN-LAST:event_jBtnEditarActionPerformed
@@ -1335,6 +1365,7 @@ public class JfrmClientes extends javax.swing.JFrame {
     private void jFTxtCpfCnpjFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFTxtCpfCnpjFocusLost
         if (jFTxtCpfCnpj.getText().length() > 1 && jRadioBtnCnpj.isSelected() == true && jRadioBtnCpf.isSelected() == false) {
             clsClientes.setCnpj(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()));
+            System.out.println(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()));
             clsClientes.setCpf("");
         } else if (jFTxtCpfCnpj.getText().length() > 1 && jRadioBtnCpf.isSelected() == true && jRadioBtnCnpj.isSelected() == false) {
             clsClientes.setCpf(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()));
@@ -1457,15 +1488,16 @@ public class JfrmClientes extends javax.swing.JFrame {
 
     private void jBtn_Salvar_EndActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_Salvar_EndActionPerformed
         if (editandoEnd == false) {
-            enderecosDAO.save(clsEnderecos);
+            EnderecosDAO endDAO = new EnderecosDAO();
+            endDAO.save(clsEnderecos);
             if (validaBlocoEnd() == true) {
-                if (enderecosDAO.isSucesso() == true) {
-                    JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+                if (endDAO.isSucesso() == true) {
+                    JOptionPane.showMessageDialog(this, endDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
                     disableBlocoEnd();
                     reloadTable();
                     setIconBtnAdd(false);
                 } else {
-                    JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, endDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
                     disableBlocoEnd();
                     clearTxtEnd();
                     setIconBtnAdd(false);
@@ -1473,14 +1505,15 @@ public class JfrmClientes extends javax.swing.JFrame {
             }
         } else {
             if (validaBlocoEnd() == true) {
-                enderecosDAO.update(clsEnderecos);
-                if (enderecosDAO.isSucesso() == true) {
-                    JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+                EnderecosDAO endDAO = new EnderecosDAO();
+                endDAO.update(clsEnderecos);
+                if (endDAO.isSucesso() == true) {
+                    JOptionPane.showMessageDialog(this, endDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
                     disableBlocoEnd();
                     reloadTable();
                     setIconBtnAdd(false);
                 } else {
-                    JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, endDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
                     disableBlocoEnd();
                     clearTxtEnd();
                     setIconBtnAdd(false);
@@ -1492,16 +1525,17 @@ public class JfrmClientes extends javax.swing.JFrame {
     private void jBtn_excluir_endActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtn_excluir_endActionPerformed
         int deletar = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir?", "Atenção", JOptionPane.YES_NO_OPTION);
         if (deletar == 0) {
-            enderecosDAO.delete(clsEnderecos.getId());
-            if (enderecosDAO.isSucesso() == true) {
-                JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+            EnderecosDAO endDAO = new EnderecosDAO();
+            endDAO.delete(clsEnderecos.getId());
+            if (endDAO.isSucesso() == true) {
+                JOptionPane.showMessageDialog(this, endDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
                 clearTxtEnd();
                 disableBlocoEnd();
                 reloadTable();
                 setIconBtnAdd(false);
                 precionadoEnd = false;
             } else {
-                JOptionPane.showMessageDialog(this, enderecosDAO.getRetorno() + "O usuario " + userLoged + ""
+                JOptionPane.showMessageDialog(this, endDAO.getRetorno() + "O usuario " + userLoged + ""
                         + " não tem permissao para deletar!", "Erro", JOptionPane.ERROR_MESSAGE);
                 setIconBtnAdd(true);
                 precionadoEnd = true;
@@ -1522,19 +1556,22 @@ public class JfrmClientes extends javax.swing.JFrame {
         if (editando == false) {
             if (validaBlocoEnd() == true && validaBlocoCliente() == true) {
                 clsClientes.setIdColaborador(userIdLoged);
-                ClientesDAO clientesDAO = new ClientesDAO();
-                clientesDAO.save(clsClientes);
-                clsEnderecos.setIdCliente(clientesDAO.getIdRetornado());
+                ClientesDAO cliDAO = new ClientesDAO();
+                cliDAO.save(clsClientes);
+                clsEnderecos.setIdCliente(cliDAO.getIdRetornado());
+                clsClientes.setId(cliDAO.getIdRetornado());
+                EnderecosDAO endDAO = new EnderecosDAO();
                 enderecosDAO.save(clsEnderecos);
-                if (enderecosDAO.isSucesso() == true && clientesDAO.isSucesso() == true) {
-                    JOptionPane.showMessageDialog(this, "Endereco: " + enderecosDAO.getRetorno() + "Cliente: " + clientesDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+                if (endDAO.isSucesso() == true && cliDAO.isSucesso() == true) {
+                    JOptionPane.showMessageDialog(this, "Endereco: " + endDAO.getRetorno() + "Cliente: " + cliDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
                     disableControl();
-                    listEnderecosBD = enderecosDAO.selectALL(clsClientes.getId());
+                    enableBtnPrincipal();
+                    listEnderecosBD = endDAO.selectALL(clsClientes.getId());
                     reloadTable();
                     setIconBtnAdd(false);
                     setIconBtnNv(false);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Endereco: " + enderecosDAO.getRetorno() + "Cliente: " + clientesDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Endereco: " + endDAO.getRetorno() + "Cliente: " + cliDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
                     disableControl();
                     clearTxt();
                     setIconBtnAdd(false);
@@ -1543,17 +1580,20 @@ public class JfrmClientes extends javax.swing.JFrame {
             }
         } else {
             if (validaBlocoEnd() == true && validaBlocoCliente() == true) {
-                clientesDAO.update(clsClientes);
-                enderecosDAO.update(clsEnderecos);
-                if (enderecosDAO.isSucesso() == true && clientesDAO.isSucesso() == true) {
-                    JOptionPane.showMessageDialog(this, "Endereco: " + enderecosDAO.getRetorno() + "Cliente: " + clientesDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+                ClientesDAO cliDAO = new ClientesDAO();
+                cliDAO.update(clsClientes);
+                EnderecosDAO endDAO = new EnderecosDAO();
+                endDAO.update(clsEnderecos);
+                if (endDAO.isSucesso() == true && cliDAO.isSucesso() == true) {
+                    JOptionPane.showMessageDialog(this, "Endereco: " + endDAO.getRetorno() + "Cliente: " + cliDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
                     disableControl();
-                    listEnderecosBD = enderecosDAO.selectALL(clsClientes.getId());
+                    enableBtnPrincipal();
+                    listEnderecosBD = endDAO.selectALL(clsClientes.getId());
                     reloadTable();
                     setIconBtnAdd(false);
                     setIconBtnNv(false);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Endereco: " + enderecosDAO.getRetorno() + "Cliente: " + clientesDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Endereco: " + endDAO.getRetorno() + "Cliente: " + cliDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
                     disableControl();
                     clearTxt();
                     setIconBtnAdd(false);
@@ -1562,6 +1602,32 @@ public class JfrmClientes extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jBtnSalvarActionPerformed
+
+    private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
+       int deletar = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir?", "Atenção", JOptionPane.YES_NO_OPTION);
+        if (deletar == 0) {
+            ClientesDAO cliDAO = new ClientesDAO();
+            cliDAO.delete(clsClientes.getId());
+            if (cliDAO.isSucesso() == true) {
+                JOptionPane.showMessageDialog(this,  cliDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+                clearTxt();
+                disableControl();
+                removeTable();
+                setIconBtnNv(false);
+                precionado = false;
+            } else {
+                JOptionPane.showMessageDialog(this, cliDAO.getRetorno() + "O usuario " + userLoged + ""
+                        + " não tem permissao para deletar!", "Erro", JOptionPane.ERROR_MESSAGE);
+                setIconBtnNv(true);
+                precionado = true;
+            }
+
+        }
+    }//GEN-LAST:event_jBtnExcluirActionPerformed
+
+    private void jCkb_inativarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCkb_inativarItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCkb_inativarItemStateChanged
      
     /**
      * @param args the command line arguments

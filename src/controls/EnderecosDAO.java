@@ -33,25 +33,24 @@ public class EnderecosDAO {
     public boolean isSucesso() {
         return sucesso;
     }
-    
-    
-    public EnderecosDAO(){
-    
+
+    public EnderecosDAO() {
+
     }
-    
-    public void save(ClsEnderecos clsEnderecos){
-    
-    String sql = "insert into Enderecos (Rua, Numero, Bairro, TipoEndereco, Referencia, Cep, Id_cidade, id_cliente) values (?,?,?,?,?,?,?,?)";
-    String sqlId = "select MAX(id) as Id from Enderecos";
-   
-    Connection conn = null;
-    PreparedStatement ps = null;
-    ResultSet rs = null;
-    
+
+    public void save(ClsEnderecos clsEnderecos) {
+
+        String sql = "insert into Enderecos (Rua, Numero, Bairro, TipoEndereco, Referencia, Cep, Id_cidade, id_cliente) values (?,?,?,?,?,?,?,?)";
+        String sqlId = "select MAX(id) as Id from Enderecos";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
         try {
             conn = ConexaoDAO.getConexaoDAO();
             ps = conn.prepareStatement(sql);
-            
+
             ps.setString(1, clsEnderecos.getRua());
             ps.setString(2, clsEnderecos.getNumero());
             ps.setString(3, clsEnderecos.getBairro());
@@ -60,21 +59,33 @@ public class EnderecosDAO {
             ps.setString(6, clsEnderecos.getCep());
             ps.setInt(7, clsEnderecos.getIdCidade());
             ps.setInt(8, clsEnderecos.getIdCliente());
-            
+
             ps.execute();
             ps = conn.prepareStatement(sqlId);
             rs = ps.executeQuery();
             //passando o ultimo ID criado no endereço para Adicionar o cliente.
-            while(rs.next()){
-            idRetornado = rs.getInt("Id");
+            while (rs.next()) {
+                idRetornado = rs.getInt("Id");
             }
-            
+
             sucesso = true;
             retorno = "Inserido com sucesso";
-            
+
         } catch (SQLException e) {
-            sucesso = false;
-            retorno = "Erro ao inserir o endereço!";
+            switch (e.getErrorCode()) {
+                case 1048:
+                    retorno = "Verifique todos os campos se estão preenchidos!";
+                    sucesso = false;
+                    break;
+                case 1062:
+                    retorno = "Carro ja cadastrado!";
+                    sucesso = false;
+                    break;
+                default:
+                    retorno = "Erro ao inserir: " + e;
+                    sucesso = false;
+                    break;
+            }
         } finally {
             ConexaoDAO.FecharConexao();
         }
@@ -111,8 +122,20 @@ public class EnderecosDAO {
             retorno = "Atualizado com sucesso";
             
         } catch (SQLException e) {
-            sucesso = false;
-            retorno = "Erro ao inserir o endereço!";
+            switch (e.getErrorCode()) {
+                case 1048:
+                    retorno = "Verifique todos os campos se estão preenchidos!";
+                    sucesso = false;
+                    break;
+                case 1062:
+                    retorno = "Endereço ja cadastrado!";
+                    sucesso = false;
+                    break;
+                default:
+                    retorno = "Erro ao atualizar: " + e;
+                    sucesso = false;
+                    break;
+            }
         } finally {
             ConexaoDAO.FecharConexao();
         }
