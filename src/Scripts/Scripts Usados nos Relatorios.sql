@@ -5,9 +5,10 @@
  */
 
 /*Usadono relatório de cilentes*/
+
 use locadora;
 
-Select
+Select 
 cli.id, 
 case when cli.nome = '' then cli.razaosocial
 	 when cli.razaosocial = '' then cli.nome
@@ -22,13 +23,25 @@ cli.datanascimento,
 cli.telefone, 
 cli.celular, 
 cli.cnh,
-cli.observacoes,
-cli.email, 
+cli.observacoes, 
 cb.nome as colaboradorCadastro,
-case when cli.inativo = 0 then 'LIBERADO'
-     when cli.inativo = 1 then 'BLOQUEADO'
-     else 0 end as inativo	
+case when cli.inativo = 0 then 'ATIVO'
+	when cli.inativo = 1 then 'BLOQUEADO'
+    else 0 end as inativo,
+end.id,
+end.rua,
+end.numero,
+end.bairro,
+cd.nomecidade,
+cd.estado,
+cd.pais,
+end.cep,
+end.tipoendereco,
+end.referencia  
 from Clientes cli
 inner join colaboradores cb on cli.id_colaborador = cb.id 
-
-where cli.id = 5 /*passa o ID do cliente, idependente de ser pessoa juridica ou fisica ele agrupa os dados*/
+inner join enderecos end on end.id_cliente = cli.id
+inner join cidades cd on cd.id = end.id_cidade
+where cli.id = 9 
+order by end.id
+limit 1  /*Limita o resultado em uma linha para não da um erro no relatorio*/ 

@@ -1755,7 +1755,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         // passa o caminho do relatorio e o parametro para carregar o relatorio.
         try {
             ClsImpressao clsimpressao = new ClsImpressao();
-            clsimpressao.ClsImpressao(directory.getAbsolutePath(),directory2.getAbsolutePath(), "idCliente",clsClientes.getId(),  "Cadastro do Cliente");
+            clsimpressao.ClsImpressao(directory.getAbsolutePath(), "idCliente", ""+clsClientes.getId(),  "Cadastro do Cliente");
             System.out.println(""+clsClientes.getId());
         } catch (ClassNotFoundException | SQLException | JRException e) {
             JOptionPane.showMessageDialog(this, "Erro foi aqui" + e, "Erro", JOptionPane.ERROR_MESSAGE);
