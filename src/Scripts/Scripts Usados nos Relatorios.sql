@@ -44,4 +44,4 @@ inner join enderecos end on end.id_cliente = cli.id
 inner join cidades cd on cd.id = end.id_cidade
 where cli.id = 9 
 order by end.id
-limit 1  /*Limita o resultado em uma linha para não da um erro no relatorio*/ 
+

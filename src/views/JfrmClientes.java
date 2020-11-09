@@ -37,6 +37,7 @@ public class JfrmClientes extends javax.swing.JFrame {
    private int userIdLoged;
    private String CpfUserLoged;
    
+ 
    EnderecosDAO enderecosDAO;
    ClsEnderecos clsEnderecos;
    ClsCidades clsCidades;
@@ -75,6 +76,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         userIdLoged = clslogin.getId();
         CpfUserLoged = clslogin.getCpfUserLoged();
 
+        clientesDAO = new ClientesDAO();
         clsEnderecos = new ClsEnderecos();
         clsCidades = new ClsCidades();
         cidadesDAO = new CidadesDAO();
@@ -83,7 +85,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         clsValidacoes = new ClsValidacoes();
         listCidadesBD = cidadesDAO.selectALL();
         clsMascaracampos = new ClsMascaraCampos();
-        
+        listClientesBD = clientesDAO.selectAll();
 
         try {
             addMascara();
@@ -241,7 +243,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jBtn_Editar_End.setEnabled(false);
         jBtn_excluir_end.setEnabled(false);
         jBtn_Salvar_End.setEnabled(false);
-        jBtn_Adcionar_end.setEnabled(true);
+        jBtn_Adcionar_end.setEnabled(false);
         jRadioBtnCpf.setEnabled(true);
         jRadioBtnCnpj.setEnabled(true);
         jCkb_inativar.setEnabled(true);
@@ -527,12 +529,14 @@ public class JfrmClientes extends javax.swing.JFrame {
         jBtn_Editar_End.setEnabled(true);
         jBtn_excluir_end.setEnabled(true);
         jBtn_Salvar_End.setEnabled(true);
+        jBtn_Adcionar_end.setEnabled(true);
     }
     
     /**
      * Habilita os botoes apos salvar um endereço adicional em um cliente ja cadastrado
      */
     private void enableBtnBlocoEnd() {
+        jBtn_Adcionar_end.setEnabled(true);
         jBtn_Editar_End.setEnabled(true);
         jBtn_excluir_end.setEnabled(true);
         jBtn_Salvar_End.setEnabled(true);
@@ -541,6 +545,7 @@ public class JfrmClientes extends javax.swing.JFrame {
      * Habilita os botoes apos salvar um cliente novo
      */
     private void enableBtnPrincipal() {
+        jBtn_Adcionar_end.setEnabled(true);
         jBtnEditar.setEnabled(true);
         jBtnImprimir.setEnabled(true);
         jBtnExcluir.setEnabled(true);
@@ -565,6 +570,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jBtn_Editar_End.setEnabled(false);
         jBtn_excluir_end.setEnabled(false);
         jBtn_Salvar_End.setEnabled(false);
+        jBtn_Adcionar_end.setEnabled(true);
     }
     
     /**
@@ -917,17 +923,17 @@ public class JfrmClientes extends javax.swing.JFrame {
         jRadioBtnCpf.setSelected(true);
         jRadioBtnCpf.setText("Fisica");
         jRadioBtnCpf.setToolTipText("Marque para pessoa fisica!");
-        jRadioBtnCpf.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jRadioBtnCpfItemStateChanged(evt);
+        jRadioBtnCpf.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRadioBtnCpfMouseClicked(evt);
             }
         });
 
         jRadioBtnCnpj.setText("Juridica");
         jRadioBtnCnpj.setToolTipText("Marque para pessoa Juridica!");
-        jRadioBtnCnpj.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jRadioBtnCnpjItemStateChanged(evt);
+        jRadioBtnCnpj.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jRadioBtnCnpjMouseClicked(evt);
             }
         });
 
@@ -1387,43 +1393,12 @@ public class JfrmClientes extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBtnNovoActionPerformed
 
-    private void jRadioBtnCpfItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioBtnCpfItemStateChanged
-        if (jRadioBtnCpf.isSelected() == true) {
-            jRadioBtnCnpj.setEnabled(false);
-            try {
-                jFTxtCpfCnpj.setText("");
-                addMascaraCpfCnpj(true);
-                jTxtNome.setEnabled(true);
-            } catch (ParseException ex) {
-                System.out.println("Erro ao aplicar mascara: " + ex);
-            }
-        } else if (jRadioBtnCpf.isSelected() == false) {
-            jRadioBtnCnpj.setEnabled(true);
-            jFTxtCpfCnpj.setText("");
-        }
-    }//GEN-LAST:event_jRadioBtnCpfItemStateChanged
-
-    private void jRadioBtnCnpjItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioBtnCnpjItemStateChanged
-        if (jRadioBtnCnpj.isSelected() == true) {
-            jRadioBtnCpf.setEnabled(false);
-            try {
-                addMascaraCpfCnpj(false);
-                jTxtNome.setEnabled(true);
-            } catch (ParseException ex) {
-                System.out.println("Erro ao aplicar mascara: " + ex);
-            }
-        } else if (jRadioBtnCnpj.isSelected() == false) {
-            jRadioBtnCpf.setEnabled(true);
-            jFTxtCpfCnpj.setText("");
-        }
-    }//GEN-LAST:event_jRadioBtnCnpjItemStateChanged
-
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
         precionado = true;
         editando = true;
         clsClientes = listClientesBD.get(linhaIndice);
         clsEnderecos.setIdCliente(clsClientes.getId());
-        jTblEnderecos.setEnabled(false);
+        //jTblEnderecos.setEnabled(false);
         jTxtNome.setEnabled(true);
         setIconBtnNv(true);
         enableControl();
@@ -1639,8 +1614,9 @@ public class JfrmClientes extends javax.swing.JFrame {
         clsEnderecos = listEnderecosBD.get(jTblEnderecos.getSelectedRow());
         precionadoEnd = true;
         editandoEnd = true;
-        setIconBtnAdd(true);
         enableBlocoEnd();
+        setIconBtnAdd(true);
+       
     }//GEN-LAST:event_jBtn_Editar_EndActionPerformed
 
     private void jBtnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSalvarActionPerformed
@@ -1662,12 +1638,14 @@ public class JfrmClientes extends javax.swing.JFrame {
                     reloadTable();
                     setIconBtnAdd(false);
                     setIconBtnNv(false);
+                    precionado = false;
                 } else {
                     JOptionPane.showMessageDialog(this, "Endereco: " + endDAO.getRetorno() + "Cliente: " + cliDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
                     disableControl();
                     clearTxt();
                     setIconBtnAdd(false);
                     setIconBtnNv(false);
+                     precionado = false;
                 }
             }
         } else {
@@ -1685,12 +1663,14 @@ public class JfrmClientes extends javax.swing.JFrame {
                     reloadTable();
                     setIconBtnAdd(false);
                     setIconBtnNv(false);
+                     precionado = false;
                 } else {
                     JOptionPane.showMessageDialog(this, "Endereco: " + endDAO.getRetorno() + "Cliente: " + cliDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
                     disableControl();
                     clearTxt();
                     setIconBtnAdd(false);
                     setIconBtnNv(false);
+                    precionado = false;
                 }
             }
         }
@@ -1742,6 +1722,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                 if (listCidadesBD.get(i).getNomeCidade().equals(jCboCidade.getSelectedItem().toString())) {
                     String sigla = listCidadesBD.get(i).getSiglaEstado();
                     clsEnderecos.setId_cidade(listCidadesBD.get(i).getIdCidade());
+                    clsEnderecos.setIdCidade(listCidadesBD.get(i).getIdCidade());
                     clsEnderecos.setEstado(listCidadesBD.get(i).getEstado());
                     jTxtEstado.setText("" + sigla + " - " + listCidadesBD.get(i).getEstado());
                 }
@@ -1761,6 +1742,37 @@ public class JfrmClientes extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Erro foi aqui" + e, "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jBtnImprimirActionPerformed
+
+    private void jRadioBtnCpfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioBtnCpfMouseClicked
+        if (jRadioBtnCpf.isSelected() == true) {
+            jRadioBtnCnpj.setEnabled(false);
+            try {
+                jFTxtCpfCnpj.setText("");
+                addMascaraCpfCnpj(true);
+                jTxtNome.setEnabled(true);
+            } catch (ParseException ex) {
+                System.out.println("Erro ao aplicar mascara: " + ex);
+            }
+        } else if (jRadioBtnCpf.isSelected() == false) {
+            jRadioBtnCnpj.setEnabled(true);
+            jFTxtCpfCnpj.setText("");
+        }
+    }//GEN-LAST:event_jRadioBtnCpfMouseClicked
+
+    private void jRadioBtnCnpjMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioBtnCnpjMouseClicked
+        if (jRadioBtnCnpj.isSelected() == true) {
+            jRadioBtnCpf.setEnabled(false);
+            try {
+                addMascaraCpfCnpj(false);
+                jTxtNome.setEnabled(true);
+            } catch (ParseException ex) {
+                System.out.println("Erro ao aplicar mascara: " + ex);
+            }
+        } else if (jRadioBtnCnpj.isSelected() == false) {
+            jRadioBtnCpf.setEnabled(true);
+            jFTxtCpfCnpj.setText("");
+        }
+    }//GEN-LAST:event_jRadioBtnCnpjMouseClicked
      
     /**
      * @param args the command line arguments

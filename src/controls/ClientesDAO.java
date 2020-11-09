@@ -86,17 +86,12 @@ public class ClientesDAO {
                     retorno = "Carro ja cadastrado!";
                     sucesso = false;
                     break;
-                default: {
-                    try {
-                        conn.rollback();
-                    } catch (SQLException ex) {
-                        retorno = "Erro ao salvar Cliente" + ex;
-                        sucesso = false;
-                    }
+                default: 
+                    retorno = "Erro ao salvar Cliente" + e;
+                    sucesso = false;
+                    break;
                 }
-                break;
-            }
-
+             
         } finally {
             try {
                 if (ps != null) {

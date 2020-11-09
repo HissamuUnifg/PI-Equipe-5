@@ -364,7 +364,7 @@
             <Property name="toolTipText" type="java.lang.String" value="Marque para pessoa fisica!"/>
           </Properties>
           <Events>
-            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jRadioBtnCpfItemStateChanged"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jRadioBtnCpfMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JRadioButton" name="jRadioBtnCnpj">
@@ -373,7 +373,7 @@
             <Property name="toolTipText" type="java.lang.String" value="Marque para pessoa Juridica!"/>
           </Properties>
           <Events>
-            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="jRadioBtnCnpjItemStateChanged"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jRadioBtnCnpjMouseClicked"/>
           </Events>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="jFTxtCpfCnpj">

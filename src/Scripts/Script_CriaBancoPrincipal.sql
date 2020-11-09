@@ -5,6 +5,8 @@
  * Created: 21/10/2020
  */
 
+/*PARA CRIAR AS FKs USE O SEGUNDO SCRIPT "Script_CriaFk_BancoPrincipal.sql*/
+
 /*Comando vai criar a base de dados caso não exista*/
 CREATE DATABASE IF NOT EXISTS LOCADORA;
 
@@ -22,9 +24,8 @@ Cpf_funCadastro varchar(14) DEFAULT NULL,
 Senha varchar(20) NOT NULL,
 Telefone varchar(20) NOT NULL,
 PRIMARY KEY (id),
-UNIQUE KEY cpf_UNIQUE (Cpf),
-KEY Cpf_Cpf_funCadastro_idx (Cpf_funCadastro),
-CONSTRAINT Cpf_Cpf_funCadastro FOREIGN KEY (Cpf_funCadastro) REFERENCES Colaboradores (Cpf)
+UNIQUE KEY cpf_UNIQUE (Cpf)
+
 
 );
 
@@ -59,8 +60,8 @@ Inativo int(1) NOT NULL,
 id_colaborador int NOT NULL,
 
 PRIMARY KEY (id),
-UNIQUE KEY placa_UNIQUE (Placa),
-FOREIGN KEY fk_id_colaborador(id_colaborador) references Colaboradores(id)
+UNIQUE KEY placa_UNIQUE (Placa)
+
 );
 
 /*Criando tabela Cidades*/
@@ -89,8 +90,8 @@ CREATE TABLE IF NOT EXISTS Clientes (
   IE VARCHAR(20) NULL,
   RG VARCHAR(20) NULL,
   DataNascimento DATE  NULL,
-  Telefone VARCHAR(12) NOT NULL,
-  Celular VARCHAR(12) DEFAULT NULL,
+  Telefone VARCHAR(13) NOT NULL,
+  Celular VARCHAR(14) DEFAULT NULL,
   Email VARCHAR(250) NOT NULL,
   Observacoes VARCHAR(1000) DEFAULT NULL,
   CNH VARCHAR(20)  NULL,
@@ -98,10 +99,8 @@ CREATE TABLE IF NOT EXISTS Clientes (
   Inativo INT NOT NULL,
    
   UNIQUE KEY Cpf_Cnpj (Cpf,Cnpj),
-  PRIMARY KEY (id),
-  CONSTRAINT colaboradores_clientes  FOREIGN KEY (id_colaborador) REFERENCES Colaboradores (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+  PRIMARY KEY (id)
+  
 );
 
 
@@ -113,15 +112,10 @@ Numero varchar(5) NOT NULL,
 Bairro varchar(100) NOT NULL,
 Cep varchar(10) NOT NULL,
 TipoEndereco varchar(20) NOT NULL,
+Referencia varchar(1000) DEFAULT NULL,
 id_cidade int NOT NULL,
 id_cliente int NOT NULL,
-PRIMARY KEY(id),
-CONSTRAINT Clientes_enderecos FOREIGN KEY (id_cliente) REFERENCES clientes (Id)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-CONSTRAINT Enderecos_cidades FOREIGN KEY (id_cidade) REFERENCES Cidades (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+PRIMARY KEY(id)
 );
 
 
@@ -144,15 +138,7 @@ CREATE TABLE IF NOT EXISTS Contratos (
   DataChegada DATE NULL,
   DataContrato DATE NOT NULL,
   Status VARCHAR(15) NOT NULL,
-  PRIMARY KEY (id),
-  CONSTRAINT colaboradores_contratos FOREIGN KEY (id_colaborador)  REFERENCES Colaboradores (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT clientes_contratos FOREIGN KEY (id_cliente) REFERENCES Clientes (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT carro_contrato  FOREIGN KEY (id_carro)  REFERENCES Carros (id)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
+  PRIMARY KEY (id)
+  
 );
 
