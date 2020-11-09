@@ -11,15 +11,18 @@ import controls.ClientesDAO;
 import controls.EnderecosDAO;
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.io.File;
+import java.sql.SQLException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
 import models.ClsCarregarTableEndereco;
 import models.ClsControlaCpNumericCliente;
+import models.ClsImpressao;
 import models.ClsValidacoes;
 import models.ClsMascaraCampos;
+import net.sf.jasperreports.engine.JRException;
 
 
 
@@ -51,7 +54,6 @@ public class JfrmClientes extends javax.swing.JFrame {
    boolean precionadoEnd;
    boolean editandoEnd;
    boolean buscandoEnd;
-   private int tipoCliente; // 0 o programa vai gravar o CNPJ 1 o programa grava CPF
    private int linhaIndice;
    
    
@@ -373,7 +375,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                         loadBlocoEnd(-1);
                         enableControlBusca();
                         clsClientes = listClientesBD.get(i);
-                        tipoCliente = 1;
+                      
                     }
                 }
                 precionado = false;
@@ -396,7 +398,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                         loadBlocoCliente(i);
                         loadBlocoEnd(-1);
                         enableControlBusca();
-                        tipoCliente = 0;
+                       
                         clsClientes = listClientesBD.get(i);
                     }
                 }
@@ -663,11 +665,11 @@ public class JfrmClientes extends javax.swing.JFrame {
             jFtxtCnh.requestFocus();
             return false;
         } else if (jFtxtDataNascimento.getText().length() < 1) {
-            msgObgCampo("DataNascimento");
+            msgObgCampo("Data Nascimento");
             jFtxtDataNascimento.requestFocus();
             return false;
         } else if (jFtxtDataNascimento.getText().length() > 10) {
-            msgAdvCampo("DataNascimento");
+            msgAdvCampo("Data Nascimento");
             jFtxtDataNascimento.requestFocus();
             return false;
         } else if (jFtxtFone.getText().length() < 1) {
@@ -693,6 +695,10 @@ public class JfrmClientes extends javax.swing.JFrame {
         } else if (jTxtEmail.getText().length() > 250) {
             msgAdvCampo("Email");
             jTxtEmail.requestFocus();
+            return false;
+        } else if (jTextObservacoes.getText().length() > 1000){
+             msgAdvCampo("Observacoes");
+            jTextObservacoes.requestFocus();
             return false;
         }
         return true;
@@ -747,7 +753,7 @@ public class JfrmClientes extends javax.swing.JFrame {
             msgObgCampo("Tipo Endereco");
             jCboTipoEnd.requestFocus();
             return false;
-        }
+        } 
        
         return true;
     }
@@ -840,6 +846,11 @@ public class JfrmClientes extends javax.swing.JFrame {
         jBtnImprimir.setToolTipText("Clique aqui para imprimir Cliente");
         jBtnImprimir.setBorder(null);
         jBtnImprimir.setFocusPainted(false);
+        jBtnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnImprimirActionPerformed(evt);
+            }
+        });
 
         jBtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/new_121792.png"))); // NOI18N
         jBtnEditar.setToolTipText("Clique aqui para editar Cliente");
@@ -1379,7 +1390,6 @@ public class JfrmClientes extends javax.swing.JFrame {
     private void jRadioBtnCpfItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioBtnCpfItemStateChanged
         if (jRadioBtnCpf.isSelected() == true) {
             jRadioBtnCnpj.setEnabled(false);
-            tipoCliente = 1;
             try {
                 jFTxtCpfCnpj.setText("");
                 addMascaraCpfCnpj(true);
@@ -1396,7 +1406,6 @@ public class JfrmClientes extends javax.swing.JFrame {
     private void jRadioBtnCnpjItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jRadioBtnCnpjItemStateChanged
         if (jRadioBtnCnpj.isSelected() == true) {
             jRadioBtnCpf.setEnabled(false);
-            tipoCliente = 0;
             try {
                 addMascaraCpfCnpj(false);
                 jTxtNome.setEnabled(true);
@@ -1739,6 +1748,19 @@ public class JfrmClientes extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jCboCidadeFocusLost
+
+    private void jBtnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnImprimirActionPerformed
+               File directory = new File("./src/relatorios/relClientes.jrxml");
+               File directory2 = new File("./src/relatorios/relClientes_endereco.jrxml");
+        // passa o caminho do relatorio e o parametro para carregar o relatorio.
+        try {
+            ClsImpressao clsimpressao = new ClsImpressao();
+            clsimpressao.ClsImpressao(directory.getAbsolutePath(),directory2.getAbsolutePath(), "idCliente",clsClientes.getId(),  "Cadastro do Cliente");
+            System.out.println(""+clsClientes.getId());
+        } catch (ClassNotFoundException | SQLException | JRException e) {
+            JOptionPane.showMessageDialog(this, "Erro foi aqui" + e, "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jBtnImprimirActionPerformed
      
     /**
      * @param args the command line arguments

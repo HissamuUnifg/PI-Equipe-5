@@ -77,6 +77,31 @@ public class ClsImpressao {
       
         ConexaoDAO.FecharConexao();
     }
+    public void ClsImpressao(String nomeRel, String nomeSubRel, String parametro, int valorParametro, String tituloRelatorio) throws JRException, SQLException, ClassNotFoundException {
+        //gerando o jasper design
+        JasperDesign desenho = JRXmlLoader.load(nomeRel);
+        JasperDesign desenho2 = JRXmlLoader.load(nomeSubRel);
+
+        //compila o relatório
+        JasperReport relatorio = JasperCompileManager.compileReport(desenho);
+        JasperReport relatorio2 = JasperCompileManager.compileReport(desenho2);
+
+               
+
+        //executa o relatório
+        Map parametros = new HashMap();
+        parametros.put("SUBREPORT_DIR", desenho2);
+        parametros.put(parametro, valorParametro);
+        JasperPrint impressao = JasperFillManager.fillReport(relatorio, parametros, ConexaoDAO.getConexaoDAO());
+        
+        //exibe o resultado
+        JasperViewer viewer = new JasperViewer(impressao, true);
+        relOpemFrame(tituloRelatorio, impressao);
+        
+        //fecha conexão com o banco de dados
+      
+        ConexaoDAO.FecharConexao();
+    }
     private static void relOpemFrame( String titulo, JasperPrint print ) {
          /*
          * Cria um JRViewer para exibir o relatório.

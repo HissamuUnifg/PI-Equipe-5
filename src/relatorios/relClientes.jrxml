@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba35dffc-0834-4489-b18b-afd55bba0203">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\Tiago Teixeira\\Desktop\\Faculdade Tiago\\POO\\Primeira Unidade\\PI-Equipe-5\\src\\relatorios\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idCliente" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[Select
+cli.id, 
+case when cli.nome = '' then cli.razaosocial
+	 when cli.razaosocial = '' then cli.nome
+	 else '' END AS NOME,
+case when cli.cpf = '' then cli.cnpj
+	 when cli.cnpj = '' then cli.cpf
+     else 0 end as CPF_CNPJ,
+case when cli.ie = '' then cli.rg
+	 when cli.rg = '' then cli.ie
+     else 0 end as RG_IE,
+cli.datanascimento, 
+cli.telefone, 
+cli.celular, 
+cli.cnh,
+cli.observacoes,
+cli.email, 
+cb.nome as colaboradorCadastro,
+case when cli.inativo = 0 then 'LIBERADO'
+     when cli.inativo = 1 then 'BLOQUEADO'
+     else 0 end as inativo	
+from Clientes cli
+inner join colaboradores cb on cli.id_colaborador = cb.id 
+where cli.id = $P{idCliente}
+]]>
+	</queryString>
+	<field name="id" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="NOME" class="java.lang.String"/>
+	<field name="CPF_CNPJ" class="java.lang.String"/>
+	<field name="RG_IE" class="java.lang.String"/>
+	<field name="datanascimento" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefone" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="celular" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cnh" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="observacoes" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="email" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="colaboradorCadastro" class="java.lang.String"/>
+	<field name="inativo" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="60" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="218" height="23" uuid="6dab1199-92e7-4355-8a3f-9446073fc99b"/>
+				<textElement>
+					<font fontName="Arial" size="14"/>
+				</textElement>
+				<text><![CDATA[Locadora de Veiculos Boa Viagem]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="614" y="34" width="188" height="20" uuid="4a1a4879-c30c-45d4-ba76-bacca7d5c979"/>
+				<textElement>
+					<font size="12" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Relatório - Registro do Cliente]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="786" y="0" width="24" height="13" uuid="4a2f9704-3096-43d5-8556-65b254362640"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="749" y="0" width="32" height="13" uuid="19203d30-1943-44ac-96f9-9fc23daaf71f"/>
+				<text><![CDATA[Página:]]></text>
+			</staticText>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="638" y="14" width="166" height="20" uuid="cc528139-e65e-4d75-b96c-36c8e4eb717e"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="38" y="0" width="100" height="20" uuid="cde8a254-59a5-4135-8103-a503f86f75a8"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nome/Razão Social]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="38" height="20" uuid="b4cd713b-493a-4c7d-9065-33e7b30f3d0b"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Código]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="255" y="0" width="114" height="20" uuid="b6d0ad18-6171-4db0-9d15-014cfda28a75"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RG/Incriçao Estadual]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="178" y="1" width="77" height="20" uuid="7899e4af-412a-42b9-b3b1-f20e4b4d7f07"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CPF/CNPJ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="369" y="0" width="69" height="20" uuid="ef0743e3-2bc1-4f40-8a5a-877a461a056f"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CNH]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="538" y="0" width="114" height="20" uuid="5f050905-c6d3-455b-a600-d2b46078e04d"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Colab. Cad.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="652" y="0" width="65" height="20" uuid="5a1daa6d-1abc-439c-aead-41bbd7accc83"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Status]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="438" y="0" width="100" height="20" uuid="5395743d-375a-42d5-b0a5-455e9984098a"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data Nascimento]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="287" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="438" y="1" width="100" height="20" uuid="ec843697-659e-4d5e-aab4-90dd13c1f61a"/>
+				<textFieldExpression><![CDATA[$F{datanascimento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="38" y="0" width="140" height="20" uuid="144773a2-da2e-4e95-aecb-ee3ca49c6e2f"/>
+				<textFieldExpression><![CDATA[$F{NOME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="38" height="20" uuid="ed8f1033-3fe2-4ad8-801e-e6a15f481215"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="0" width="100" height="20" uuid="a0f0bd23-ad0c-42b6-b4c6-5e47ccaea345"/>
+				<textFieldExpression><![CDATA[$F{RG_IE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="178" y="1" width="77" height="20" uuid="4a441bf2-7115-4fce-bd91-77ff1c797855"/>
+				<textFieldExpression><![CDATA[$F{CPF_CNPJ}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="369" y="0" width="69" height="20" uuid="d715c1f9-40c4-4ad4-a9c2-249cb7a5f5cc"/>
+				<textFieldExpression><![CDATA[$F{cnh}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="538" y="0" width="114" height="20" uuid="e79f54f2-5bf5-4fa7-916b-c647b0181ddd"/>
+				<textFieldExpression><![CDATA[$F{colaboradorCadastro}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="652" y="0" width="65" height="20" uuid="bec4f542-6f8b-49f4-8a9e-77aa755b3ab9"/>
+				<textFieldExpression><![CDATA[$F{inativo}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="0" y="59" width="802" height="213" uuid="a5c743cd-cd04-433c-aaa1-8f1c3bf33b01"/>
+				<subreportParameter name="idCliente"/>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["C:\\Users\\Tiago Teixeira\\Desktop\\Faculdade Tiago\\POO\\Primeira Unidade\\PI-Equipe-5\\src\\relatorios\\relClientes_endereco.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="25" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="25" splitType="Stretch"/>
+	</summary>
+</jasperReport>
