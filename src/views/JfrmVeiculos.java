@@ -402,17 +402,18 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
     //funcoes de apoio a Jtable
     private void carregarJtable() {
-
         jTblVeiculos.setModel(modeloTable);
     }
 
     private void removeLinhaJtable(int indice) {
-
         modeloTable.deleteRow(indice);
     }
 
     private void atualizarJtable() {
-        modeloTable.addRow(clscarros);
+        listaCarros = carrosDAO.selectAll();
+        modeloTable = new ClsCarregarTableCarro(listaCarros);
+        jTblVeiculos.setModel(modeloTable);
+        //modeloTable.addRow(clscarros);
     }
 
     private void atualizaListaCarros(int indice) {
@@ -422,7 +423,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     }
     
     private void limpaJtable() {
+        listaCarros.clear();
+        modeloTable = new ClsCarregarTableCarro(listaCarros);
         jTblVeiculos.setModel(modeloTable);
+        //listaCarros = carrosDAO.selectAll();
+               
     }
     
     //funções de apoio a jframe
@@ -1026,11 +1031,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     private void jBtnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnNovoActionPerformed
         if (precionado == false) {
             clscarros.ClsCarrosClear();
+            limpaJtable();
             jTblVeiculos.setEnabled(false);
             setIconBtnNv(true);
             enableControl();
-            clearTxt();
-            limpaJtable();
+            clearTxt();            
             precionado = true;
             editando = false;
             jTxtNome.requestFocus();
