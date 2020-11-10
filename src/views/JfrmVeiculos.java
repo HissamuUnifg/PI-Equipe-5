@@ -93,16 +93,12 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         precionado = false;
     }
 
-    //verificando status do cadastro
-    private boolean verificaStatusInativo(int valor) {
-        if (clscarros.getInativo() == 0) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
+    
     // metodos auxiliares para funcionamento da tela
+    
+    /**
+     * Responsavel por carregar o jComboBox "jCboTipo"
+     */
     private void setCarroTipo() {
         //jCboTipo.removeAllItems();
 
@@ -111,7 +107,10 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jCboTipo.addItem("UTILITARIO SUV");
         jCboTipo.addItem("CAMINHONETE");
     }
-
+    
+    /**
+     * Carregar o jComboBox "jCboClasse" 
+     */
     private void setCarroClasse() {
         //jCboClasse.removeAllItems();
 
@@ -119,7 +118,12 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jCboClasse.addItem("MEDIO");
         jCboClasse.addItem("LUXO");
     }
-            
+    /**
+     * Responsavel por trocar a função e icone do botão "jBtnNovo"
+     * Passando false o botão assume a posição de novo
+     * Passando true o botão assume a posição de cancelar 
+     * @param funcao 
+     */        
     private void setIconBtnNv(boolean funcao) {
         if (funcao == true) {
             jBtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_cancelar.png"))); // NOI18N
@@ -129,7 +133,12 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             jBtnNovo.setToolTipText("Clique aqui para novo Veiculo");
         }
     }
-
+    
+    /**
+     * Responsavel por desabilitar os campos 
+     * impedindo a digitação
+     * 
+     */
     private void disableControl() {
         //desabilitando os controles e campos da tela
         jCboTipo.setEnabled(false);
@@ -163,7 +172,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         JbtnImprimir.setEnabled(false);
 
     }
-
+    
+    /**
+     * Responsavel por habilitar os campos para inserção de dados
+     * usado para novo registro e quando edita o registro cadastrado
+     */
     private void enableControl() {
         //desabilitando os controles e campos da tela
         jCboTipo.setEnabled(true);
@@ -197,6 +210,10 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
     }
    
+    /**
+     * Responsavel por limpar os jTextField e jFormattedTextField
+     * função passa valores em branco e valores 0 para campos numericos
+     */
     private void clearTxt() {
 
         jTxtAnoFabricacao.setText("");
@@ -219,25 +236,50 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jLabelStatus.setText("");
     }
 
+    /**
+     * Usado por lançar um MensageBox de campo obrigatório
+     * @param dado 
+     */
     private void msgObgCampo(String dado) {
-        JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " é obrigatório", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " "
+                + "é obrigatório", "Informação", JOptionPane.INFORMATION_MESSAGE);
     }
-
+    
+     /**
+     * Usado por lançar um MensageBox de campo obrigatório Advertencia
+     * @param dado 
+     */
     private void msgAdvCampo(String dado) {
-        JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " está maior ou menor do que o permitido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " "
+                + "está maior ou menor do que o permitido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
     }
     
+     /**
+     * Usado por lançar um MensageBox de campo obrigatório Erro
+     * @param dado 
+     */
     private void msgErrCampo(String dado) {
-        JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " é invalido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + ""
+                + " é invalido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
     }
     
-
+    /*****************************************************/
+    
+    /**
+     * Responsavel por aplicar a mascara no campo DataCompra
+     * Retorna uma Exeption caso dê erro
+     * Para usar necessita de circular com o "Try"
+     * @throws ParseException 
+     */
     private void addMascara() throws ParseException {
         JfTxtData.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraData(JfTxtData)));
-       // JfTxtData.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraDataAno(JfTxtData)));
-       // JfTxtData.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraDataAno(JfTxtData)));
     }
-
+    
+    /**
+     * Responsavel por controlar os imputs de teclas do teclado dentro dos
+     * campos jTextField e jFormattedTextField.
+     * Usado uma classe especifica "ClsControlaCpNumeric"
+     */
     private void controleDigitacao() {
         //todos os Jtext que estiver aqui só vão aceitar numeros e pontos
         jTxtKm.setDocument(new ClsControlaCpNumeric());
@@ -250,7 +292,15 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtNumeroRenavan.setDocument(new ClsControlaCpNumeric());
 
     }
-
+    /**
+     * Responsavel com validar a integridade dos dados digitados
+     * tomamndo como parametro as regras de negocio estabelecidas
+     * retorna "false" ou "true", false se estiver alguma validação 
+     * pendente, caso haja ele retorna o foco para o campo que está 
+     * pendente de validação, retorna "true" caso todos sejam validados.
+     * 
+     * @return  false or true
+     */
     private boolean validaCampos() {
         //valida campo Nome
         if (jTxtNome.getText().length() < 1) {
@@ -401,27 +451,54 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     }
 
     //funcoes de apoio a Jtable
+    
+    /**
+     * Responsavel por carregar a jTable com os dados da DB que 
+     * estão na "listaCarros" pré carregados para a execução da
+     * manipulação dos dados.
+     */
     private void carregarJtable() {
         jTblVeiculos.setModel(modeloTable);
     }
-
+    
+    /**
+     * remove a linha da jTable ao excluir um carro
+     * usa como parametro o indice do objeto na lista
+     * e a função se encarrega de apagar e atualizar o
+     * model da jTable.
+     * @param indice 
+     */
     private void removeLinhaJtable(int indice) {
         modeloTable.deleteRow(indice);
     }
-
+    /**
+     * Atualiza o jTable carregando uma nova lista, nesse caso
+     * "listaCarros" e em seguida passando a lista para o model
+     * e adicionando a jTbale, resultado a jTable carrega com 
+     * os dados.
+     */
     private void atualizarJtable() {
         listaCarros = carrosDAO.selectAll();
         modeloTable = new ClsCarregarTableCarro(listaCarros);
         jTblVeiculos.setModel(modeloTable);
         //modeloTable.addRow(clscarros);
     }
-
+    /**
+     * Atualiza a Lista de carros com um carro "clscarros"
+     * Passa para a lista o objeto clscarros
+     * @param indice 
+     */
     private void atualizaListaCarros(int indice) {
         listaCarros.set(indice, clscarros);
         modeloTable.updatedListRow(indice, clscarros);
         modeloTable.updatedRow(indice, indice);        
     }
-    
+    /**
+     * Metodo usado para limpar a jTable
+     * Basicamente recarrega a Jtable com
+     * uma lista vazia, fazendo com que ele
+     * não carregue nenhum dado
+     */
     private void limpaJtable() {
         listaCarros.clear();
         modeloTable = new ClsCarregarTableCarro(listaCarros);
@@ -432,6 +509,10 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     
     //funções de apoio a jframe
     
+    /**
+     * Usa o objeto da tela para carregar a tela
+     * 
+     */
     private void carregarFrame() {
         jLabelCodigo.setText("Codigo: " + clscarros.getId());
         jTxtAnoFabricacao.setText("" + clscarros.getAnoFabricacao());
@@ -453,7 +534,13 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jCboTipo.setSelectedItem(clscarros.getTipoVeiculo());
         jCboClasse.setSelectedItem(clscarros.getClasse());
     }
-
+    
+    /**
+     * Carrega toda a jFrame a parir de uma lista carregada com os dados do veiculo
+     * Usa a "listaCarros" para pegar os valores a ser exibidos
+     *
+     * @param indice 
+     */
     private void carregarFrameLista(int indice) {
         //o indice é o objeto selecionado dentro da lista
         jLabelCodigo.setText("Codigo: " + listaCarros.get(indice).getId());
@@ -1019,6 +1106,8 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     // eventos dos componentes da tela
+    
+    
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         models.ClsLogin clslogin = new ClsLogin();
         clslogin.setUserLoged(userLoged);
@@ -1303,9 +1392,9 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     }//GEN-LAST:event_jTblVeiculosMouseClicked
 
     private void jTxtNumeroRenavanFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNumeroRenavanFocusLost
-        if ("".equals(Integer.parseInt(jTxtNumeroRenavan.getText()))) {
+        if ("".equals(jTxtNumeroRenavan.getText())) {
         } else {
-            clscarros.setRenavam(Integer.parseInt(jTxtNumeroRenavan.getText()));
+            clscarros.setRenavam(jTxtNumeroRenavan.getText());
         }
     }//GEN-LAST:event_jTxtNumeroRenavanFocusLost
 

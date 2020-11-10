@@ -55,7 +55,7 @@ public class CarrosDAO {
             ps.setString(5, clscarros.getTipoVeiculo());
             ps.setString(6, clscarros.getCor());
             ps.setString(7, clscarros.getPlaca().toUpperCase());
-            ps.setInt(8, clscarros.getRenavam());
+            ps.setString(8, clscarros.getRenavam());
             ps.setString(9, clscarros.getObsEstado());
             ps.setString(10, clscarros.getDataCompra());
             ps.setInt(11, clscarros.getAnoModelo());
@@ -130,7 +130,7 @@ public class CarrosDAO {
             ps.setString(5, clscarros.getTipoVeiculo());
             ps.setString(6, clscarros.getCor());
             ps.setString(7, clscarros.getPlaca().toUpperCase());
-            ps.setInt(8, clscarros.getRenavam());
+            ps.setString(8, clscarros.getRenavam());
             ps.setString(9, clscarros.getObsEstado());
             ps.setString(10, clscarros.getDataCompra());
             ps.setInt(11, clscarros.getAnoModelo());
@@ -257,7 +257,7 @@ public class CarrosDAO {
             carroEcontrado.setTipoVeiculo(rset.getString("TipoVeiculo"));
             carroEcontrado.setCor(rset.getString("Cor"));
             carroEcontrado.setPlaca(rset.getString("Placa"));
-            carroEcontrado.setRenavam(rset.getInt("Renavam"));
+            carroEcontrado.setRenavam(rset.getString("Renavam"));
             carroEcontrado.setObsEstado(rset.getString("ObsEstado"));
             carroEcontrado.setDataCompra(formatoUS.format(rset.getDate("DataCompra")));
             carroEcontrado.setAnoModelo(rset.getInt("AnoModelo"));
@@ -334,7 +334,7 @@ public class CarrosDAO {
                 carroEcontrado.setTipoVeiculo(rset.getString("TipoVeiculo"));
                 carroEcontrado.setCor(rset.getString("Cor"));
                 carroEcontrado.setPlaca(rset.getString("Placa"));
-                carroEcontrado.setRenavam(rset.getInt("Renavam"));
+                carroEcontrado.setRenavam(rset.getString("Renavam"));
                 carroEcontrado.setObsEstado(rset.getString("ObsEstado"));
                 carroEcontrado.setDataCompra(formatoUS.format(rset.getDate("DataCompra")));
                 carroEcontrado.setAnoModelo(rset.getInt("AnoModelo"));

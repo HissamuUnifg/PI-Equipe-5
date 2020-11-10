@@ -15,7 +15,7 @@ public class ClsCarros {
     private String TipoVeiculo;
     private String Cor;
     private String Placa;
-    private int Renavam;
+    private String Renavam;
     private String ObsEstado;
     private String DataCompra;
     private int AnoModelo;
@@ -30,7 +30,7 @@ public class ClsCarros {
     private int Inativo;
     private int id_colaborador;
 
-    public ClsCarros(String Nome, String Marca, String Modelo, String Classe, String TipoVeiculo, String Cor, String Placa, int Renavam, String ObsEstado, String DataCompra, int AnoModelo, int AnoFabricacao, String Chassi, int KmRodados, float ValorMercado, float ValorSeguro, float ValorKmRd, float ValorDiariaLoc, int Status, int Inativo, int id_colaborador) {
+    public ClsCarros(String Nome, String Marca, String Modelo, String Classe, String TipoVeiculo, String Cor, String Placa, String Renavam, String ObsEstado, String DataCompra, int AnoModelo, int AnoFabricacao, String Chassi, int KmRodados, float ValorMercado, float ValorSeguro, float ValorKmRd, float ValorDiariaLoc, int Status, int Inativo, int id_colaborador) {
         this.Nome = Nome;
         this.Marca = Marca;
         this.Modelo = Modelo;
@@ -64,7 +64,7 @@ public class ClsCarros {
         this.TipoVeiculo = "";
         this.Cor = "";
         this.Placa = "";
-        this.Renavam = 0;
+        this.Renavam = "";
         this.ObsEstado = "";
         this.DataCompra = "";
         this.AnoModelo = 0;
@@ -144,11 +144,11 @@ public class ClsCarros {
         this.Placa = Placa;
     }
 
-    public int getRenavam() {
+    public String getRenavam() {
         return Renavam;
     }
 
-    public void setRenavam(int Renavam) {
+    public void setRenavam(String Renavam) {
         this.Renavam = Renavam;
     }
 
