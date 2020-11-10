@@ -252,6 +252,7 @@ public class JfrmLogin extends javax.swing.JFrame {
             List<models.ClsLogin> ResultSet = loginDAO.selectFull();
             if (ResultSet.size() < 1) {
                 loadUser();
+                JOptionPane.showMessageDialog(this, "Banco de Dados não configurado, passando usuario mestre para login!", "ERRO", JOptionPane.ERROR_MESSAGE);
             } else {
                 for (models.ClsLogin cls : loginDAO.selectFull()) {
                     jCboUsuario.addItem(cls.getUsuarioDAO());

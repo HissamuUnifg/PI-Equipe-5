@@ -79,35 +79,39 @@ public class JfrmColaborador extends javax.swing.JFrame {
     
     private void buscaCliente(){
         String cpf = JOptionPane.showInputDialog("Digite o CPF para procurar");
-        ClsValidacoes clsvalidacoes = new ClsValidacoes();
-        boolean valido = clsvalidacoes.isValid(cpf);
-        if (valido == true) {
-            List<models.ClsColaborador> ResultSet = colaboradorDAO.select(cpf);
-            if (ResultSet.size() < 1) {
-                JOptionPane.showMessageDialog(this, "Erro: CPF não Cadastrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
-                buscaCliente();
-            } else {
-                for (models.ClsColaborador clb : colaboradorDAO.select(cpf)) {
-                    jTxtNome.setText(clb.getNome());
-                    clscolaborador.setNome(clb.getNome());
-                    jTxtCpf.setText(clb.getCpf());
-                    clscolaborador.setCpf(clb.getCpf());
-                    jTxtNmlogin.setText(clb.getNomeLogin());
-                    clscolaborador.setNomeLogin(clb.getNomeLogin());
-                    clscolaborador.setCpf_funCadastro(clb.getCpf_funCadastro());
-                    jTxtFone.setText(clb.getTelefone());
-                    clscolaborador.setTelefone(clb.getTelefone());
-                    jTxtSenha.setText(clb.getSenha());
-                    clscolaborador.setSenha(clb.getSenha());
-                    clscolaborador.setId(clb.getId());
-                    
-                }
-                disableCtrlBusca();
-                precionado = true;
-            }
+        if (cpf.equals("")) {
+            JbtnNovo.requestFocus();
         } else {
-            JOptionPane.showMessageDialog(this, "O CPF digitado é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
-            buscaCliente();
+            ClsValidacoes clsvalidacoes = new ClsValidacoes();
+            boolean valido = clsvalidacoes.isValid(cpf);
+            if (valido == true) {
+                List<models.ClsColaborador> ResultSet = colaboradorDAO.select(cpf);
+                if (ResultSet.size() < 0) {
+                    JOptionPane.showMessageDialog(this, "Erro: CPF não Cadastrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
+                    buscaCliente();
+                } else {
+                    for (models.ClsColaborador clb : colaboradorDAO.select(cpf)) {
+                        jTxtNome.setText(clb.getNome());
+                        clscolaborador.setNome(clb.getNome());
+                        jTxtCpf.setText(clb.getCpf());
+                        clscolaborador.setCpf(clb.getCpf());
+                        jTxtNmlogin.setText(clb.getNomeLogin());
+                        clscolaborador.setNomeLogin(clb.getNomeLogin());
+                        clscolaborador.setCpf_funCadastro(clb.getCpf_funCadastro());
+                        jTxtFone.setText(clb.getTelefone());
+                        clscolaborador.setTelefone(clb.getTelefone());
+                        jTxtSenha.setText(clb.getSenha());
+                        clscolaborador.setSenha(clb.getSenha());
+                        clscolaborador.setId(clb.getId());
+
+                    }
+                    disableCtrlBusca();
+                    precionado = true;
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "O CPF digitado é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+                buscaCliente();
+            }
         }
     }
     
@@ -563,7 +567,8 @@ public class JfrmColaborador extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "O numero do CPF é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
             jTxtCpf.setText("");
         } else {
-            clscolaborador.setCpf(jTxtCpf.getText());
+            ClsValidacoes clsVal = new ClsValidacoes();
+            clscolaborador.setCpf(clsVal.replaceDado(jTxtCpf.getText()));
         }
     }//GEN-LAST:event_jTxtCpfFocusLost
 

@@ -77,7 +77,7 @@ public class ClsImpressao {
       
         ConexaoDAO.FecharConexao();
     }
-    public void ClsImpressao(String nomeRel, String nomeSubRel, String parametro, int valorParametro, String tituloRelatorio) throws JRException, SQLException, ClassNotFoundException {
+    public void ClsImpressao(String nomeRel, String nomeSubRel, String parametro, String valorParametro, String tituloRelatorio) throws JRException, SQLException, ClassNotFoundException {
         //gerando o jasper design
         JasperDesign desenho = JRXmlLoader.load(nomeRel);
         JasperDesign desenho2 = JRXmlLoader.load(nomeSubRel);

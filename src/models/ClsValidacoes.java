@@ -83,7 +83,7 @@ public class ClsValidacoes {
 
 
     /**
-     * entra uma string e retira os dados em qualquer parte que esteja
+     * entra uma string e retira os dados desejados em qualquer parte que esteja
      * @param dado
      * @return
      */
@@ -113,9 +113,7 @@ public class ClsValidacoes {
         return dataSaida;
     }
     
-    //
-
-    /**
+     /**
      * entra uma string no formato US 2010-05-01 e retorna em formato BR
      * @param dataEntrada
      * @return  string com data formatada em formato BR 01/05/2020
@@ -132,15 +130,11 @@ public class ClsValidacoes {
     //entra uma string de data e retorna se e valida ou não (true ou false)
     public boolean validaDataFormatoBR(String data) {
       try {
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            
-            sdf.setLenient(false);
-            
-            sdf.parse(data);
-            
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");            
+            sdf.setLenient(false);            
+            sdf.parse(data);            
             return true;
-        } catch (ParseException ex) {
-            
+        } catch (ParseException ex) {            
             return false;
         }
     }
@@ -148,7 +142,7 @@ public class ClsValidacoes {
     public float formataMoeda(String arg) throws ParseException {
         //obtem um NumberFormat para o Locale default (BR)
         NumberFormat nf = NumberFormat.getNumberInstance(new Locale("pt", "BR"));
-        //converte um número com vírgulas ex: 2,56 para double
+        //converte um número com vírgulas ex: 2,56 para double/float a gosto de escolha
         float number = nf.parse(arg).floatValue();
         return number;
     }
@@ -157,6 +151,11 @@ public class ClsValidacoes {
      * Recebe uma String de Email e valida retornando false para invalido e true para valido
      * @param email - formato email@dominio.com
      * @return - true Valido, false Invalido
+     */
+    /**
+     * Valida o email caso seja valido retorna "true" caso seja invalido retorna "false"
+     * @param email
+     * @return 
      */
     public  boolean isValidEmailAddressRegex(String email) {
     boolean isEmailIdValid = false;

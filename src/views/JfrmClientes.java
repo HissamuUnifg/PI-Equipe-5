@@ -354,61 +354,65 @@ public class JfrmClientes extends javax.swing.JFrame {
      * na lista pre carregada com os dados do BD
      */
     private void buscaCliente(){
-        clsClientes.cleanClientes();
         String cpf = JOptionPane.showInputDialog("Digite o CPF/CNPJ para procurar");
-        boolean valido = clsValidacoes.isValid(cpf);
-        boolean tipo = clsValidacoes.isTipoCpfCnpj(); //tipo true é CPF tipo false é CNPJ
-        if (valido == true && tipo == true) {
-            if (listBuscaCPF(cpf) == false) {
-                JOptionPane.showMessageDialog(this, "Erro: CPF não Cadastrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
-                buscaCliente();
-            } else {
-                for (int i = 0; i < listClientesBD.size(); i++) {
-                    if (listClientesBD.get(i).getCpf().equals(cpf)) {
-                        carregarListaEnd(listClientesBD.get(i).getId());
-                        linhaIndice = i;
-                        carregarJtable();
-                        try {
-                            addMascaraCpfCnpj(tipo);
-                        } catch (ParseException ex) {
-                            System.out.println("Erro ao aplicar: "+ex);
-                        }
-                        loadBlocoCliente(i);
-                        loadBlocoEnd(-1);
-                        enableControlBusca();
-                        clsClientes = listClientesBD.get(i);
-                      
-                    }
-                }
-                precionado = false;
-            }
-        } else if (valido == true && tipo == false) {
-            if (listBuscaCNPJ(cpf) == false) {
-                JOptionPane.showMessageDialog(this, "Erro: CNPJ não Cadastrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
-                buscaCliente();
-            } else {
-                   for (int i = 0; i < listClientesBD.size(); i++) {
-                    if (listClientesBD.get(i).getCnpj().equals(cpf)) {
-                        carregarListaEnd(listClientesBD.get(i).getId());
-                        linhaIndice = i;
-                        carregarJtable();
-                        try {
-                            addMascaraCpfCnpj(tipo);
-                        } catch (ParseException ex) {
-                            System.out.println("Erro ao aplicar: "+ex);
-                        }
-                        loadBlocoCliente(i);
-                        loadBlocoEnd(-1);
-                        enableControlBusca();
-                       
-                        clsClientes = listClientesBD.get(i);
-                    }
-                }
-                precionado = false;
-            }
+        if (cpf.equals("")) {
+            jBtnBuscar.requestFocus();
         } else {
-            JOptionPane.showMessageDialog(this, "O CPF/CNPJ digitado é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
-            buscaCliente();
+            clsClientes.cleanClientes();
+            boolean valido = clsValidacoes.isValid(cpf);
+            boolean tipo = clsValidacoes.isTipoCpfCnpj(); //tipo true é CPF tipo false é CNPJ
+            if (valido == true && tipo == true) {
+                if (listBuscaCPF(cpf) == false) {
+                    JOptionPane.showMessageDialog(this, "Erro: CPF não Cadastrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
+                    buscaCliente();
+                } else {
+                    for (int i = 0; i < listClientesBD.size(); i++) {
+                        if (listClientesBD.get(i).getCpf().equals(cpf)) {
+                            carregarListaEnd(listClientesBD.get(i).getId());
+                            linhaIndice = i;
+                            carregarJtable();
+                            try {
+                                addMascaraCpfCnpj(tipo);
+                            } catch (ParseException ex) {
+                                System.out.println("Erro ao aplicar: " + ex);
+                            }
+                            loadBlocoCliente(i);
+                            loadBlocoEnd(-1);
+                            enableControlBusca();
+                            clsClientes = listClientesBD.get(i);
+
+                        }
+                    }
+                    precionado = false;
+                }
+            } else if (valido == true && tipo == false) {
+                if (listBuscaCNPJ(cpf) == false) {
+                    JOptionPane.showMessageDialog(this, "Erro: CNPJ não Cadastrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
+                    buscaCliente();
+                } else {
+                    for (int i = 0; i < listClientesBD.size(); i++) {
+                        if (listClientesBD.get(i).getCnpj().equals(cpf)) {
+                            carregarListaEnd(listClientesBD.get(i).getId());
+                            linhaIndice = i;
+                            carregarJtable();
+                            try {
+                                addMascaraCpfCnpj(tipo);
+                            } catch (ParseException ex) {
+                                System.out.println("Erro ao aplicar: " + ex);
+                            }
+                            loadBlocoCliente(i);
+                            loadBlocoEnd(-1);
+                            enableControlBusca();
+
+                            clsClientes = listClientesBD.get(i);
+                        }
+                    }
+                    precionado = false;
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "O CPF/CNPJ digitado é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
+                buscaCliente();
+            }
         }
     }
     
@@ -1731,13 +1735,11 @@ public class JfrmClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jCboCidadeFocusLost
 
     private void jBtnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnImprimirActionPerformed
-               File directory = new File("./src/relatorios/relClientes.jrxml");
-               File directory2 = new File("./src/relatorios/relClientes_endereco.jrxml");
+        File directory = new File("./src/relatorios/relClientes.jrxml");
         // passa o caminho do relatorio e o parametro para carregar o relatorio.
         try {
             ClsImpressao clsimpressao = new ClsImpressao();
-            clsimpressao.ClsImpressao(directory.getAbsolutePath(), "idCliente", ""+clsClientes.getId(),  "Cadastro do Cliente");
-            System.out.println(""+clsClientes.getId());
+            clsimpressao.ClsImpressao(directory.getAbsolutePath(), "idCliente", "" + clsClientes.getId(), "Cadastro do Cliente");
         } catch (ClassNotFoundException | SQLException | JRException e) {
             JOptionPane.showMessageDialog(this, "Erro foi aqui" + e, "Erro", JOptionPane.ERROR_MESSAGE);
         }
