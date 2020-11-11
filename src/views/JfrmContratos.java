@@ -5,7 +5,9 @@ import static java.awt.SystemColor.window;
 import java.awt.Toolkit;
 import java.io.File;
 import javafx.stage.FileChooser;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import models.ClsLogin;
 
 /**
@@ -34,7 +36,6 @@ public class JfrmContratos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jFileChooser1 = new javax.swing.JFileChooser();
         jBtnNovo = new javax.swing.JButton();
         jBtnEditar = new javax.swing.JButton();
         jBtnSalvar = new javax.swing.JButton();
@@ -600,13 +601,22 @@ public class JfrmContratos extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowClosing
 
     private void jBtnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnImprimirActionPerformed
-        File arquivo = null;
-        JpanelFile FileChoser = new JpanelFile(arquivo);
-        javax.swing.JFrame jfrm = new JFrame();
-        jfrm.setName("Salvar Contrato");
-        jfrm.add(FileChoser);
-        jfrm.setSize(540, 370);
-        jfrm.setVisible(true);
+
+          JFileChooser fileChooser = new JFileChooser();
+          fileChooser.setDialogTitle("Gravar contrato");
+          fileChooser.setDialogType(JFileChooser.SAVE_DIALOG);
+          FileNameExtensionFilter filtro = new FileNameExtensionFilter("Arquivos Microsoft Word", "DOC", "DOCX");
+          fileChooser.setFileFilter(filtro);
+          fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+          int retorno = fileChooser.showSaveDialog(this);
+         if (retorno == JFileChooser.APPROVE_OPTION ) {
+             File arquivoSalvo = fileChooser.getSelectedFile();
+             String caminhoArquivo = fileChooser.getCurrentDirectory().toString();
+             System.out.println(caminhoArquivo+"\\"+arquivoSalvo.getName());
+        } else {
+             System.out.println("Canlecou aqui.");
+        }
+          
     }//GEN-LAST:event_jBtnImprimirActionPerformed
 
     /**
@@ -629,7 +639,6 @@ public class JfrmContratos extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCboStatusContrato;
     private javax.swing.JComboBox<String> jCboTipoContrato;
     private javax.swing.JFormattedTextField jFTxtCpfCnpj;
-    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFormattedTextField jFtxtCelular;
     private javax.swing.JFormattedTextField jFtxtCep;
     private javax.swing.JFormattedTextField jFtxtFone;
