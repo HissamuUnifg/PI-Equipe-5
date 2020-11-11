@@ -37,7 +37,7 @@ import net.sf.jasperreports.swing.JRViewer;
 import net.sf.jasperreports.view.JasperViewer;
 
 /**
- *
+ * 
  * @author Tiago Teixeira
  */
 
@@ -55,6 +55,10 @@ import net.sf.jasperreports.view.JasperViewer;
 */
 
 public class ClsImpressao {
+    ClsEnderecos clsEnd = new ClsEnderecos();
+    ClsClientes clsCli = new ClsClientes();
+    ClsCarros clsCar = new ClsCarros();
+    ClsContratos clsCont = new ClsContratos();
     
     public void ClsImpressao(String nomeRel, String parametro, String valorParametro, String tituloRelatorio) throws JRException, SQLException, ClassNotFoundException {
         //gerando o jasper design
@@ -126,6 +130,31 @@ public class ClsImpressao {
         // exibe o JFrame
         frameRelatorio.setVisible( true );
  
+    }
+    
+    public ClsImpressao() {
+    }
+    
+    /**
+     * Usado Para carregar a classe com os dados necessários para gerar o documento Word com o contrato do cliente.
+     * Usado parametros das classes envolvidas na operação
+     * @param clsEnd
+     * @param clsCli
+     * @param clsCar
+     * @param clsCont 
+     */
+    public ClsImpressao(ClsEnderecos clsEnd, ClsClientes clsCli, ClsCarros clsCar, ClsContratos clsCont) {
+     this.clsEnd = clsEnd;
+     this.clsCli = clsCli;
+     this.clsCar = clsCar;
+     this.clsCont = clsCont;
+    }
+    
+    public void criarContrato(){
+        // TODO O CODIGO PARA GERAR O ARQUIVO VAI FICAR NESSE METODO, AO CRIAR O OBJETO 
+        //ClsImpressão, observar o construtor quem pede os 3 objetos da tela de contratos.
+        String cliente = clsCli.getNome();
+        
     }
     
 }

@@ -1,7 +1,11 @@
 
 package views;
 
+import static java.awt.SystemColor.window;
 import java.awt.Toolkit;
+import java.io.File;
+import javafx.stage.FileChooser;
+import javax.swing.JFrame;
 import models.ClsLogin;
 
 /**
@@ -30,6 +34,7 @@ public class JfrmContratos extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jFileChooser1 = new javax.swing.JFileChooser();
         jBtnNovo = new javax.swing.JButton();
         jBtnEditar = new javax.swing.JButton();
         jBtnSalvar = new javax.swing.JButton();
@@ -109,6 +114,11 @@ public class JfrmContratos extends javax.swing.JFrame {
         jBtnImprimir.setToolTipText("Clique aqui para imprimir Contrato");
         jBtnImprimir.setBorder(null);
         jBtnImprimir.setFocusPainted(false);
+        jBtnImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnImprimirActionPerformed(evt);
+            }
+        });
 
         jBtnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/search_121759.png"))); // NOI18N
         jBtnBuscar.setToolTipText("Clique aqui para buscar Contrato");
@@ -589,6 +599,16 @@ public class JfrmContratos extends javax.swing.JFrame {
         telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
 
+    private void jBtnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnImprimirActionPerformed
+        File arquivo = null;
+        JpanelFile FileChoser = new JpanelFile(arquivo);
+        javax.swing.JFrame jfrm = new JFrame();
+        jfrm.setName("Salvar Contrato");
+        jfrm.add(FileChoser);
+        jfrm.setSize(540, 370);
+        jfrm.setVisible(true);
+    }//GEN-LAST:event_jBtnImprimirActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -609,6 +629,7 @@ public class JfrmContratos extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jCboStatusContrato;
     private javax.swing.JComboBox<String> jCboTipoContrato;
     private javax.swing.JFormattedTextField jFTxtCpfCnpj;
+    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JFormattedTextField jFtxtCelular;
     private javax.swing.JFormattedTextField jFtxtCep;
     private javax.swing.JFormattedTextField jFtxtFone;
