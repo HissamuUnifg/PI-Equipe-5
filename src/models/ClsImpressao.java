@@ -170,49 +170,153 @@ public class ClsImpressao {
         titulo1.setFontFamily("Arial");
         titulo1.setText("CONTRATO DE ALUGUEL DE VEICULOS - LOCADORA BOA VIAGEM");
         titulo1.addBreak();
+        titulo1.addBreak();
+        titulo1.setText("IDENTIFICAÇÃO DAS PARTES CONTRATANTES");
+        titulo1.addBreak();
+        titulo1.addBreak();
         
-        //Registro das Partes
+        //Registro das Parte Locadora
         XWPFParagraph partes = documento.createParagraph();
         partes.setAlignment(ParagraphAlignment.BOTH);
         XWPFRun partes1 = partes.createRun();
         partes1.setFontSize(12);
         partes1.setFontFamily("Arial");
 
-        partes1.setText("CREATE TABLE IF NOT EXISTS Contratos (\n"
-                + "  id INT NOT NULL AUTO_INCREMENT,\n"
-                + "  id_cliente INT NOT NULL,\n"
-                + "  id_carro INT NOT NULL,\n"
-                + "  id_colaborador INT NOT NULL,\n"
-                + "  Observacoes VARCHAR(1000) NULL,\n"
-                + "  QuantidadeDiarias INT(3) NULL,\n"
-                + "  QuantidadeKmRet INT(9) NULL,\n"
-                + "  ValorExtra FLOAT NULL,\n"
-                + "  ValorTotal FLOAT NULL,\n"
-                + "  TipoLocacao CHAR(1) NOT NULL,\n"
-                + "  DataSaida DATE NOT NULL,\n"
-                + "  DataChegada DATE NULL,\n"
-                + "  DataContrato DATE NOT NULL,\n"
-                + "  Status VARCHAR(15) NOT NULL,\n"
-                + "  PRIMARY KEY (id),\n"
-                + "  CONSTRAINT colaboradores_contratos\n"
-                + "    FOREIGN KEY (id_colaborador)\n"
-                + "    REFERENCES Colaboradores (id)\n"
-                + "    ON DELETE NO ACTION\n"
-                + "    ON UPDATE NO ACTION,\n"
-                + "  CONSTRAINT clientes_contratos\n"
-                + "    FOREIGN KEY (id_cliente)\n"
-                + "    REFERENCES Clientes (id)\n"
-                + "    ON DELETE NO ACTION\n"
-                + "    ON UPDATE NO ACTION,\n"
-                + "  CONSTRAINT carro_contrato\n"
-                + "    FOREIGN KEY (id_carro)\n"
-                + "    REFERENCES Carros (id)\n"
-                + "    ON DELETE NO ACTION\n"
-                + "    ON UPDATE NO ACTION)");
+        partes1.setText("LOCADORA: LOCADORA BOA VIAGEM, com sede em CENTRO UNIVERSITARIO FG UNIFG, na Rua RUA DEMONSTRAÇÃO, nº 001, "
+                + "bairro CENTRO, Cep 46430000, no Estado BAHIA, inscrita no CNPJ Nº 00.000.000/0001-00, e "
+                + "no Cadastro Estadual sob o nº 123456789, neste ato representada pelo seu diretor TIAGO TEIXEIRA, "
+                + "BRASILEIRO, DIVORCIADO, ANALISTA DE SISTEMAS, Carteira de Identidade nº 0000000000 , CPF Nº 000.000.000-00, "
+                + "residente e domiciliado na Rua RUA DEMONSTRAÇÃO, nº 001, bairro CENTRO, Cep 46430000, Cidade GUANAMBI, no Estado BAHIA");
 
         partes1.addBreak();
+        
+        if(clsCli.getNome().equals("") || clsCli.getNome() == null){
+       
+            partes1.setText("LOCATÁRIO:  "+clsCli.getRazaoSocial()+", "+clsEnd.getPais()+", SOLTEIRO, EMPREGADO,"
+                + " Carteira de Identidade nº "+clsCli.getIe()+", Carteira Nacional de Habilitação nº "+clsCli.getCnh()+""
+                + " C.P.F. nº "+clsCli.getCnpj()+", residente e domiciliado na Rua "+clsEnd.getRua()+"),"
+                + " nº "+clsEnd.getNumero()+", bairro  "+clsEnd.getBairro()+", Cep "+clsEnd.getCep()+", Cidade "+clsEnd.getNomeCidade()+", no Estado "+clsEnd.getEstado()+".");
+        
+        }else if (clsCli.getRazaoSocial().equals("") || clsCli.getRazaoSocial() == null) {
+        
+            partes1.setText("LOCATÁRIO:  "+clsCli.getNome()+", "+clsEnd.getPais()+", SOLTEIRO, EMPREGADO,"
+                + " Carteira de Identidade nº "+clsCli.getRg()+", Carteira Nacional de Habilitação nº "+clsCli.getCnh()+""
+                + " C.P.F. nº "+clsCli.getCpf()+", residente e domiciliado na Rua "+clsEnd.getRua()+"),"
+                + " nº "+clsEnd.getNumero()+", bairro  "+clsEnd.getBairro()+", Cep "+clsEnd.getCep()+", Cidade "+clsEnd.getNomeCidade()+", no Estado "+clsEnd.getEstado()+".");
+        }
+        
+       
         partes1.addBreak();
-
+        partes1.addBreak();
+        
+        
+        //informação do Contrato
+        XWPFParagraph informacao = documento.createParagraph();
+        informacao.setAlignment(ParagraphAlignment.BOTH);
+        XWPFRun informacao1 = informacao.createRun();
+        informacao1.setFontSize(12);
+        informacao1.setFontFamily("Arial");
+        informacao1.setItalic(true);
+        informacao1.setText("As partes acima identificadas têm, entre si, justo e acertado o presente Contrato de Locação de Automóvel"
+                + " de Prazo Determinado, que se regerá pelas cláusulas seguintes e pelas condições descritas no presente.");
+        
+        informacao1.addBreak();
+        informacao1.addBreak();
+        
+        //DO OBJETO DO CONTRATO
+        XWPFParagraph objeto = documento.createParagraph();
+        objeto.setAlignment(ParagraphAlignment.BOTH);
+        XWPFRun objeto1 = objeto.createRun();
+        objeto1.setFontSize(12);
+        objeto1.setFontFamily("Arial");
+        
+        objeto1.setText("DO OBJETO DO CONTRATO");
+        
+        objeto1.addBreak();
+        
+        //OBJETO 1
+        
+        XWPFParagraph carro = documento.createParagraph();
+        carro.setAlignment(ParagraphAlignment.BOTH);
+        XWPFRun carro1 = carro.createRun();
+        carro1.setFontSize(12);
+        carro1.setFontFamily("Arial");
+        
+        carro1.setText("Cláusula 1ª. O presente contrato tem como OBJETO a locação do automóvel"
+                + " Carro "+clsCar.getNome()+","
+                + " de Marca "+clsCar.getMarca()+", "
+                + " de Modelo "+clsCar.getModelo()+", "
+                + " de Ano Modelo "+clsCar.getAnoModelo()+", "
+                + " de Ano Fabricação "+clsCar.getAnoFabricacao()+","
+                + " de Cor "+clsCar.getCor()+", "
+                + " de Placa "+clsCar.getPlaca()+" ,"
+                + " de Chassi "+clsCar.getChassi()+","
+                + " de Numero Renavan "+clsCar.getRenavam()+","
+                + " com KM atual de "+clsCar.getKmRodados()+","
+                + " e estado ("+clsCar.getObsEstado()+"), de propriedade da LOCADORA.");
+        
+        carro1.addBreak();
+        carro1.addBreak();
+        
+        
+        //Do uso
+        XWPFParagraph douso = documento.createParagraph();
+        douso.setAlignment(ParagraphAlignment.BOTH);
+        XWPFRun douso1 = douso.createRun();
+        douso1.setFontSize(12);
+        douso1.setFontFamily("Arial");
+        
+        douso1.setText("DO USO");
+        
+        douso1.addBreak();
+        
+        
+        
+        //CLASULAS DO CONTRATO
+        
+        XWPFParagraph clasulas = documento.createParagraph();
+        clasulas.setAlignment(ParagraphAlignment.BOTH);
+        XWPFRun clasulas0 = clasulas.createRun();
+        clasulas0.setFontSize(12);
+        clasulas0.setFontFamily("Arial");
+        
+        clasulas0.setText("Cláusula 2ª. O automóvel, objeto deste contrato, será "
+                + " utilizado exclusivamente pelo LOCATÁRIO, não sendo permitido o "
+                + " seu uso por terceiros sob pena de rescisão contratual e o pagamento"
+                + " da multa prevista na Cláusula 7ª.");
+        
+        clasulas0.addBreak();
+        clasulas0.addBreak();
+        
+        
+        //CLASULA DA DEVOLUÇÃO
+        
+        XWPFParagraph clasulaDev = documento.createParagraph();
+        clasulaDev.setAlignment(ParagraphAlignment.BOTH);
+        XWPFRun clasulaDev1 = clasulaDev.createRun();
+        clasulaDev1.setFontSize(12);
+        clasulaDev1.setFontFamily("Arial");
+        
+        clasulaDev1.setText("Cláusula 3ª. O LOCATÁRIO deverá devolver o automóvel à "
+                + " LOCADORA nas mesmas condições em que estava quando o recebeu, ou "
+                + " seja, em perfeitas condições de uso, respondendo pelos danos ou "
+                + " prejuízos causados2.");
+        
+        clasulaDev1.addBreak();
+        clasulaDev1.addBreak();
+        //Registro da parte Locataria
+        
+        XWPFParagraph locataria = documento.createParagraph();
+        locataria.setAlignment(ParagraphAlignment.BOTH);
+        XWPFRun locataria1 = locataria.createRun();
+        locataria1.setFontSize(12);
+        locataria1.setFontFamily("Arial");
+        
+        locataria1.setText("");
+        
+        locataria1.addBreak();
+        locataria1.addBreak();
+        
         //String cliente = clsCli.getNome();
         documento.write(arquivo);
         arquivo.close();
