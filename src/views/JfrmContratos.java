@@ -1,15 +1,20 @@
 
 package views;
 
-import static java.awt.SystemColor.window;
+
+import controls.CarrosDAO;
+import controls.ClientesDAO;
+import controls.ConexaoDAO;
 import java.awt.Toolkit;
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javafx.stage.FileChooser;
+import java.util.List;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import models.ClsCarros;
+import models.ClsCidades;
+import models.ClsClientes;
+import models.ClsContratos;
+import models.ClsEnderecos;
 import models.ClsImpressao;
 import models.ClsLogin;
 
@@ -23,18 +28,88 @@ public class JfrmContratos extends javax.swing.JFrame {
     private int userIdLoged;
     private String CpfUserLoged;
     
+    //INDICADOR DE TIPO DE CONTRATO
+    private int tipoContrato; // 0 KM, 1 DIARIA
+    //GLOBAIS INDICES DAS LISTAS
+    private int indiceCliente;
+    private int indiceCarro;
+    
+    //GLOBAIS OBJETOS DE CONEXAO
+    ConexaoDAO conexaoDAO;
+    CarrosDAO carrosDAO;
+    ClientesDAO clientesDAO;
+    
+    //GLOBAIS OBJETOS LISTA 
+    List<ClsCarros> listaCarros;
+    List<ClsClientes> listaClientes;
+    
+    //GLOBAIS OBJETOS USO COMUM
+    ClsEnderecos clsEnderecos;
+    ClsCidades clsCidades;
+    ClsContratos clsContratos;
+    ClsCarros clsCarros;
+    ClsClientes clsClientes;
+    
+    
+  
+    
     public JfrmContratos() {
         initComponents();
         setIcon();
     }
+    
     public JfrmContratos(ClsLogin clslogin) {
+        initComponents();
+        setIcon();
+        
+         clsEnderecos = new ClsEnderecos();
+         clsCidades = new ClsCidades();
+         clsContratos = new ClsContratos();
+         clsCarros = new ClsCarros();
+         clsClientes = new ClsClientes();
+        
+        
+        
+        carrosDAO = new CarrosDAO();
+        clientesDAO = new ClientesDAO();
+        
         userLoged = clslogin.getUserLoged();
         userIdLoged = clslogin.getId();
         CpfUserLoged = clslogin.getCpfUserLoged();
-        initComponents();
-        setIcon();
+       
+        listaCarros = carrosDAO.selectAll();
+        listaClientes = clientesDAO.selectAll();
+        
+        loadCombCarro();
+        loadCombCliente();
+                
     }
 
+    private void loadCombCliente() {
+        if (listaClientes.size() > 1) {
+            for (models.ClsClientes clC : listaClientes) {
+                jCboNome.addItem(clC.getNome());
+            }
+        }
+    }
+    private void loadCombCarro() {
+        if (listaCarros.size() > 1) {
+        for (models.ClsCarros clCar: listaCarros) {
+            jCboPlaca.addItem(""+clCar.getPlaca()+"  "+clCar.getNome()+"  "+clCar.getCor()+"");
+        }
+        }
+    }
+    
+    private void loadCombTipoStatus() {
+        jCboTipoContrato.addItem("KM RODADO");
+        jCboTipoContrato.addItem("DIÁRIA");
+        
+        jCboStatusContrato.addItem("ABERTO");
+        jCboStatusContrato.addItem("ANDAMENTO");
+        jCboStatusContrato.addItem("FINALIZADO");
+        
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -158,7 +233,7 @@ public class JfrmContratos extends javax.swing.JFrame {
 
         jCboNome.setBackground(new java.awt.Color(240, 240, 240));
         jCboNome.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jCboNome.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCboNome.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jCboNome.setToolTipText("Selecione o cliente para iniciar o contrato");
         jCboNome.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome"));
 
@@ -349,7 +424,7 @@ public class JfrmContratos extends javax.swing.JFrame {
 
         jCboPlaca.setBackground(new java.awt.Color(240, 240, 240));
         jCboPlaca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jCboPlaca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCboPlaca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jCboPlaca.setToolTipText("Selecione a placa do veiculo a ser alugado");
         jCboPlaca.setBorder(javax.swing.BorderFactory.createTitledBorder("Placa"));
 
@@ -432,13 +507,13 @@ public class JfrmContratos extends javax.swing.JFrame {
 
         jCboTipoContrato.setBackground(new java.awt.Color(240, 240, 240));
         jCboTipoContrato.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jCboTipoContrato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCboTipoContrato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jCboTipoContrato.setToolTipText("Selecione o tipo de contrato, escolha entre diaria ou km rodado");
         jCboTipoContrato.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo Contrato"));
 
         jCboStatusContrato.setBackground(new java.awt.Color(240, 240, 240));
         jCboStatusContrato.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jCboStatusContrato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jCboStatusContrato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jCboStatusContrato.setToolTipText("Selecione o status do contrato do cliente");
         jCboStatusContrato.setBorder(javax.swing.BorderFactory.createTitledBorder("Status Contrato"));
 
@@ -612,21 +687,24 @@ public class JfrmContratos extends javax.swing.JFrame {
           fileChooser.setFileFilter(filtro);
           fileChooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
           int retorno = fileChooser.showSaveDialog(this);
-         if (retorno == JFileChooser.APPROVE_OPTION ) {
-             File arquivoSalvo = fileChooser.getSelectedFile();
-             String caminhoArquivo = fileChooser.getCurrentDirectory().toString();
-             models.ClsImpressao clsImp = new ClsImpressao();
-              try {
-                  clsImp.criarContrato(caminhoArquivo+"\\"+arquivoSalvo.getName());
-                  
-              } catch (Exception ex) {
-                  System.out.println("Não gerou o arquivo");
-              }
-             System.out.println(caminhoArquivo+"\\"+arquivoSalvo.getName());
+        if (retorno == JFileChooser.APPROVE_OPTION) {
+            File arquivoSalvo = fileChooser.getSelectedFile();
+            String caminhoArquivo = fileChooser.getCurrentDirectory().toString();
+            models.ClsImpressao clsImp = new ClsImpressao(clsEnderecos, clsClientes, clsCarros, clsContratos);
+            try {
+                if (tipoContrato == 0) {
+                    clsImp.criarContratoKM(caminhoArquivo + "\\" + arquivoSalvo.getName());
+                } else if (tipoContrato == 1) {
+                    clsImp.criarContratoDiaria(caminhoArquivo + "\\" + arquivoSalvo.getName());
+                }
+
+            } catch (Exception ex) {
+                System.out.println("Não gerou o arquivo");
+            }
+            System.out.println(caminhoArquivo + "\\" + arquivoSalvo.getName());
         } else {
-             System.out.println("Canlecou aqui.");
+            System.out.println("Canlecou aqui.");
         }
-          
     }//GEN-LAST:event_jBtnImprimirActionPerformed
 
     /**
