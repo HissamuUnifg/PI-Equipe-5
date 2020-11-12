@@ -49,6 +49,7 @@ public class JfrmClientes extends javax.swing.JFrame {
    ClsMascaraCampos clsMascaracampos;
    
    //Variáveis que auxiliam nas ações dos botões
+   
    boolean precionado;
    boolean editando;
    boolean buscando;
@@ -352,7 +353,7 @@ public class JfrmClientes extends javax.swing.JFrame {
     /**
      * usado no evento do botao "Buscar", valida o cpf/cnpj inserido e se for valido executa a busca 
      * na lista pre carregada com os dados do BD
-     */
+    */
     private void buscaCliente(){
         String cpf = JOptionPane.showInputDialog("Digite o CPF/CNPJ para procurar");
         if (cpf.equals("")) {

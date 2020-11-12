@@ -4,10 +4,13 @@ package views;
 import static java.awt.SystemColor.window;
 import java.awt.Toolkit;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import models.ClsImpressao;
 import models.ClsLogin;
 
 /**
@@ -612,6 +615,13 @@ public class JfrmContratos extends javax.swing.JFrame {
          if (retorno == JFileChooser.APPROVE_OPTION ) {
              File arquivoSalvo = fileChooser.getSelectedFile();
              String caminhoArquivo = fileChooser.getCurrentDirectory().toString();
+             models.ClsImpressao clsImp = new ClsImpressao();
+              try {
+                  clsImp.criarContrato(caminhoArquivo+"\\"+arquivoSalvo.getName());
+                  
+              } catch (Exception ex) {
+                  System.out.println("Não gerou o arquivo");
+              }
              System.out.println(caminhoArquivo+"\\"+arquivoSalvo.getName());
         } else {
              System.out.println("Canlecou aqui.");

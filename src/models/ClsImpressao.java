@@ -22,6 +22,8 @@ package models;
 
 import controls.ConexaoDAO;
 import java.awt.BorderLayout;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +37,10 @@ import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.swing.JRViewer;
 import net.sf.jasperreports.view.JasperViewer;
+import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
 
 /**
  * 
@@ -66,8 +72,7 @@ public class ClsImpressao {
 
         //compila o relatório
         JasperReport relatorio = JasperCompileManager.compileReport(desenho);
-               
-
+         
         //executa o relatório
         Map parametros = new HashMap();
         parametros.put(parametro, valorParametro);
@@ -150,11 +155,70 @@ public class ClsImpressao {
      this.clsCont = clsCont;
     }
     
-    public void criarContrato(){
+    public void criarContrato(String caminhoNomeArq) throws Exception {
         // TODO O CODIGO PARA GERAR O ARQUIVO VAI FICAR NESSE METODO, AO CRIAR O OBJETO 
         //ClsImpressão, observar o construtor quem pede os 3 objetos da tela de contratos.
-        String cliente = clsCli.getNome();
+       //criando o Documento em Branco
+        XWPFDocument documento = new XWPFDocument();
+        FileOutputStream arquivo = new FileOutputStream(new File(caminhoNomeArq+".docx"));
         
+        //Titulo do Contrato
+        XWPFParagraph titulo = documento.createParagraph();
+        titulo.setAlignment(ParagraphAlignment.CENTER);
+        XWPFRun titulo1 = titulo.createRun();
+        titulo1.setFontSize(12);
+        titulo1.setFontFamily("Arial");
+        titulo1.setText("CONTRATO DE ALUGUEL DE VEICULOS - LOCADORA BOA VIAGEM");
+        titulo1.addBreak();
+        
+        //Registro das Partes
+        XWPFParagraph partes = documento.createParagraph();
+        partes.setAlignment(ParagraphAlignment.BOTH);
+        XWPFRun partes1 = partes.createRun();
+        partes1.setFontSize(12);
+        partes1.setFontFamily("Arial");
+
+        partes1.setText("CREATE TABLE IF NOT EXISTS Contratos (\n"
+                + "  id INT NOT NULL AUTO_INCREMENT,\n"
+                + "  id_cliente INT NOT NULL,\n"
+                + "  id_carro INT NOT NULL,\n"
+                + "  id_colaborador INT NOT NULL,\n"
+                + "  Observacoes VARCHAR(1000) NULL,\n"
+                + "  QuantidadeDiarias INT(3) NULL,\n"
+                + "  QuantidadeKmRet INT(9) NULL,\n"
+                + "  ValorExtra FLOAT NULL,\n"
+                + "  ValorTotal FLOAT NULL,\n"
+                + "  TipoLocacao CHAR(1) NOT NULL,\n"
+                + "  DataSaida DATE NOT NULL,\n"
+                + "  DataChegada DATE NULL,\n"
+                + "  DataContrato DATE NOT NULL,\n"
+                + "  Status VARCHAR(15) NOT NULL,\n"
+                + "  PRIMARY KEY (id),\n"
+                + "  CONSTRAINT colaboradores_contratos\n"
+                + "    FOREIGN KEY (id_colaborador)\n"
+                + "    REFERENCES Colaboradores (id)\n"
+                + "    ON DELETE NO ACTION\n"
+                + "    ON UPDATE NO ACTION,\n"
+                + "  CONSTRAINT clientes_contratos\n"
+                + "    FOREIGN KEY (id_cliente)\n"
+                + "    REFERENCES Clientes (id)\n"
+                + "    ON DELETE NO ACTION\n"
+                + "    ON UPDATE NO ACTION,\n"
+                + "  CONSTRAINT carro_contrato\n"
+                + "    FOREIGN KEY (id_carro)\n"
+                + "    REFERENCES Carros (id)\n"
+                + "    ON DELETE NO ACTION\n"
+                + "    ON UPDATE NO ACTION)");
+
+        partes1.addBreak();
+        partes1.addBreak();
+
+        //String cliente = clsCli.getNome();
+        documento.write(arquivo);
+        arquivo.close();
+
     }
+
+   
     
 }
