@@ -474,7 +474,7 @@ public class ClsImpressao {
         locador1.setFontSize(12);
         locador1.setFontFamily("Arial");
         
-        locador1.setText("____________________________________________"); 
+        locador1.setText("____________________________________________/n/n"); 
         locador1.setText("Locadora Boa Viagem");
         locador1.addBreak();
         locador1.addBreak();
