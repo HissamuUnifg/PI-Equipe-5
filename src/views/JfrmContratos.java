@@ -7,6 +7,7 @@ import controls.CidadesDAO;
 import controls.ClientesDAO;
 import controls.ConexaoDAO;
 import controls.EnderecosDAO;
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.io.File;
 import java.text.NumberFormat;
@@ -14,17 +15,22 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.DefaultFormatterFactory;
 import models.ClsCarros;
 import models.ClsCidades;
 import models.ClsClientes;
 import models.ClsContratos;
+import models.ClsControlaCpNumeric;
 import models.ClsEnderecos;
 import models.ClsImpressao;
 import models.ClsLogin;
 import models.ClsMascaraCampos;
+import models.ClsValidacoes;
 
 /**
  *  
@@ -46,13 +52,14 @@ public class JfrmContratos extends javax.swing.JFrame {
     SimpleDateFormat formatoBr = new SimpleDateFormat("dd-MM-yyyy");
     Locale locale;
     NumberFormat FormatterMoeda;
+    ClsValidacoes clsValidacoes;
     
     //GLOBAIS OBJETOS DE CONEXAO
     ConexaoDAO conexaoDAO;
     CarrosDAO carrosDAO;
     ClientesDAO clientesDAO;
     EnderecosDAO enderecosDAO;
-    CidadesDAO cidadesDAO;
+    
     
     //GLOBAIS OBJETOS LISTA 
     List<ClsCarros> listaCarros;
@@ -77,22 +84,22 @@ public class JfrmContratos extends javax.swing.JFrame {
     public JfrmContratos(ClsLogin clslogin) {
         initComponents();
         setIcon();
-        
-         clsEnderecos = new ClsEnderecos();
-         clsCidades = new ClsCidades();
-         clsContratos = new ClsContratos();
-         clsCarros = new ClsCarros();
-         clsClientes = new ClsClientes();
-         clsMascaracampos = new ClsMascaraCampos();
-         locale = new Locale("pt", "BR");
-         FormatterMoeda = NumberFormat.getCurrencyInstance(locale);
-        
-        
+
+        clsEnderecos = new ClsEnderecos();
+        clsCidades = new ClsCidades();
+        clsContratos = new ClsContratos();
+        clsCarros = new ClsCarros();
+        clsClientes = new ClsClientes();
+        clsMascaracampos = new ClsMascaraCampos();
+        locale = new Locale("pt", "BR");
+        FormatterMoeda = NumberFormat.getCurrencyInstance(locale);
+        clsValidacoes = new ClsValidacoes();
+
         carrosDAO = new CarrosDAO();
         clientesDAO = new ClientesDAO();
         enderecosDAO = new EnderecosDAO();
-        cidadesDAO = new CidadesDAO();
-        
+
+
         userLoged = clslogin.getUserLoged();
         userIdLoged = clslogin.getId();
         CpfUserLoged = clslogin.getCpfUserLoged();
@@ -100,9 +107,11 @@ public class JfrmContratos extends javax.swing.JFrame {
         listaCarros = carrosDAO.selectAll();
         listaClientes = clientesDAO.selectAll();
         
+        
         precionado = false;
         editando = false;
         
+        controleDigitacao();
         loadCombCarro();
         loadCombTipoStatus();
         loadCombCliente();
@@ -139,6 +148,15 @@ public class JfrmContratos extends javax.swing.JFrame {
         jFtxtCelular.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraCelular(jFtxtCelular)));
     }
     
+    private void controleDigitacao() {
+        //todos os Jtext que estiver aqui só vão aceitar numeros e pontos
+        jTxtValorDiaria.setDocument(new ClsControlaCpNumeric());
+        jTxtValorKmRodado.setDocument(new ClsControlaCpNumeric());
+        jTxtQtdDias.setDocument(new ClsControlaCpNumeric());
+        jTxtValorKmRodado.setDocument(new ClsControlaCpNumeric());
+        jTxtValorExtra.setDocument(new ClsControlaCpNumeric());
+
+    }
     /**
      * Passando o valor true ele vai formatar um CPF
      * Passando o valor false ele vai formatar um CNPJ
@@ -300,7 +318,7 @@ public class JfrmContratos extends javax.swing.JFrame {
     private void loadCombCarro() {
         if (listaCarros.size() > 1) {
         for (models.ClsCarros clCar: listaCarros) {
-            jCboPlaca.addItem(""+clCar.getPlaca()+"  "+clCar.getNome()+"  "+clCar.getCor()+"");
+            jCboPlaca.addItem(clCar.getPlaca());
         }
         }
     }
@@ -317,34 +335,199 @@ public class JfrmContratos extends javax.swing.JFrame {
     
     
     private void buscaIndiceCarros(String placaCarro) {
-        List<models.ClsCarros> ResultSet = listaCarros;
-        for (int i = 0; i < ResultSet.size(); i++) {
-            if (ResultSet.get(i).getPlaca().equals(placaCarro)) {
+        for (int i = 0; i < listaCarros.size(); i++) {
+            if (listaCarros.get(i).getPlaca().equals(placaCarro)) {
                 indiceCarro = i;
                 clsCarros = listaCarros.get(indiceCarro);
+                clsContratos.setIdCarro(clsCarros.getId());
+                loadTxtCarro();
                 break;
             }
         }
-
+    }
+    private void buscaIndiceCarrosID(int  idCarro) {
+        for (int i = 0; i < listaCarros.size(); i++) {
+            if (listaCarros.get(i).getId() == idCarro) {
+                indiceCarro = i;
+                clsCarros = listaCarros.get(indiceCarro);
+                clsContratos.setIdCarro(clsCarros.getId());
+                loadTxtCarro();
+                break;
+            }
+        }
     }
     
     private void buscaIndiceClientes(String nomeCliente){
         boolean encontrado = false;
-        List<models.ClsClientes> ResultSet = listaClientes;
-        for (int i = 0; i < ResultSet.size(); i++) {
-            if (ResultSet.get(i).getNome().equals(nomeCliente)) {
+        for (int i = 0; i < listaClientes.size(); i++) {
+            if (listaClientes.get(i).getNome().equals(nomeCliente)) {
                 indiceCliente = i;
                 clsClientes = listaClientes.get(indiceCliente);
+                clsContratos.setIdCliente(clsClientes.getId());
+                clsContratos.setIdColaborador(userIdLoged);
+                loadTxtCliente(i);
                 encontrado = true;
                 break;
             }
         }
         if (encontrado) {
             clsEnderecos = enderecosDAO.selectId(clsClientes.getId());
-            clsCidades = cidadesDAO.selectId(clsEnderecos.getIdCidade());
+            loadTxtEndCLiente();
         }
     }
+    private void buscaIndiceClientesID(int idCliente){
+        boolean encontrado = false;
+        for (int i = 0; i < listaClientes.size(); i++) {
+            if (listaClientes.get(i).getId() == idCliente) {
+                indiceCliente = i;
+                clsClientes = listaClientes.get(indiceCliente);
+                clsContratos.setIdCliente(clsClientes.getId());
+                clsContratos.setIdColaborador(userIdLoged);
+                loadTxtCliente(i);
+                encontrado = true;
+                break;
+            }
+        }
+        if (encontrado) {
+            clsEnderecos = enderecosDAO.selectId(clsClientes.getId());
+            loadTxtEndCLiente();
+        }
+    }
+    
+    private void loadTxtCliente(int indice) {
+        
+        jTxtObservacoes.setText(listaClientes.get(indice).getObservacoes());
+        jTxtEmail.setText(listaClientes.get(indice).getEmail());
+        if (listaClientes.get(indice).getNome() == null || listaClientes.get(indice).getNome().equals("")) {
+            jCboNome.setSelectedItem(listaClientes.get(indice).getRazaoSocial());
+            
+        } else if (listaClientes.get(indice).getRazaoSocial() == null || listaClientes.get(indice).getRazaoSocial().equals("")) {
+            jCboNome.setSelectedItem(listaClientes.get(indice).getNome());
 
+        }
+        if (listaClientes.get(indice).getCpf() == null || listaClientes.get(indice).getCpf().equals("")) {
+            jFTxtCpfCnpj.setText(listaClientes.get(indice).getCnpj());
+
+        } else if (listaClientes.get(indice).getCnpj() == null || listaClientes.get(indice).getCnpj().equals("")) {
+            jFTxtCpfCnpj.setText(listaClientes.get(indice).getCpf());
+
+        }
+        jFtxtCelular.setText(listaClientes.get(indice).getCelular());
+        jFtxtFone.setText(listaClientes.get(indice).getTelefone());
+        if (listaClientes.get(indice).getRg().equals("") || listaClientes.get(indice).getRg() == null) {
+            jFtxtRgIe.setText("" + listaClientes.get(indice).getIe());
+        } else if (listaClientes.get(indice).getIe().equals("") || listaClientes.get(indice).getIe() == null) {
+            jFtxtRgIe.setText("" + listaClientes.get(indice).getRg());
+        }
+        jFtxtCnh.setText("" + listaClientes.get(indice).getCnh());
+
+    }
+    
+    private void loadTxtEndCLiente() {
+ 
+        jTxtBairro.setText(clsEnderecos.getBairro());
+        jTxtNumero.setText(clsEnderecos.getNumero());
+        jTxtReferencia.setText(clsEnderecos.getReferencia());
+        jTxtRua.setText(clsEnderecos.getRua());
+        jFtxtCep.setText(clsEnderecos.getCep());
+        jTxtEstado.setText(clsEnderecos.getEstado());
+        jTxtTipoEnd.setText(clsEnderecos.getTipoEndereco());
+        jTxtCidade.setText(clsEnderecos.getNomeCidade());
+    }
+    
+    private void loadTxtCarro() {
+        jTxtNome.setText(clsCarros.getNome());
+        jTxtClasse.setText(clsCarros.getClasse());
+        jTxtTipo.setText(clsCarros.getTipoVeiculo());
+        jTxtValorKmRodado.setText(FormatterMoeda.format(clsCarros.getValorKmRd()));
+        jTxtValorDiaria.setText(FormatterMoeda.format(clsCarros.getValorDiariaLoc()));
+        jTxtAnoFabricacao.setText(""+clsCarros.getAnoFabricacao());
+        jTxtAnoModelo.setText(""+clsCarros.getAnoModelo());
+        jTxtChassi.setText(clsCarros.getChassi());
+        jTxtCor.setText(clsCarros.getCor());
+        jTxtKm.setText(""+clsCarros.getKmRodados());
+        jTxtMarca.setText(clsCarros.getMarca());
+        jTxtNumeroRenavan.setText(clsCarros.getRenavam());
+        jTxtVeiculo.setText(clsCarros.getNome());
+ 
+    }
+    
+    private void loadTxtFull(int idCarro, int idCliente) {
+        buscaIndiceCarrosID(idCarro);
+        buscaIndiceClientesID(idCliente);
+        jTxtObservacoes.setText(clsContratos.getObservacoes());
+        jTxtValorExtra.setText(FormatterMoeda.format(clsContratos.getValorExtra()));
+        jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.getValorTotal()));
+        jTxtValorKmFinal.setText(""+clsContratos.getQuantidadeKmRet());
+        jTxtQtdDias.setText(""+clsContratos.getQuantidadeDiarias());
+    }
+    
+        /**
+     * Usado por lançar um MensageBox de campo obrigatório
+     * @param dado 
+     */
+    private void msgObgCampo(String dado) {
+        JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " "
+                + "é obrigatório", "Informação", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+     /**
+     * Usado por lançar um MensageBox de campo obrigatório Advertencia
+     * @param dado 
+     */
+    private void msgAdvCampo(String dado) {
+        JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + " "
+                + "está maior ou menor do que o permitido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+     /**
+     * Usado por lançar um MensageBox de campo obrigatório Erro
+     * @param dado 
+     */
+    private void msgErrCampo(String dado) {
+        JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + ""
+                + " é invalido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private boolean validaCampos(){
+        if (jCboNome.getSelectedIndex() == 0) {
+            msgObgCampo("Nome Cliente");
+            jCboNome.requestFocus();
+            return false;
+        } else if (jCboPlaca.getSelectedIndex() == 0) {
+            msgAdvCampo("Carro");
+            jCboPlaca.requestFocus();
+            return false;
+        } else  if (jCboTipoContrato.getSelectedIndex() == 0) {
+            msgObgCampo("Tipo Contrato");
+            jCboTipoContrato.requestFocus();
+            return false;
+        } else if (jCboStatusContrato.getSelectedIndex() == 0) {
+            msgAdvCampo("Status Contrato");
+            jCboStatusContrato.requestFocus();
+            return false;
+        } else if (jTxtValorKmFinal.getText().length() > 5) {
+            msgErrCampo("Valor Km Final");
+            jTxtValorKmFinal.requestFocus();
+            return false;
+        } else if (jTxtQtdDias.getText().length() > 3) {
+            msgErrCampo("Quantidade de Dias");
+            jTxtQtdDias.requestFocus();
+            return false;
+        } else if (JfTxtDataSaida.getText().length() < 1) {
+            msgObgCampo("Data Saida");
+            JfTxtDataSaida.requestFocus();
+            return false;
+        } else if (JfTxtDataChegada.getText().length() < 1) {
+            msgErrCampo("Data Chegada");
+            JfTxtDataChegada.requestFocus();
+            return false;
+        } else {
+             return true;
+        }
+           
+       
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -477,6 +660,11 @@ public class JfrmContratos extends javax.swing.JFrame {
         jCboNome.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jCboNome.setToolTipText("Selecione o cliente para iniciar o contrato");
         jCboNome.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome"));
+        jCboNome.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jCboNomeFocusLost(evt);
+            }
+        });
 
         jFTxtCpfCnpj.setBackground(new java.awt.Color(240, 240, 240));
         jFTxtCpfCnpj.setBorder(javax.swing.BorderFactory.createTitledBorder("CPF/CNPJ"));
@@ -668,6 +856,11 @@ public class JfrmContratos extends javax.swing.JFrame {
         jCboPlaca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jCboPlaca.setToolTipText("Selecione a placa do veiculo a ser alugado");
         jCboPlaca.setBorder(javax.swing.BorderFactory.createTitledBorder("Placa"));
+        jCboPlaca.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jCboPlacaFocusLost(evt);
+            }
+        });
 
         jTxtTipo.setBackground(new java.awt.Color(240, 240, 240));
         jTxtTipo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -762,16 +955,41 @@ public class JfrmContratos extends javax.swing.JFrame {
         jCboStatusContrato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jCboStatusContrato.setToolTipText("Selecione o status do contrato do cliente");
         jCboStatusContrato.setBorder(javax.swing.BorderFactory.createTitledBorder("Status Contrato"));
+        jCboStatusContrato.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jCboStatusContratoFocusLost(evt);
+            }
+        });
 
         jTxtValorKmFinal.setBackground(new java.awt.Color(240, 240, 240));
         jTxtValorKmFinal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtValorKmFinal.setToolTipText("Digite o KM rodado no ato da entrega do veiculo");
         jTxtValorKmFinal.setBorder(javax.swing.BorderFactory.createTitledBorder("KM Rodado Final"));
+        jTxtValorKmFinal.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtValorKmFinalFocusLost(evt);
+            }
+        });
+        jTxtValorKmFinal.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTxtValorKmFinalMouseClicked(evt);
+            }
+        });
 
         jTxtQtdDias.setBackground(new java.awt.Color(240, 240, 240));
         jTxtQtdDias.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtQtdDias.setToolTipText("Digite a quantidade de dias que será alugado o veiculo");
         jTxtQtdDias.setBorder(javax.swing.BorderFactory.createTitledBorder("Dias Alugados"));
+        jTxtQtdDias.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtQtdDiasFocusLost(evt);
+            }
+        });
+        jTxtQtdDias.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTxtQtdDiasMouseClicked(evt);
+            }
+        });
 
         jTxtObservacoes.setBackground(new java.awt.Color(240, 240, 240));
         jTxtObservacoes.setToolTipText("Breve observação caso houver sobre o veiculo");
@@ -786,16 +1004,36 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtValorExtra.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtValorExtra.setToolTipText("Campo para digitação de despesas extras, como multas, avarias e etc.");
         jTxtValorExtra.setBorder(javax.swing.BorderFactory.createTitledBorder("Valores Extras"));
+        jTxtValorExtra.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtValorExtraFocusLost(evt);
+            }
+        });
+        jTxtValorExtra.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTxtValorExtraMouseClicked(evt);
+            }
+        });
 
         JfTxtDataChegada.setBackground(new java.awt.Color(240, 240, 240));
         JfTxtDataChegada.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Chegada"));
         JfTxtDataChegada.setToolTipText("Inserir data de chegada do Veiculo!");
         JfTxtDataChegada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        JfTxtDataChegada.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JfTxtDataChegadaFocusLost(evt);
+            }
+        });
 
         JfTxtDataSaida.setBackground(new java.awt.Color(240, 240, 240));
         JfTxtDataSaida.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Saida"));
         JfTxtDataSaida.setToolTipText("Inserir data de saida do Veiculo!");
         JfTxtDataSaida.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        JfTxtDataSaida.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                JfTxtDataSaidaFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelDadosValoresLayout = new javax.swing.GroupLayout(jPanelDadosValores);
         jPanelDadosValores.setLayout(jPanelDadosValoresLayout);
@@ -954,15 +1192,18 @@ public class JfrmContratos extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnImprimirActionPerformed
 
     private void jCboTipoContratoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jCboTipoContratoFocusLost
-        if(jCboTipoContrato.getSelectedItem().equals("KM-RODADO")){
+
+        if (jCboTipoContrato.getSelectedItem().equals("KM-RODADO")) {
             enableTipoKM(true);
             tipoContrato = 0;
             clsContratos.setTipoLocacao(jCboTipoContrato.getSelectedItem().toString());
-        }else if(jCboTipoContrato.getSelectedItem().equals("DIÁRIA")){
+        } else if (jCboTipoContrato.getSelectedItem().equals("DIÁRIA")) {
             tipoContrato = 1;
             clsContratos.setTipoLocacao(jCboTipoContrato.getSelectedItem().toString());
             enableTipoKM(false);
         }
+
+
     }//GEN-LAST:event_jCboTipoContratoFocusLost
 
     private void jBtnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnNovoActionPerformed
@@ -984,6 +1225,92 @@ public class JfrmContratos extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jBtnNovoActionPerformed
 
+    private void jCboNomeFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jCboNomeFocusLost
+
+            buscaIndiceClientes(jCboNome.getSelectedItem().toString());
+
+    }//GEN-LAST:event_jCboNomeFocusLost
+
+    private void jCboPlacaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jCboPlacaFocusLost
+
+            buscaIndiceCarros(jCboPlaca.getSelectedItem().toString());
+    
+    }//GEN-LAST:event_jCboPlacaFocusLost
+
+    private void jCboStatusContratoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jCboStatusContratoFocusLost
+
+            clsContratos.setStatus(jCboStatusContrato.getSelectedItem().toString());
+
+    }//GEN-LAST:event_jCboStatusContratoFocusLost
+
+    private void jTxtValorKmFinalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtValorKmFinalFocusLost
+        clsContratos.setValorExtra(0);
+        jTxtValorExtra.setText(FormatterMoeda.format(clsContratos.getValorExtra()));
+        if(jTxtValorKmFinal.getText().length() < 1){
+            JOptionPane.showMessageDialog(this, "O campo deve ser preenchido", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            clsContratos.setQuantidadeKmRet(Integer.parseInt(jTxtValorKmFinal.getText()));
+            jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.calcularValorTotalKM(clsCarros.getValorKmRd())));
+        }
+    }//GEN-LAST:event_jTxtValorKmFinalFocusLost
+
+    private void jTxtValorExtraFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtValorExtraFocusLost
+        if("".equals(jTxtValorExtra.getText())){
+            clsContratos.setValorExtra(0);
+        }else if (jTxtValorExtra.getText().length() > 14){
+            JOptionPane.showMessageDialog(this, "O valor inserido é maior que o permitido", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+            try {
+                clsContratos.setValorExtra(clsValidacoes.formataMoeda(jTxtValorExtra.getText()));
+                jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.calcularValorTotalKM(clsCarros.getValorKmRd())));
+                jTxtValorExtra.setText(FormatterMoeda.format(clsContratos.getValorExtra()));
+            } catch (ParseException ex) {
+                System.out.println(""+ex);
+            }
+            
+        }
+        
+    }//GEN-LAST:event_jTxtValorExtraFocusLost
+
+    private void jTxtValorExtraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTxtValorExtraMouseClicked
+        jTxtValorExtra.setText("");
+    }//GEN-LAST:event_jTxtValorExtraMouseClicked
+
+    private void jTxtQtdDiasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtQtdDiasFocusLost
+        clsContratos.setValorExtra(0);
+        jTxtValorExtra.setText(FormatterMoeda.format(clsContratos.getValorExtra()));
+        clsContratos.setQuantidadeDiarias(Integer.parseInt(jTxtQtdDias.getText()));
+        jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.calcularValorTotalDIA(clsCarros.getValorDiariaLoc())));
+    }//GEN-LAST:event_jTxtQtdDiasFocusLost
+
+    private void jTxtValorKmFinalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTxtValorKmFinalMouseClicked
+        jTxtValorKmFinal.setText("");
+    }//GEN-LAST:event_jTxtValorKmFinalMouseClicked
+
+    private void jTxtQtdDiasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTxtQtdDiasMouseClicked
+        jTxtQtdDias.setText("");
+    }//GEN-LAST:event_jTxtQtdDiasMouseClicked
+
+    private void JfTxtDataSaidaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JfTxtDataSaidaFocusLost
+        if (clsValidacoes.validaDataFormatoBR(JfTxtDataSaida.getText()) == true) {
+            clsContratos.setDataSaida(clsValidacoes.dataFormatoUS(JfTxtDataSaida.getText()));
+            clsContratos.setDataContrato(clsValidacoes.dataFormatoUS(JfTxtDataSaida.getText()));
+        } else {
+            msgErrCampo("Data Saida");
+        }
+    }//GEN-LAST:event_JfTxtDataSaidaFocusLost
+
+    private void JfTxtDataChegadaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_JfTxtDataChegadaFocusLost
+        if (clsValidacoes.validaDataFormatoBR(JfTxtDataChegada.getText()) == true) {
+            clsContratos.setDataChegada(clsValidacoes.dataFormatoUS(JfTxtDataChegada.getText()));
+            clsContratos.setDataContrato(clsValidacoes.dataFormatoUS(JfTxtDataSaida.getText()));
+        } else {
+            msgErrCampo("Data Saida");
+        }
+    }//GEN-LAST:event_JfTxtDataChegadaFocusLost
+
+    
+    
     /**
      * @param args the command line arguments
      */

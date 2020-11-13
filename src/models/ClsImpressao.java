@@ -203,6 +203,7 @@ public class ClsImpressao {
                 + "residente e domiciliado na Rua RUA DEMONSTRAÇÃO, nº 001, bairro CENTRO, Cep 46430000, Cidade GUANAMBI, no Estado BAHIA");
 
         partes1.addBreak();
+        partes1.addBreak();
         
         if(clsCli.getNome().equals("") || clsCli.getNome() == null){
        
@@ -239,7 +240,7 @@ public class ClsImpressao {
         
         //DO OBJETO DO CONTRATO
         XWPFParagraph objeto = documento.createParagraph();
-        objeto.setAlignment(ParagraphAlignment.BOTH);
+        objeto.setAlignment(ParagraphAlignment.LEFT);
         XWPFRun objeto1 = objeto.createRun();
         objeto1.setFontSize(12);
         objeto1.setFontFamily("Arial");
@@ -247,7 +248,7 @@ public class ClsImpressao {
         objeto1.setText("DO OBJETO DO CONTRATO");
         
         objeto1.addBreak();
-        
+        objeto1.addBreak();
         //
         
         XWPFParagraph carro = documento.createParagraph();
@@ -282,6 +283,7 @@ public class ClsImpressao {
         
         douso1.setText("DO USO");
         
+        douso1.addBreak();
         douso1.addBreak();
         
         
@@ -332,7 +334,8 @@ public class ClsImpressao {
         prazo1.setText("DO PRAZO");
         
         prazo1.addBreak();
-
+        prazo1.addBreak();
+        
         //CLASULA 4
         
         XWPFParagraph clasula4 = documento.createParagraph();
