@@ -74,6 +74,43 @@ public class CidadesDAO {
        
         return listClsCidades;      
     }
+    
+    public ClsCidades selectId(int idCidade) {
+        ClsCidades clsCid = new ClsCidades();
+        String sql = "select Id, NomeCidade, SiglaEstado, Estado, Pais from cidades where id = ? ";
+               
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        
+        try {
+            
+            conn = ConexaoDAO.getConexaoDAO();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, idCidade);
+            rs = ps.executeQuery();
+            
+            while (rs.next()) {
+                ClsCidades clsCidades = new ClsCidades();
+                clsCidades.setIdCidade(rs.getInt("Id"));
+                clsCidades.setNomeCidade(rs.getString("NomeCidade"));
+                clsCidades.setSiglaEstado(rs.getString("SiglaEstado"));
+                clsCidades.setEstado(rs.getString("Estado"));
+                clsCidades.setPais(rs.getString("Pais"));
+                clsCid = clsCidades;
+            }
+            
+            retorno = "Listado com Sucesso!";
+            sucesso = true;            
+        } catch (SQLException e) {
+            retorno = "Erro aqui:" +e;
+            sucesso = false;
+        } finally {
+            ConexaoDAO.FecharConexao();           
+        }
+       
+        return clsCid;      
+    }
      
     
     

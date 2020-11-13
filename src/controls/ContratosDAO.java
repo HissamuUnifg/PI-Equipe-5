@@ -3,6 +3,7 @@ package controls;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import models.ClsContratos;
@@ -146,8 +147,72 @@ public class ContratosDAO {
         }
     
  }
+ 
+ public void delete(int idContrato) {
+        String sql = "delete from contratos where id = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+
+        try {
+            conn = ConexaoDAO.getConexaoDAO();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, idContrato);
+
+            ps.execute();
+            retorno = "Excluido com sucesso!";
+            sucesso = true;
+        } catch (SQLException e) {
+            sucesso = false;
+            retorno = "Erro ao excluir:" + e;
+        } finally {
+            ConexaoDAO.FecharConexao();
+        }
+    }
     
-    
-    
+ public ClsContratos select(int idContrato) {
+        ClsContratos clsCont = new ClsContratos();
+        String sql = "select id, id_cliente, id_carro, id_colaborador, Observacoes, QuantidadeDiarias, "
+                + " QuantidadeKmRet,ValorExtra,ValorTotal,TipoLocacao,DataSaida,DataChegada, "
+                + " DataContrato,Status from contratos where = ?";
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            conn = ConexaoDAO.getConexaoDAO();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, idContrato);
+            rs = ps.executeQuery();
+            
+            while (rs.next()){
+            ClsContratos clsContratos = new ClsContratos();
+            clsContratos.setId(rs.getInt("id"));
+            clsContratos.setIdCliente(rs.getInt("id_cliente"));
+            clsContratos.setIdCarro(rs.getInt("id_carro"));
+            clsContratos.setIdColaborador(rs.getInt("id_colaborador"));
+            clsContratos.setObservacoes(rs.getString("Observacoes"));
+            clsContratos.setQuantidadeDiarias(rs.getInt("quantidadediarias"));
+            clsContratos.setQuantidadeKmRet(rs.getInt("quantidadekmret"));
+            clsContratos.setValorExtra(rs.getFloat("valorextra"));
+            clsContratos.setValorTotal(rs.getFloat("valortotal"));
+            clsContratos.setTipoLocacao(rs.getString("tipolocacao"));
+            clsContratos.setDataSaida(formatoUS.format(rs.getDate("datasaida")));
+            clsContratos.setDataChegada(formatoUS.format(rs.getDate("datachegada")));
+            clsContratos.setDataContrato(formatoUS.format(rs.getDate("datacontrato")));
+            clsContratos.setStatus(rs.getString("status"));
+            clsCont = clsContratos;
+            }
+            
+            retorno = "Contrato encontrado!";
+            sucesso = true;
+            
+        } catch (SQLException e) {
+            sucesso = false;
+            retorno = "Erro ao buscar contrato: "+e;
+        }finally {
+            ConexaoDAO.FecharConexao();
+        }
+        return clsCont;
+    }
     
 }

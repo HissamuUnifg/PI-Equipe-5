@@ -3,13 +3,20 @@ package views;
 
 
 import controls.CarrosDAO;
+import controls.CidadesDAO;
 import controls.ClientesDAO;
 import controls.ConexaoDAO;
+import controls.EnderecosDAO;
 import java.awt.Toolkit;
 import java.io.File;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.DefaultFormatterFactory;
 import models.ClsCarros;
 import models.ClsCidades;
 import models.ClsClientes;
@@ -17,6 +24,7 @@ import models.ClsContratos;
 import models.ClsEnderecos;
 import models.ClsImpressao;
 import models.ClsLogin;
+import models.ClsMascaraCampos;
 
 /**
  *  
@@ -33,11 +41,18 @@ public class JfrmContratos extends javax.swing.JFrame {
     //GLOBAIS INDICES DAS LISTAS
     private int indiceCliente;
     private int indiceCarro;
+    private boolean precionado;
+    private boolean editando;
+    SimpleDateFormat formatoBr = new SimpleDateFormat("dd-MM-yyyy");
+    Locale locale;
+    NumberFormat FormatterMoeda;
     
     //GLOBAIS OBJETOS DE CONEXAO
     ConexaoDAO conexaoDAO;
     CarrosDAO carrosDAO;
     ClientesDAO clientesDAO;
+    EnderecosDAO enderecosDAO;
+    CidadesDAO cidadesDAO;
     
     //GLOBAIS OBJETOS LISTA 
     List<ClsCarros> listaCarros;
@@ -49,6 +64,7 @@ public class JfrmContratos extends javax.swing.JFrame {
     ClsContratos clsContratos;
     ClsCarros clsCarros;
     ClsClientes clsClientes;
+    ClsMascaraCampos clsMascaracampos;
     
     
   
@@ -67,11 +83,15 @@ public class JfrmContratos extends javax.swing.JFrame {
          clsContratos = new ClsContratos();
          clsCarros = new ClsCarros();
          clsClientes = new ClsClientes();
-        
+         clsMascaracampos = new ClsMascaraCampos();
+         locale = new Locale("pt", "BR");
+         FormatterMoeda = NumberFormat.getCurrencyInstance(locale);
         
         
         carrosDAO = new CarrosDAO();
         clientesDAO = new ClientesDAO();
+        enderecosDAO = new EnderecosDAO();
+        cidadesDAO = new CidadesDAO();
         
         userLoged = clslogin.getUserLoged();
         userIdLoged = clslogin.getId();
@@ -80,9 +100,193 @@ public class JfrmContratos extends javax.swing.JFrame {
         listaCarros = carrosDAO.selectAll();
         listaClientes = clientesDAO.selectAll();
         
+        precionado = false;
+        editando = false;
+        
         loadCombCarro();
+        loadCombTipoStatus();
         loadCombCliente();
+        disableControl();
+        try {
+            addMascara();
+        } catch (ParseException ex) {
+            System.out.println("Erro aqui: "+ ex);
+        }
                 
+    }
+    
+    /**
+     * Responsavel por trocar a função e icone do botão "jBtnNovo"
+     * Passando false o botão assume a posição de novo
+     * Passando true o botão assume a posição de cancelar 
+     * @param funcao 
+     */        
+    private void setIconBtnNv(boolean funcao) {
+        if (funcao == true) {
+            jBtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/icone_cancelar.png"))); // NOI18N
+            jBtnNovo.setToolTipText("Clique aqui para cancelar a operacao");
+        } else {
+            jBtnNovo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/add_121935.png"))); // NOI18N
+            jBtnNovo.setToolTipText("Clique aqui para novo Veiculo");
+        }
+    }
+    
+    private void addMascara() throws ParseException {
+        JfTxtDataChegada.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraData(JfTxtDataChegada)));
+        JfTxtDataSaida.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraData(JfTxtDataSaida)));
+        jFtxtCep.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraCep(jFtxtCep)));
+        jFtxtFone.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraTelefone(jFtxtFone)));
+        jFtxtCelular.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraCelular(jFtxtCelular)));
+    }
+    
+    /**
+     * Passando o valor true ele vai formatar um CPF
+     * Passando o valor false ele vai formatar um CNPJ
+     * @param tipo
+     * @throws ParseException 
+     */
+    private void addMascaraCpfCnpj(boolean tipo) throws ParseException {
+        //se for true aplica a mascara CPF // se for false aplica a mascara cnpj
+        if (tipo == true) {
+                jFTxtCpfCnpj.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraCpf(jFTxtCpfCnpj))); 
+        } else if (tipo == false) {
+                jFTxtCpfCnpj.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraCnpj(jFTxtCpfCnpj)));
+        }
+    }
+    
+    
+    private void disableControl(){
+        //desabilitando os comboBox
+        jCboNome.setEnabled(false);
+        jCboPlaca.setEnabled(false);
+        jCboTipoContrato.setEnabled(false);
+        jCboStatusContrato.setEnabled(false);
+        //desabilitando os botoes
+        jBtnRecalcular.setEnabled(false);
+        jBtnEditar.setEnabled(false);
+        jBtnExcluir.setEnabled(false);
+        jBtnImprimir.setEnabled(false);
+        jBtnSalvar.setEnabled(false);
+        jBtnBuscar.setEnabled(true);
+        //desabilitando campos de texto
+        jTxtObservacoes.setEnabled(true);
+        jTxtBairro.setEnabled(false);
+        jTxtEmail.setEnabled(false);
+        jTxtEstado.setEnabled(false);
+        jTxtNumero.setEnabled(false);
+        jTxtReferencia.setEnabled(false);
+        jTxtRua.setEnabled(false);
+        jFTxtCpfCnpj.setEnabled(false);
+        jFtxtCelular.setEnabled(false);
+        jFtxtCep.setEnabled(false);
+        JfTxtDataChegada.setEnabled(false);
+        JfTxtDataSaida.setEnabled(false);
+        jFtxtFone.setEnabled(false);
+        jFtxtRgIe.setEnabled(false);
+        jFtxtCnh.setEnabled(false);
+        jTxtClasse.setEnabled(false);
+        jTxtTipo.setEnabled(false);
+        jTxtCidade.setEnabled(false);
+        jTxtTipoEnd.setEnabled(false);
+        jTxtValorDiaria.setEnabled(false);
+        jTxtValorExtra.setEnabled(false);
+        jTxtValorTotal.setEnabled(false);
+        jTxtValorKmFinal.setEnabled(false);
+        jTxtQtdDias.setEnabled(false);
+        jTxtValorKmRodado.setEnabled(false);
+        
+        jTxtAnoFabricacao.setEnabled(false);
+        jTxtAnoModelo.setEnabled(false);
+        jTxtChassi.setEnabled(false);
+        jTxtCor.setEnabled(false);
+        jTxtKm.setEnabled(false);
+        jTxtMarca.setEnabled(false);
+        jTxtNome.setEnabled(false);
+        jTxtNumeroRenavan.setEnabled(false);
+        jTxtVeiculo.setEnabled(false);
+    
+    }
+    
+    private void enableControl() {
+        jCboNome.setEnabled(true);
+        jCboPlaca.setEnabled(true);
+        jCboTipoContrato.setEnabled(true);
+        jCboStatusContrato.setEnabled(true);
+        //desabilitando os botoes
+        jBtnRecalcular.setEnabled(true);
+        jBtnEditar.setEnabled(false);
+        jBtnExcluir.setEnabled(true);
+        jBtnImprimir.setEnabled(true);
+        jBtnSalvar.setEnabled(true);
+        jBtnBuscar.setEnabled(false);
+        
+        JfTxtDataChegada.setEnabled(true);
+        JfTxtDataSaida.setEnabled(true);
+        jTxtObservacoes.setEnabled(true);
+        
+    }
+    
+    private void clearTxt() {
+    
+        jTxtObservacoes.setText("");
+        jTxtBairro.setText("");
+        jTxtEmail.setText("");
+        jTxtEstado.setText("");
+        jTxtNumero.setText("");
+        jTxtReferencia.setText("");
+        jTxtRua.setText("");
+        jFTxtCpfCnpj.setText("");
+        jFtxtCelular.setText("");
+        jFtxtCep.setText("");
+        JfTxtDataChegada.setText("");
+        JfTxtDataSaida.setText("");
+        jFtxtFone.setText("");
+        jFtxtRgIe.setText("");
+        jFtxtCnh.setText("");
+        jTxtClasse.setText("");
+        jTxtTipo.setText("");
+        
+        jTxtValorDiaria.setText("");
+        jTxtValorExtra.setText("");
+        jTxtValorTotal.setText("");
+        jTxtValorKmFinal.setText("");
+        jTxtQtdDias.setText("");
+        jTxtValorKmRodado.setText("");
+        
+        jTxtAnoFabricacao.setText("");
+        jTxtAnoModelo.setText("");
+        jTxtChassi.setText("");
+        jTxtCor.setText("");
+        jTxtKm.setText("");
+        jTxtMarca.setText("");
+        jTxtNome.setText("");
+        jTxtNumeroRenavan.setText("");
+        jTxtVeiculo.setText("");
+    }
+    
+    /**
+     * Passando true ele habilita os controles Jtext para Tipo de Contrato por KM
+     * Passando false ele habilita os controles Jtext para o Tipo de contrato por Dia Locado
+     * @param Tipo 
+     */
+    private void enableTipoKM(boolean tipo) {
+        if (tipo) {
+            
+            jTxtValorExtra.setEnabled(true);
+            jTxtValorTotal.setEnabled(false);
+            jTxtValorKmFinal.setEnabled(true);
+            jTxtValorKmFinal.requestFocus();
+            jTxtQtdDias.setEnabled(false);
+
+        } else {
+
+            jTxtValorExtra.setEnabled(true);
+            jTxtValorTotal.setEnabled(false);
+            jTxtValorKmFinal.setEnabled(false);
+            jTxtQtdDias.setEnabled(true);
+            jTxtQtdDias.requestFocus();
+
+        }
     }
 
     private void loadCombCliente() {
@@ -92,6 +296,7 @@ public class JfrmContratos extends javax.swing.JFrame {
             }
         }
     }
+    
     private void loadCombCarro() {
         if (listaCarros.size() > 1) {
         for (models.ClsCarros clCar: listaCarros) {
@@ -101,7 +306,7 @@ public class JfrmContratos extends javax.swing.JFrame {
     }
     
     private void loadCombTipoStatus() {
-        jCboTipoContrato.addItem("KM RODADO");
+        jCboTipoContrato.addItem("KM-RODADO");
         jCboTipoContrato.addItem("DIÁRIA");
         
         jCboStatusContrato.addItem("ABERTO");
@@ -109,6 +314,37 @@ public class JfrmContratos extends javax.swing.JFrame {
         jCboStatusContrato.addItem("FINALIZADO");
         
     }
+    
+    
+    private void buscaIndiceCarros(String placaCarro) {
+        List<models.ClsCarros> ResultSet = listaCarros;
+        for (int i = 0; i < ResultSet.size(); i++) {
+            if (ResultSet.get(i).getPlaca().equals(placaCarro)) {
+                indiceCarro = i;
+                clsCarros = listaCarros.get(indiceCarro);
+                break;
+            }
+        }
+
+    }
+    
+    private void buscaIndiceClientes(String nomeCliente){
+        boolean encontrado = false;
+        List<models.ClsClientes> ResultSet = listaClientes;
+        for (int i = 0; i < ResultSet.size(); i++) {
+            if (ResultSet.get(i).getNome().equals(nomeCliente)) {
+                indiceCliente = i;
+                clsClientes = listaClientes.get(indiceCliente);
+                encontrado = true;
+                break;
+            }
+        }
+        if (encontrado) {
+            clsEnderecos = enderecosDAO.selectId(clsClientes.getId());
+            clsCidades = cidadesDAO.selectId(clsEnderecos.getIdCidade());
+        }
+    }
+
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -128,7 +364,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         jCboNome = new javax.swing.JComboBox<>();
         jFTxtCpfCnpj = new javax.swing.JFormattedTextField();
         jFtxtRgIe = new javax.swing.JFormattedTextField();
-        javax.swing.JFormattedTextField jFtxtCnh = new javax.swing.JFormattedTextField();
+        jFtxtCnh = new javax.swing.JFormattedTextField();
         jPanelDadosEnderecos = new javax.swing.JPanel();
         jTxtRua = new javax.swing.JTextField();
         jTxtNumero = new javax.swing.JTextField();
@@ -158,7 +394,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         jCboStatusContrato = new javax.swing.JComboBox<>();
         jTxtValorKmFinal = new javax.swing.JTextField();
         jTxtQtdDias = new javax.swing.JTextField();
-        jTextObservacoes = new javax.swing.JTextField();
+        jTxtObservacoes = new javax.swing.JTextField();
         jTxtValorDiaria = new javax.swing.JTextField();
         jTxtValorExtra = new javax.swing.JTextField();
         JfTxtDataChegada = new javax.swing.JFormattedTextField();
@@ -178,6 +414,11 @@ public class JfrmContratos extends javax.swing.JFrame {
         jBtnNovo.setToolTipText("Clique aqui para novo Contrato");
         jBtnNovo.setBorder(null);
         jBtnNovo.setFocusPainted(false);
+        jBtnNovo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnNovoActionPerformed(evt);
+            }
+        });
 
         jBtnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/new_121792.png"))); // NOI18N
         jBtnEditar.setToolTipText("Clique aqui para editar Contrato");
@@ -510,6 +751,11 @@ public class JfrmContratos extends javax.swing.JFrame {
         jCboTipoContrato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jCboTipoContrato.setToolTipText("Selecione o tipo de contrato, escolha entre diaria ou km rodado");
         jCboTipoContrato.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo Contrato"));
+        jCboTipoContrato.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jCboTipoContratoFocusLost(evt);
+            }
+        });
 
         jCboStatusContrato.setBackground(new java.awt.Color(240, 240, 240));
         jCboStatusContrato.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -527,9 +773,9 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtQtdDias.setToolTipText("Digite a quantidade de dias que será alugado o veiculo");
         jTxtQtdDias.setBorder(javax.swing.BorderFactory.createTitledBorder("Dias Alugados"));
 
-        jTextObservacoes.setBackground(new java.awt.Color(240, 240, 240));
-        jTextObservacoes.setToolTipText("Breve observação caso houver sobre o veiculo");
-        jTextObservacoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Observações"));
+        jTxtObservacoes.setBackground(new java.awt.Color(240, 240, 240));
+        jTxtObservacoes.setToolTipText("Breve observação caso houver sobre o veiculo");
+        jTxtObservacoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Observações"));
 
         jTxtValorDiaria.setBackground(new java.awt.Color(240, 240, 240));
         jTxtValorDiaria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -562,7 +808,7 @@ public class JfrmContratos extends javax.swing.JFrame {
                     .addComponent(jCboStatusContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jTextObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jTxtObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelDadosValoresLayout.createSequentialGroup()
                         .addComponent(jTxtValorKmRodado, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -601,7 +847,7 @@ public class JfrmContratos extends javax.swing.JFrame {
                 .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jCboStatusContrato)
                     .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTxtObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTxtValorExtra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jTxtValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 18, Short.MAX_VALUE))
@@ -707,6 +953,37 @@ public class JfrmContratos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBtnImprimirActionPerformed
 
+    private void jCboTipoContratoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jCboTipoContratoFocusLost
+        if(jCboTipoContrato.getSelectedItem().equals("KM-RODADO")){
+            enableTipoKM(true);
+            tipoContrato = 0;
+            clsContratos.setTipoLocacao(jCboTipoContrato.getSelectedItem().toString());
+        }else if(jCboTipoContrato.getSelectedItem().equals("DIÁRIA")){
+            tipoContrato = 1;
+            clsContratos.setTipoLocacao(jCboTipoContrato.getSelectedItem().toString());
+            enableTipoKM(false);
+        }
+    }//GEN-LAST:event_jCboTipoContratoFocusLost
+
+    private void jBtnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnNovoActionPerformed
+        if (precionado == false) {
+            setIconBtnNv(true);
+            enableControl();
+            clearTxt();
+            precionado = true;
+            editando = false;
+            jTxtNome.requestFocus();
+
+        } else {
+            setIconBtnNv(false);
+            disableControl();
+            clearTxt();
+            precionado = false;
+            editando = false;
+        }
+
+    }//GEN-LAST:event_jBtnNovoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -729,6 +1006,7 @@ public class JfrmContratos extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField jFTxtCpfCnpj;
     private javax.swing.JFormattedTextField jFtxtCelular;
     private javax.swing.JFormattedTextField jFtxtCep;
+    private javax.swing.JFormattedTextField jFtxtCnh;
     private javax.swing.JFormattedTextField jFtxtFone;
     private javax.swing.JFormattedTextField jFtxtRgIe;
     private javax.swing.JLabel jLabelCodigo;
@@ -736,7 +1014,6 @@ public class JfrmContratos extends javax.swing.JFrame {
     private javax.swing.JPanel jPaneDadosVeiculos;
     private javax.swing.JPanel jPanelDadosEnderecos;
     private javax.swing.JPanel jPanelDadosValores;
-    private javax.swing.JTextField jTextObservacoes;
     private javax.swing.JTextField jTxtAnoFabricacao;
     private javax.swing.JTextField jTxtAnoModelo;
     private javax.swing.JTextField jTxtBairro;
@@ -751,6 +1028,7 @@ public class JfrmContratos extends javax.swing.JFrame {
     private javax.swing.JTextField jTxtNome;
     private javax.swing.JTextField jTxtNumero;
     private javax.swing.JTextField jTxtNumeroRenavan;
+    private javax.swing.JTextField jTxtObservacoes;
     private javax.swing.JTextField jTxtQtdDias;
     private javax.swing.JTextField jTxtReferencia;
     private javax.swing.JTextField jTxtRua;

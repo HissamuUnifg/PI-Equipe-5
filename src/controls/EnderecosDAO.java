@@ -279,4 +279,61 @@ public class EnderecosDAO {
         }
 
     }
+    
+    public ClsEnderecos selectId(int idCliente) {
+       ClsEnderecos clsEndereco = new ClsEnderecos();
+
+        String sql = "select end.id as id, end.rua as rua,end.numero as numero,end.bairro as bairro, end.referencia as referencia, "
+                + " cde.nomecidade as nomecidade,cde.estado as estado,end.cep as cep, end.tipoendereco as tipoendereco, cl.id as idcliente, "
+                + " cde.id as id_cidade from enderecos end inner join cidades cde on cde.id = end.id_cidade "
+                + " inner join Clientes cl on cl.id = end.id_cliente where cl.id = ? and end.tipoendereco = 'RESIDENCIAL' ";
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+
+            conn = ConexaoDAO.getConexaoDAO();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, idCliente);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                ClsEnderecos clsend = new ClsEnderecos();
+                clsend.setId(rs.getInt("id"));
+                clsend.setRua(rs.getString("rua"));
+                clsend.setNumero(rs.getString("Numero"));
+                clsend.setBairro(rs.getString("Bairro"));
+                clsend.setReferencia(rs.getString("Referencia"));
+                clsend.setNomeCidade(rs.getString("NomeCidade"));
+                clsend.setEstado(rs.getString("Estado"));
+                clsend.setCep(rs.getString("Cep"));
+                clsend.setTipoEndereco(rs.getString("TipoEndereco"));
+                clsend.setId_cidade(rs.getInt("Id_cidade"));
+                clsend.setIdCidade(rs.getInt("Id_cidade"));
+                clsend.setIdCliente(rs.getInt("idcliente"));
+                clsEndereco = clsend ;
+            }
+            retorno = "Carregado lista com sucesso";
+            sucesso = true;
+        } catch (SQLException e) {
+            retorno = "Erro ao obter os dados!" + e;
+            sucesso = false;
+        } finally {
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                    ConexaoDAO.FecharConexao();
+                }
+            } catch (SQLException e) {
+                retorno = "Erro ao fechar conexões: " + e;
+            }
+        }
+
+        return clsEndereco;
+    }
 }
