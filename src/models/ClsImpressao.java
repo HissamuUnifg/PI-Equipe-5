@@ -204,6 +204,7 @@ public class ClsImpressao {
 
         partes1.addBreak();
         partes1.addBreak();
+    
         
         if(clsCli.getNome().equals("") || clsCli.getNome() == null){
        
@@ -223,6 +224,7 @@ public class ClsImpressao {
        
         partes1.addBreak();
         partes1.addBreak();
+
         
         
         //informação do Contrato
@@ -570,6 +572,8 @@ public class ClsImpressao {
                 + "residente e domiciliado na Rua RUA DEMONSTRAÇÃO, nº 001, bairro CENTRO, Cep 46430000, Cidade GUANAMBI, no Estado BAHIA");
 
         partes1.addBreak();
+        partes1.addBreak();
+        partes1.addBreak();
         
         if(clsCli.getNome().equals("") || clsCli.getNome() == null){
        
@@ -817,7 +821,7 @@ public class ClsImpressao {
         
         
         XWPFParagraph localData = documento.createParagraph();
-        localData.setAlignment(ParagraphAlignment.BOTH);
+        localData.setAlignment(ParagraphAlignment.LEFT);
         XWPFRun localData1 = localData.createRun();
         localData1.setFontSize(12);
         localData1.setFontFamily("Arial");
@@ -832,7 +836,7 @@ public class ClsImpressao {
         locador1.setFontSize(12);
         locador1.setFontFamily("Arial");
         
-        locador1.setText("____________________________________________"); 
+        locador1.setText("____________________________________________\n\n"); 
         locador1.setText("Locadora Boa Viagem");
         locador1.addBreak();
         locador1.addBreak();

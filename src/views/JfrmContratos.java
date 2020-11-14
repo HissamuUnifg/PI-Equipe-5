@@ -308,7 +308,7 @@ public class JfrmContratos extends javax.swing.JFrame {
     }
 
     private void loadCombCliente() {
-        if (listaClientes.size() > 1) {
+        if (listaClientes.size() > 0) {
             for (models.ClsClientes clC : listaClientes) {
                 jCboNome.addItem(clC.getNome());
             }
@@ -316,7 +316,7 @@ public class JfrmContratos extends javax.swing.JFrame {
     }
     
     private void loadCombCarro() {
-        if (listaCarros.size() > 1) {
+        if (listaCarros.size() > 0) {
         for (models.ClsCarros clCar: listaCarros) {
             jCboPlaca.addItem(clCar.getPlaca());
         }
