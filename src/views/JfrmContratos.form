@@ -37,8 +37,6 @@
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jBtnSalvar" min="-2" pref="75" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jBtnRecalcular" min="-2" pref="75" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
               <Component id="jBtnImprimir" min="-2" pref="75" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jBtnBuscar" min="-2" pref="75" max="-2" attributes="0"/>
@@ -69,7 +67,6 @@
                   <Component id="jBtnEditar" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
                   <Component id="jBtnNovo" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
                   <Component id="jBtnBuscar" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
-                  <Component id="jBtnRecalcular" min="-2" pref="65" max="-2" attributes="0"/>
                   <Component id="jBtnImprimir" min="-2" pref="65" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
@@ -179,18 +176,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnExcluirActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="jBtnRecalcular">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/imagens/rotate_121763.png"/>
-        </Property>
-        <Property name="toolTipText" type="java.lang.String" value="Clique aqui para recalcular Contrato"/>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
-        <Property name="focusPainted" type="boolean" value="false"/>
-      </Properties>
     </Component>
     <Container class="javax.swing.JPanel" name="jPanDadosGerais">
       <Properties>
@@ -325,6 +310,7 @@
           </Properties>
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jCboNomeFocusLost"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jCboNomeKeyPressed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -806,6 +792,7 @@
           </Properties>
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jCboPlacaFocusLost"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jCboPlacaKeyPressed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -981,6 +968,7 @@
           </Properties>
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jCboTipoContratoFocusLost"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jCboTipoContratoKeyPressed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -1031,6 +1019,7 @@
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtValorKmFinalFocusLost"/>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTxtValorKmFinalMouseClicked"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTxtValorKmFinalKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtQtdDias">
@@ -1051,6 +1040,7 @@
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtQtdDiasFocusLost"/>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jTxtQtdDiasMouseClicked"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jTxtQtdDiasKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="jTxtObservacoes">
@@ -1119,7 +1109,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="JfTxtDataChegadaFocusLost"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JfTxtDataChegadaKeyPressed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="JfTxtDataSaida">
@@ -1138,7 +1128,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="JfTxtDataSaidaFocusLost"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JfTxtDataSaidaKeyPressed"/>
           </Events>
         </Component>
       </SubComponents>

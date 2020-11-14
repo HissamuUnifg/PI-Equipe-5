@@ -301,8 +301,8 @@ public class ClsImpressao {
         clasulas0.setFontSize(12);
         clasulas0.setFontFamily("Arial");
         
-        clasulas0.setText("Cláusula 2ª. O automóvel, objeto deste contrato, será "
-                + " utilizado exclusivamente pelo LOCATÁRIO, não sendo permitido o "
+        clasulas0.setText("Cláusula 2ª. O automóvel, objeto deste contrato, será"
+                + " utilizado exclusivamente pelo LOCATÁRIO, não sendo permitido o"
                 + " seu uso por terceiros sob pena de rescisão contratual e o pagamento"
                 + " da multa prevista na Cláusula 7ª.");
         
@@ -318,9 +318,9 @@ public class ClsImpressao {
         clasulaDev1.setFontSize(12);
         clasulaDev1.setFontFamily("Arial");
         
-        clasulaDev1.setText("Cláusula 3ª. O LOCATÁRIO deverá devolver o automóvel à "
-                + " LOCADORA nas mesmas condições em que estava quando o recebeu, ou "
-                + " seja, em perfeitas condições de uso, respondendo pelos danos ou "
+        clasulaDev1.setText("Cláusula 3ª. O LOCATÁRIO deverá devolver o automóvel à"
+                + " LOCADORA nas mesmas condições em que estava quando o recebeu, ou"
+                + " seja, em perfeitas condições de uso, respondendo pelos danos ou"
                 + " prejuízos causados2.");
         
         clasulaDev1.addBreak();
@@ -365,10 +365,10 @@ public class ClsImpressao {
         clasulaValor1.setFontSize(12);
         clasulaValor1.setFontFamily("Arial");
         
-          clasulaValor1.setText("Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo "
+          clasulaValor1.setText("Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo"
                 + " o valor totla de "+FormatterMoeda.format(clsCont.getValorTotal())+""
-                + " que deverá ser pago em dinheiro (espécie) ou Cartão de Debito ou Credito. Caso hover algum dano ou multa no "
-                + " veiculo o valor será adicionado ao valor total do contrato a ser emitido nova cópia. E em caso de acidente com "
+                + " que deverá ser pago em dinheiro (espécie) ou Cartão de Debito ou Credito. Caso hover algum dano ou multa no"
+                + " veiculo o valor será adicionado ao valor total do contrato a ser emitido nova cópia. E em caso de acidente com"
                 + " perca do veiculo será cobrado o valor de "+FormatterMoeda.format(clsCar.getValorSeguro())+" que se refere ao seguro");
         
         clasulaValor1.addBreak();
@@ -384,7 +384,7 @@ public class ClsImpressao {
         clasula55.setFontSize(12);
         clasula55.setFontFamily("Arial");
         
-        clasula55.setText("Cláusula 5ª. Se o LOCATÁRIO não restituir o automóvel na data estipulada, "
+        clasula55.setText("Cláusula 5ª. Se o LOCATÁRIO não restituir o automóvel na data estipulada,"
                 + " deverá pagar, enquanto detiver em seu poder, o aluguel que a LOCADORA arbitrar, e"
                 + " responderá pelo dano, que o automóvel venha a sofrer mesmo se proveniente de caso fortuito.");
         
@@ -409,7 +409,7 @@ public class ClsImpressao {
         clasula66.setFontSize(12);
         clasula66.setFontFamily("Arial");
         
-        clasula66.setText("Cláusula 6ª. É assegurado às partes a rescisão do presente contrato a qualquer "
+        clasula66.setText("Cláusula 6ª. É assegurado às partes a rescisão do presente contrato a qualquer"
                 + " momento, desde que haja comunicação à outra parte com antecedência mínima de 2 dias.");
         
         clasula66.addBreak();
@@ -421,8 +421,8 @@ public class ClsImpressao {
         clasula77.setFontSize(12);
         clasula77.setFontFamily("Arial");
         
-        clasula77.setText("Cláusula 7ª. O descumprimento de qualquer das cláusulas por parte dos contratantes "
-                + " ensejará a rescisão deste instrumento e o devido pagamento de multa, pela parte inadimplente "
+        clasula77.setText("Cláusula 7ª. O descumprimento de qualquer das cláusulas por parte dos contratantes"
+                + " ensejará a rescisão deste instrumento e o devido pagamento de multa, pela parte inadimplente"
                 + " no valor de R$ 200,00 (Duzentos Reais).");
         
         clasula77.addBreak();
@@ -446,7 +446,7 @@ public class ClsImpressao {
         clasula88.setFontSize(12);
         clasula88.setFontFamily("Arial");
         
-        clasula88.setText("Cláusula 8ª. Para dirimir quaisquer controvérsias oriundas do CONTRATO, "
+        clasula88.setText("Cláusula 8ª. Para dirimir quaisquer controvérsias oriundas do CONTRATO,"
                 + " as partes elegem o foro da comarca de "+clsEnd.getNomeCidade()+"-"+clsEnd.getSiglaEstado()+";");
         
         clasula88.addBreak();
@@ -457,20 +457,21 @@ public class ClsImpressao {
         clasula99.setFontSize(12);
         clasula99.setFontFamily("Arial");
         
-        clasula99.setText("Por estarem assim justos e contratados, firmam o presente "
+        clasula99.setText("Por estarem assim justos e contratados, firmam o presente"
                 + " instrumento, em duas vias de igual teor, juntamente com 2 (duas) testemunhas."); 
         
         clasula99.addBreak();
         
         
         XWPFParagraph localData = documento.createParagraph();
-        localData.setAlignment(ParagraphAlignment.BOTH);
+        localData.setAlignment(ParagraphAlignment.LEFT);
         XWPFRun localData1 = localData.createRun();
         localData1.setFontSize(12);
         localData1.setFontFamily("Arial");
         
         localData1.setText(""+clsEnd.getNomeCidade()+" - "+clsVal.dataFormatoBR(clsCont.getDataContrato())+""); 
         
+        localData1.addBreak();
         localData1.addBreak();
         
         XWPFParagraph locador = documento.createParagraph();
@@ -479,7 +480,8 @@ public class ClsImpressao {
         locador1.setFontSize(12);
         locador1.setFontFamily("Arial");
         
-        locador1.setText("____________________________________________/n/n"); 
+        locador1.setText("____________________________________________"); 
+        locador1.addBreak();
         locador1.setText("Locadora Boa Viagem");
         locador1.addBreak();
         locador1.addBreak();
@@ -490,7 +492,8 @@ public class ClsImpressao {
         clienteLoc1.setFontSize(12);
         clienteLoc1.setFontFamily("Arial");
         
-        clienteLoc1.setText("____________________________________________"); 
+        clienteLoc1.setText("____________________________________________");
+        clienteLoc1.addBreak();
         clienteLoc1.setText(clsCli.getNome());
         clienteLoc1.addBreak();
         clienteLoc1.addBreak();
@@ -503,6 +506,7 @@ public class ClsImpressao {
         testemunha1.setFontFamily("Arial");
         
         testemunha1.setText("____________________________________________"); 
+        testemunha1.addBreak();
         testemunha1.setText("CPF:_______________________");
         testemunha1.addBreak();
         testemunha1.addBreak();
@@ -514,6 +518,7 @@ public class ClsImpressao {
         testemunha22.setFontFamily("Arial");
         
         testemunha22.setText("____________________________________________"); 
+        testemunha22.addBreak();
         testemunha22.setText("CPF:_______________________");
         testemunha22.addBreak();
         testemunha22.addBreak();
@@ -529,7 +534,9 @@ public class ClsImpressao {
         
         notaCont1.setText("Nota:"); 
         notaCont1.setText("1. A Locação de Coisas rege-se pelo previsto nos Arts. 1188 a 1215, do Código Civil.");
+        notaCont1.addBreak();
         notaCont1.setText("2. Art. 1192 do Código Civil.");
+        notaCont1.addBreak();
         notaCont1.setText("3. Art. 1196 do Código Civil.");
         
         notaCont1.addBreak();
@@ -571,11 +578,11 @@ public class ClsImpressao {
         partes1.setFontSize(12);
         partes1.setFontFamily("Arial");
 
-        partes1.setText("LOCADORA: LOCADORA BOA VIAGEM, com sede em CENTRO UNIVERSITARIO FG UNIFG, na Rua RUA DEMONSTRAÇÃO, nº 001, "
-                + "bairro CENTRO, Cep 46430000, no Estado BAHIA, inscrita no CNPJ Nº 00.000.000/0001-00, e "
-                + "no Cadastro Estadual sob o nº 123456789, neste ato representada pelo seu diretor TIAGO TEIXEIRA, "
-                + "BRASILEIRO, DIVORCIADO, ANALISTA DE SISTEMAS, Carteira de Identidade nº 0000000000 , CPF Nº 000.000.000-00, "
-                + "residente e domiciliado na Rua RUA DEMONSTRAÇÃO, nº 001, bairro CENTRO, Cep 46430000, Cidade GUANAMBI, no Estado BAHIA");
+        partes1.setText("LOCADORA: LOCADORA BOA VIAGEM, com sede em CENTRO UNIVERSITARIO FG UNIFG, na Rua RUA DEMONSTRAÇÃO, nº 001,"
+                + " bairro CENTRO, Cep 46430000, no Estado BAHIA, inscrita no CNPJ Nº 00.000.000/0001-00, e"
+                + " no Cadastro Estadual sob o nº 123456789, neste ato representada pelo seu diretor TIAGO TEIXEIRA,"
+                + " BRASILEIRO, DIVORCIADO, ANALISTA DE SISTEMAS, Carteira de Identidade nº 0000000000 , CPF Nº 000.000.000-00,"
+                + " residente e domiciliado na Rua RUA DEMONSTRAÇÃO, nº 001, bairro CENTRO, Cep 46430000, Cidade GUANAMBI, no Estado BAHIA");
 
         partes1.addBreak();
         partes1.addBreak();
@@ -616,7 +623,7 @@ public class ClsImpressao {
         
         //DO OBJETO DO CONTRATO
         XWPFParagraph objeto = documento.createParagraph();
-        objeto.setAlignment(ParagraphAlignment.CENTER);
+        objeto.setAlignment(ParagraphAlignment.LEFT);
         XWPFRun objeto1 = objeto.createRun();
         objeto1.setFontSize(12);
         objeto1.setFontFamily("Arial");
@@ -624,7 +631,7 @@ public class ClsImpressao {
         objeto1.setText("DO OBJETO DO CONTRATO");
         
         objeto1.addBreak();
-        
+        objeto1.addBreak();
         //
         
         XWPFParagraph carro = documento.createParagraph();
@@ -660,6 +667,7 @@ public class ClsImpressao {
         douso1.setText("DO USO");
         
         douso1.addBreak();
+        douso1.addBreak();
         
         
         
@@ -671,8 +679,8 @@ public class ClsImpressao {
         clasulas0.setFontSize(12);
         clasulas0.setFontFamily("Arial");
         
-        clasulas0.setText("Cláusula 2ª. O automóvel, objeto deste contrato, será "
-                + " utilizado exclusivamente pelo LOCATÁRIO, não sendo permitido o "
+        clasulas0.setText("Cláusula 2ª. O automóvel, objeto deste contrato, será"
+                + " utilizado exclusivamente pelo LOCATÁRIO, não sendo permitido o"
                 + " seu uso por terceiros sob pena de rescisão contratual e o pagamento"
                 + " da multa prevista na Cláusula 7ª.");
         
@@ -688,9 +696,9 @@ public class ClsImpressao {
         clasulaDev1.setFontSize(12);
         clasulaDev1.setFontFamily("Arial");
         
-        clasulaDev1.setText("Cláusula 3ª. O LOCATÁRIO deverá devolver o automóvel à "
-                + " LOCADORA nas mesmas condições em que estava quando o recebeu, ou "
-                + " seja, em perfeitas condições de uso, respondendo pelos danos ou "
+        clasulaDev1.setText("Cláusula 3ª. O LOCATÁRIO deverá devolver o automóvel à"
+                + " LOCADORA nas mesmas condições em que estava quando o recebeu, ou"
+                + " seja, em perfeitas condições de uso, respondendo pelos danos ou"
                 + " prejuízos causados2.");
         
         clasulaDev1.addBreak();
@@ -731,10 +739,10 @@ public class ClsImpressao {
         clasulaValor1.setFontSize(12);
         clasulaValor1.setFontFamily("Arial");
         
-        clasulaValor1.setText("Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo "
+        clasulaValor1.setText("Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo"
                 + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+""
-                + " que deverá ser pago em dinheiro (ESPÉCIE) ou Cartão de Debito ou Credito. Caso haver algum dano ou multa no "
-                + " veiculo, o valor será adicionado ao valor total do contrato a ser emitido nova cópia. E em caso de acidente com "
+                + " que deverá ser pago em dinheiro (ESPÉCIE) ou Cartão de Debito ou Credito. Caso haver algum dano ou multa no"
+                + " veiculo, o valor será adicionado ao valor total do contrato a ser emitido nova cópia. E em caso de acidente com"
                 + " perca do veiculo será cobrado o valor de "+FormatterMoeda.format(clsCar.getValorSeguro())+" que se refere ao seguro do automóvel");
         
         clasulaValor1.addBreak();
@@ -747,7 +755,7 @@ public class ClsImpressao {
         clasula55.setFontSize(12);
         clasula55.setFontFamily("Arial");
         
-        clasula55.setText("Cláusula 5ª. Se o LOCATÁRIO não restituir o automóvel na data estipulada, "
+        clasula55.setText("Cláusula 5ª. Se o LOCATÁRIO não restituir o automóvel na data estipulada,"
                 + " deverá pagar, enquanto detiver em seu poder, o aluguel que a LOCADORA arbitrar, e"
                 + " responderá pelo dano, que o automóvel venha a sofrer mesmo se proveniente de caso fortuito.");
         
@@ -773,7 +781,7 @@ public class ClsImpressao {
         clasula66.setFontSize(12);
         clasula66.setFontFamily("Arial");
         
-        clasula66.setText("Cláusula 6ª. É assegurado às partes a rescisão do presente contrato a qualquer "
+        clasula66.setText("Cláusula 6ª. É assegurado às partes a rescisão do presente contrato a qualquer"
                 + " momento, desde que haja comunicação à outra parte com antecedência mínima de 2 dias.");
         
         clasula66.addBreak();
@@ -785,8 +793,8 @@ public class ClsImpressao {
         clasula77.setFontSize(12);
         clasula77.setFontFamily("Arial");
         
-        clasula77.setText("Cláusula 7ª. O descumprimento de qualquer das cláusulas por parte dos contratantes "
-                + " ensejará a rescisão deste instrumento e o devido pagamento de multa, pela parte inadimplente "
+        clasula77.setText("Cláusula 7ª. O descumprimento de qualquer das cláusulas por parte dos contratantes"
+                + " ensejará a rescisão deste instrumento e o devido pagamento de multa, pela parte inadimplente"
                 + " no valor de R$ 200,00 (Duzentos Reais).");
         
         clasula77.addBreak();
@@ -811,7 +819,7 @@ public class ClsImpressao {
         clasula88.setFontSize(12);
         clasula88.setFontFamily("Arial");
         
-        clasula88.setText("Cláusula 8ª. Para dirimir quaisquer controvérsias oriundas do CONTRATO, "
+        clasula88.setText("Cláusula 8ª. Para dirimir quaisquer controvérsias oriundas do CONTRATO,"
                 + " as partes elegem o foro da comarca de "+clsEnd.getNomeCidade()+" - "+clsEnd.getSiglaEstado()+";");
         
         clasula88.addBreak();
@@ -822,7 +830,7 @@ public class ClsImpressao {
         clasula99.setFontSize(12);
         clasula99.setFontFamily("Arial");
         
-        clasula99.setText("Por estarem assim justos e contratados, firmam o presente "
+        clasula99.setText("Por estarem assim justos e contratados, firmam o presente"
                 + " instrumento, em duas vias de igual teor, juntamente com 2 (duas) testemunhas."); 
         
         clasula99.addBreak();
@@ -837,6 +845,7 @@ public class ClsImpressao {
         localData1.setText(""+clsEnd.getNomeCidade()+" - "+clsVal.dataFormatoBR(clsCont.getDataContrato())+""); 
         
         localData1.addBreak();
+        localData1.addBreak();
         
         XWPFParagraph locador = documento.createParagraph();
         locador.setAlignment(ParagraphAlignment.LEFT);
@@ -844,7 +853,8 @@ public class ClsImpressao {
         locador1.setFontSize(12);
         locador1.setFontFamily("Arial");
         
-        locador1.setText("____________________________________________\n\n"); 
+        locador1.setText("____________________________________________"); 
+        locador1.addBreak();
         locador1.setText("Locadora Boa Viagem");
         locador1.addBreak();
         locador1.addBreak();
@@ -856,6 +866,7 @@ public class ClsImpressao {
         clienteLoc1.setFontFamily("Arial");
         
         clienteLoc1.setText("____________________________________________"); 
+        clienteLoc1.addBreak();
         clienteLoc1.setText(clsCli.getNome());
         clienteLoc1.addBreak();
         clienteLoc1.addBreak();
@@ -868,6 +879,7 @@ public class ClsImpressao {
         testemunha1.setFontFamily("Arial");
         
         testemunha1.setText("____________________________________________"); 
+         testemunha1.addBreak();
         testemunha1.setText("CPF:_______________________");
         testemunha1.addBreak();
         testemunha1.addBreak();
@@ -879,6 +891,7 @@ public class ClsImpressao {
         testemunha22.setFontFamily("Arial");
         
         testemunha22.setText("____________________________________________"); 
+        testemunha22.addBreak();
         testemunha22.setText("CPF:_______________________");
         testemunha22.addBreak();
         testemunha22.addBreak();
@@ -894,7 +907,9 @@ public class ClsImpressao {
         
         notaCont1.setText("Nota:"); 
         notaCont1.setText("1. A Locação de Coisas rege-se pelo previsto nos Arts. 1188 a 1215, do Código Civil.");
+        notaCont1.addBreak();
         notaCont1.setText("2. Art. 1192 do Código Civil.");
+        notaCont1.addBreak();
         notaCont1.setText("3. Art. 1196 do Código Civil.");
         
         notaCont1.addBreak();

@@ -40,9 +40,9 @@ public class ClsContratos {
         this.valorTotal = valorTotal;
     }
 
-    public float calcularValorTotalKM(float valorKm) {
-
-        valorTotal = valorKm * quantidadeKmRet;
+    public float calcularValorTotalKM(float valorKm, int kmAtual) {
+        valorTotal = quantidadeKmRet - kmAtual;
+        valorTotal = valorTotal * valorKm;
         valorTotal = valorExtra + valorTotal;
         return valorTotal;
     }
