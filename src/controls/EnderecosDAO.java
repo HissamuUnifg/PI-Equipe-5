@@ -162,7 +162,7 @@ public class EnderecosDAO {
 
         String sql = "select end.id as id, end.rua as rua,end.numero as numero,end.bairro as bairro, end.referencia as referencia, "
                 + " cde.nomecidade as nomecidade,cde.estado as estado,end.cep as cep, end.tipoendereco as tipoendereco, cl.id as idcliente, "
-                + " cde.id as id_cidade from enderecos end inner join cidades cde on cde.id = end.id_cidade "
+                + " cde.id as id_cidade, cde.SiglaEstado, cde.pais from enderecos end inner join cidades cde on cde.id = end.id_cidade "
                 + " inner join Clientes cl on cl.id = end.id_cliente where cl.id = ?";
 
         Connection conn = null;
@@ -190,6 +190,8 @@ public class EnderecosDAO {
                 clsend.setId_cidade(rs.getInt("Id_cidade"));
                 clsend.setIdCidade(rs.getInt("Id_cidade"));
                 clsend.setIdCliente(rs.getInt("idcliente"));
+                clsend.setSiglaEstado(rs.getString("siglaestado"));
+                clsend.setPais(rs.getString("pais"));
                 clsEndereco.add(clsend);
             }
             retorno = "Carregado lista com sucesso";
@@ -285,7 +287,7 @@ public class EnderecosDAO {
 
         String sql = "select end.id as id, end.rua as rua,end.numero as numero,end.bairro as bairro, end.referencia as referencia, "
                 + " cde.nomecidade as nomecidade,cde.estado as estado,end.cep as cep, end.tipoendereco as tipoendereco, cl.id as idcliente, "
-                + " cde.id as id_cidade from enderecos end inner join cidades cde on cde.id = end.id_cidade "
+                + " cde.id as id_cidade, cde.SiglaEstado, cde.pais from enderecos end inner join cidades cde on cde.id = end.id_cidade "
                 + " inner join Clientes cl on cl.id = end.id_cliente where cl.id = ? and end.tipoendereco = 'RESIDENCIAL' ";
 
         Connection conn = null;
@@ -313,6 +315,8 @@ public class EnderecosDAO {
                 clsend.setId_cidade(rs.getInt("Id_cidade"));
                 clsend.setIdCidade(rs.getInt("Id_cidade"));
                 clsend.setIdCliente(rs.getInt("idcliente"));
+                clsend.setSiglaEstado(rs.getString("siglaestado"));
+                clsend.setPais(rs.getString("pais"));
                 clsEndereco = clsend ;
             }
             retorno = "Carregado lista com sucesso";

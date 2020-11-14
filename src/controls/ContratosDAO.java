@@ -16,16 +16,32 @@ import models.ClsValidacoes;
 public class ContratosDAO {
     private String retorno;
     private boolean sucesso;
+    private int idGerado;
     ClsValidacoes clsval = new ClsValidacoes();
     SimpleDateFormat formatoUS = new SimpleDateFormat("yyyy-MM-dd");
+
+    public int getIdGerado() {
+        return idGerado;
+    }
+    
+    
+    public String getRetorno() {
+        return retorno;
+    }
+
+    public boolean isSucesso() {
+        return sucesso;
+    }
     
     
  public void save(ClsContratos clsContratos){
     String sql = "INSERT INTO contratos (id_cliente,id_carro,id_colaborador, Observacoes,QuantidadeDiarias,"
             + " QuantidadeKmRet,ValorExtra,ValorTotal,TipoLocacao,DataSaida,DataChegada,DataContrato,Status) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+    String sql2 = "select max(id) as id from contratos";
     
     Connection conn = null;
     PreparedStatement ps = null;
+    ResultSet rs = null;
     
      try {
          
@@ -45,6 +61,16 @@ public class ContratosDAO {
          ps.setString(11, clsContratos.getDataChegada());
          ps.setString(12, clsContratos.getDataContrato());
          ps.setString(13, clsContratos.getStatus());
+         
+         ps.execute();
+         
+         ps = conn.prepareStatement(sql2);
+         rs = ps.executeQuery();
+         
+         while(rs.next()){
+             idGerado = rs.getInt("id");
+         }
+         
          
          
          retorno = "Contrato Gravado com Sucesso!";
@@ -111,7 +137,9 @@ public class ContratosDAO {
          ps.setString(13, clsContratos.getStatus());
          ps.setInt(14, clsContratos.getId());
          
-         retorno = "Contrato Gravado com Sucesso!";
+         ps.execute();
+         
+         retorno = "Contrato Atualizado com Sucesso!";
          sucesso = true;
          
      } catch (SQLException e) {
@@ -149,10 +177,10 @@ public class ContratosDAO {
  }
  
  public void delete(int idContrato) {
-        String sql = "delete from contratos where id = ?";
+        String sql = "delete from contratos where id = ? and status = 'ABERTO' ";
         Connection conn = null;
         PreparedStatement ps = null;
-
+        
         try {
             conn = ConexaoDAO.getConexaoDAO();
             ps = conn.prepareStatement(sql);
@@ -162,8 +190,9 @@ public class ContratosDAO {
             retorno = "Excluido com sucesso!";
             sucesso = true;
         } catch (SQLException e) {
+            System.out.println("Erro de bloqueio de exclusão"+e.getErrorCode()+""+e);
             sucesso = false;
-            retorno = "Erro ao excluir:" + e;
+            retorno = "Erro ao excluir: ";
         } finally {
             ConexaoDAO.FecharConexao();
         }
@@ -173,7 +202,7 @@ public class ContratosDAO {
         ClsContratos clsCont = new ClsContratos();
         String sql = "select id, id_cliente, id_carro, id_colaborador, Observacoes, QuantidadeDiarias, "
                 + " QuantidadeKmRet,ValorExtra,ValorTotal,TipoLocacao,DataSaida,DataChegada, "
-                + " DataContrato,Status from contratos where = ?";
+                + " DataContrato,Status from contratos where id = ?";
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs = null;

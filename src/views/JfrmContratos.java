@@ -3,11 +3,10 @@ package views;
 
 
 import controls.CarrosDAO;
-import controls.CidadesDAO;
 import controls.ClientesDAO;
 import controls.ConexaoDAO;
+import controls.ContratosDAO;
 import controls.EnderecosDAO;
-import java.awt.Color;
 import java.awt.Toolkit;
 import java.io.File;
 import java.text.NumberFormat;
@@ -15,8 +14,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -59,10 +56,12 @@ public class JfrmContratos extends javax.swing.JFrame {
     CarrosDAO carrosDAO;
     ClientesDAO clientesDAO;
     EnderecosDAO enderecosDAO;
+    ContratosDAO contratosDAO;
     
     
     //GLOBAIS OBJETOS LISTA 
     List<ClsCarros> listaCarros;
+    List<ClsCarros> listaCarrosFull;
     List<ClsClientes> listaClientes;
     
     //GLOBAIS OBJETOS USO COMUM
@@ -98,13 +97,15 @@ public class JfrmContratos extends javax.swing.JFrame {
         carrosDAO = new CarrosDAO();
         clientesDAO = new ClientesDAO();
         enderecosDAO = new EnderecosDAO();
+        contratosDAO = new ContratosDAO();
 
 
         userLoged = clslogin.getUserLoged();
         userIdLoged = clslogin.getId();
         CpfUserLoged = clslogin.getCpfUserLoged();
        
-        listaCarros = carrosDAO.selectAll();
+        listaCarros = carrosDAO.selectAllStatus();
+        listaCarrosFull = carrosDAO.selectAll();
         listaClientes = clientesDAO.selectAll();
         
         
@@ -244,6 +245,14 @@ public class JfrmContratos extends javax.swing.JFrame {
         
     }
     
+    private void enableControlBusca() {
+        jBtnEditar.setEnabled(true);
+        jBtnExcluir.setEnabled(true);
+        jBtnImprimir.setEnabled(true);
+        jBtnSalvar.setEnabled(false);
+        jBtnBuscar.setEnabled(true);
+    }
+    
     private void clearTxt() {
     
         jTxtObservacoes.setText("");
@@ -333,6 +342,25 @@ public class JfrmContratos extends javax.swing.JFrame {
         
     }
     
+    private void buscaContrato() {
+        String idContrato = JOptionPane.showInputDialog("Digite o Codigo Do Contrato para procurar");
+        if (idContrato.equals("")) {
+            JOptionPane.showMessageDialog(this, "Digite o numero do contrato", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
+            buscaContrato();
+        } else {
+            clsContratos = contratosDAO.select(Integer.parseInt(idContrato));
+            if (contratosDAO.isSucesso()) {               
+                loadTxtFull(clsContratos.getIdCarro(), clsContratos.getIdCliente());
+                precionado = false;
+                enableControlBusca();
+            } else if (!contratosDAO.isSucesso()) {
+                JOptionPane.showMessageDialog(this, "Numero de contrato nâo localizado", "ERRO", JOptionPane.ERROR_MESSAGE);
+                buscaContrato();
+            }
+
+        }
+
+    }
     
     private void buscaIndiceCarros(String placaCarro) {
         for (int i = 0; i < listaCarros.size(); i++) {
@@ -345,12 +373,14 @@ public class JfrmContratos extends javax.swing.JFrame {
             }
         }
     }
+    
     private void buscaIndiceCarrosID(int  idCarro) {
-        for (int i = 0; i < listaCarros.size(); i++) {
-            if (listaCarros.get(i).getId() == idCarro) {
+        for (int i = 0; i < listaCarrosFull.size(); i++) {
+            if (listaCarrosFull.get(i).getId() == idCarro) {
                 indiceCarro = i;
-                clsCarros = listaCarros.get(indiceCarro);
+                clsCarros = listaCarrosFull.get(indiceCarro);
                 clsContratos.setIdCarro(clsCarros.getId());
+                loadCombCarro();
                 loadTxtCarro();
                 break;
             }
@@ -375,6 +405,7 @@ public class JfrmContratos extends javax.swing.JFrame {
             loadTxtEndCLiente();
         }
     }
+    
     private void buscaIndiceClientesID(int idCliente){
         boolean encontrado = false;
         for (int i = 0; i < listaClientes.size(); i++) {
@@ -436,6 +467,7 @@ public class JfrmContratos extends javax.swing.JFrame {
     }
     
     private void loadTxtCarro() {
+        jCboPlaca.setSelectedItem(clsCarros.getPlaca());
         jTxtNome.setText(clsCarros.getNome());
         jTxtClasse.setText(clsCarros.getClasse());
         jTxtTipo.setText(clsCarros.getTipoVeiculo());
@@ -453,8 +485,15 @@ public class JfrmContratos extends javax.swing.JFrame {
     }
     
     private void loadTxtFull(int idCarro, int idCliente) {
-        buscaIndiceCarrosID(idCarro);
+        listaCarros.clear();
+        listaCarros = carrosDAO.selectAll();
         buscaIndiceClientesID(idCliente);
+        buscaIndiceCarrosID(idCarro);
+        jLabelCodigo.setText("Codigo: "+clsContratos.getId());
+        jCboStatusContrato.setSelectedItem(clsContratos.getStatus());
+        jCboTipoContrato.setSelectedItem(clsContratos.getTipoLocacao());
+        JfTxtDataChegada.setText(clsValidacoes.dataFormatoBR(clsContratos.getDataChegada()));
+        JfTxtDataSaida.setText(clsValidacoes.dataFormatoBR(clsContratos.getDataSaida()));
         jTxtObservacoes.setText(clsContratos.getObservacoes());
         jTxtValorExtra.setText(FormatterMoeda.format(clsContratos.getValorExtra()));
         jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.getValorTotal()));
@@ -607,11 +646,21 @@ public class JfrmContratos extends javax.swing.JFrame {
         jBtnEditar.setToolTipText("Clique aqui para editar Contrato");
         jBtnEditar.setBorder(null);
         jBtnEditar.setFocusPainted(false);
+        jBtnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnEditarActionPerformed(evt);
+            }
+        });
 
         jBtnSalvar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/save_121760.png"))); // NOI18N
         jBtnSalvar.setToolTipText("Clique aqui para salvar Contrato");
         jBtnSalvar.setBorder(null);
         jBtnSalvar.setFocusPainted(false);
+        jBtnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnSalvarActionPerformed(evt);
+            }
+        });
 
         jBtnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/print_121773.png"))); // NOI18N
         jBtnImprimir.setToolTipText("Clique aqui para imprimir Contrato");
@@ -627,11 +676,21 @@ public class JfrmContratos extends javax.swing.JFrame {
         jBtnBuscar.setToolTipText("Clique aqui para buscar Contrato");
         jBtnBuscar.setBorder(null);
         jBtnBuscar.setFocusPainted(false);
+        jBtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnBuscarActionPerformed(evt);
+            }
+        });
 
         jBtnExcluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/bin_121907.png"))); // NOI18N
         jBtnExcluir.setToolTipText("Clique aqui para excluir Contrato");
         jBtnExcluir.setBorder(null);
         jBtnExcluir.setFocusPainted(false);
+        jBtnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnExcluirActionPerformed(evt);
+            }
+        });
 
         jBtnRecalcular.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/rotate_121763.png"))); // NOI18N
         jBtnRecalcular.setToolTipText("Clique aqui para recalcular Contrato");
@@ -1005,6 +1064,9 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtValorExtra.setToolTipText("Campo para digitação de despesas extras, como multas, avarias e etc.");
         jTxtValorExtra.setBorder(javax.swing.BorderFactory.createTitledBorder("Valores Extras"));
         jTxtValorExtra.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTxtValorExtraFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtValorExtraFocusLost(evt);
             }
@@ -1197,9 +1259,13 @@ public class JfrmContratos extends javax.swing.JFrame {
             enableTipoKM(true);
             tipoContrato = 0;
             clsContratos.setTipoLocacao(jCboTipoContrato.getSelectedItem().toString());
+            clsContratos.setQuantidadeDiarias(0);
+            jTxtQtdDias.setText("");
         } else if (jCboTipoContrato.getSelectedItem().equals("DIÁRIA")) {
             tipoContrato = 1;
             clsContratos.setTipoLocacao(jCboTipoContrato.getSelectedItem().toString());
+            clsContratos.setQuantidadeKmRet(0);
+            jTxtValorKmFinal.setText("");
             enableTipoKM(false);
         }
 
@@ -1208,6 +1274,8 @@ public class JfrmContratos extends javax.swing.JFrame {
 
     private void jBtnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnNovoActionPerformed
         if (precionado == false) {
+            listaCarros.clear();
+            listaCarros = carrosDAO.selectAllStatus();
             setIconBtnNv(true);
             enableControl();
             clearTxt();
@@ -1240,6 +1308,10 @@ public class JfrmContratos extends javax.swing.JFrame {
     private void jCboStatusContratoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jCboStatusContratoFocusLost
 
             clsContratos.setStatus(jCboStatusContrato.getSelectedItem().toString());
+            if(jCboStatusContrato.getSelectedItem().toString().equals("FINALIZADO")) {
+                clsCarros.setStatus(0);
+            }
+            
 
     }//GEN-LAST:event_jCboStatusContratoFocusLost
 
@@ -1309,7 +1381,105 @@ public class JfrmContratos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_JfTxtDataChegadaFocusLost
 
+    private void jBtnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnSalvarActionPerformed
+        boolean validado = validaCampos();
+        if (editando == false && validado == true) {
+            clsContratos.setIdColaborador(userIdLoged);
+            clsCarros.setStatus(1);
+            contratosDAO.save(clsContratos);
+            carrosDAO.update(clsCarros);
+            if (contratosDAO.isSucesso() && carrosDAO.isSucesso()) {
+                JOptionPane.showMessageDialog(this, contratosDAO.getRetorno(), "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
+                clsContratos.setId(contratosDAO.getIdGerado());
+                setIconBtnNv(false);
+                precionado = false;
+                editando = false;
+                disableControl();
+                jBtnEditar.setEnabled(true);
+                jBtnImprimir.setEnabled(true);
+                
+
+            } else if (contratosDAO.isSucesso() == false || carrosDAO.isSucesso() == false) {
+                JOptionPane.showMessageDialog(this, contratosDAO.getRetorno(), "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
+                setIconBtnNv(false);
+                precionado = false;
+                editando = false;
+                disableControl();
+                clearTxt();
+            }
+        } else if (editando && validado) {
+            if(clsContratos.getStatus().equals("FINALIZADO")){
+                clsCarros.setStatus(0);
+            }else{
+                clsCarros.setStatus(1);
+            }
+            carrosDAO.update(clsCarros);
+            contratosDAO.update(clsContratos);
+            if (contratosDAO.isSucesso() && carrosDAO.isSucesso()) {
+                JOptionPane.showMessageDialog(this, contratosDAO.getRetorno(), "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
+                setIconBtnNv(false);
+                precionado = false;
+                editando = false;
+                disableControl();
+                jBtnEditar.setEnabled(true);
+                jBtnImprimir.setEnabled(true);
+            } else if (contratosDAO.isSucesso() == false || carrosDAO.isSucesso() == false) {
+                JOptionPane.showMessageDialog(this, contratosDAO.getRetorno(), "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
+                setIconBtnNv(false);
+                precionado = false;
+                editando = false;
+                disableControl();
+                clearTxt();
+               } 
+    }//GEN-LAST:event_jBtnSalvarActionPerformed
+    }
     
+    private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
+        precionado = true;
+        editando = true;
+        setIconBtnNv(true);
+        enableControl();
+    }//GEN-LAST:event_jBtnEditarActionPerformed
+
+    private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
+         buscaContrato();
+    }//GEN-LAST:event_jBtnBuscarActionPerformed
+
+    private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
+        if (clsContratos.getStatus().equals("ANDAMENTO") || clsContratos.getStatus().equals("FINALIZADO")) {
+                JOptionPane.showMessageDialog(this, "Olá " + userLoged + ""
+                        + " não pode deletar contrato \n "
+                        + "com Status diferente de ABERTO!", "Erro", JOptionPane.ERROR_MESSAGE);
+            } else  {
+        int deletar = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir o contrato?", "Atenção", JOptionPane.YES_NO_OPTION);
+        if (deletar == 0) {
+                clsCarros.setStatus(0);
+                carrosDAO.update(clsCarros);
+                contratosDAO.delete(clsContratos.getId());
+                if (contratosDAO.isSucesso() == true) {
+                    JOptionPane.showMessageDialog(this, contratosDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
+                    clearTxt();
+                    disableControl();
+                    setIconBtnNv(false);
+                    precionado = false;
+                } else if (contratosDAO.isSucesso() == false) {
+                    JOptionPane.showMessageDialog(this, contratosDAO.getRetorno() + "Olá " + userLoged + ""
+                            + " não conseguiu excluir erro:\n"
+                            + " " + contratosDAO.getRetorno() + "", "Erro", JOptionPane.ERROR_MESSAGE);
+                    setIconBtnNv(true);
+                    precionado = true;
+                }
+
+            }
+        }
+    }//GEN-LAST:event_jBtnExcluirActionPerformed
+
+    private void jTxtValorExtraFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtValorExtraFocusGained
+        jTxtValorExtra.setText("");
+    }//GEN-LAST:event_jTxtValorExtraFocusGained
+    
+    
+   
     
     /**
      * @param args the command line arguments

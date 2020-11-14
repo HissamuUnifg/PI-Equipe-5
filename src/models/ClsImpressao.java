@@ -188,6 +188,9 @@ public class ClsImpressao {
         titulo1.setText("IDENTIFICAÇÃO DAS PARTES CONTRATANTES");
         titulo1.addBreak();
         titulo1.addBreak();
+        titulo1.setText("Contrato Número: nº"+clsCont.getId());
+        titulo1.addBreak();
+        titulo1.addBreak();
         
         //Registro das Parte Locadora
         XWPFParagraph partes = documento.createParagraph();
@@ -557,6 +560,9 @@ public class ClsImpressao {
         titulo1.setText("IDENTIFICAÇÃO DAS PARTES CONTRATANTES");
         titulo1.addBreak();
         titulo1.addBreak();
+        titulo1.setText("Contrato Número: nº"+clsCont.getId());
+        titulo1.addBreak();
+        titulo1.addBreak();
         
         //Registro das Parte Locadora
         XWPFParagraph partes = documento.createParagraph();
@@ -610,7 +616,7 @@ public class ClsImpressao {
         
         //DO OBJETO DO CONTRATO
         XWPFParagraph objeto = documento.createParagraph();
-        objeto.setAlignment(ParagraphAlignment.BOTH);
+        objeto.setAlignment(ParagraphAlignment.CENTER);
         XWPFRun objeto1 = objeto.createRun();
         objeto1.setFontSize(12);
         objeto1.setFontFamily("Arial");
@@ -713,7 +719,7 @@ public class ClsImpressao {
         clasula44.setFontFamily("Arial");
         
         clasula44.setText("Cláusula 4ª. A presente locação terá o lapso por Kilometragem Usada, o calculo será feito ao retorno do veiculo,"
-                + " o veiculo será retirado no dia  "+clsVal.dataFormatoBR(clsCont.getDataContrato())+" com a Kilometragem inicial em KM"+clsCar.getKmRodados()+" "
+                + " o veiculo será retirado no dia  "+clsVal.dataFormatoBR(clsCont.getDataContrato())+" com a Kilometragem inicial em KM: "+clsCar.getKmRodados()+" "
                 + " o custo por cada KM rodado no veiculo é de "+FormatterMoeda.format(clsCar.getValorKmRd())+" .");
         
         clasula44.addBreak();
@@ -726,10 +732,10 @@ public class ClsImpressao {
         clasulaValor1.setFontFamily("Arial");
         
         clasulaValor1.setText("Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo "
-                + " o valor totla de "+FormatterMoeda.format(clsCont.getValorTotal())+""
-                + " que deverá ser pago em dinheiro (espécie) ou Cartão de Debito ou Credito. Caso hover algum dano ou multa no "
-                + " veiculo o valor será adicionado ao valor total do contrato a ser emitido nova cópia. E em caso de acidente com "
-                + " perca do veiculo será cobrado o valor de "+FormatterMoeda.format(clsCar.getValorSeguro())+" que se refere ao seguro");
+                + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+""
+                + " que deverá ser pago em dinheiro (ESPÉCIE) ou Cartão de Debito ou Credito. Caso haver algum dano ou multa no "
+                + " veiculo, o valor será adicionado ao valor total do contrato a ser emitido nova cópia. E em caso de acidente com "
+                + " perca do veiculo será cobrado o valor de "+FormatterMoeda.format(clsCar.getValorSeguro())+" que se refere ao seguro do automóvel");
         
         clasulaValor1.addBreak();
         clasulaValor1.addBreak();
@@ -758,6 +764,7 @@ public class ClsImpressao {
         
         recisao1.setText("DA RESCISÃO");
         
+        recisao1.addBreak();
         recisao1.addBreak();
         
         XWPFParagraph clasula6 = documento.createParagraph();
@@ -796,6 +803,7 @@ public class ClsImpressao {
         doforo1.setText("DO FORO");
         
         doforo1.addBreak();
+        doforo1.addBreak();
         
         XWPFParagraph clasula8 = documento.createParagraph();
         clasula8.setAlignment(ParagraphAlignment.BOTH);
@@ -804,7 +812,7 @@ public class ClsImpressao {
         clasula88.setFontFamily("Arial");
         
         clasula88.setText("Cláusula 8ª. Para dirimir quaisquer controvérsias oriundas do CONTRATO, "
-                + " as partes elegem o foro da comarca de "+clsEnd.getNomeCidade()+"-"+clsEnd.getSiglaEstado()+";");
+                + " as partes elegem o foro da comarca de "+clsEnd.getNomeCidade()+" - "+clsEnd.getSiglaEstado()+";");
         
         clasula88.addBreak();
         
