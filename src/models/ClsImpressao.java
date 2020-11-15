@@ -182,6 +182,12 @@ public class ClsImpressao {
         XWPFRun titulo1 = titulo.createRun();
         titulo1.setFontSize(12);
         titulo1.setFontFamily("Arial");
+        titulo1.setText("Centro Universitário FG - UniFG");
+        titulo1.addBreak();
+        titulo1.setText("Projeto Integrador 2 - Sistemas de Informação");
+        titulo1.addBreak();
+        titulo1.setText("Professor: Hissamu Shirado e Raissa Arruda");
+        titulo1.addBreak();
         titulo1.setText("CONTRATO DE ALUGUEL DE VEICULOS - LOCADORA BOA VIAGEM");
         titulo1.addBreak();
         titulo1.addBreak();
@@ -366,7 +372,7 @@ public class ClsImpressao {
         clasulaValor1.setFontFamily("Arial");
         
           clasulaValor1.setText("Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo"
-                + " o valor totla de "+FormatterMoeda.format(clsCont.getValorTotal())+""
+                + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+""
                 + " que deverá ser pago em dinheiro (espécie) ou Cartão de Debito ou Credito. Caso hover algum dano ou multa no"
                 + " veiculo o valor será adicionado ao valor total do contrato a ser emitido nova cópia. E em caso de acidente com"
                 + " perca do veiculo será cobrado o valor de "+FormatterMoeda.format(clsCar.getValorSeguro())+" que se refere ao seguro");
@@ -561,6 +567,12 @@ public class ClsImpressao {
         XWPFRun titulo1 = titulo.createRun();
         titulo1.setFontSize(12);
         titulo1.setFontFamily("Arial");
+        titulo1.setText("Centro Universitário FG - UniFG");
+        titulo1.addBreak();
+        titulo1.setText("Projeto Integrador 2 - Sistemas de Informação");
+        titulo1.addBreak();
+        titulo1.setText("Professor: Hissamu Shirado e Raissa Arruda");
+        titulo1.addBreak();
         titulo1.setText("CONTRATO DE ALUGUEL DE VEICULOS - LOCADORA BOA VIAGEM");
         titulo1.addBreak();
         titulo1.addBreak();

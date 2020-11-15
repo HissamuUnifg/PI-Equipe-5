@@ -110,6 +110,11 @@ public class JfrmClientes extends javax.swing.JFrame {
                
     }
     
+    private void reloadListClientes(){
+        listClientesBD.clear();
+        listClientesBD = clientesDAO.selectAll();
+    }
+    
     /**
      * Pssando as mascaras responsaveis por formatar os dados inseridos
      * @throws ParseException 
@@ -1424,11 +1429,42 @@ public class JfrmClientes extends javax.swing.JFrame {
 
     private void jFTxtCpfCnpjFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFTxtCpfCnpjFocusLost
         if (jFTxtCpfCnpj.getText().length() > 1 && jRadioBtnCnpj.isSelected() == true && jRadioBtnCpf.isSelected() == false) {
-            clsClientes.setCnpj(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()));
-            clsClientes.setCpf("");
+            if (clsValidacoes.isValid(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()))) {
+                if (listBuscaCNPJ(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()))) {
+                    JOptionPane.showMessageDialog(this, "CNPJ inserido já cadastrado no sistema, use a Busca", "ERRO", JOptionPane.ERROR_MESSAGE);
+                    jFTxtCpfCnpj.setText("");
+                    jFTxtCpfCnpj.requestFocus();
+
+                } else {
+                    clsClientes.setCnpj(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()));
+                    clsClientes.setCpf("");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "CNPJ inserido é invalido confira e tente novamente", "ERRO", JOptionPane.ERROR_MESSAGE);
+                jFTxtCpfCnpj.setText("");
+                jFTxtCpfCnpj.requestFocus();
+
+            }
+
         } else if (jFTxtCpfCnpj.getText().length() > 1 && jRadioBtnCpf.isSelected() == true && jRadioBtnCnpj.isSelected() == false) {
-            clsClientes.setCpf(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()));
-            clsClientes.setCnpj("");
+
+            if (clsValidacoes.isValid(jFTxtCpfCnpj.getText())) {
+                if (listBuscaCPF(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()))) {
+                    JOptionPane.showMessageDialog(this, "CPF inserido já cadastrado no sistema, use a Busca", "ERRO", JOptionPane.ERROR_MESSAGE);
+                    jFTxtCpfCnpj.setText("");
+                    jFTxtCpfCnpj.requestFocus();
+
+                } else {
+                    clsClientes.setCpf(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()));
+                    clsClientes.setCnpj("");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "CPF inserido é invalido confira e tente novamente", "ERRO", JOptionPane.ERROR_MESSAGE);
+                jFTxtCpfCnpj.setText("");
+                jFTxtCpfCnpj.requestFocus();
+
+            }
         }
     }//GEN-LAST:event_jFTxtCpfCnpjFocusLost
 
@@ -1485,10 +1521,12 @@ public class JfrmClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jTxtEmailFocusLost
 
     private void jTextObservacoesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextObservacoesFocusLost
-        if(jTextObservacoes.getText().length() >1) {
+        if(jTextObservacoes.getText().length() > 1) {
             clsClientes.setObservacoes(jTextObservacoes.getText());
         } else if (jTextObservacoes.getText().length() > 999) {
             msgAdvCampo("Observacoes");
+        } else if (jTextObservacoes.getText().equals("")) {
+            clsClientes.setObservacoes("");
         }
     }//GEN-LAST:event_jTextObservacoesFocusLost
 
@@ -1519,6 +1557,10 @@ public class JfrmClientes extends javax.swing.JFrame {
     private void jTxtReferenciaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtReferenciaFocusLost
         if (jTxtReferencia.getText().length() > 1) {
             clsEnderecos.setReferencia(jTxtReferencia.getText());
+        } else if (jTxtReferencia.getText().length() > 999) {
+            msgErrCampo("Referencia");
+        } else if (jTxtReferencia.getText().equals("")) {
+            clsEnderecos.setReferencia("");
         }
     }//GEN-LAST:event_jTxtReferenciaFocusLost
 
@@ -1690,6 +1732,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this,  cliDAO.getRetorno(), "Mensagem", JOptionPane.INFORMATION_MESSAGE);
                 clearTxt();
                 disableControl();
+                reloadListClientes();
                 removeTable();
                 setIconBtnNv(false);
                 precionado = false;

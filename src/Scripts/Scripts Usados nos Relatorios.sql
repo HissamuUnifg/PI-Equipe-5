@@ -45,3 +45,60 @@ inner join cidades cd on cd.id = end.id_cidade
 where cli.id = 9 
 order by end.id
 
+/**
+ * Author:  Tiago Teixeira
+ * Created: 14/11/2020
+ */
+
+/*Usadono relatório de Veiculos*/
+
+SELECT c.id,
+	c.`Nome`,
+	c.`Marca`,
+	c.`Modelo`,
+	c.`Classe`,
+	c.`TipoVeiculo`,
+	c.`Cor`,
+	c.`Placa`,
+	c.`Renavam`,
+	c.`ObsEstado`,
+	c.`DataCompra`,
+	c.`AnoModelo`,
+	c.`AnoFabricacao`,
+	c.`Chassi`,
+	c.`KmRodados`,
+	c.`ValorMercado`,
+	c.`ValorSeguro`,
+	c.`ValorKmRd`,
+	c.`ValorDiariaLoc`,
+    CASE when c.`Status` = 0 then 'LIBERADO'
+         when c.Status = 1 then  'ALUGADO'
+         ELSE  0 END as Status,
+	CASE when c.`Inativo` = 0 then 'ATIVO'
+		 when c.Inativo = 1 then 'INATIVO'
+         ELSE 0 END as Inativo,
+	cb.`Nome` AS Colaborador
+FROM locadora.carros c
+	inner join locadora.colaboradores cb ON 
+	 cb.id = c.id_colaborador
+	where c.Placa = $P{Placa}
+	order by Nome
+
+/**
+ * Author:  Tiago Teixeira
+ * Created: 14/11/2020
+ */
+
+/*Usadono relatório de Colaboradores*/
+
+select 
+id, 
+nome, 
+nomelogin, 
+cpf, 
+cpf_funcadastro, 
+senha, 
+telefone  
+from colaboradores  
+where Cpf = $P{Cpf} 
+order by nome

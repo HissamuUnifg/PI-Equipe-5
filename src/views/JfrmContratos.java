@@ -10,11 +10,14 @@ import controls.EnderecosDAO;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -141,7 +144,10 @@ public class JfrmContratos extends javax.swing.JFrame {
             jBtnNovo.setToolTipText("Clique aqui para novo Veiculo");
         }
     }
-    
+    /**
+     * Responsável por aplicar as mascaras nos campos formatados, e aplica a limitação da digitação também
+     * @throws ParseException 
+     */
     private void addMascara() throws ParseException {
         JfTxtDataChegada.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraData(JfTxtDataChegada)));
         JfTxtDataSaida.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraData(JfTxtDataSaida)));
@@ -149,7 +155,9 @@ public class JfrmContratos extends javax.swing.JFrame {
         jFtxtFone.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraTelefone(jFtxtFone)));
         jFtxtCelular.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraCelular(jFtxtCelular)));
     }
-    
+    /**
+     * Passa um documento para cada campo de texto limitando o input de caracteres
+     */
     private void controleDigitacao() {
         //todos os Jtext que estiver aqui só vão aceitar numeros e pontos
         jTxtValorDiaria.setDocument(new ClsControlaCpNumeric());
@@ -174,7 +182,10 @@ public class JfrmContratos extends javax.swing.JFrame {
         }
     }
     
-    
+    /**
+     * Responsavel por desabilitar os controles que não são editaveis nessa tela
+     * Usado ao carregar a tela
+     */
     private void disableControl(){
         //desabilitando os comboBox
         jCboNome.setEnabled(false);
@@ -226,6 +237,10 @@ public class JfrmContratos extends javax.swing.JFrame {
     
     }
     
+    /**
+     * Responsavel por habilitar a tela 
+     * para novo cadastro ou edição de um exitente
+     */
     private void enableControl() {
         jCboNome.setEnabled(true);
         jCboPlaca.setEnabled(true);
@@ -243,7 +258,10 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtObservacoes.setEnabled(true);
         
     }
-    
+    /**
+     * Responsavel por habilitar o uso dos botões 
+     * de controle da tela de acordo com a regra de negócio
+     */
     private void enableControlBusca() {
         jBtnEditar.setEnabled(true);
         jBtnExcluir.setEnabled(true);
@@ -251,7 +269,9 @@ public class JfrmContratos extends javax.swing.JFrame {
         jBtnSalvar.setEnabled(false);
         jBtnBuscar.setEnabled(true);
     }
-    
+    /**
+     * Responsável para limpar a tela quando cancela a operação ou deleta um contrato
+     */
     private void clearTxt() {
     
         jTxtObservacoes.setText("");
@@ -314,7 +334,10 @@ public class JfrmContratos extends javax.swing.JFrame {
 
         }
     }
-
+    /**
+     * Carrega o jCboNome com os dados retornados do Banco de Dados
+     *
+     */
     private void loadCombCliente() {
         if (listaClientes.size() > 0) {
             for (models.ClsClientes clC : listaClientes) {
@@ -322,7 +345,10 @@ public class JfrmContratos extends javax.swing.JFrame {
             }
         }
     }
-    
+    /**
+     * Carrega o jCboPlaca com os dados retornados do Banco de Dados
+     * 
+     */
     private void loadCombCarro() {
         if (listaCarros.size() > 0) {
         for (models.ClsCarros clCar: listaCarros) {
@@ -330,7 +356,9 @@ public class JfrmContratos extends javax.swing.JFrame {
         }
         }
     }
-    
+    /**
+     * Carregar os jCboTipoContrato e Status
+     */
     private void loadCombTipoStatus() {
         jCboTipoContrato.addItem("KM-RODADO");
         jCboTipoContrato.addItem("DIÁRIA");
@@ -340,7 +368,9 @@ public class JfrmContratos extends javax.swing.JFrame {
         jCboStatusContrato.addItem("FINALIZADO");
         
     }
-    
+    /**
+     * Utilizado para localizar o contrato e acionar as funções auxiliares para carregar a tela por completo
+     */
     private void buscaContrato() {
         String idContrato = JOptionPane.showInputDialog("Digite o Codigo Do Contrato para procurar");
         if (idContrato.equals("")) {
@@ -360,7 +390,10 @@ public class JfrmContratos extends javax.swing.JFrame {
         }
 
     }
-    
+    /**
+     * Usado para localizar o veiculo pela placa quando é selecionado no JcboPlaca
+     * @param placaCarro 
+     */
     private void buscaIndiceCarros(String placaCarro) {
         for (int i = 0; i < listaCarros.size(); i++) {
             if (listaCarros.get(i).getPlaca().equals(placaCarro)) {
@@ -372,7 +405,10 @@ public class JfrmContratos extends javax.swing.JFrame {
             }
         }
     }
-    
+    /**
+     * Usado para buscar o carro quando utiliza a função de busca
+     * @param idCarro 
+     */
     private void buscaIndiceCarrosID(int  idCarro) {
         for (int i = 0; i < listaCarrosFull.size(); i++) {
             if (listaCarrosFull.get(i).getId() == idCarro) {
@@ -385,7 +421,10 @@ public class JfrmContratos extends javax.swing.JFrame {
             }
         }
     }
-    
+    /**
+     * Usado para localizar o cliente quando é selecionado no jCboNome
+     * @param nomeCliente 
+     */
     private void buscaIndiceClientes(String nomeCliente){
         boolean encontrado = false;
         for (int i = 0; i < listaClientes.size(); i++) {
@@ -404,7 +443,10 @@ public class JfrmContratos extends javax.swing.JFrame {
             loadTxtEndCLiente();
         }
     }
-    
+    /**
+     * Usado para localizar o cliente do contrato pelo Id, usado na busca
+     * @param idCliente 
+     */
     private void buscaIndiceClientesID(int idCliente){
         boolean encontrado = false;
         for (int i = 0; i < listaClientes.size(); i++) {
@@ -423,7 +465,10 @@ public class JfrmContratos extends javax.swing.JFrame {
             loadTxtEndCLiente();
         }
     }
-    
+    /**
+     * Usado para carregar o bloco de cliente, usado em conjunto com as funções "buscaIndiceClientesID" e "buscaIndiceClientes"
+     * @param indice 
+     */
     private void loadTxtCliente(int indice) {
         
         jTxtObservacoes.setText(listaClientes.get(indice).getObservacoes());
@@ -453,6 +498,9 @@ public class JfrmContratos extends javax.swing.JFrame {
 
     }
     
+    /**
+     * Usado para carregar o bloco de endereco do cliente logo após é selecionado 
+     */
     private void loadTxtEndCLiente() {
  
         jTxtBairro.setText(clsEnderecos.getBairro());
@@ -465,6 +513,10 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtCidade.setText(clsEnderecos.getNomeCidade());
     }
     
+    /**
+     * Usado para carregar o JtextField do bloco 
+     * do carro, logo quando a placa é selecionada
+     */
     private void loadTxtCarro() {
         jCboPlaca.setSelectedItem(clsCarros.getPlaca());
         jTxtNome.setText(clsCarros.getNome());
@@ -483,6 +535,11 @@ public class JfrmContratos extends javax.swing.JFrame {
  
     }
     
+    /**
+     * Usado para carregar a tela com os dados encontrados na busca
+     * @param idCarro
+     * @param idCliente 
+     */
     private void loadTxtFull(int idCarro, int idCliente) {
         listaCarros.clear();
         listaCarros = carrosDAO.selectAll();
@@ -500,7 +557,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtQtdDias.setText(""+clsContratos.getQuantidadeDiarias());
     }
     
-        /**
+     /**
      * Usado por lançar um MensageBox de campo obrigatório
      * @param dado 
      */
@@ -526,7 +583,10 @@ public class JfrmContratos extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Olá " + userLoged + " esse dado: " + dado + ""
                 + " é invalido!", "Informação", JOptionPane.INFORMATION_MESSAGE);
     }
-    
+    /**
+     * Valida os campos, e verifica os dados inseridos se estão de acordo com o padrão esperado
+     * @return true para VALIDO e false para INVALIDO
+     */
     private boolean validaCampos(){
         if (jCboNome.getSelectedIndex() == 0) {
             msgObgCampo("Nome Cliente");
@@ -1263,6 +1323,13 @@ public class JfrmContratos extends javax.swing.JFrame {
                 System.out.println("Não gerou o arquivo");
             }
             System.out.println(caminhoArquivo + "\\" + arquivoSalvo.getName());
+//              try {
+//               String arquivo = "cmd.exe /C start WINWORD.exe "+caminhoArquivo+"\\"+arquivoSalvo.getName()+".docx";
+//               Runtime.getRuntime().exec(arquivo);// .getRuntime().exec("cmd.exe /C start WINWORD.exe c:\seu_arquivo.doc");
+//                  System.out.println(arquivo);
+//              } catch (IOException ex) {
+//                  System.out.println("Erro aqui: "+ex);
+//              }
         } else {
             System.out.println("Canlecou aqui.");
         }
@@ -1333,21 +1400,32 @@ public class JfrmContratos extends javax.swing.JFrame {
     }//GEN-LAST:event_jCboStatusContratoFocusLost
 
     private void jTxtValorExtraFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtValorExtraFocusLost
-        if("".equals(jTxtValorExtra.getText())){
+        if ("".equals(jTxtValorExtra.getText())) {
             clsContratos.setValorExtra(0);
-        }else if (jTxtValorExtra.getText().length() > 14){
+        } else if (jTxtValorExtra.getText().length() > 14) {
             JOptionPane.showMessageDialog(this, "O valor inserido é maior que o permitido", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
-        }else{
+        } else if (tipoContrato == 0) {
             try {
                 clsContratos.setValorExtra(clsValidacoes.formataMoeda(jTxtValorExtra.getText()));
                 jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.calcularValorTotalKM(clsCarros.getValorKmRd(), clsCarros.getKmRodados())));
                 jTxtValorExtra.setText(FormatterMoeda.format(clsContratos.getValorExtra()));
+               
             } catch (ParseException ex) {
-                System.out.println(""+ex);
+                System.out.println("" + ex);
             }
-            
+        } else if (tipoContrato == 1) {
+
+            try {
+                clsContratos.setValorExtra(clsValidacoes.formataMoeda(jTxtValorExtra.getText()));
+                jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.calcularValorTotalDIA(clsCarros.getValorDiariaLoc())));
+                jTxtValorExtra.setText(FormatterMoeda.format(clsContratos.getValorExtra()));
+               
+            } catch (ParseException ex) {
+                System.out.println("" + ex);
+            }
+
         }
-        
+
     }//GEN-LAST:event_jTxtValorExtraFocusLost
 
     private void jTxtValorExtraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTxtValorExtraMouseClicked
@@ -1401,6 +1479,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         } else if (editando && validado) {
             if(clsContratos.getStatus().equals("FINALIZADO")){
                 clsCarros.setStatus(0);
+                clsCarros.setKmRodados(clsContratos.getQuantidadeKmRet());
             }else{
                 clsCarros.setStatus(1);
             }

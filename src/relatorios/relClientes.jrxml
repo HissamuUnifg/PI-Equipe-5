@@ -274,6 +274,20 @@ limit 3]]>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="0" y="23" width="218" height="17" uuid="cd94b9d2-3cc4-468e-a794-7167f1aa717f"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Centro Universitário FG - UniFG]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="40" width="317" height="17" uuid="2aea1263-f461-417e-8c09-ac1934e116b2"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Projeto Integrador 2 - Sistemas de Informação / Prof. Hissamu Shirado]]></text>
+			</staticText>
 		</band>
 	</title>
 	<detail>

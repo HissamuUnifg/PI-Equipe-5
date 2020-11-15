@@ -199,9 +199,9 @@ FROM locadora.carros c
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="10" y="0" width="170" height="30" uuid="09092ebe-fef4-40e9-8d56-d184450aa73c"/>
+				<reportElement x="0" y="0" width="170" height="23" uuid="09092ebe-fef4-40e9-8d56-d184450aa73c"/>
 				<textElement>
-					<font size="16"/>
+					<font size="14" isBold="true" isItalic="true"/>
 				</textElement>
 				<text><![CDATA[Locadora Boa Viagem ]]></text>
 			</staticText>
@@ -216,6 +216,20 @@ FROM locadora.carros c
 				<reportElement x="721" y="0" width="53" height="20" uuid="b211bc79-d288-4fee-9538-c750611ed993"/>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[Código:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="26" width="218" height="17" uuid="5a10e5c8-b206-4f70-950d-eef724efef46"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Centro Universitário FG - UniFG]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="43" width="334" height="17" uuid="649a5956-8dda-4cab-905e-5137d7698e62"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Projeto Integrador 2 - Sistemas de Informação / Prof. Hissamu Shirado]]></text>
 			</staticText>
 		</band>
 	</title>
