@@ -675,6 +675,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtNome.setToolTipText("Digite o nome do veiculo");
         jTxtNome.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome"));
+        jTxtNome.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtNome.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtNomeFocusLost(evt);
@@ -685,6 +686,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtVeiculo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtVeiculo.setToolTipText("Digite o modelo do veiculo");
         jTxtVeiculo.setBorder(javax.swing.BorderFactory.createTitledBorder("Modelo"));
+        jTxtVeiculo.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtVeiculo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtVeiculoFocusLost(evt);
@@ -695,6 +697,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtMarca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtMarca.setToolTipText("Digite a marca do veiculo");
         jTxtMarca.setBorder(javax.swing.BorderFactory.createTitledBorder("Marca"));
+        jTxtMarca.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtMarca.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtMarcaFocusLost(evt);
@@ -705,6 +708,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtCor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtCor.setToolTipText("Digite a cor do veiculo");
         jTxtCor.setBorder(javax.swing.BorderFactory.createTitledBorder("Cor"));
+        jTxtCor.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtCor.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtCorFocusLost(evt);
@@ -715,6 +719,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtPlaca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtPlaca.setToolTipText("Digite a placa do veiculo");
         jTxtPlaca.setBorder(javax.swing.BorderFactory.createTitledBorder("Placa"));
+        jTxtPlaca.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtPlaca.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtPlacaFocusLost(evt);
@@ -725,6 +730,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtChassi.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtChassi.setToolTipText("Digite o numero do chassi do veiculo");
         jTxtChassi.setBorder(javax.swing.BorderFactory.createTitledBorder("Chassi"));
+        jTxtChassi.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtChassi.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtChassiFocusLost(evt);
@@ -735,6 +741,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtKm.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtKm.setToolTipText("Digite a KM rodada do veiculo");
         jTxtKm.setBorder(javax.swing.BorderFactory.createTitledBorder("Km Rodado"));
+        jTxtKm.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtKm.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtKmFocusLost(evt);
@@ -745,6 +752,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtAnoModelo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtAnoModelo.setToolTipText("Digite ano modelo do veiculo");
         jTxtAnoModelo.setBorder(javax.swing.BorderFactory.createTitledBorder("Ano Modelo"));
+        jTxtAnoModelo.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtAnoModelo.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtAnoModeloFocusLost(evt);
@@ -755,6 +763,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtAnoFabricacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtAnoFabricacao.setToolTipText("Digite ano fabricação do veiculo");
         jTxtAnoFabricacao.setBorder(javax.swing.BorderFactory.createTitledBorder("Ano Fabricacao"));
+        jTxtAnoFabricacao.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtAnoFabricacao.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtAnoFabricacaoFocusLost(evt);
@@ -787,6 +796,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtNumeroRenavan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtNumeroRenavan.setToolTipText("Digite o numero RENAVAN do veiculo");
         jTxtNumeroRenavan.setBorder(javax.swing.BorderFactory.createTitledBorder("RENAVAN"));
+        jTxtNumeroRenavan.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtNumeroRenavan.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtNumeroRenavanFocusLost(evt);
@@ -797,6 +807,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtObservacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtObservacoes.setToolTipText("Digite breve observação sobre o veiculo");
         jTxtObservacoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Observações/Estado"));
+        jTxtObservacoes.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtObservacoes.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtObservacoesFocusLost(evt);
@@ -806,6 +817,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         JfTxtData.setBackground(new java.awt.Color(240, 240, 240));
         JfTxtData.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Compra"));
         JfTxtData.setToolTipText("Inserir data de aquisição do Veiculo!");
+        JfTxtData.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         JfTxtData.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         JfTxtData.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -892,6 +904,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorSeguro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtValorSeguro.setToolTipText("Digite o valor do seguro anual do veiculo");
         jTxtValorSeguro.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor Seguro"));
+        jTxtValorSeguro.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtValorSeguro.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtValorSeguroFocusLost(evt);
@@ -907,6 +920,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorKmRodado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtValorKmRodado.setToolTipText("Digite o valor de cada KM rodado do veiculo");
         jTxtValorKmRodado.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor Km Rodado"));
+        jTxtValorKmRodado.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtValorKmRodado.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtValorKmRodadoFocusLost(evt);
@@ -922,6 +936,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorDiaria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtValorDiaria.setToolTipText("Digite o valor da diária do veiculo");
         jTxtValorDiaria.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor Diaria"));
+        jTxtValorDiaria.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtValorDiaria.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtValorDiariaFocusLost(evt);
@@ -972,6 +987,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorMercado.setBackground(new java.awt.Color(240, 240, 240));
         jTxtValorMercado.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor Mercado/Bem"));
         jTxtValorMercado.setToolTipText("Digite valor de mercado do veiculo");
+        jTxtValorMercado.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtValorMercado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtValorMercado.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {

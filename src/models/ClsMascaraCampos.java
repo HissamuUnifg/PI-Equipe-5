@@ -80,13 +80,23 @@ public class ClsMascaraCampos {
         return mask;
     }
     
-        public MaskFormatter mascaraCNH(JFormattedTextField textfield) throws ParseException {
+    public MaskFormatter mascaraCNH(JFormattedTextField textfield) throws ParseException {
         MaskFormatter mask = null;
         mask = new MaskFormatter("###########");
         mask.setOverwriteMode(true);
         mask.setValidCharacters("0123456789");
         mask.setPlaceholderCharacter('_');
         mask.install(textfield);
+        return mask;
+    }
+    
+    public MaskFormatter removeMasc(JFormattedTextField textfield) throws ParseException {
+        MaskFormatter mask = null;
+        mask = new MaskFormatter("");
+        mask.setOverwriteMode(true);
+        mask.setValidCharacters("0123456789");
+        mask.setPlaceholderCharacter('_');
+        mask.uninstall();
         return mask;
     }
 

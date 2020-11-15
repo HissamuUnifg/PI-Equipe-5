@@ -9,6 +9,7 @@ import java.text.ParseException;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
+import models.ClsColaborador;
 import models.ClsImpressao;
 import models.ClsLogin;
 import models.ClsValidacoes;
@@ -23,9 +24,10 @@ import net.sf.jasperreports.engine.JRException;
 public class JfrmColaborador extends javax.swing.JFrame {
     
     //Declaração de objetos a serem usados na tela
-    models.ClsColaborador clscolaborador;
+    ClsColaborador clscolaborador;
     controls.ColaboradorDAO colaboradorDAO;
     models.ClsMascaraCampos clsMascaraCampos;
+    List<ClsColaborador> listColaboradorBD;
     //declaração de variaveis de controle da tela
     private String userLoged;
     private int userIdLoged;
@@ -59,6 +61,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         clscolaborador = new models.ClsColaborador();
         colaboradorDAO = new controls.ColaboradorDAO();
         clsMascaraCampos = new models.ClsMascaraCampos();
+        listColaboradorBD = colaboradorDAO.selectAll();
         getIcon();
         disableControls(); 
         try {
@@ -69,6 +72,17 @@ public class JfrmColaborador extends javax.swing.JFrame {
     }
     
     //funções e eventos da tela
+    private boolean listBuscaCPF(String cpf){
+        boolean encontrado = false;
+        for (int i = 0; i < listColaboradorBD.size(); i++) {
+            if (listColaboradorBD.get(i).getCpf().equals(cpf)) {
+                encontrado = true;
+                break;
+            }
+        }
+        return encontrado;
+    }
+    
     private void initMascaraCpfTelefone() throws ParseException {
        // iniciando a mascara com os formatos contidos na classe MascaraCampos//
        jTxtFone.setFormatterFactory(new DefaultFormatterFactory(clsMascaraCampos.mascaraCelular(jTxtFone))); 
@@ -77,27 +91,26 @@ public class JfrmColaborador extends javax.swing.JFrame {
         
     }
     
-    private void buscaCliente(){
+    private void buscaColaborador(){
         String cpf = JOptionPane.showInputDialog("Digite o CPF para procurar");
         if (cpf.equals("")) {
             JbtnNovo.requestFocus();
         } else {
-            ClsValidacoes clsvalidacoes = new ClsValidacoes();
-            boolean valido = clsvalidacoes.isValid(cpf);
+            boolean valido = new ClsValidacoes().isValid(cpf);
             if (valido == true) {
                 List<models.ClsColaborador> ResultSet = colaboradorDAO.select(cpf);
-                if (ResultSet.size() < 0) {
+                if (ResultSet.size() < 1) {
                     JOptionPane.showMessageDialog(this, "Erro: CPF não Cadastrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
-                    buscaCliente();
+                    buscaColaborador();
                 } else {
-                    for (models.ClsColaborador clb : colaboradorDAO.select(cpf)) {
+                    for (models.ClsColaborador clb : ResultSet) {
                         jTxtNome.setText(clb.getNome());
                         clscolaborador.setNome(clb.getNome());
                         jTxtCpf.setText(clb.getCpf());
                         clscolaborador.setCpf(clb.getCpf());
                         jTxtNmlogin.setText(clb.getNomeLogin());
                         clscolaborador.setNomeLogin(clb.getNomeLogin());
-                        clscolaborador.setCpf_funCadastro(clb.getCpf_funCadastro());
+                        clscolaborador.setCpf_funCadastro(new ClsValidacoes().replaceDado(clb.getCpf_funCadastro()));
                         jTxtFone.setText(clb.getTelefone());
                         clscolaborador.setTelefone(clb.getTelefone());
                         jTxtSenha.setText(clb.getSenha());
@@ -106,11 +119,13 @@ public class JfrmColaborador extends javax.swing.JFrame {
 
                     }
                     disableCtrlBusca();
-                    precionado = true;
+                    precionado = false;
+                    setIconBtnNv(false);
+                    JbtnNovo.setEnabled(true);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "O CPF digitado é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
-                buscaCliente();
+                buscaColaborador();
             }
         }
     }
@@ -208,6 +223,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro Colaboraores");
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
@@ -231,6 +247,11 @@ public class JfrmColaborador extends javax.swing.JFrame {
         JbtnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 JbtnBuscarMouseClicked(evt);
+            }
+        });
+        JbtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JbtnBuscarActionPerformed(evt);
             }
         });
 
@@ -354,7 +375,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
                     .addComponent(jTxtNmlogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTxtFone, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3592854-add-user-business-man-employee-general-human-member-office_107767.png"))); // NOI18N
@@ -408,7 +429,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
                     .addComponent(JbtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(JpanDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(5, 5, 5))
         );
 
         pack();
@@ -427,9 +448,13 @@ public class JfrmColaborador extends javax.swing.JFrame {
        if(precionado == false){
            enableControls();
            setIconBtnNv(true);
-           clscolaborador.setCpf_funCadastro(CpfUserLoged);
            editando = false;
            precionado = true;
+           if(CpfUserLoged == null){
+                clscolaborador.setCpf_funCadastro("00000000000");
+           }else{
+                clscolaborador.setCpf_funCadastro(new ClsValidacoes().replaceDado(CpfUserLoged));
+           }           
            clearTextBox();
        }else{
            clearTextBox();
@@ -482,7 +507,10 @@ public class JfrmColaborador extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, colaboradorDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
                 disableControls();
                 setIconBtnNv(false);
+                listColaboradorBD.clear();
+                listColaboradorBD = colaboradorDAO.selectAll();
                 JbtnNovo.setEnabled(true);
+                precionado = false;
                 JbtnExcluir.setEnabled(true);
                 JbtnEditar.setEnabled(true);
                 JbtnBuscar.setEnabled(true);
@@ -491,8 +519,9 @@ public class JfrmColaborador extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, colaboradorDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
                 disableControls();
                 setIconBtnNv(false);
-                clearTextBox();
                 JbtnNovo.setEnabled(true);
+                precionado = false;
+                clearTextBox();               
                 JbtnExcluir.setEnabled(true);
                 JbtnEditar.setEnabled(true);
                 JbtnBuscar.setEnabled(true);
@@ -503,6 +532,8 @@ public class JfrmColaborador extends javax.swing.JFrame {
             colaboradorDAO.update(clscolaborador);
             JOptionPane.showMessageDialog(this, colaboradorDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
             disableControls();
+            precionado = false;
+            setIconBtnNv(false);
             JbtnNovo.setEnabled(true);
             JbtnExcluir.setEnabled(true);
             JbtnEditar.setEnabled(true);
@@ -515,7 +546,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
     }//GEN-LAST:event_JbtnSalvarMouseClicked
 
     private void JbtnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbtnBuscarMouseClicked
-        buscaCliente();
+        buscaColaborador();
     }//GEN-LAST:event_JbtnBuscarMouseClicked
 
     private void JbtnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbtnEditarMouseClicked
@@ -556,19 +587,25 @@ public class JfrmColaborador extends javax.swing.JFrame {
     }//GEN-LAST:event_jTxtFoneKeyPressed
 
     private void jTxtCpfFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtCpfFocusLost
-        clscolaborador.setCpf(jTxtCpf.getText());       
+            
         if (jTxtCpf.getText().length() < 11) {
             JOptionPane.showMessageDialog(this, "O numero do CPF é invalido, tamanho menor que 11 digitos!", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
             jTxtCpf.setText("");
-        }else if (jTxtCpf.getText().length() < 11) {
-            JOptionPane.showMessageDialog(this, "O numero do CPF é invalido, tamanho não pode sermaior que 11 digitos!", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
+            jTxtCpf.requestFocus();
+        } else if (jTxtCpf.getText().length() < 11) {
+            JOptionPane.showMessageDialog(this, "O numero do CPF é invalido, tamanho não pode ser maior que 11 digitos!", "Advertencia", JOptionPane.INFORMATION_MESSAGE);
             jTxtCpf.setText("");
-        }else if (new ClsValidacoes().isValid(jTxtCpf.getText()) == false) {
+            jTxtCpf.requestFocus();
+        } else if (new ClsValidacoes().isValid(jTxtCpf.getText()) == false) {
             JOptionPane.showMessageDialog(this, "O numero do CPF é invalido!", "ERRO", JOptionPane.ERROR_MESSAGE);
             jTxtCpf.setText("");
+            jTxtCpf.requestFocus();
+        } else if (listBuscaCPF(new ClsValidacoes().replaceDado(jTxtCpf.getText()))) {
+            JOptionPane.showMessageDialog(this, "Numero do CPF já cadastrado!", "ERRO", JOptionPane.ERROR_MESSAGE);
+            jTxtCpf.setText("");
+            jTxtCpf.requestFocus();
         } else {
-            ClsValidacoes clsVal = new ClsValidacoes();
-            clscolaborador.setCpf(clsVal.replaceDado(jTxtCpf.getText()));
+            clscolaborador.setCpf(new ClsValidacoes().replaceDado(jTxtCpf.getText()));
         }
     }//GEN-LAST:event_jTxtCpfFocusLost
 
@@ -594,6 +631,10 @@ public class JfrmColaborador extends javax.swing.JFrame {
         setIconBtnNv(false);
         precionado = false;
     }//GEN-LAST:event_JbtnImprimirActionPerformed
+
+    private void JbtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JbtnBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JbtnBuscarActionPerformed
 
     /**
      * @param args the command line arguments

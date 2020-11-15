@@ -220,5 +220,60 @@ public class ColaboradorDAO {
 
         return colaboradores;
     }
+    
+    public List<models.ClsColaborador> selectAll() {
+
+        String sql = "select id, nome, cpf, nomeLogin, Cpf_funCadastro, senha, telefone from colaboradores";
+        List<models.ClsColaborador> colaboradores = new ArrayList<models.ClsColaborador>();
+
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rset = null;
+
+        try {
+            conn = ConexaoDAO.getConexaoDAO();
+            ps = conn.prepareStatement(sql);
+            rset = ps.executeQuery();
+
+            while (rset.next()) {
+                models.ClsColaborador colaborador = new models.ClsColaborador();
+                colaborador.setId(rset.getInt("id"));
+                colaborador.setNome(rset.getString("nome"));
+                colaborador.setCpf(rset.getString("cpf"));
+                colaborador.setNomeLogin(rset.getString("nomeLogin"));
+                colaborador.setCpf_funCadastro(rset.getString("Cpf_funCadastro"));
+                colaborador.setSenha(rset.getString("senha"));
+                colaborador.setTelefone(rset.getString("telefone"));
+                colaboradores.add(colaborador);
+            }
+            retorno = "Colaborador Encontrado!";
+            sucesso = true;
+
+        } catch (SQLException e) {
+            retorno = "Erro: " + e;
+            System.out.println(e);
+            sucesso = false;
+        } finally {
+
+            try {
+
+                if (rset != null) {
+                    rset.close();
+                }
+                if (ps != null) {
+                    ps.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                    ConexaoDAO.FecharConexao();
+                }
+
+            } catch (SQLException e) {
+                retorno = "Erro: " + e;
+            }
+        }
+
+        return colaboradores;
+    }
 
 }

@@ -15,6 +15,8 @@ import java.io.File;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.text.DefaultFormatterFactory;
 import models.ClsCarregarTableEndereco;
@@ -125,6 +127,10 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtFone.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraTelefone(jFtxtFone)));
         jFtxtCelular.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraCelular(jFtxtCelular)));
         jFtxtCnh.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraCNH(jFtxtCnh)));
+    }
+    
+    private void removeMascara() throws ParseException {
+        jFTxtCpfCnpj.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.removeMasc(jFTxtCpfCnpj)));
     }
     
     /**
@@ -893,6 +899,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtFone.setBackground(new java.awt.Color(240, 240, 240));
         jFtxtFone.setBorder(javax.swing.BorderFactory.createTitledBorder("Fone"));
         jFtxtFone.setToolTipText("Adicione aqui o numero de telefone fixo do cliente");
+        jFtxtFone.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jFtxtFone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jFtxtFone.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -903,6 +910,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtCelular.setBackground(new java.awt.Color(240, 240, 240));
         jFtxtCelular.setBorder(javax.swing.BorderFactory.createTitledBorder("Celular"));
         jFtxtCelular.setToolTipText("Adicione aqui o numero de telefone celular do cliente");
+        jFtxtCelular.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jFtxtCelular.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jFtxtCelular.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -914,6 +922,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jTxtEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtEmail.setToolTipText("Adicione o Email do Cliente do Cliente");
         jTxtEmail.setBorder(javax.swing.BorderFactory.createTitledBorder("E-mail"));
+        jTxtEmail.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtEmail.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtEmailFocusLost(evt);
@@ -924,6 +933,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jTxtNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtNome.setToolTipText("Nome completo do Cliente");
         jTxtNome.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome"));
+        jTxtNome.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtNome.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtNomeFocusLost(evt);
@@ -950,6 +960,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFTxtCpfCnpj.setBackground(new java.awt.Color(240, 240, 240));
         jFTxtCpfCnpj.setBorder(javax.swing.BorderFactory.createTitledBorder("CPF/CNPJ"));
         jFTxtCpfCnpj.setToolTipText("Escolha entre CPF ou CNPJ e insira o dado!");
+        jFTxtCpfCnpj.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jFTxtCpfCnpj.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jFTxtCpfCnpj.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -960,6 +971,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtRgIe.setBackground(new java.awt.Color(240, 240, 240));
         jFtxtRgIe.setBorder(javax.swing.BorderFactory.createTitledBorder("RG/IE"));
         jFtxtRgIe.setToolTipText("Insira o RG caso seja pessoa fisica ou IE caso seja pessoa juridica");
+        jFtxtRgIe.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jFtxtRgIe.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jFtxtRgIe.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -970,6 +982,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtCnh.setBackground(new java.awt.Color(240, 240, 240));
         jFtxtCnh.setBorder(javax.swing.BorderFactory.createTitledBorder("CNH"));
         jFtxtCnh.setToolTipText("Numero da CNH do cliente");
+        jFtxtCnh.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jFtxtCnh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jFtxtCnh.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -980,6 +993,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtDataNascimento.setBackground(new java.awt.Color(240, 240, 240));
         jFtxtDataNascimento.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Nascimento"));
         jFtxtDataNascimento.setToolTipText("Data nascimento do cliente!");
+        jFtxtDataNascimento.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jFtxtDataNascimento.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jFtxtDataNascimento.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -1083,6 +1097,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jTxtRua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtRua.setToolTipText("Nome da rua do cliente");
         jTxtRua.setBorder(javax.swing.BorderFactory.createTitledBorder("Rua"));
+        jTxtRua.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtRua.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtRuaFocusLost(evt);
@@ -1093,6 +1108,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jTxtNumero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtNumero.setToolTipText("Numero da Residencia");
         jTxtNumero.setBorder(javax.swing.BorderFactory.createTitledBorder("Numero"));
+        jTxtNumero.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtNumero.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtNumeroFocusLost(evt);
@@ -1114,6 +1130,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jTxtBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtBairro.setToolTipText("Bairro da Residencia");
         jTxtBairro.setBorder(javax.swing.BorderFactory.createTitledBorder("Bairro"));
+        jTxtBairro.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtBairro.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtBairroFocusLost(evt);
@@ -1124,6 +1141,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jTxtEstado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtEstado.setToolTipText("Estado da Residencia");
         jTxtEstado.setBorder(javax.swing.BorderFactory.createTitledBorder("Estado"));
+        jTxtEstado.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jCboTipoEnd.setBackground(new java.awt.Color(240, 240, 240));
         jCboTipoEnd.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -1140,6 +1158,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jTxtReferencia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtReferencia.setToolTipText("Breve ponto de referencia");
         jTxtReferencia.setBorder(javax.swing.BorderFactory.createTitledBorder("Referencia"));
+        jTxtReferencia.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtReferencia.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtReferenciaFocusLost(evt);
@@ -1206,6 +1225,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         jFtxtCep.setBackground(new java.awt.Color(240, 240, 240));
         jFtxtCep.setBorder(javax.swing.BorderFactory.createTitledBorder("CEP"));
         jFtxtCep.setToolTipText("Nuero do CEP do endereço do cliente");
+        jFtxtCep.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jFtxtCep.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jFtxtCepFocusLost(evt);
@@ -1381,8 +1401,14 @@ public class JfrmClientes extends javax.swing.JFrame {
         if (precionado == false) {
             jTblEnderecos.setEnabled(false);
             setIconBtnNv(true);
+            clsClientes.cleanClientes();
             enableControl();
             clearTxt();
+            try {
+                removeMascara();
+            } catch (ParseException ex) {
+                System.out.println("Erro: "+ex);
+            }
             if (buscando == true || editando == true) {
                 removeTable();
             }
@@ -1395,6 +1421,7 @@ public class JfrmClientes extends javax.swing.JFrame {
             setIconBtnNv(false);
             disableControl();
             clearTxt();
+            clsClientes.cleanClientes();
             if (buscando == true || editando == true) {
                 removeTable();
             }
@@ -1430,7 +1457,7 @@ public class JfrmClientes extends javax.swing.JFrame {
     private void jFTxtCpfCnpjFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jFTxtCpfCnpjFocusLost
         if (jFTxtCpfCnpj.getText().length() > 1 && jRadioBtnCnpj.isSelected() == true && jRadioBtnCpf.isSelected() == false) {
             if (clsValidacoes.isValid(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()))) {
-                if (listBuscaCNPJ(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()))) {
+                if (listBuscaCNPJ(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText())) && editando == false) {
                     JOptionPane.showMessageDialog(this, "CNPJ inserido já cadastrado no sistema, use a Busca", "ERRO", JOptionPane.ERROR_MESSAGE);
                     jFTxtCpfCnpj.setText("");
                     jFTxtCpfCnpj.requestFocus();
@@ -1450,7 +1477,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         } else if (jFTxtCpfCnpj.getText().length() > 1 && jRadioBtnCpf.isSelected() == true && jRadioBtnCnpj.isSelected() == false) {
 
             if (clsValidacoes.isValid(jFTxtCpfCnpj.getText())) {
-                if (listBuscaCPF(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText()))) {
+                if (listBuscaCPF(clsValidacoes.replaceDado(jFTxtCpfCnpj.getText())) && editando == false) {
                     JOptionPane.showMessageDialog(this, "CPF inserido já cadastrado no sistema, use a Busca", "ERRO", JOptionPane.ERROR_MESSAGE);
                     jFTxtCpfCnpj.setText("");
                     jFTxtCpfCnpj.requestFocus();
@@ -1809,6 +1836,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         if (jRadioBtnCnpj.isSelected() == true) {
             jRadioBtnCpf.setEnabled(false);
             try {
+                jFTxtCpfCnpj.setText("");
                 addMascaraCpfCnpj(false);
                 jTxtNome.setEnabled(true);
             } catch (ParseException ex) {

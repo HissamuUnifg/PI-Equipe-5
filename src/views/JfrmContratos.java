@@ -755,17 +755,20 @@ public class JfrmContratos extends javax.swing.JFrame {
         jFtxtFone.setBackground(new java.awt.Color(240, 240, 240));
         jFtxtFone.setBorder(javax.swing.BorderFactory.createTitledBorder("Fone"));
         jFtxtFone.setToolTipText("Exibição do numero de telefone fixo do cliente");
+        jFtxtFone.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jFtxtFone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jFtxtCelular.setBackground(new java.awt.Color(240, 240, 240));
         jFtxtCelular.setBorder(javax.swing.BorderFactory.createTitledBorder("Celular"));
         jFtxtCelular.setToolTipText("Exibição do numero de telefone celular do cliente");
+        jFtxtCelular.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jFtxtCelular.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jTxtEmail.setBackground(new java.awt.Color(240, 240, 240));
         jTxtEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtEmail.setToolTipText("Exibição do Email do Cliente do Cliente");
         jTxtEmail.setBorder(javax.swing.BorderFactory.createTitledBorder("E-mail"));
+        jTxtEmail.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jCboNome.setBackground(new java.awt.Color(240, 240, 240));
         jCboNome.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -786,16 +789,19 @@ public class JfrmContratos extends javax.swing.JFrame {
         jFTxtCpfCnpj.setBackground(new java.awt.Color(240, 240, 240));
         jFTxtCpfCnpj.setBorder(javax.swing.BorderFactory.createTitledBorder("CPF/CNPJ"));
         jFTxtCpfCnpj.setToolTipText("Escolha entre CPF ou CNPJ e insira o dado!");
+        jFTxtCpfCnpj.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jFTxtCpfCnpj.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jFtxtRgIe.setBackground(new java.awt.Color(240, 240, 240));
         jFtxtRgIe.setBorder(javax.swing.BorderFactory.createTitledBorder("RG/IE"));
         jFtxtRgIe.setToolTipText("Insira o RG caso seja pessoa fisica ou IE caso seja pessoa juridica");
+        jFtxtRgIe.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jFtxtRgIe.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         jFtxtCnh.setBackground(new java.awt.Color(240, 240, 240));
         jFtxtCnh.setBorder(javax.swing.BorderFactory.createTitledBorder("CNH"));
         jFtxtCnh.setToolTipText("Numero da CNH do cliente");
+        jFtxtCnh.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jFtxtCnh.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanDadosGeraisLayout = new javax.swing.GroupLayout(jPanDadosGerais);
@@ -843,40 +849,48 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtRua.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtRua.setToolTipText("Exibição do nome da rua");
         jTxtRua.setBorder(javax.swing.BorderFactory.createTitledBorder("Rua"));
+        jTxtRua.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtNumero.setBackground(new java.awt.Color(240, 240, 240));
         jTxtNumero.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtNumero.setToolTipText("Exibição do Numero");
         jTxtNumero.setBorder(javax.swing.BorderFactory.createTitledBorder("Numero"));
+        jTxtNumero.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtBairro.setBackground(new java.awt.Color(240, 240, 240));
         jTxtBairro.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtBairro.setToolTipText("Exibição do nome do bairro");
         jTxtBairro.setBorder(javax.swing.BorderFactory.createTitledBorder("Bairro"));
+        jTxtBairro.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtEstado.setBackground(new java.awt.Color(240, 240, 240));
         jTxtEstado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtEstado.setToolTipText("Exibição do Estado");
         jTxtEstado.setBorder(javax.swing.BorderFactory.createTitledBorder("Estado"));
+        jTxtEstado.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtReferencia.setBackground(new java.awt.Color(240, 240, 240));
         jTxtReferencia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtReferencia.setToolTipText("Exibição da referencia");
         jTxtReferencia.setBorder(javax.swing.BorderFactory.createTitledBorder("Referencia"));
+        jTxtReferencia.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtCidade.setBackground(new java.awt.Color(240, 240, 240));
         jTxtCidade.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtCidade.setToolTipText("Exibição da cidade ");
         jTxtCidade.setBorder(javax.swing.BorderFactory.createTitledBorder("Cidade"));
+        jTxtCidade.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtTipoEnd.setBackground(new java.awt.Color(240, 240, 240));
         jTxtTipoEnd.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtTipoEnd.setToolTipText("Exibição do tipo de endereço");
         jTxtTipoEnd.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo de Endereço"));
+        jTxtTipoEnd.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jFtxtCep.setBackground(new java.awt.Color(240, 240, 240));
         jFtxtCep.setBorder(javax.swing.BorderFactory.createTitledBorder("CEP"));
         jFtxtCep.setToolTipText("Nuero do CEP do endereço do cliente");
+        jFtxtCep.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         javax.swing.GroupLayout jPanelDadosEnderecosLayout = new javax.swing.GroupLayout(jPanelDadosEnderecos);
         jPanelDadosEnderecos.setLayout(jPanelDadosEnderecosLayout);
@@ -927,46 +941,55 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtNome.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtNome.setToolTipText("Exibição do nome do veiculo");
         jTxtNome.setBorder(javax.swing.BorderFactory.createTitledBorder("Nome"));
+        jTxtNome.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtMarca.setBackground(new java.awt.Color(240, 240, 240));
         jTxtMarca.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtMarca.setToolTipText("Exibição da marca do veiculo");
         jTxtMarca.setBorder(javax.swing.BorderFactory.createTitledBorder("Marca"));
+        jTxtMarca.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtCor.setBackground(new java.awt.Color(240, 240, 240));
         jTxtCor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtCor.setToolTipText("Exibição da cor do veiculo");
         jTxtCor.setBorder(javax.swing.BorderFactory.createTitledBorder("Cor"));
+        jTxtCor.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtChassi.setBackground(new java.awt.Color(240, 240, 240));
         jTxtChassi.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtChassi.setToolTipText("Exibição do numero do chassi do veiculo");
         jTxtChassi.setBorder(javax.swing.BorderFactory.createTitledBorder("Chassi"));
+        jTxtChassi.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtKm.setBackground(new java.awt.Color(240, 240, 240));
         jTxtKm.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtKm.setToolTipText("Exibição do KM rodada do veiculo");
         jTxtKm.setBorder(javax.swing.BorderFactory.createTitledBorder("Km Rodado Atual"));
+        jTxtKm.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtAnoModelo.setBackground(new java.awt.Color(240, 240, 240));
         jTxtAnoModelo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtAnoModelo.setToolTipText("Exibição do ano modelo do veiculo");
         jTxtAnoModelo.setBorder(javax.swing.BorderFactory.createTitledBorder("Ano Modelo"));
+        jTxtAnoModelo.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtAnoFabricacao.setBackground(new java.awt.Color(240, 240, 240));
         jTxtAnoFabricacao.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtAnoFabricacao.setToolTipText("Exibição do ano fabricação do veiculo");
         jTxtAnoFabricacao.setBorder(javax.swing.BorderFactory.createTitledBorder("Ano Fabricacao"));
+        jTxtAnoFabricacao.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtNumeroRenavan.setBackground(new java.awt.Color(240, 240, 240));
         jTxtNumeroRenavan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtNumeroRenavan.setToolTipText("Exibição do numero RENAVAN do veiculo");
         jTxtNumeroRenavan.setBorder(javax.swing.BorderFactory.createTitledBorder("RENAVAN"));
+        jTxtNumeroRenavan.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtVeiculo.setBackground(new java.awt.Color(240, 240, 240));
         jTxtVeiculo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtVeiculo.setToolTipText("Exibição do modelo do veiculo");
         jTxtVeiculo.setBorder(javax.swing.BorderFactory.createTitledBorder("Modelo"));
+        jTxtVeiculo.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jCboPlaca.setBackground(new java.awt.Color(240, 240, 240));
         jCboPlaca.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -988,11 +1011,13 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtTipo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtTipo.setToolTipText("Exibição do tipo do veiculo");
         jTxtTipo.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo"));
+        jTxtTipo.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtClasse.setBackground(new java.awt.Color(240, 240, 240));
         jTxtClasse.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtClasse.setToolTipText("Exibição da classe do veiculo");
         jTxtClasse.setBorder(javax.swing.BorderFactory.createTitledBorder("Classe"));
+        jTxtClasse.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         javax.swing.GroupLayout jPaneDadosVeiculosLayout = new javax.swing.GroupLayout(jPaneDadosVeiculos);
         jPaneDadosVeiculos.setLayout(jPaneDadosVeiculosLayout);
@@ -1055,11 +1080,13 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtValorKmRodado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtValorKmRodado.setToolTipText("Exibição do valor de cada KM rodado desse veiculo");
         jTxtValorKmRodado.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor Km Rodado"));
+        jTxtValorKmRodado.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtValorTotal.setBackground(new java.awt.Color(240, 240, 240));
         jTxtValorTotal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtValorTotal.setToolTipText("Exibição do valor total calculado para esse contrato");
         jTxtValorTotal.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor Total"));
+        jTxtValorTotal.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jCboTipoContrato.setBackground(new java.awt.Color(240, 240, 240));
         jCboTipoContrato.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -1092,6 +1119,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtValorKmFinal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtValorKmFinal.setToolTipText("Digite o KM rodado no ato da entrega do veiculo");
         jTxtValorKmFinal.setBorder(javax.swing.BorderFactory.createTitledBorder("KM Rodado Final"));
+        jTxtValorKmFinal.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtValorKmFinal.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtValorKmFinalFocusLost(evt);
@@ -1112,6 +1140,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtQtdDias.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtQtdDias.setToolTipText("Digite a quantidade de dias que será alugado o veiculo");
         jTxtQtdDias.setBorder(javax.swing.BorderFactory.createTitledBorder("Dias Alugados"));
+        jTxtQtdDias.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtQtdDias.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtQtdDiasFocusLost(evt);
@@ -1131,16 +1160,19 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtObservacoes.setBackground(new java.awt.Color(240, 240, 240));
         jTxtObservacoes.setToolTipText("Breve observação caso houver sobre o veiculo");
         jTxtObservacoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Observações"));
+        jTxtObservacoes.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtValorDiaria.setBackground(new java.awt.Color(240, 240, 240));
         jTxtValorDiaria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtValorDiaria.setToolTipText("Exibição do valor da diária desse veiculo");
         jTxtValorDiaria.setBorder(javax.swing.BorderFactory.createTitledBorder("Valor Diaria"));
+        jTxtValorDiaria.setDisabledTextColor(new java.awt.Color(90, 90, 90));
 
         jTxtValorExtra.setBackground(new java.awt.Color(240, 240, 240));
         jTxtValorExtra.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtValorExtra.setToolTipText("Campo para digitação de despesas extras, como multas, avarias e etc.");
         jTxtValorExtra.setBorder(javax.swing.BorderFactory.createTitledBorder("Valores Extras"));
+        jTxtValorExtra.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtValorExtra.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 jTxtValorExtraFocusGained(evt);
@@ -1158,6 +1190,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         JfTxtDataChegada.setBackground(new java.awt.Color(240, 240, 240));
         JfTxtDataChegada.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Chegada"));
         JfTxtDataChegada.setToolTipText("Inserir data de chegada do Veiculo!");
+        JfTxtDataChegada.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         JfTxtDataChegada.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         JfTxtDataChegada.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -1168,6 +1201,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         JfTxtDataSaida.setBackground(new java.awt.Color(240, 240, 240));
         JfTxtDataSaida.setBorder(javax.swing.BorderFactory.createTitledBorder("Data Saida"));
         JfTxtDataSaida.setToolTipText("Inserir data de saida do Veiculo!");
+        JfTxtDataSaida.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         JfTxtDataSaida.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         JfTxtDataSaida.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -1252,7 +1286,7 @@ public class JfrmContratos extends javax.swing.JFrame {
                 .addComponent(jBtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabelCodigo)
-                .addGap(74, 74, 74))
+                .addGap(41, 41, 41))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

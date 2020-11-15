@@ -51,6 +51,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Principal - Locadora App");
         setIconImages(null);
+        setResizable(false);
         setSize(new java.awt.Dimension(1170, 850));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N

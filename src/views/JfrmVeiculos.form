@@ -245,6 +245,9 @@
                 <TitledBorder title="Nome"/>
               </Border>
             </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="5a" green="5a" red="5a" type="rgb"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtNomeFocusLost"/>
@@ -263,6 +266,9 @@
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="Modelo"/>
               </Border>
+            </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="5a" green="5a" red="5a" type="rgb"/>
             </Property>
           </Properties>
           <Events>
@@ -283,6 +289,9 @@
                 <TitledBorder title="Marca"/>
               </Border>
             </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="5a" green="5a" red="5a" type="rgb"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtMarcaFocusLost"/>
@@ -301,6 +310,9 @@
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="Cor"/>
               </Border>
+            </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="5a" green="5a" red="5a" type="rgb"/>
             </Property>
           </Properties>
           <Events>
@@ -321,6 +333,9 @@
                 <TitledBorder title="Placa"/>
               </Border>
             </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="5a" green="5a" red="5a" type="rgb"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtPlacaFocusLost"/>
@@ -339,6 +354,9 @@
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="Chassi"/>
               </Border>
+            </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="5a" green="5a" red="5a" type="rgb"/>
             </Property>
           </Properties>
           <Events>
@@ -359,6 +377,9 @@
                 <TitledBorder title="Km Rodado"/>
               </Border>
             </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="5a" green="5a" red="5a" type="rgb"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtKmFocusLost"/>
@@ -378,6 +399,9 @@
                 <TitledBorder title="Ano Modelo"/>
               </Border>
             </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="5a" green="5a" red="5a" type="rgb"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtAnoModeloFocusLost"/>
@@ -396,6 +420,9 @@
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="Ano Fabricacao"/>
               </Border>
+            </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="5a" green="5a" red="5a" type="rgb"/>
             </Property>
           </Properties>
           <Events>
@@ -470,6 +497,9 @@
                 <TitledBorder title="RENAVAN"/>
               </Border>
             </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="5a" green="5a" red="5a" type="rgb"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtNumeroRenavanFocusLost"/>
@@ -489,6 +519,9 @@
                 <TitledBorder title="Observa&#xe7;&#xf5;es/Estado"/>
               </Border>
             </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="5a" green="5a" red="5a" type="rgb"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtObservacoesFocusLost"/>
@@ -505,6 +538,9 @@
               </Border>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Inserir data de aquisi&#xe7;&#xe3;o do Veiculo!"/>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="5a" green="5a" red="5a" type="rgb"/>
+            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
             </Property>
@@ -613,6 +649,9 @@
                 <TitledBorder title="Valor Seguro"/>
               </Border>
             </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="5a" green="5a" red="5a" type="rgb"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtValorSeguroFocusLost"/>
@@ -633,6 +672,9 @@
                 <TitledBorder title="Valor Km Rodado"/>
               </Border>
             </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="5a" green="5a" red="5a" type="rgb"/>
+            </Property>
           </Properties>
           <Events>
             <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="jTxtValorKmRodadoFocusLost"/>
@@ -652,6 +694,9 @@
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                 <TitledBorder title="Valor Diaria"/>
               </Border>
+            </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="5a" green="5a" red="5a" type="rgb"/>
             </Property>
           </Properties>
           <Events>
@@ -735,6 +780,9 @@
               </Border>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Digite valor de mercado do veiculo"/>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="5a" green="5a" red="5a" type="rgb"/>
+            </Property>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="14" style="0"/>
             </Property>

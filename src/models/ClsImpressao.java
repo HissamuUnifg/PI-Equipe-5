@@ -217,17 +217,19 @@ public class ClsImpressao {
         
         if(clsCli.getNome().equals("") || clsCli.getNome() == null){
        
-            partes1.setText("LOCATÁRIO:  "+clsCli.getRazaoSocial()+", "+clsEnd.getPais()+", SOLTEIRO, EMPREGADO,"
+            partes1.setText("LOCATÁRIO:  "+clsCli.getRazaoSocial().toUpperCase()+", "+clsEnd.getPais().toUpperCase()+", SOLTEIRO, EMPREGADO,"
                 + " Carteira de Identidade nº "+clsCli.getIe()+", Carteira Nacional de Habilitação nº "+clsCli.getCnh()+""
-                + " C.P.F. nº "+clsCli.getCnpj()+", residente e domiciliado na Rua "+clsEnd.getRua()+"),"
-                + " nº "+clsEnd.getNumero()+", bairro  "+clsEnd.getBairro()+", Cep "+clsEnd.getCep()+", Cidade "+clsEnd.getNomeCidade()+", no Estado "+clsEnd.getEstado()+".");
+                + " C.P.F. nº "+clsCli.getCnpj()+", residente e domiciliado na Rua "+clsEnd.getRua().toUpperCase()+"),"
+                + " nº "+clsEnd.getNumero().toUpperCase()+", bairro  "+clsEnd.getBairro().toUpperCase()+", Cep "+clsEnd.getCep()+", "
+                + "Cidade "+clsEnd.getNomeCidade().toUpperCase()+", no Estado "+clsEnd.getEstado().toUpperCase()+".");
         
         }else if (clsCli.getRazaoSocial().equals("") || clsCli.getRazaoSocial() == null) {
         
-            partes1.setText("LOCATÁRIO:  "+clsCli.getNome()+", "+clsEnd.getPais()+", SOLTEIRO, EMPREGADO,"
+            partes1.setText("LOCATÁRIO:  "+clsCli.getNome().toUpperCase()+", "+clsEnd.getPais().toUpperCase()+", SOLTEIRO, EMPREGADO,"
                 + " Carteira de Identidade nº "+clsCli.getRg()+", Carteira Nacional de Habilitação nº "+clsCli.getCnh()+""
-                + " C.P.F. nº "+clsCli.getCpf()+", residente e domiciliado na Rua "+clsEnd.getRua()+"),"
-                + " nº "+clsEnd.getNumero()+", bairro  "+clsEnd.getBairro()+", Cep "+clsEnd.getCep()+", Cidade "+clsEnd.getNomeCidade()+", no Estado "+clsEnd.getEstado()+".");
+                + " C.P.F. nº "+clsCli.getCpf()+", residente e domiciliado na Rua "+clsEnd.getRua().toUpperCase()+"),"
+                + " nº "+clsEnd.getNumero()+", bairro  "+clsEnd.getBairro().toUpperCase()+", Cep "+clsEnd.getCep()+", "
+                + "Cidade "+clsEnd.getNomeCidade().toUpperCase()+", no Estado "+clsEnd.getEstado().toUpperCase()+".");
         }
         
        
@@ -269,17 +271,17 @@ public class ClsImpressao {
         carro1.setFontFamily("Arial");
         
         carro1.setText("Cláusula 1ª. O presente contrato tem como OBJETO a locação do automóvel"
-                + " Carro "+clsCar.getNome()+", "
-                + " de Marca "+clsCar.getMarca()+", "
-                + " de Modelo "+clsCar.getModelo()+", "
+                + " Carro "+clsCar.getNome().toUpperCase()+", "
+                + " de Marca "+clsCar.getMarca().toUpperCase()+", "
+                + " de Modelo "+clsCar.getModelo().toUpperCase()+", "
                 + " de Ano Modelo "+clsCar.getAnoModelo()+", "
                 + " de Ano Fabricação "+clsCar.getAnoFabricacao()+", "
-                + " de Cor "+clsCar.getCor()+", "
-                + " de Placa "+clsCar.getPlaca()+", "
+                + " de Cor "+clsCar.getCor().toUpperCase()+", "
+                + " de Placa "+clsCar.getPlaca().toUpperCase()+", "
                 + " de Chassi "+clsCar.getChassi()+", "
                 + " de Numero Renavan "+clsCar.getRenavam()+", "
                 + " com KM atual de "+clsCar.getKmRodados()+", "
-                + " e estado ("+clsCar.getObsEstado()+"), de propriedade da LOCADORA.");
+                + " e estado ("+clsCar.getObsEstado().toUpperCase()+"), de propriedade da LOCADORA.");
         
         carro1.addBreak();
         carro1.addBreak();
@@ -453,7 +455,7 @@ public class ClsImpressao {
         clasula88.setFontFamily("Arial");
         
         clasula88.setText("Cláusula 8ª. Para dirimir quaisquer controvérsias oriundas do CONTRATO,"
-                + " as partes elegem o foro da comarca de "+clsEnd.getNomeCidade()+"-"+clsEnd.getSiglaEstado()+";");
+                + " as partes elegem o foro da comarca de "+clsEnd.getNomeCidade().toUpperCase()+"-"+clsEnd.getSiglaEstado().toUpperCase()+";");
         
         clasula88.addBreak();
         
@@ -475,7 +477,7 @@ public class ClsImpressao {
         localData1.setFontSize(12);
         localData1.setFontFamily("Arial");
         
-        localData1.setText(""+clsEnd.getNomeCidade()+" - "+clsVal.dataFormatoBR(clsCont.getDataContrato())+""); 
+        localData1.setText(""+clsEnd.getNomeCidade().toUpperCase()+" - "+clsVal.dataFormatoBR(clsCont.getDataContrato())+""); 
         
         localData1.addBreak();
         localData1.addBreak();
@@ -602,17 +604,19 @@ public class ClsImpressao {
         
         if(clsCli.getNome().equals("") || clsCli.getNome() == null){
        
-            partes1.setText("LOCATÁRIO:  "+clsCli.getRazaoSocial()+", "+clsEnd.getPais()+", SOLTEIRO, EMPREGADO,"
+            partes1.setText("LOCATÁRIO:  "+clsCli.getRazaoSocial().toUpperCase()+", "+clsEnd.getPais().toUpperCase()+", SOLTEIRO, EMPREGADO,"
                 + " Carteira de Identidade nº "+clsCli.getIe()+", Carteira Nacional de Habilitação nº "+clsCli.getCnh()+""
-                + " C.P.F. nº "+clsCli.getCnpj()+", residente e domiciliado na Rua "+clsEnd.getRua()+"),"
-                + " nº "+clsEnd.getNumero()+", bairro  "+clsEnd.getBairro()+", Cep "+clsEnd.getCep()+", Cidade "+clsEnd.getNomeCidade()+", no Estado "+clsEnd.getEstado()+".");
+                + " C.P.F. nº "+clsCli.getCnpj()+", residente e domiciliado na Rua "+clsEnd.getRua().toUpperCase()+"),"
+                + " nº "+clsEnd.getNumero()+", bairro  "+clsEnd.getBairro().toUpperCase()+", Cep "+clsEnd.getCep()+", "
+                + "Cidade "+clsEnd.getNomeCidade().toUpperCase()+", no Estado "+clsEnd.getEstado().toUpperCase()+".");
         
         }else if (clsCli.getRazaoSocial().equals("") || clsCli.getRazaoSocial() == null) {
         
-            partes1.setText("LOCATÁRIO:  "+clsCli.getNome()+", "+clsEnd.getPais()+", SOLTEIRO, EMPREGADO,"
-                + " Carteira de Identidade nº "+clsCli.getRg()+", Carteira Nacional de Habilitação nº "+clsCli.getCnh()+""
-                + " C.P.F. nº "+clsCli.getCpf()+", residente e domiciliado na Rua "+clsEnd.getRua()+"),"
-                + " nº "+clsEnd.getNumero()+", bairro  "+clsEnd.getBairro()+", Cep "+clsEnd.getCep()+", Cidade "+clsEnd.getNomeCidade()+", no Estado "+clsEnd.getEstado()+".");
+            partes1.setText("LOCATÁRIO:  "+clsCli.getNome().toUpperCase()+", "+clsEnd.getPais().toUpperCase()+", SOLTEIRO, EMPREGADO,"
+                + " Carteira de Identidade nº "+clsCli.getRg().toUpperCase()+", Carteira Nacional de Habilitação nº "+clsCli.getCnh()+""
+                + " C.P.F. nº "+clsCli.getCpf()+", residente e domiciliado na Rua "+clsEnd.getRua().toUpperCase()+"),"
+                + " nº "+clsEnd.getNumero()+", bairro  "+clsEnd.getBairro().toUpperCase()+", Cep "+clsEnd.getCep()+", "
+                + "Cidade "+clsEnd.getNomeCidade().toUpperCase()+", no Estado "+clsEnd.getEstado().toUpperCase()+".");
         }
         
        
@@ -653,17 +657,17 @@ public class ClsImpressao {
         carro1.setFontFamily("Arial");
         
         carro1.setText("Cláusula 1ª. O presente contrato tem como OBJETO a locação do automóvel"
-                + " Carro "+clsCar.getNome()+", "
-                + " de Marca "+clsCar.getMarca()+", "
-                + " de Modelo "+clsCar.getModelo()+", "
+                + " Carro "+clsCar.getNome().toUpperCase()+", "
+                + " de Marca "+clsCar.getMarca().toUpperCase()+", "
+                + " de Modelo "+clsCar.getModelo().toUpperCase()+", "
                 + " de Ano Modelo "+clsCar.getAnoModelo()+", "
                 + " de Ano Fabricação "+clsCar.getAnoFabricacao()+", "
-                + " de Cor "+clsCar.getCor()+", "
-                + " de Placa "+clsCar.getPlaca()+", "
-                + " de Chassi "+clsCar.getChassi()+", "
+                + " de Cor "+clsCar.getCor().toUpperCase()+", "
+                + " de Placa "+clsCar.getPlaca().toUpperCase()+", "
+                + " de Chassi "+clsCar.getChassi().toUpperCase()+", "
                 + " de Numero Renavan "+clsCar.getRenavam()+", "
                 + " com KM atual de "+clsCar.getKmRodados()+", "
-                + " e estado ("+clsCar.getObsEstado()+"), de propriedade da LOCADORA.");
+                + " e estado ("+clsCar.getObsEstado().toUpperCase()+"), de propriedade da LOCADORA.");
         
         carro1.addBreak();
         carro1.addBreak();
@@ -832,7 +836,7 @@ public class ClsImpressao {
         clasula88.setFontFamily("Arial");
         
         clasula88.setText("Cláusula 8ª. Para dirimir quaisquer controvérsias oriundas do CONTRATO,"
-                + " as partes elegem o foro da comarca de "+clsEnd.getNomeCidade()+" - "+clsEnd.getSiglaEstado()+";");
+                + " as partes elegem o foro da comarca de "+clsEnd.getNomeCidade().toUpperCase()+" - "+clsEnd.getSiglaEstado().toUpperCase()+";");
         
         clasula88.addBreak();
         
@@ -854,7 +858,7 @@ public class ClsImpressao {
         localData1.setFontSize(12);
         localData1.setFontFamily("Arial");
         
-        localData1.setText(""+clsEnd.getNomeCidade()+" - "+clsVal.dataFormatoBR(clsCont.getDataContrato())+""); 
+        localData1.setText(""+clsEnd.getNomeCidade().toUpperCase()+" - "+clsVal.dataFormatoBR(clsCont.getDataContrato())+""); 
         
         localData1.addBreak();
         localData1.addBreak();
