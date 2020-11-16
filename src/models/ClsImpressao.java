@@ -366,18 +366,28 @@ public class ClsImpressao {
         
         
         //CLASULA 4.1
+        String textoClasula4 = null;
+        if(clsCont.getObservacoes() == null || clsCont.getObservacoes().equals("")) {
+        textoClasula4 = "Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo"
+                + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+""
+                + " que deverá ser pago em dinheiro (espécie) ou Cartão de Debito ou Credito. Caso hover algum dano ou multa no"
+                + " veiculo o valor será adicionado ao valor total do contrato a ser emitido nova cópia. E em caso de acidente com"
+                + " perca do veiculo será cobrado o valor de "+FormatterMoeda.format(clsCar.getValorSeguro())+" que se refere ao seguro";
+        }else{
         
+        textoClasula4 = "Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo"
+                + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+", que contém agregado o valor extra de "+FormatterMoeda.format(clsCont.getValorExtra())+""
+                + " proveniente de "+clsCont.getObservacoes().toUpperCase()+", o valor total deverá ser pago em dinheiro (espécie) ou Cartão de Debito ou Credito. Em caso de acidente com"
+                + " perca do veiculo será cobrado o valor de "+FormatterMoeda.format(clsCar.getValorSeguro())+" que se refere ao seguro";
+        
+        }
         XWPFParagraph clasulaValor = documento.createParagraph();
         clasulaValor.setAlignment(ParagraphAlignment.BOTH);
         XWPFRun clasulaValor1 = clasulaValor.createRun();
         clasulaValor1.setFontSize(12);
         clasulaValor1.setFontFamily("Arial");
         
-          clasulaValor1.setText("Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo"
-                + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+""
-                + " que deverá ser pago em dinheiro (espécie) ou Cartão de Debito ou Credito. Caso hover algum dano ou multa no"
-                + " veiculo o valor será adicionado ao valor total do contrato a ser emitido nova cópia. E em caso de acidente com"
-                + " perca do veiculo será cobrado o valor de "+FormatterMoeda.format(clsCar.getValorSeguro())+" que se refere ao seguro");
+          clasulaValor1.setText(textoClasula4);
         
         clasulaValor1.addBreak();
         clasulaValor1.addBreak();
@@ -749,17 +759,30 @@ public class ClsImpressao {
         clasula44.addBreak();
         clasula44.addBreak();
         
+        //clasula 4.1
         XWPFParagraph clasulaValor = documento.createParagraph();
         clasulaValor.setAlignment(ParagraphAlignment.BOTH);
         XWPFRun clasulaValor1 = clasulaValor.createRun();
         clasulaValor1.setFontSize(12);
         clasulaValor1.setFontFamily("Arial");
         
-        clasulaValor1.setText("Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo"
+        String textoClasula41 = null;
+        if(clsCont.getObservacoes() == null || clsCont.getObservacoes().equals("")) {
+        textoClasula41 = "Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo"
                 + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+""
-                + " que deverá ser pago em dinheiro (ESPÉCIE) ou Cartão de Debito ou Credito. Caso haver algum dano ou multa no"
-                + " veiculo, o valor será adicionado ao valor total do contrato a ser emitido nova cópia. E em caso de acidente com"
-                + " perca do veiculo será cobrado o valor de "+FormatterMoeda.format(clsCar.getValorSeguro())+" que se refere ao seguro do automóvel");
+                + " que deverá ser pago em dinheiro (espécie) ou Cartão de Debito ou Credito. Caso hover algum dano ou multa no"
+                + " veiculo o valor será adicionado ao valor total do contrato a ser emitido nova cópia. E em caso de acidente com"
+                + " perca do veiculo será cobrado o valor de "+FormatterMoeda.format(clsCar.getValorSeguro())+" que se refere ao seguro";
+        }else{
+        
+        textoClasula41 = "Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo"
+                + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+", que contém agregado o valor extra de "+FormatterMoeda.format(clsCont.getValorExtra())+""
+                + " proveniente de "+clsCont.getObservacoes().toUpperCase()+", o valor total deverá ser pago em dinheiro (espécie) ou Cartão de Debito ou Credito. Em caso de acidente com"
+                + " perca do veiculo será cobrado o valor de "+FormatterMoeda.format(clsCar.getValorSeguro())+" que se refere ao seguro";
+        
+        }
+        
+        clasulaValor1.setText(textoClasula41);
         
         clasulaValor1.addBreak();
         clasulaValor1.addBreak();

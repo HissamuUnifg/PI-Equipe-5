@@ -1161,6 +1161,16 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtObservacoes.setToolTipText("Breve observação caso houver sobre o veiculo");
         jTxtObservacoes.setBorder(javax.swing.BorderFactory.createTitledBorder("Observações"));
         jTxtObservacoes.setDisabledTextColor(new java.awt.Color(90, 90, 90));
+        jTxtObservacoes.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtObservacoesFocusLost(evt);
+            }
+        });
+        jTxtObservacoes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTxtObservacoesKeyPressed(evt);
+            }
+        });
 
         jTxtValorDiaria.setBackground(new java.awt.Color(240, 240, 240));
         jTxtValorDiaria.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -1689,6 +1699,26 @@ public class JfrmContratos extends javax.swing.JFrame {
             JfTxtDataSaida.requestFocus();
         
     }//GEN-LAST:event_jTxtValorKmFinalFocusLost
+
+    private void jTxtObservacoesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtObservacoesFocusLost
+            if(jTxtObservacoes.getText().length() > 999 ){
+                msgErrCampo("Observações");
+            }else {
+                 clsContratos.setObservacoes(jTxtObservacoes.getText());
+            }
+    }//GEN-LAST:event_jTxtObservacoesFocusLost
+
+    private void jTxtObservacoesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtObservacoesKeyPressed
+        if(evt.getKeyChar() == KeyEvent.VK_ENTER){
+            if(jTxtObservacoes.getText().length() > 999 ){
+                msgErrCampo("Observações");
+            }else {
+                 clsContratos.setObservacoes(jTxtObservacoes.getText());
+            }
+        }
+               
+       
+    }//GEN-LAST:event_jTxtObservacoesKeyPressed
     
     
    
