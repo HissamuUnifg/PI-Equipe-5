@@ -10,14 +10,11 @@ import controls.EnderecosDAO;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.io.IOException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -42,6 +39,7 @@ public class JfrmContratos extends javax.swing.JFrame {
     private String userLoged;
     private int userIdLoged;
     private String CpfUserLoged;
+    private String userNivel;
     
     //INDICADOR DE TIPO DE CONTRATO
     private int tipoContrato; // 0 KM, 1 DIARIA
@@ -107,6 +105,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         userLoged = clslogin.getUserLoged();
         userIdLoged = clslogin.getId();
         CpfUserLoged = clslogin.getCpfUserLoged();
+        userNivel = clslogin.getNivel();
        
         listaCarros = carrosDAO.selectAllStatus();
         listaCarrosFull = carrosDAO.selectAll();
@@ -129,6 +128,15 @@ public class JfrmContratos extends javax.swing.JFrame {
                 
     }
     
+    private boolean nivelUserLoged() {
+        boolean verificacao = false;
+        if (this.userNivel.equals("GERENTE")) {
+            verificacao = true;
+        } else if (this.userNivel.equals("OPERADOR")) {
+            verificacao = false;
+        }
+        return verificacao;
+    }
     /**
      * Responsavel por trocar a função e icone do botão "jBtnNovo"
      * Passando false o botão assume a posição de novo
@@ -1560,10 +1568,19 @@ public class JfrmContratos extends javax.swing.JFrame {
     }
     
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
-        precionado = true;
-        editando = true;
-        setIconBtnNv(true);
-        enableControl();
+        if (nivelUserLoged() && clsContratos.getStatus().equals("FINALIZADO")) {
+            precionado = true;
+            editando = true;
+            setIconBtnNv(true);
+            enableControl();
+        } else if (nivelUserLoged() == false && !"FINALIZADO".equals(clsContratos.getStatus())) {
+            precionado = true;
+            editando = true;
+            setIconBtnNv(true);
+            enableControl();
+        } else if (!nivelUserLoged() && clsContratos.getStatus().equals("FINALIZADO")) {
+            JOptionPane.showMessageDialog(this, "Olá " + userLoged + ", o contrato só pode ser editado por um GERENTE após concluido", "INFOMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_jBtnEditarActionPerformed
 
     private void jBtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnBuscarActionPerformed
@@ -1571,13 +1588,16 @@ public class JfrmContratos extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnBuscarActionPerformed
 
     private void jBtnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnExcluirActionPerformed
-        if (clsContratos.getStatus().equals("ANDAMENTO") || clsContratos.getStatus().equals("FINALIZADO")) {
-                JOptionPane.showMessageDialog(this, "Olá " + userLoged + ""
-                        + " não pode deletar contrato \n "
-                        + "com Status diferente de ABERTO!", "Erro", JOptionPane.ERROR_MESSAGE);
-            } else  {
-        int deletar = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir o contrato?", "Atenção", JOptionPane.YES_NO_OPTION);
-        if (deletar == 0) {
+        if (!"ABERTO".equals(clsContratos.getStatus())) {
+            JOptionPane.showMessageDialog(this, "Olá " + userLoged + ""
+                    + " não pode deletar contrato \n "
+                    + "com Status diferente de ABERTO!", "Erro", JOptionPane.ERROR_MESSAGE);
+        } else if (clsContratos.getStatus().equals("ABERTO") && !nivelUserLoged()) {
+            JOptionPane.showMessageDialog(this, "Olá " + userLoged + ""
+                    + " somente GERENTE tem essa permissão!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
+        } else if (clsContratos.getStatus().equals("ABERTO") && nivelUserLoged()) {
+            int deletar = JOptionPane.showConfirmDialog(this, "Deseja realmente excluir o contrato?", "Atenção", JOptionPane.YES_NO_OPTION);
+            if (deletar == 0) {
                 clsCarros.setStatus(0);
                 carrosDAO.update(clsCarros);
                 contratosDAO.delete(clsContratos.getId());

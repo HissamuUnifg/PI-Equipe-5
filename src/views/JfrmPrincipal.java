@@ -2,6 +2,7 @@
 package views;
 
 import java.awt.Toolkit;
+import javax.swing.JOptionPane;
 import models.ClsLogin;
 
 /**
@@ -12,6 +13,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
     private String userLoged;
     private int userIdLoged;
     private String CpfUserLoged;
+    private String userNivel;
     
     public JfrmPrincipal() {
         initComponents();
@@ -22,6 +24,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
        userLoged = clslogin.getUserLoged();
        userIdLoged = clslogin.getId();
        CpfUserLoged = clslogin.getCpfUserLoged();
+       userNivel = clslogin.getNivel();
        initComponents();
        setIcon();
        setUserLoged();
@@ -177,6 +180,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
         clslogin.setCpfUserLoged(CpfUserLoged);
+        clslogin.setNivel(userNivel);
         views.JfrmClientes telaclientes = new views.JfrmClientes(clslogin);
         this.setVisible(false);
         telaclientes.setVisible(true);
@@ -187,9 +191,15 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
         clslogin.setCpfUserLoged(CpfUserLoged);
-        views.JfrmColaborador telacolaborador = new views.JfrmColaborador(clslogin);
-        this.setVisible(false);
-        telacolaborador.setVisible(true);
+        clslogin.setNivel(userNivel);
+        if(userNivel.equals("GERENTE")){
+            views.JfrmColaborador telacolaborador = new views.JfrmColaborador(clslogin);
+            this.setVisible(false);
+            telacolaborador.setVisible(true);
+        }else{
+            JOptionPane.showMessageDialog(this, "O calaborador: "+userLoged+" não tem permissão de acesso a essa tela!", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
+        }
+       
     }//GEN-LAST:event_jMenuCadColabActionPerformed
 
     private void jMenuCadMovVeicActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuCadMovVeicActionPerformed
@@ -197,6 +207,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
         clslogin.setCpfUserLoged(CpfUserLoged);
+        clslogin.setNivel(userNivel);
         views.JfrmVeiculos telaveiculos = new views.JfrmVeiculos(clslogin);
         this.setVisible(false);
         telaveiculos.setVisible(true);
@@ -207,6 +218,7 @@ public class JfrmPrincipal extends javax.swing.JFrame {
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
         clslogin.setCpfUserLoged(CpfUserLoged);
+        clslogin.setNivel(userNivel);
         views.JfrmContratos telacontrato = new views.JfrmContratos(clslogin);
         this.setVisible(false);
         telacontrato.setVisible(true);

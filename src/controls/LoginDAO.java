@@ -28,7 +28,7 @@ public class LoginDAO {
     
      public List<models.ClsLogin> select(String nomeLogin) {
 
-        String sql = "select id, Cpf, nomeLogin, senha from colaboradores where nomeLogin = ? ";
+        String sql = "select id, Cpf, nomeLogin, senha, nivel  from colaboradores where nomeLogin = ? ";
         List<models.ClsLogin> login = new ArrayList<models.ClsLogin>();
 
         Connection conn = null;
@@ -48,6 +48,7 @@ public class LoginDAO {
                     clsLogin.setCpfUserLoged(rset.getString("Cpf"));
                     clsLogin.setUsuarioDAO(rset.getString("nomeLogin"));
                     clsLogin.setSenhaDAO(rset.getString("senha"));
+                    clsLogin.setNivel(rset.getString("nivel"));
                     login.add(clsLogin);
                 }
                 retorno = "Login Encontrado!";
@@ -80,7 +81,7 @@ public class LoginDAO {
     }
      public List<models.ClsLogin> selectFull() {
 
-        String sql = "select id, nomeLogin, senha from colaboradores";
+        String sql = "select id, nomeLogin, senha, nivel from colaboradores";
         List<models.ClsLogin> login = new ArrayList<models.ClsLogin>();
 
         Connection conn = null;
@@ -98,6 +99,7 @@ public class LoginDAO {
                     clsLogin.setId(rset.getInt("id"));
                     clsLogin.setUsuarioDAO(rset.getString("nomeLogin"));
                     clsLogin.setSenhaDAO(rset.getString("senha"));
+                    clsLogin.setNivel(rset.getString("nivel"));
                     login.add(clsLogin);
                 }
                 retorno = "Login Encontrado!";

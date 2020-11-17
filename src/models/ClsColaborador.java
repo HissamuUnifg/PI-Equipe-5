@@ -11,6 +11,15 @@ package models;
     private String nomeLogin;
     private String senha;
     private String Cpf_funCadastro;
+    protected String nivel;
+
+    public String getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(String nivel) {
+        this.nivel = nivel;
+    }
     
     public String getCpf_funCadastro() {
         return Cpf_funCadastro;

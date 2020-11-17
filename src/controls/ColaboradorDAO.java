@@ -31,7 +31,7 @@ public class ColaboradorDAO {
 
     public void save(models.ClsColaborador clscolaborador) {
         // variavel com a string do comando SQL para inserção de dados na enticade Colaborador
-        String sql = "insert into colaboradores (nome, cpf, nomeLogin, Cpf_funCadastro, senha, telefone) values (?,?,?,?,?,?)";
+        String sql = "insert into colaboradores (nome, cpf, nomeLogin, Cpf_funCadastro, senha, telefone, nivel) values (?,?,?,?,?,?,?)";
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -47,6 +47,7 @@ public class ColaboradorDAO {
             ps.setString(4, clscolaborador.getCpf_funCadastro());
             ps.setString(5, clscolaborador.getSenha());
             ps.setString(6, clscolaborador.getTelefone());
+            ps.setString(7, clscolaborador.getNivel());
             //executando a instrução com os parametro setados da classe colaborador
             ps.execute();
             retorno = "Gravado com sucesso!";
@@ -81,7 +82,7 @@ public class ColaboradorDAO {
     public void update(models.ClsColaborador clscolaborador) {
 
         // variavel com a string do comando SQL para atualização dos dados na enticade Colaborador
-        String sql = "update colaboradores set nome = ?, cpf = ?, nomeLogin = ?, Cpf_funCadastro = ? , senha = ?, telefone = ? where id = ?";
+        String sql = "update colaboradores set nome = ?, cpf = ?, nomeLogin = ?, Cpf_funCadastro = ? , senha = ?, telefone = ?, nivel = ? where id = ?";
 
         Connection conn = null;
         PreparedStatement ps = null;
@@ -97,7 +98,8 @@ public class ColaboradorDAO {
             ps.setString(4, clscolaborador.getCpf_funCadastro());
             ps.setString(5, clscolaborador.getSenha());
             ps.setString(6, clscolaborador.getTelefone());
-            ps.setInt(7, clscolaborador.getId());
+            ps.setString(7, clscolaborador.getNivel());
+            ps.setInt(8, clscolaborador.getId());
 
             //executando a instrução com os parametro setados da classe colaborador
             ps.execute();
@@ -167,7 +169,7 @@ public class ColaboradorDAO {
 
     public List<models.ClsColaborador> select(String cpf) {
 
-        String sql = "select id, nome, cpf, nomeLogin, Cpf_funCadastro, senha, telefone from colaboradores where cpf = ?";
+        String sql = "select id, nome, cpf, nomeLogin, Cpf_funCadastro, senha, telefone, nivel from colaboradores where cpf = ?";
         List<models.ClsColaborador> colaboradores = new ArrayList<models.ClsColaborador>();
 
         Connection conn = null;
@@ -189,6 +191,7 @@ public class ColaboradorDAO {
                 colaborador.setCpf_funCadastro(rset.getString("Cpf_funCadastro"));
                 colaborador.setSenha(rset.getString("senha"));
                 colaborador.setTelefone(rset.getString("telefone"));
+                colaborador.setNivel(rset.getString("nivel"));
                 colaboradores.add(colaborador);
             }
             retorno = "Colaborador Encontrado!";
@@ -223,7 +226,7 @@ public class ColaboradorDAO {
     
     public List<models.ClsColaborador> selectAll() {
 
-        String sql = "select id, nome, cpf, nomeLogin, Cpf_funCadastro, senha, telefone from colaboradores";
+        String sql = "select id, nome, cpf, nomeLogin, Cpf_funCadastro, senha, telefone, nivel from colaboradores";
         List<models.ClsColaborador> colaboradores = new ArrayList<models.ClsColaborador>();
 
         Connection conn = null;
@@ -244,6 +247,7 @@ public class ColaboradorDAO {
                 colaborador.setCpf_funCadastro(rset.getString("Cpf_funCadastro"));
                 colaborador.setSenha(rset.getString("senha"));
                 colaborador.setTelefone(rset.getString("telefone"));
+                colaborador.setNivel(rset.getString("nivel"));
                 colaboradores.add(colaborador);
             }
             retorno = "Colaborador Encontrado!";

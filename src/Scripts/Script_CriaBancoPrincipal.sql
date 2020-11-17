@@ -23,6 +23,7 @@ NomeLogin varchar(20) NOT NULL,
 Cpf_funCadastro varchar(14) DEFAULT NULL,
 Senha varchar(20) NOT NULL,
 Telefone varchar(20) NOT NULL,
+Nivel varchar(20) NOT NULL,
 PRIMARY KEY (id),
 UNIQUE KEY cpf_UNIQUE (Cpf)
 

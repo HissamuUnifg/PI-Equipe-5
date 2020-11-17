@@ -60,9 +60,9 @@ public class JfrmLogin extends javax.swing.JFrame {
         jCboUsuario.setMaximumRowCount(20);
         jCboUsuario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jCboUsuario.setToolTipText("Selecione o Usuário");
-        jCboUsuario.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jCboUsuarioItemStateChanged(evt);
+        jCboUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jCboUsuarioKeyPressed(evt);
             }
         });
 
@@ -177,22 +177,6 @@ public class JfrmLogin extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jBtnLoginActionPerformed
 
-    private void jCboUsuarioItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jCboUsuarioItemStateChanged
-        if (jCboUsuario.getSelectedIndex() > -1) {
-            jPassSenha.setEnabled(true);
-            jPassSenha.requestFocus();
-            if (usarOffline == true) {
-                loadUser();
-            } else {
-                List<ClsLogin> ResultSet = loginDAO.select(jCboUsuario.getSelectedItem().toString());
-                clslogin.ClsLogin(ResultSet.get(0).getId(), jCboUsuario.getSelectedItem().toString(),
-                        ResultSet.get(0).getSenhaDAO(), ResultSet.get(0).getCpfUserLoged());
-
-            }
-
-        }
-    }//GEN-LAST:event_jCboUsuarioItemStateChanged
-
     private void jPassSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPassSenhaActionPerformed
         jBtnLogin.setEnabled(true);       
     }//GEN-LAST:event_jPassSenhaActionPerformed
@@ -221,6 +205,23 @@ public class JfrmLogin extends javax.swing.JFrame {
         jBtnLogin.requestFocus();
        
     }//GEN-LAST:event_jPassSenhaFocusLost
+
+    private void jCboUsuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCboUsuarioKeyPressed
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            if (jCboUsuario.getSelectedIndex() > -1) {
+                jPassSenha.setEnabled(true);
+                jPassSenha.requestFocus();
+                if (usarOffline == true) {
+                    loadUser();
+                } else {
+                    List<ClsLogin> ResultSet = loginDAO.select(jCboUsuario.getSelectedItem().toString());
+
+                    clslogin.ClsLogin(ResultSet.get(0).getId(), jCboUsuario.getSelectedItem().toString(),
+                            ResultSet.get(0).getSenhaDAO(), ResultSet.get(0).getCpfUserLoged(), ResultSet.get(0).getNivel());
+                }
+            }
+        }
+    }//GEN-LAST:event_jCboUsuarioKeyPressed
 
   
                

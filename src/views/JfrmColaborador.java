@@ -32,6 +32,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
     private String userLoged;
     private int userIdLoged;
     private String CpfUserLoged;
+    private String userNivel;
     private boolean editando;
     private boolean precionado;
     
@@ -55,6 +56,8 @@ public class JfrmColaborador extends javax.swing.JFrame {
         userLoged = clslogin.getUserLoged();
         userIdLoged = clslogin.getId();
         CpfUserLoged = clslogin.getCpfUserLoged();
+        userNivel = clslogin.getNivel();
+        
         initComponents();
         editando = false;
         precionado = false;
@@ -69,6 +72,12 @@ public class JfrmColaborador extends javax.swing.JFrame {
         } catch (ParseException ex) {
             JOptionPane.showMessageDialog(this, "Erro ao iniciar as mascaras" + ex +"", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
+        loadCboNivel();
+    }
+    
+    private void loadCboNivel(){
+        jCboNivel.addItem("OPERADOR");
+        jCboNivel.addItem("GERENTE");
     }
     
     //funções e eventos da tela
@@ -115,6 +124,8 @@ public class JfrmColaborador extends javax.swing.JFrame {
                         clscolaborador.setTelefone(clb.getTelefone());
                         jTxtSenha.setText(clb.getSenha());
                         clscolaborador.setSenha(clb.getSenha());
+                        jCboNivel.setSelectedItem(clb.getNivel());
+                        clscolaborador.setNivel(clb.getNivel());
                         clscolaborador.setId(clb.getId());
 
                     }
@@ -142,6 +153,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         jTxtNmlogin.setEnabled(false);
         jTxtNome.setEnabled(false);
         jTxtSenha.setEnabled(false);
+        jCboNivel.setEnabled(false);
         //desabilitando os controles Jbutton
         JbtnSalvar.setEnabled(false);
         JbtnImprimir.setVisible(false);
@@ -159,6 +171,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         jTxtNmlogin.setEnabled(false);
         jTxtNome.setEnabled(false);
         jTxtSenha.setEnabled(false);
+        jCboNivel.setEnabled(false);
         //desabilitando os controles Jbutton
         JbtnSalvar.setEnabled(false);
         JbtnImprimir.setVisible(true);
@@ -176,6 +189,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         jTxtNmlogin.setEnabled(true);
         jTxtNome.setEnabled(true);
         jTxtSenha.setEnabled(true);
+        jCboNivel.setEnabled(true);
         //desabilitando os botes e habilitando apenas o Jbutton salvar
         JbtnNovo.setEnabled(true);
         JbtnExcluir.setEnabled(false);
@@ -218,6 +232,9 @@ public class JfrmColaborador extends javax.swing.JFrame {
         jTxtSenha = new javax.swing.JTextField();
         jTxtCpf = new javax.swing.JFormattedTextField();
         jTxtFone = new javax.swing.JFormattedTextField();
+        jCboNivel = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         JbtnImprimir = new javax.swing.JButton();
 
@@ -325,6 +342,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         jTxtCpf.setBackground(new java.awt.Color(240, 240, 240));
         jTxtCpf.setBorder(javax.swing.BorderFactory.createTitledBorder("CPF"));
         jTxtCpf.setToolTipText("Digite o CPF do colaborador");
+        jTxtCpf.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtCpf.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtCpfFocusLost(evt);
@@ -334,6 +352,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         jTxtFone.setBackground(new java.awt.Color(240, 240, 240));
         jTxtFone.setBorder(javax.swing.BorderFactory.createTitledBorder("Telefone"));
         jTxtFone.setToolTipText("Digite o Telefone do colaborador");
+        jTxtFone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtFone.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 jTxtFoneFocusLost(evt);
@@ -345,22 +364,50 @@ public class JfrmColaborador extends javax.swing.JFrame {
             }
         });
 
+        jCboNivel.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jCboNivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
+        jCboNivel.setToolTipText("Selecione o nivel de acesso do colaborador");
+        jCboNivel.setBorder(javax.swing.BorderFactory.createTitledBorder("Nivel"));
+        jCboNivel.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jCboNivelFocusLost(evt);
+            }
+        });
+
+        jLabel2.setText("Selecione o nível de acesso que deseja atribuir para o colaborador:");
+
+        jLabel3.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel3.setText("Caso selecione GERENTE terá possibilidade de EXCLUIR CADASTROS");
+
         javax.swing.GroupLayout JpanDadosGeraisLayout = new javax.swing.GroupLayout(JpanDadosGerais);
         JpanDadosGerais.setLayout(JpanDadosGeraisLayout);
         JpanDadosGeraisLayout.setHorizontalGroup(
             JpanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(JpanDadosGeraisLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(JpanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, JpanDadosGeraisLayout.createSequentialGroup()
-                        .addComponent(jTxtNmlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(JpanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(JpanDadosGeraisLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(JpanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, JpanDadosGeraisLayout.createSequentialGroup()
+                                .addComponent(jTxtNmlogin, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jTxtNome, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(JpanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTxtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
-                    .addComponent(jTxtFone))
+                        .addGroup(JpanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTxtCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                            .addComponent(jTxtFone)))
+                    .addGroup(JpanDadosGeraisLayout.createSequentialGroup()
+                        .addGroup(JpanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(JpanDadosGeraisLayout.createSequentialGroup()
+                                .addGap(10, 10, 10)
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JpanDadosGeraisLayout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)))
+                        .addComponent(jCboNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         JpanDadosGeraisLayout.setVerticalGroup(
@@ -374,8 +421,15 @@ public class JfrmColaborador extends javax.swing.JFrame {
                 .addGroup(JpanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTxtNmlogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTxtSenha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtFone, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jTxtFone))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(JpanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jCboNivel, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(JpanDadosGeraisLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)))
+                .addGap(25, 25, 25))
         );
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/3592854-add-user-business-man-employee-general-human-member-office_107767.png"))); // NOI18N
@@ -395,12 +449,9 @@ public class JfrmColaborador extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(JpanDadosGerais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addComponent(JbtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
                         .addComponent(JbtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -412,8 +463,12 @@ public class JfrmColaborador extends javax.swing.JFrame {
                         .addComponent(JbtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(JbtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 17, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
+                        .addComponent(JpanDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 13, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -421,15 +476,15 @@ public class JfrmColaborador extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(JbtnExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JbtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JbtnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JbtnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JbtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(JbtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(JpanDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5))
+                    .addComponent(JbtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JbtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JbtnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(JpanDadosGerais, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -636,6 +691,14 @@ public class JfrmColaborador extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_JbtnBuscarActionPerformed
 
+    private void jCboNivelFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jCboNivelFocusLost
+        if(jCboNivel.getSelectedItem() == "Selecione"){
+            JOptionPane.showConfirmDialog(this, "Por favor selecione o Nivel do Colaborador", "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
+        }else if (jCboNivel.getSelectedItem() != "Selecione") {
+                clscolaborador.setNivel(jCboNivel.getSelectedItem().toString());
+        }  
+    }//GEN-LAST:event_jCboNivelFocusLost
+
     /**
      * @param args the command line arguments
      */
@@ -649,7 +712,10 @@ public class JfrmColaborador extends javax.swing.JFrame {
     private javax.swing.JButton JbtnNovo;
     private javax.swing.JButton JbtnSalvar;
     private javax.swing.JPanel JpanDadosGerais;
+    private javax.swing.JComboBox<String> jCboNivel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JFormattedTextField jTxtCpf;
     private javax.swing.JFormattedTextField jTxtFone;
     private javax.swing.JTextField jTxtNmlogin;
