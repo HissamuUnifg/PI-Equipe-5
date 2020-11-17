@@ -495,6 +495,7 @@ public class JfrmColaborador extends javax.swing.JFrame {
         ClsLogin clslogin = new ClsLogin();
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
+        clslogin.setNivel(userNivel);
         views.JfrmPrincipal telaprincipal = new views.JfrmPrincipal(clslogin);
         telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing

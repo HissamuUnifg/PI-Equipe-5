@@ -40,6 +40,9 @@ public class JfrmContratos extends javax.swing.JFrame {
     private int userIdLoged;
     private String CpfUserLoged;
     private String userNivel;
+    private String userNv;
+    
+    
     
     //INDICADOR DE TIPO DE CONTRATO
     private int tipoContrato; // 0 KM, 1 DIARIA
@@ -106,7 +109,8 @@ public class JfrmContratos extends javax.swing.JFrame {
         userIdLoged = clslogin.getId();
         CpfUserLoged = clslogin.getCpfUserLoged();
         userNivel = clslogin.getNivel();
-       
+        userNv = clslogin.getNivel();
+        
         listaCarros = carrosDAO.selectAllStatus();
         listaCarrosFull = carrosDAO.selectAll();
         listaClientes = clientesDAO.selectAll();
@@ -127,12 +131,16 @@ public class JfrmContratos extends javax.swing.JFrame {
         }
                 
     }
+
+    public void JfrmContratosLiberacao(String userNivel) {
+       this.userNv = userNivel;
+    }
     
     private boolean nivelUserLoged() {
         boolean verificacao = false;
-        if (this.userNivel.equals("GERENTE")) {
+        if (userNivel.equals("GERENTE")) {
             verificacao = true;
-        } else if (this.userNivel.equals("OPERADOR")) {
+        } else if (userNivel.equals("OPERADOR")) {
             verificacao = false;
         }
         return verificacao;
@@ -1367,6 +1375,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
         clslogin.setCpfUserLoged(CpfUserLoged);
+        clslogin.setNivel(userNivel);
         views.JfrmPrincipal telaprincipal = new views.JfrmPrincipal(clslogin);
         telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
@@ -1466,26 +1475,15 @@ public class JfrmContratos extends javax.swing.JFrame {
             clsContratos.setValorExtra(0);
         } else if (jTxtValorExtra.getText().length() > 14) {
             JOptionPane.showMessageDialog(this, "O valor inserido é maior que o permitido", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
-        } else if (tipoContrato == 0) {
+        } else if (jTxtValorExtra.getText().length() > 1) {
             try {
                 clsContratos.setValorExtra(clsValidacoes.formataMoeda(jTxtValorExtra.getText()));
-                jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.calcularValorTotalKM(clsCarros.getValorKmRd(), clsCarros.getKmRodados())));
+                jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.calcularValorExtra()));
                 jTxtValorExtra.setText(FormatterMoeda.format(clsContratos.getValorExtra()));
-               
+
             } catch (ParseException ex) {
                 System.out.println("" + ex);
             }
-        } else if (tipoContrato == 1) {
-
-            try {
-                clsContratos.setValorExtra(clsValidacoes.formataMoeda(jTxtValorExtra.getText()));
-                jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.calcularValorTotalDIA(clsCarros.getValorDiariaLoc())));
-                jTxtValorExtra.setText(FormatterMoeda.format(clsContratos.getValorExtra()));
-               
-            } catch (ParseException ex) {
-                System.out.println("" + ex);
-            }
-
         }
 
     }//GEN-LAST:event_jTxtValorExtraFocusLost
@@ -1550,6 +1548,7 @@ public class JfrmContratos extends javax.swing.JFrame {
             contratosDAO.update(clsContratos);
             if (contratosDAO.isSucesso() && carrosDAO.isSucesso()) {
                 JOptionPane.showMessageDialog(this, contratosDAO.getRetorno(), "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
+                userNv = userNivel;
                 setIconBtnNv(false);
                 precionado = false;
                 editando = false;
@@ -1558,6 +1557,7 @@ public class JfrmContratos extends javax.swing.JFrame {
                 jBtnImprimir.setEnabled(true);
             } else if (contratosDAO.isSucesso() == false || carrosDAO.isSucesso() == false) {
                 JOptionPane.showMessageDialog(this, contratosDAO.getRetorno(), "INFORMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
+                userNv = userNivel;
                 setIconBtnNv(false);
                 precionado = false;
                 editando = false;
@@ -1568,7 +1568,7 @@ public class JfrmContratos extends javax.swing.JFrame {
     }
     
     private void jBtnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnEditarActionPerformed
-        if (nivelUserLoged() && clsContratos.getStatus().equals("FINALIZADO")) {
+        if (nivelUserLoged() || userNv.equals("GERENTE") && clsContratos.getStatus().equals("FINALIZADO")) {
             precionado = true;
             editando = true;
             setIconBtnNv(true);
@@ -1579,7 +1579,23 @@ public class JfrmContratos extends javax.swing.JFrame {
             setIconBtnNv(true);
             enableControl();
         } else if (!nivelUserLoged() && clsContratos.getStatus().equals("FINALIZADO")) {
-            JOptionPane.showMessageDialog(this, "Olá " + userLoged + ", o contrato só pode ser editado por um GERENTE após concluido", "INFOMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
+            int confirma = JOptionPane.showConfirmDialog(this, "Olá " + userLoged + ", o contrato só pode ser editado por um GERENTE após concluido"
+                    + "\n Clique em SIM para pedir acesso ou NÃO para cancelar", "INFOMAÇÃO", JOptionPane.YES_NO_OPTION);
+            if (confirma == 0) {
+                JfrmLogin login = new JfrmLogin(true, this);
+                login.setVisible(true);
+                if (userNv.equals("GERENTE")) {
+                    precionado = true;
+                    editando = true;
+                    setIconBtnNv(true);
+                    enableControl();
+                }
+            } else if (!nivelUserLoged()) {
+                JOptionPane.showMessageDialog(this, "Olá " + userLoged + ", o contrato só pode ser editado por um GERENTE após concluido", "INFOMAÇÃO", JOptionPane.INFORMATION_MESSAGE);
+            } else if (confirma == 1) {
+                //jBtnEditar.requestFocus();
+            }
+
         }
     }//GEN-LAST:event_jBtnEditarActionPerformed
 

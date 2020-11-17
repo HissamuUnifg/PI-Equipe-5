@@ -38,6 +38,7 @@ public class JfrmClientes extends javax.swing.JFrame {
    private String userLoged;
    private int userIdLoged;
    private String CpfUserLoged;
+   private String userNivel;
    
  
    EnderecosDAO enderecosDAO;
@@ -78,6 +79,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         userLoged = clslogin.getUserLoged();
         userIdLoged = clslogin.getId();
         CpfUserLoged = clslogin.getCpfUserLoged();
+        userNivel = clslogin.getNivel();
 
         clientesDAO = new ClientesDAO();
         clsEnderecos = new ClsEnderecos();
@@ -1378,6 +1380,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
         clslogin.setCpfUserLoged(CpfUserLoged);
+        clslogin.setNivel(userNivel);
         views.JfrmPrincipal telaprincipal = new views.JfrmPrincipal(clslogin);
         telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing

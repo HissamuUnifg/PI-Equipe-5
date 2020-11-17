@@ -12,12 +12,14 @@ import models.ClsLogin;
 
 
 
-public class JfrmLogin extends javax.swing.JFrame {
 
+public class JfrmLogin extends javax.swing.JFrame {
+    
+    boolean FnLiberaAcesso;
     private boolean loginsucess;
     private boolean usarOffline;
     private String senhaDigitada;
-    
+    JfrmContratos cont;
     
     
     ConexaoDAO conn;
@@ -25,6 +27,26 @@ public class JfrmLogin extends javax.swing.JFrame {
     LoginDAO loginDAO;
     
     public JfrmLogin() {
+        FnLiberaAcesso = false;
+        initComponents();
+        setIcon();
+        conn = new ConexaoDAO();
+        clslogin = new ClsLogin();
+        loginDAO = new LoginDAO();
+       
+        //loadUser();
+        loadUserDB();
+        jPassSenha.setEnabled(false);
+        jBtnLogin.setEnabled(false);
+    }
+    /**
+     * Caso entre no jFrmLogin como FnLibera acesso True o Sistema troca a função de login 
+     * @param FnLiberaAcesso 
+     * @param cont 
+     */
+    public JfrmLogin(boolean FnLiberaAcesso, JfrmContratos cont) {
+        this.cont = cont;
+        this.FnLiberaAcesso = FnLiberaAcesso;
         conn = new ConexaoDAO();
         clslogin = new ClsLogin();
         loginDAO = new LoginDAO();
@@ -35,7 +57,42 @@ public class JfrmLogin extends javax.swing.JFrame {
         jPassSenha.setEnabled(false);
         jBtnLogin.setEnabled(false);
     }
-
+    
+    private void FnLiberaAcessoFalse() {
+        if (jCboUsuario.getSelectedIndex() > 0) {
+            senhaDigitada =  new String(jPassSenha.getPassword());
+            loginsucess = clslogin.validarlogin(jCboUsuario.getSelectedItem().toString(), senhaDigitada);
+            if (loginsucess == true) {
+                clslogin.setUserLoged(jCboUsuario.getSelectedItem().toString());
+                this.setVisible(false);
+                //criando o objeto da tela principal
+                views.JfrmPrincipal telaprincipal = new views.JfrmPrincipal(clslogin);
+                telaprincipal.show();
+            } else {
+                JOptionPane.showMessageDialog(this, "Senha ou Usuario Incorretos", "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuario não selecionado, por favor selecione!", "ERRO", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+    private void FnLiberaAcessoTrue() {
+        if (jCboUsuario.getSelectedIndex() > 0) {
+            senhaDigitada =  new String(jPassSenha.getPassword());
+            loginsucess = clslogin.validarlogin(jCboUsuario.getSelectedItem().toString(), senhaDigitada);
+            if (loginsucess == true) {
+                clslogin.setUserLoged(jCboUsuario.getSelectedItem().toString());
+                //passando a informação do usuario gerente para o operador
+                cont.JfrmContratosLiberacao(clslogin.getNivel());
+                this.setVisible(false);
+                
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Senha ou Usuario Incorretos", "ERRO", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Usuario não selecionado, por favor selecione!", "ERRO", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -49,7 +106,7 @@ public class JfrmLogin extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jPassSenha = new javax.swing.JPasswordField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Login Sistema");
         setName("Login Sistema"); // NOI18N
         setResizable(false);
@@ -158,23 +215,11 @@ public class JfrmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnFecharActionPerformed
 
     private void jBtnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnLoginActionPerformed
-
-        if (jCboUsuario.getSelectedIndex() > 0) {
-            senhaDigitada =  new String(jPassSenha.getPassword());
-            loginsucess = clslogin.validarlogin(jCboUsuario.getSelectedItem().toString(), senhaDigitada);
-            if (loginsucess == true) {
-                clslogin.setUserLoged(jCboUsuario.getSelectedItem().toString());
-                this.setVisible(false);
-                //criando o objeto da tela principal
-                views.JfrmPrincipal telaprincipal = new views.JfrmPrincipal(clslogin);
-                telaprincipal.show();
-            } else {
-                JOptionPane.showMessageDialog(this, "Senha ou Usuario Incorretos", "ERRO", JOptionPane.ERROR_MESSAGE);
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Usuario não selecionado, por favor selecione!", "ERRO", JOptionPane.INFORMATION_MESSAGE);
+        if(FnLiberaAcesso){
+            FnLiberaAcessoTrue();
+        }else{
+            FnLiberaAcessoFalse();
         }
-
     }//GEN-LAST:event_jBtnLoginActionPerformed
 
     private void jPassSenhaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jPassSenhaActionPerformed
@@ -184,17 +229,10 @@ public class JfrmLogin extends javax.swing.JFrame {
     private void jPassSenhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPassSenhaKeyPressed
         jBtnLogin.setEnabled(true);
         if (evt.getKeyCode() == KeyEvent.VK_ENTER || evt.getKeyCode() == KeyEvent.VK_TAB) {
-            jBtnLogin.requestFocus();
-            senhaDigitada =  new String(jPassSenha.getPassword());
-            loginsucess = clslogin.validarlogin(jCboUsuario.getSelectedItem().toString(), senhaDigitada);
-            if (loginsucess == true) {
-                clslogin.setUserLoged(jCboUsuario.getSelectedItem().toString());
-                this.setVisible(false);
-                //criando o objeto da tela principal
-                views.JfrmPrincipal telaprincipal = new views.JfrmPrincipal(clslogin);
-                telaprincipal.show();
+            if (FnLiberaAcesso) {
+                FnLiberaAcessoTrue();
             } else {
-                JOptionPane.showMessageDialog(this, "Senha ou Usuario Incorretos", "ERRO", JOptionPane.ERROR_MESSAGE);
+                FnLiberaAcessoFalse();
             }
         }
     }//GEN-LAST:event_jPassSenhaKeyPressed

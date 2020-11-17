@@ -32,6 +32,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     private String userLoged;
     private int userIdLoged;
     private String CpfUserLoged;
+    private String userNivel;
 
     // variaveis auxiliares 
     private boolean editando;
@@ -64,6 +65,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         userLoged = clslogin.getUserLoged();
         userIdLoged = clslogin.getId();
         CpfUserLoged = clslogin.getCpfUserLoged();
+        userNivel = clslogin.getNivel();
 
         //carregando os objetos auxiliares
         carrosDAO = new controls.CarrosDAO();
@@ -1135,6 +1137,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         clslogin.setUserLoged(userLoged);
         clslogin.setId(userIdLoged);
         clslogin.setCpfUserLoged(CpfUserLoged);
+        clslogin.setNivel(userNivel);
         views.JfrmPrincipal telaprincipal = new views.JfrmPrincipal(clslogin);
         telaprincipal.setVisible(true);
     }//GEN-LAST:event_formWindowClosing
