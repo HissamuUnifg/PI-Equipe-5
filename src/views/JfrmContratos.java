@@ -368,11 +368,31 @@ public class JfrmContratos extends javax.swing.JFrame {
         jCboStatusContrato.addItem("FINALIZADO");
         
     }
+    
+    /**
+     * Solicita a atualiza o KM do carro no ato da entrega do mesmo
+     */
+    private void atualizarKmCarro() {
+        String km = JOptionPane.showInputDialog("Digite o KM atual do carro no \n ato da entrega para a atualização do cadastro!");
+        km = km.replaceAll("[^0-9]", "");
+        if (km.equals("")) {
+            JOptionPane.showMessageDialog(this, "Digite o KM", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
+            atualizarKmCarro();
+        } else if (Integer.parseInt(km) < clsCarros.getKmRodados()) {
+            JOptionPane.showMessageDialog(this, "Digite o KM, maior que o KM inicial", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
+            atualizarKmCarro();
+        } else {
+            jTxtValorKmFinal.setText(km);
+            clsCarros.setKmRodados(Integer.parseInt(km));
+            clsContratos.setQuantidadeKmRet(Integer.parseInt(km));
+        }
+    }
     /**
      * Utilizado para localizar o contrato e acionar as funções auxiliares para carregar a tela por completo
      */
     private void buscaContrato() {
         String idContrato = JOptionPane.showInputDialog("Digite o Codigo Do Contrato para procurar");
+        idContrato = idContrato.replaceAll("[^0-9]", "");
         if (idContrato.equals("")) {
             JOptionPane.showMessageDialog(this, "Digite o numero do contrato", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
             buscaContrato();
@@ -604,7 +624,7 @@ public class JfrmContratos extends javax.swing.JFrame {
             msgAdvCampo("Status Contrato");
             jCboStatusContrato.requestFocus();
             return false;
-        } else if (jTxtValorKmFinal.getText().length() > 5) {
+        } else if (jTxtValorKmFinal.getText().length() > 7) {
             msgErrCampo("Valor Km Final");
             jTxtValorKmFinal.requestFocus();
             return false;
@@ -1091,7 +1111,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         jCboTipoContrato.setBackground(new java.awt.Color(240, 240, 240));
         jCboTipoContrato.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jCboTipoContrato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
-        jCboTipoContrato.setToolTipText("Selecione o tipo de contrato, escolha entre diaria ou km rodado");
+        jCboTipoContrato.setToolTipText("Selecione o tipo de contrato, escolha entre diaria ou km rodado precione Tab para selecionar");
         jCboTipoContrato.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo Contrato"));
         jCboTipoContrato.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -1107,11 +1127,11 @@ public class JfrmContratos extends javax.swing.JFrame {
         jCboStatusContrato.setBackground(new java.awt.Color(240, 240, 240));
         jCboStatusContrato.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jCboStatusContrato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
-        jCboStatusContrato.setToolTipText("Selecione o status do contrato do cliente");
+        jCboStatusContrato.setToolTipText("Selecione o status do contrato do cliente e precione enter para selecionar");
         jCboStatusContrato.setBorder(javax.swing.BorderFactory.createTitledBorder("Status Contrato"));
-        jCboStatusContrato.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jCboStatusContratoFocusLost(evt);
+        jCboStatusContrato.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jCboStatusContratoKeyPressed(evt);
             }
         });
 
@@ -1433,16 +1453,6 @@ public class JfrmContratos extends javax.swing.JFrame {
     
     }//GEN-LAST:event_jCboPlacaFocusLost
 
-    private void jCboStatusContratoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jCboStatusContratoFocusLost
-
-            clsContratos.setStatus(jCboStatusContrato.getSelectedItem().toString());
-            if(jCboStatusContrato.getSelectedItem().toString().equals("FINALIZADO")) {
-                clsCarros.setStatus(0);
-            }
-            
-
-    }//GEN-LAST:event_jCboStatusContratoFocusLost
-
     private void jTxtValorExtraFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtValorExtraFocusLost
         if ("".equals(jTxtValorExtra.getText())) {
             clsContratos.setValorExtra(0);
@@ -1482,6 +1492,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         clsContratos.setQuantidadeDiarias(Integer.parseInt(jTxtQtdDias.getText()));
         jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.calcularValorTotalDIA(clsCarros.getValorDiariaLoc())));
         JfTxtDataSaida.setEnabled(true);
+        JfTxtDataChegada.setEnabled(true);
         JfTxtDataSaida.requestFocus();
     }//GEN-LAST:event_jTxtQtdDiasFocusLost
 
@@ -1594,7 +1605,7 @@ public class JfrmContratos extends javax.swing.JFrame {
 
     private void jTxtValorKmFinalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtValorKmFinalKeyPressed
         if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            clsContratos.setValorExtra(0);
+         clsContratos.setValorExtra(0);
             jTxtValorExtra.setText(FormatterMoeda.format(clsContratos.getValorExtra()));
             if (Integer.parseInt(jTxtValorKmFinal.getText()) < clsCarros.getKmRodados()) {
                 JOptionPane.showMessageDialog(this, "O campo deve ser preenchido com um valor \n maior que o KM atual do Veiculo!", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
@@ -1606,6 +1617,7 @@ public class JfrmContratos extends javax.swing.JFrame {
             }
 
             JfTxtDataSaida.setEnabled(true);
+            JfTxtDataChegada.setEnabled(true);
             JfTxtDataSaida.requestFocus();
         }
     }//GEN-LAST:event_jTxtValorKmFinalKeyPressed
@@ -1638,14 +1650,13 @@ public class JfrmContratos extends javax.swing.JFrame {
     }//GEN-LAST:event_JfTxtDataChegadaKeyPressed
 
     private void jTxtQtdDiasKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtQtdDiasKeyPressed
-        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
-            clsContratos.setValorExtra(0);
-            jTxtValorExtra.setText(FormatterMoeda.format(clsContratos.getValorExtra()));
-            clsContratos.setQuantidadeDiarias(Integer.parseInt(jTxtQtdDias.getText()));
-            jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.calcularValorTotalDIA(clsCarros.getValorDiariaLoc())));
-            JfTxtDataSaida.setEnabled(true);
-            JfTxtDataSaida.requestFocus();
-        }
+        clsContratos.setValorExtra(0);
+        jTxtValorExtra.setText(FormatterMoeda.format(clsContratos.getValorExtra()));
+        clsContratos.setQuantidadeDiarias(Integer.parseInt(jTxtQtdDias.getText()));
+        jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.calcularValorTotalDIA(clsCarros.getValorDiariaLoc())));
+        JfTxtDataSaida.setEnabled(true);
+        JfTxtDataChegada.setEnabled(true);
+        JfTxtDataSaida.requestFocus();
     }//GEN-LAST:event_jTxtQtdDiasKeyPressed
 
     private void jCboNomeKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCboNomeKeyPressed
@@ -1696,6 +1707,7 @@ public class JfrmContratos extends javax.swing.JFrame {
             }
 
             JfTxtDataSaida.setEnabled(true);
+            JfTxtDataChegada.setEnabled(true);
             JfTxtDataSaida.requestFocus();
         
     }//GEN-LAST:event_jTxtValorKmFinalFocusLost
@@ -1719,6 +1731,22 @@ public class JfrmContratos extends javax.swing.JFrame {
                
        
     }//GEN-LAST:event_jTxtObservacoesKeyPressed
+
+    private void jCboStatusContratoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCboStatusContratoKeyPressed
+        if (evt.getKeyChar() == KeyEvent.VK_ENTER) {
+            clsContratos.setStatus(jCboStatusContrato.getSelectedItem().toString());
+            if (jCboStatusContrato.getSelectedItem().toString().equals("FINALIZADO")) {
+                clsCarros.setStatus(0);
+                clsContratos.setStatus(jCboStatusContrato.getSelectedItem().toString());
+                if (jCboTipoContrato.getSelectedItem() == "DIÁRIA") {
+                    if (jTxtQtdDias.getText().length() > 0) {
+                        atualizarKmCarro();
+                    }
+                }
+            }
+            jTxtObservacoes.requestFocus();
+        }
+    }//GEN-LAST:event_jCboStatusContratoKeyPressed
     
     
    

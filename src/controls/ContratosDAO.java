@@ -232,8 +232,14 @@ public class ContratosDAO {
             clsCont = clsContratos;
             }
             
-            retorno = "Contrato encontrado!";
-            sucesso = true;
+            if(clsCont.getId() == 0){
+                retorno = "Nâo encontrado!";
+                sucesso = false; 
+            }else if (clsCont.getId() != 0){
+                 retorno = "Contrato encontrado!";
+                sucesso = true;
+            }
+           
             
         } catch (SQLException e) {
             sucesso = false;

@@ -11,8 +11,8 @@
 	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter "/>
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="69"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="Placa" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -98,7 +98,7 @@ FROM locadora.carros c
 		<property name="com.jaspersoft.studio.field.tree.path" value="carros"/>
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="Renavam" class="java.lang.Integer">
+	<field name="Renavam" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.name" value="Renavam"/>
 		<property name="com.jaspersoft.studio.field.label" value="Renavam"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="carros"/>
@@ -311,25 +311,25 @@ FROM locadora.carros c
 				<text><![CDATA[Placa]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="522" y="0" width="80" height="16" uuid="fdba4e44-acf4-4e77-aee6-9f93dd0c2d2f">
+				<reportElement x="522" y="0" width="50" height="16" uuid="fdba4e44-acf4-4e77-aee6-9f93dd0c2d2f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="25fed05a-44c6-4fb8-b54b-d48c31344323"/>
 				</reportElement>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[AnoFabricacao]]></text>
+				<text><![CDATA[Ano Fab]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="600" y="0" width="60" height="16" uuid="e252205f-6ef7-4228-89ed-0ae0670da31a">
+				<reportElement x="573" y="0" width="54" height="16" uuid="e252205f-6ef7-4228-89ed-0ae0670da31a">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="565d9507-d97e-4c7f-af16-4b7c9662fa01"/>
 				</reportElement>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[AnoModelo]]></text>
+				<text><![CDATA[Ano Mod]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="660" y="0" width="78" height="16" uuid="e8d27fa2-6a12-4358-8c86-8b7846828a29">
+				<reportElement x="627" y="0" width="94" height="16" uuid="e8d27fa2-6a12-4358-8c86-8b7846828a29">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b1765581-a25a-48a2-9377-ba07c65e2c38"/>
 				</reportElement>
 				<textElement>
@@ -338,7 +338,7 @@ FROM locadora.carros c
 				<text><![CDATA[Chassi]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="741" y="0" width="62" height="16" uuid="a63b086f-2407-438d-86d9-f35d534be570">
+				<reportElement x="737" y="0" width="62" height="16" uuid="a63b086f-2407-438d-86d9-f35d534be570">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0b2bd7b2-1ef7-4bf1-9c06-528208462dd7"/>
 				</reportElement>
 				<textElement>
@@ -409,7 +409,7 @@ FROM locadora.carros c
 				<textFieldExpression><![CDATA[$F{Renavam}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="600" y="1" width="51" height="20" uuid="2cfcd604-0b0e-4615-8ac3-fc29e1cdc6a6">
+				<reportElement x="576" y="1" width="51" height="20" uuid="2cfcd604-0b0e-4615-8ac3-fc29e1cdc6a6">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="565d9507-d97e-4c7f-af16-4b7c9662fa01"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{AnoModelo}]]></textFieldExpression>
@@ -421,7 +421,7 @@ FROM locadora.carros c
 				<textFieldExpression><![CDATA[$F{AnoFabricacao}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="660" y="1" width="78" height="20" uuid="01125479-7093-4474-a7e9-73537a4a46a2">
+				<reportElement x="627" y="1" width="94" height="20" uuid="01125479-7093-4474-a7e9-73537a4a46a2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b1765581-a25a-48a2-9377-ba07c65e2c38"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{Chassi}]]></textFieldExpression>

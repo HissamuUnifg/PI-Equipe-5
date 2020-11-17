@@ -41,8 +41,8 @@ public class ClsContratos {
     }
 
     public float calcularValorTotalKM(float valorKm, int kmAtual) {
-        valorTotal = quantidadeKmRet - kmAtual;
-        valorTotal = valorTotal * valorKm;
+        quantidadeKmRet = quantidadeKmRet - kmAtual;
+        valorTotal = quantidadeKmRet * valorKm;
         valorTotal = valorExtra + valorTotal;
         return valorTotal;
     }

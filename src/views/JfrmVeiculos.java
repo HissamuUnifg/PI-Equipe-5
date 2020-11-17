@@ -273,6 +273,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
      */
     private void addMascara() throws ParseException {
         JfTxtData.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraData(JfTxtData)));
+        jTxtNumeroRenavan.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.numRenavan(jTxtNumeroRenavan)));
     }
     
     /**
@@ -289,7 +290,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorKmRodado.setDocument(new ClsControlaCpNumeric());
         jTxtValorMercado.setDocument(new ClsControlaCpNumeric());
         jTxtValorSeguro.setDocument(new ClsControlaCpNumeric());
-        jTxtNumeroRenavan.setDocument(new ClsControlaCpNumeric());
+        //jTxtNumeroRenavan.setDocument(new ClsControlaCpNumeric());
 
     }
     /**
@@ -365,7 +366,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             msgObgCampo("KmRodados");
             jTxtKm.requestFocus();
             return false;
-        } else if (jTxtKm.getText().length() > 9) {
+        } else if (jTxtKm.getText().length() > 7) {
             msgAdvCampo("KmRodados");
             jTxtKm.requestFocus();
             return false;
@@ -600,9 +601,9 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtAnoFabricacao = new javax.swing.JTextField();
         jCboClasse = new javax.swing.JComboBox<>();
         jCboTipo = new javax.swing.JComboBox<>();
-        jTxtNumeroRenavan = new javax.swing.JTextField();
         jTxtObservacoes = new javax.swing.JTextField();
         JfTxtData = new javax.swing.JFormattedTextField();
+        jTxtNumeroRenavan = new javax.swing.JFormattedTextField();
         jLabelCodigo = new javax.swing.JLabel();
         jCkbInativar = new javax.swing.JCheckBox();
         jPanelDadosValores = new javax.swing.JPanel();
@@ -792,17 +793,6 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             }
         });
 
-        jTxtNumeroRenavan.setBackground(new java.awt.Color(240, 240, 240));
-        jTxtNumeroRenavan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jTxtNumeroRenavan.setToolTipText("Digite o numero RENAVAN do veiculo");
-        jTxtNumeroRenavan.setBorder(javax.swing.BorderFactory.createTitledBorder("RENAVAN"));
-        jTxtNumeroRenavan.setDisabledTextColor(new java.awt.Color(90, 90, 90));
-        jTxtNumeroRenavan.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTxtNumeroRenavanFocusLost(evt);
-            }
-        });
-
         jTxtObservacoes.setBackground(new java.awt.Color(240, 240, 240));
         jTxtObservacoes.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtObservacoes.setToolTipText("Digite breve observação sobre o veiculo");
@@ -822,6 +812,17 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         JfTxtData.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 JfTxtDataFocusLost(evt);
+            }
+        });
+
+        jTxtNumeroRenavan.setBackground(new java.awt.Color(240, 240, 240));
+        jTxtNumeroRenavan.setBorder(javax.swing.BorderFactory.createTitledBorder("Renavan"));
+        jTxtNumeroRenavan.setToolTipText("Insira o numero do renavan do veiculo");
+        jTxtNumeroRenavan.setDisabledTextColor(new java.awt.Color(90, 90, 90));
+        jTxtNumeroRenavan.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTxtNumeroRenavan.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTxtNumeroRenavanFocusLost(evt);
             }
         });
 
@@ -845,21 +846,24 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jCboClasse, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPaneDadosGeraisLayout.createSequentialGroup()
-                        .addComponent(jTxtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTxtChassi, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTxtKm, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(jTxtAnoModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(jTxtAnoFabricacao, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
-                        .addComponent(JfTxtData, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPaneDadosGeraisLayout.createSequentialGroup()
-                        .addComponent(jTxtNumeroRenavan, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTxtObservacoes)))
+                        .addGroup(jPaneDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTxtNumeroRenavan)
+                            .addComponent(jTxtPlaca, javax.swing.GroupLayout.DEFAULT_SIZE, 164, Short.MAX_VALUE))
+                        .addGroup(jPaneDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPaneDadosGeraisLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jTxtChassi, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTxtKm, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(jTxtAnoModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30)
+                                .addComponent(jTxtAnoFabricacao, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
+                                .addComponent(JfTxtData, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPaneDadosGeraisLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jTxtObservacoes)))))
                 .addContainerGap())
         );
         jPaneDadosGeraisLayout.setVerticalGroup(
@@ -881,9 +885,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                     .addComponent(jTxtAnoFabricacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(JfTxtData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(7, 7, 7)
-                .addGroup(jPaneDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTxtNumeroRenavan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTxtObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPaneDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jTxtObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPaneDadosGeraisLayout.createSequentialGroup()
+                        .addComponent(jTxtNumeroRenavan)
+                        .addContainerGap())))
         );
 
         jLabelCodigo.setText("Codigo:");
@@ -1114,7 +1120,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
                 .addComponent(jPaneDadosGerais, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelDadosValores, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -1407,13 +1413,6 @@ public class JfrmVeiculos extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jTblVeiculosMouseClicked
 
-    private void jTxtNumeroRenavanFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNumeroRenavanFocusLost
-        if ("".equals(jTxtNumeroRenavan.getText())) {
-        } else {
-            clscarros.setRenavam(jTxtNumeroRenavan.getText());
-        }
-    }//GEN-LAST:event_jTxtNumeroRenavanFocusLost
-
     private void jTxtObservacoesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtObservacoesFocusLost
         if (jTxtObservacoes.getText().equals("")) {
             clscarros.setObsEstado(" ");
@@ -1462,6 +1461,13 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         
     }//GEN-LAST:event_JbtnImprimirActionPerformed
 
+    private void jTxtNumeroRenavanFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNumeroRenavanFocusLost
+       if ("".equals(jTxtNumeroRenavan.getText())) {
+        } else {
+            clscarros.setRenavam(jTxtNumeroRenavan.getText());
+        }
+    }//GEN-LAST:event_jTxtNumeroRenavanFocusLost
+
     /**
      * @param args the command line arguments
      */
@@ -1492,7 +1498,7 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     private javax.swing.JTextField jTxtKm;
     private javax.swing.JTextField jTxtMarca;
     private javax.swing.JTextField jTxtNome;
-    private javax.swing.JTextField jTxtNumeroRenavan;
+    private javax.swing.JFormattedTextField jTxtNumeroRenavan;
     private javax.swing.JTextField jTxtObservacoes;
     private javax.swing.JTextField jTxtPlaca;
     private javax.swing.JTextField jTxtPlacaBusca;

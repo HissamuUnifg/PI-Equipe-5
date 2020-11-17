@@ -7,6 +7,7 @@ package models;
  */
 import java.text.ParseException;
 import javax.swing.JFormattedTextField;
+import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
 public class ClsMascaraCampos {
@@ -97,6 +98,13 @@ public class ClsMascaraCampos {
         mask.setValidCharacters("0123456789");
         mask.setPlaceholderCharacter('_');
         mask.uninstall();
+        return mask;
+    }
+    
+    public MaskFormatter numRenavan(JFormattedTextField textfield) throws ParseException {
+        MaskFormatter mask = new MaskFormatter("***********");
+        //mask.setOverwriteMode(true);
+        mask.setValidCharacters("0,1,2,3,4,5,6,7,8,9");
         return mask;
     }
 
