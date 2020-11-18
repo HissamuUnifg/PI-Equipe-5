@@ -416,6 +416,11 @@ public class JfrmContratos extends javax.swing.JFrame {
             clsContratos = contratosDAO.select(Integer.parseInt(idContrato));
             if (contratosDAO.isSucesso()) {               
                 loadTxtFull(clsContratos.getIdCarro(), clsContratos.getIdCliente());
+                if(clsContratos.getTipoLocacao().equals("DIÁRIA")) {
+                    tipoContrato = 1;
+                } else if (clsContratos.getTipoLocacao().equals("KM-RODADO")) {
+                    tipoContrato = 0;
+                }
                 precionado = false;
                 enableControlBusca();
             } else if (!contratosDAO.isSucesso()) {
