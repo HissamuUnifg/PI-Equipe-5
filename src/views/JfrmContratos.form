@@ -203,7 +203,7 @@
                           <Component id="jFtxtCelular" min="-2" pref="151" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="41" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Group type="102" attributes="0">
                           <Component id="jFTxtCpfCnpj" min="-2" pref="179" max="-2" attributes="0"/>
@@ -927,21 +927,26 @@
                       <Component id="jCboStatusContrato" alignment="0" min="-2" pref="164" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="jTxtObservacoes" alignment="1" min="-2" pref="542" max="-2" attributes="0"/>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jTxtValorKmRodado" min="-2" pref="124" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="jTxtValorKmRodado" min="-2" pref="98" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jTxtValorDiaria" min="-2" pref="97" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                          <Component id="jTxtValorKmFinal" min="-2" pref="98" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTxtValorDiaria" min="-2" pref="124" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                          <Component id="jTxtValorKmFinal" min="-2" pref="124" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jTxtQtdDias" min="-2" pref="124" max="-2" attributes="0"/>
+                          <Component id="jTxtKmUtil" min="-2" pref="99" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="jTxtQtdDias" min="-2" pref="98" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace min="0" pref="4" max="32767" attributes="0"/>
+                          <Component id="jTxtObservacoes" min="-2" pref="542" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="JfTxtDataSaida" pref="130" max="32767" attributes="0"/>
+                      <Component id="JfTxtDataSaida" pref="134" max="32767" attributes="0"/>
                       <Component id="jTxtValorExtra" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -957,24 +962,20 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jTxtValorKmRodado" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jCboTipoContrato" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTxtValorKmFinal" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTxtQtdDias" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTxtValorDiaria" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jTxtValorKmRodado" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jCboTipoContrato" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Group type="102" alignment="1" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="JfTxtDataChegada" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="JfTxtDataSaida" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="JfTxtDataChegada" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="JfTxtDataSaida" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTxtQtdDias" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTxtKmUtil" alignment="3" max="32767" attributes="0"/>
+                          <Component id="jTxtValorKmFinal" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jTxtValorDiaria" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jCboStatusContrato" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -1093,7 +1094,7 @@
             <Property name="toolTipText" type="java.lang.String" value="Digite o KM rodado no ato da entrega do veiculo"/>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="KM Rodado Final"/>
+                <TitledBorder title="KM Rod Final"/>
               </Border>
             </Property>
             <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -1236,6 +1237,24 @@
           <Events>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="JfTxtDataSaidaKeyPressed"/>
           </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTxtKmUtil">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="f0" green="f0" red="f0" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="0"/>
+            </Property>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                <TitledBorder title="KM Utilizada"/>
+              </Border>
+            </Property>
+            <Property name="disabledTextColor" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="5a" green="5a" red="5a" type="rgb"/>
+            </Property>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

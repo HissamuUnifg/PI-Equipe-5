@@ -26,7 +26,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.text.NumberFormat;
-import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -172,7 +171,7 @@ public class ClsImpressao {
     
     public void criarContratoDiaria(String caminhoNomeArq) throws Exception {
         // TODO O CODIGO PARA GERAR O ARQUIVO VAI FICAR NESSE METODO, AO CRIAR O OBJETO 
-        //ClsImpressão, observar o construtor quem pede os 3 objetos da tela de contratos.
+        //ClsImpressão, observar o construtor quem pede os 4 objetos da tela de contratos.
        //criando o Documento em Branco
         XWPFDocument documento = new XWPFDocument();
         FileOutputStream arquivo = new FileOutputStream(new File(caminhoNomeArq+".docx"));
@@ -282,7 +281,7 @@ public class ClsImpressao {
                 + " de Chassi "+clsCar.getChassi()+", "
                 + " de Numero Renavan "+clsCar.getRenavam()+", "
                 + " com KM atual de "+clsCar.getKmRodados()+", "
-                + " e estado ("+clsCar.getObsEstado().toUpperCase()+"), de propriedade da LOCADORA.");
+                + " e estado "+clsCar.getObsEstado().toUpperCase()+", de propriedade da LOCADORA.");
         
         carro1.addBreak();
         carro1.addBreak();
@@ -370,17 +369,17 @@ public class ClsImpressao {
         String textoClasula4 = null;
         if(clsCont.getObservacoes() == null || clsCont.getObservacoes().equals("")) {
         textoClasula4 = "Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo"
-                + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+""
+                + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+" proveniente de "+clsCont.getQuantidadeDiarias()+" Dias de seviço de locação"
+                + " com o custo de "+FormatterMoeda.format(clsCar.getValorDiariaLoc())+" por cada dia utilizado e"
                 + " que deverá ser pago em dinheiro (espécie) ou Cartão de Debito ou Credito. Caso hover algum dano ou multa no"
                 + " veiculo o valor será adicionado ao valor total do contrato a ser emitido nova cópia. E em caso de acidente com"
                 + " perca do veiculo será cobrado o valor de "+FormatterMoeda.format(clsCar.getValorSeguro())+" que se refere ao seguro";
         }else{
-        
         textoClasula4 = "Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo"
-                + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+", que contém agregado o valor extra de "+FormatterMoeda.format(clsCont.getValorExtra())+""
+                + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+" proveniente de "+clsCont.getQuantidadeDiarias()+" Dias de seviço de locação"
+                + " com o custo de "+FormatterMoeda.format(clsCar.getValorDiariaLoc())+" por cada dia utilizado, que também contém agregado o valor extra de "+FormatterMoeda.format(clsCont.getValorExtra())+""
                 + " proveniente de "+clsCont.getObservacoes().toUpperCase()+", o valor total deverá ser pago em dinheiro (espécie) ou Cartão de Debito ou Credito. Em caso de acidente com"
                 + " perca do veiculo será cobrado o valor de "+FormatterMoeda.format(clsCar.getValorSeguro())+" que se refere ao seguro";
-        
         }
         XWPFParagraph clasulaValor = documento.createParagraph();
         clasulaValor.setAlignment(ParagraphAlignment.BOTH);
@@ -753,7 +752,7 @@ public class ClsImpressao {
         clasula44.setFontSize(12);
         clasula44.setFontFamily("Arial");
         
-        clasula44.setText("Cláusula 4ª. A presente locação terá o lapso por Kilometragem Usada, o calculo será feito ao retorno do veiculo,"
+        clasula44.setText("Cláusula 4ª. A presente locação terá o lapso por Kilometragem usada, o calculo será feito ao retorno do veiculo,"
                 + " o veiculo será retirado no dia  "+clsVal.dataFormatoBR(clsCont.getDataContrato())+" com a Kilometragem inicial em KM: "+clsCar.getKmRodados()+" "
                 + " o custo por cada KM rodado no veiculo é de "+FormatterMoeda.format(clsCar.getValorKmRd())+" .");
         
@@ -770,14 +769,17 @@ public class ClsImpressao {
         String textoClasula41 = null;
         if(clsCont.getObservacoes() == null || clsCont.getObservacoes().equals("")) {
         textoClasula41 = "Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo"
-                + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+""
+                + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+" proveniente de "+clsCont.getQuantidadeKmUtil()+""
+                + " KM utilizados no valor de "+FormatterMoeda.format(clsCar.getValorKmRd())+" por cada KM utilizado e"
                 + " que deverá ser pago em dinheiro (espécie) ou Cartão de Debito ou Credito. Caso hover algum dano ou multa no"
                 + " veiculo o valor será adicionado ao valor total do contrato a ser emitido nova cópia. E em caso de acidente com"
                 + " perca do veiculo será cobrado o valor de "+FormatterMoeda.format(clsCar.getValorSeguro())+" que se refere ao seguro";
         }else{
         
         textoClasula41 = "Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo"
-                + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+", que contém agregado o valor extra de "+FormatterMoeda.format(clsCont.getValorExtra())+""
+                + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+" proveniente de "+clsCont.getQuantidadeKmUtil()+""
+                + " KM utilizados no valor de "+FormatterMoeda.format(clsCar.getValorKmRd())+" por cada KM utilizado e"
+                + " que contém agregado o valor extra de "+FormatterMoeda.format(clsCont.getValorExtra())+""
                 + " proveniente de "+clsCont.getObservacoes().toUpperCase()+", o valor total deverá ser pago em dinheiro (espécie) ou Cartão de Debito ou Credito. Em caso de acidente com"
                 + " perca do veiculo será cobrado o valor de "+FormatterMoeda.format(clsCar.getValorSeguro())+" que se refere ao seguro";
         

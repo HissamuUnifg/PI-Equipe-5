@@ -36,7 +36,7 @@ public class ContratosDAO {
     
  public void save(ClsContratos clsContratos){
     String sql = "INSERT INTO contratos (id_cliente,id_carro,id_colaborador, Observacoes,QuantidadeDiarias,"
-            + " QuantidadeKmRet,ValorExtra,ValorTotal,TipoLocacao,DataSaida,DataChegada,DataContrato,Status) values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + " QuantidadeKmRet, QuantidadeKmUtil,ValorExtra,ValorTotal,TipoLocacao,DataSaida,DataChegada,DataContrato,Status) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
     String sql2 = "select max(id) as id from contratos";
     
     Connection conn = null;
@@ -54,13 +54,14 @@ public class ContratosDAO {
          ps.setString(4, clsContratos.getObservacoes());
          ps.setInt(5, clsContratos.getQuantidadeDiarias());
          ps.setInt(6, clsContratos.getQuantidadeKmRet());
-         ps.setFloat(7, clsContratos.getValorExtra());
-         ps.setFloat(8, clsContratos.getValorTotal());
-         ps.setString(9, clsContratos.getTipoLocacao());
-         ps.setString(10, clsContratos.getDataSaida());
-         ps.setString(11, clsContratos.getDataChegada());
-         ps.setString(12, clsContratos.getDataContrato());
-         ps.setString(13, clsContratos.getStatus());
+         ps.setInt(7, clsContratos.getQuantidadeKmUtil());
+         ps.setFloat(8, clsContratos.getValorExtra());
+         ps.setFloat(9, clsContratos.getValorTotal());
+         ps.setString(10, clsContratos.getTipoLocacao());
+         ps.setString(11, clsContratos.getDataSaida());
+         ps.setString(12, clsContratos.getDataChegada());
+         ps.setString(13, clsContratos.getDataContrato());
+         ps.setString(14, clsContratos.getStatus());
          
          ps.execute();
          
@@ -112,7 +113,7 @@ public class ContratosDAO {
  
  public void update(ClsContratos clsContratos){
     String sql = "update contratos set id_cliente = ?,id_carro = ?,id_colaborador = ?, Observacoes = ?,QuantidadeDiarias = ?,"
-            + " QuantidadeKmRet = ?,ValorExtra = ?,ValorTotal = ?,TipoLocacao = ?,DataSaida = ?,DataChegada = ?,DataContrato = ?,Status = ? where id = ?";
+            + " QuantidadeKmRet = ?, QuantidadeKmUtil = ?,ValorExtra = ?,ValorTotal = ?,TipoLocacao = ?,DataSaida = ?,DataChegada = ?,DataContrato = ?,Status = ? where id = ?";
     
     Connection conn = null;
     PreparedStatement ps = null;
@@ -128,14 +129,15 @@ public class ContratosDAO {
          ps.setString(4, clsContratos.getObservacoes());
          ps.setInt(5, clsContratos.getQuantidadeDiarias());
          ps.setInt(6, clsContratos.getQuantidadeKmRet());
-         ps.setFloat(7, clsContratos.getValorExtra());
-         ps.setFloat(8, clsContratos.getValorTotal());
-         ps.setString(9, clsContratos.getTipoLocacao());
-         ps.setString(10, clsContratos.getDataSaida());
-         ps.setString(11, clsContratos.getDataChegada());
-         ps.setString(12, clsContratos.getDataContrato());
-         ps.setString(13, clsContratos.getStatus());
-         ps.setInt(14, clsContratos.getId());
+         ps.setInt(7, clsContratos.getQuantidadeKmUtil());
+         ps.setFloat(8, clsContratos.getValorExtra());
+         ps.setFloat(9, clsContratos.getValorTotal());
+         ps.setString(10, clsContratos.getTipoLocacao());
+         ps.setString(11, clsContratos.getDataSaida());
+         ps.setString(12, clsContratos.getDataChegada());
+         ps.setString(13, clsContratos.getDataContrato());
+         ps.setString(14, clsContratos.getStatus());
+         ps.setInt(15, clsContratos.getId());
          
          ps.execute();
          
@@ -201,7 +203,7 @@ public class ContratosDAO {
  public ClsContratos select(int idContrato) {
         ClsContratos clsCont = new ClsContratos();
         String sql = "select id, id_cliente, id_carro, id_colaborador, Observacoes, QuantidadeDiarias, "
-                + " QuantidadeKmRet,ValorExtra,ValorTotal,TipoLocacao,DataSaida,DataChegada, "
+                + " QuantidadeKmRet, QuantidadeKmUtil,ValorExtra,ValorTotal,TipoLocacao,DataSaida,DataChegada, "
                 + " DataContrato,Status from contratos where id = ?";
         Connection conn = null;
         PreparedStatement ps = null;
@@ -222,6 +224,7 @@ public class ContratosDAO {
             clsContratos.setObservacoes(rs.getString("Observacoes"));
             clsContratos.setQuantidadeDiarias(rs.getInt("quantidadediarias"));
             clsContratos.setQuantidadeKmRet(rs.getInt("quantidadekmret"));
+            clsContratos.setQuantidadeKmUtil(rs.getInt("QuantidadeKmUtil"));
             clsContratos.setValorExtra(rs.getFloat("valorextra"));
             clsContratos.setValorTotal(rs.getFloat("valortotal"));
             clsContratos.setTipoLocacao(rs.getString("tipolocacao"));

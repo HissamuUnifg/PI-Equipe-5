@@ -132,6 +132,7 @@ CREATE TABLE IF NOT EXISTS Contratos (
   Observacoes VARCHAR(1000) NULL,
   QuantidadeDiarias INT(3) NULL,
   QuantidadeKmRet INT(9) NULL,
+  QuantidadeKmUtil INT(9) NULL,
   ValorExtra FLOAT NULL,
   ValorTotal FLOAT NULL,
   TipoLocacao VARCHAR(15) NOT NULL,

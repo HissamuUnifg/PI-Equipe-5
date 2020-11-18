@@ -18,8 +18,10 @@ public class ClsContratos {
     private String Status;
     private int quantidadeDiarias;
     private int quantidadeKmRet;
+    private int quantidadeKmUtil;
     private float valorExtra;
     private float valorTotal;
+    
 
     public ClsContratos() {}
     
@@ -41,8 +43,8 @@ public class ClsContratos {
     }
 
     public float calcularValorTotalKM(float valorKm, int kmAtual) {
-        int mutiplicador = quantidadeKmRet - kmAtual;
-        valorTotal = mutiplicador * valorKm;
+        quantidadeKmUtil = quantidadeKmRet - kmAtual;
+        valorTotal = quantidadeKmUtil * valorKm;
         return valorTotal;
     }
 
@@ -51,11 +53,25 @@ public class ClsContratos {
         return valorTotal;
     }
     
+    public void calcularKmUtil(int kmAtual) {
+        this.quantidadeKmUtil = this.quantidadeKmRet - kmAtual;
+    }
+    
+    
     public float calcularValorExtra(){
         valorTotal += valorExtra;
         return valorTotal;
     }
 
+    public int getQuantidadeKmUtil() {
+        return quantidadeKmUtil;
+    }
+
+    public void setQuantidadeKmUtil(int quatidadeKmUtil) {
+        this.quantidadeKmUtil = quatidadeKmUtil;
+    }
+    
+    
     public int getId() {
         return id;
     }

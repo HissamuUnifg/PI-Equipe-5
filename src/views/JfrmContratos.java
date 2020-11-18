@@ -215,6 +215,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         jBtnSalvar.setEnabled(false);
         jBtnBuscar.setEnabled(true);
         //desabilitando campos de texto
+        jTxtKmUtil.setEnabled(false);
         jTxtObservacoes.setEnabled(true);
         jTxtBairro.setEnabled(false);
         jTxtEmail.setEnabled(false);
@@ -307,7 +308,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         jFtxtCnh.setText("");
         jTxtClasse.setText("");
         jTxtTipo.setText("");
-        
+        jTxtKmUtil.setText("");
         jTxtValorDiaria.setText("");
         jTxtValorExtra.setText("");
         jTxtValorTotal.setText("");
@@ -399,8 +400,11 @@ public class JfrmContratos extends javax.swing.JFrame {
             atualizarKmCarro();
         } else {
             jTxtValorKmFinal.setText(km);
-            clsCarros.setKmRodados(Integer.parseInt(km));
             clsContratos.setQuantidadeKmRet(Integer.parseInt(km));
+            clsContratos.calcularKmUtil(clsCarros.getKmRodados());
+            jTxtKmUtil.setText(""+clsContratos.getQuantidadeKmUtil());
+            clsCarros.setKmRodados(Integer.parseInt(km));
+           
         }
     }
     /**
@@ -595,6 +599,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtValorExtra.setText(FormatterMoeda.format(clsContratos.getValorExtra()));
         jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.getValorTotal()));
         jTxtValorKmFinal.setText(""+clsContratos.getQuantidadeKmRet());
+        jTxtKmUtil.setText(""+clsContratos.getQuantidadeKmUtil());
         jTxtQtdDias.setText(""+clsContratos.getQuantidadeDiarias());
     }
     
@@ -720,6 +725,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtValorExtra = new javax.swing.JTextField();
         JfTxtDataChegada = new javax.swing.JFormattedTextField();
         JfTxtDataSaida = new javax.swing.JFormattedTextField();
+        jTxtKmUtil = new javax.swing.JTextField();
         jLabelCodigo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -857,7 +863,7 @@ public class JfrmContratos extends javax.swing.JFrame {
                         .addComponent(jFtxtFone, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jFtxtCelular, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(jPanDadosGeraisLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanDadosGeraisLayout.createSequentialGroup()
                         .addComponent(jFTxtCpfCnpj, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1159,7 +1165,7 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtValorKmFinal.setBackground(new java.awt.Color(240, 240, 240));
         jTxtValorKmFinal.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTxtValorKmFinal.setToolTipText("Digite o KM rodado no ato da entrega do veiculo");
-        jTxtValorKmFinal.setBorder(javax.swing.BorderFactory.createTitledBorder("KM Rodado Final"));
+        jTxtValorKmFinal.setBorder(javax.swing.BorderFactory.createTitledBorder("KM Rod Final"));
         jTxtValorKmFinal.setDisabledTextColor(new java.awt.Color(90, 90, 90));
         jTxtValorKmFinal.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
@@ -1260,6 +1266,11 @@ public class JfrmContratos extends javax.swing.JFrame {
             }
         });
 
+        jTxtKmUtil.setBackground(new java.awt.Color(240, 240, 240));
+        jTxtKmUtil.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jTxtKmUtil.setBorder(javax.swing.BorderFactory.createTitledBorder("KM Utilizada"));
+        jTxtKmUtil.setDisabledTextColor(new java.awt.Color(90, 90, 90));
+
         javax.swing.GroupLayout jPanelDadosValoresLayout = new javax.swing.GroupLayout(jPanelDadosValores);
         jPanelDadosValores.setLayout(jPanelDadosValoresLayout);
         jPanelDadosValoresLayout.setHorizontalGroup(
@@ -1270,19 +1281,23 @@ public class JfrmContratos extends javax.swing.JFrame {
                     .addComponent(jCboTipoContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jCboStatusContrato, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jTxtObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelDadosValoresLayout.createSequentialGroup()
-                        .addComponent(jTxtValorKmRodado, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelDadosValoresLayout.createSequentialGroup()
+                        .addComponent(jTxtValorKmRodado, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTxtValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14)
+                        .addComponent(jTxtValorKmFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jTxtValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTxtValorKmFinal, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTxtQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jTxtKmUtil, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTxtQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelDadosValoresLayout.createSequentialGroup()
+                        .addGap(0, 4, Short.MAX_VALUE)
+                        .addComponent(jTxtObservacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(JfTxtDataSaida, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                    .addComponent(JfTxtDataSaida, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
                     .addComponent(jTxtValorExtra))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -1294,19 +1309,17 @@ public class JfrmContratos extends javax.swing.JFrame {
             jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelDadosValoresLayout.createSequentialGroup()
                 .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelDadosValoresLayout.createSequentialGroup()
-                        .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTxtValorKmRodado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCboTipoContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTxtValorKmFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTxtQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTxtValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(7, 7, 7))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelDadosValoresLayout.createSequentialGroup()
-                        .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(JfTxtDataChegada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JfTxtDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                    .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTxtValorKmRodado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jCboTipoContrato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(JfTxtDataChegada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(JfTxtDataSaida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTxtQtdDias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTxtKmUtil)
+                        .addComponent(jTxtValorKmFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jTxtValorDiaria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jCboStatusContrato)
                     .addGroup(jPanelDadosValoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1655,6 +1668,7 @@ public class JfrmContratos extends javax.swing.JFrame {
             } else {
                 clsContratos.setQuantidadeKmRet(Integer.parseInt(jTxtValorKmFinal.getText()));
                 jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.calcularValorTotalKM(clsCarros.getValorKmRd(), clsCarros.getKmRodados())));
+                jTxtKmUtil.setText(""+clsContratos.getQuantidadeKmUtil());
             }
 
             JfTxtDataSaida.setEnabled(true);
@@ -1745,6 +1759,7 @@ public class JfrmContratos extends javax.swing.JFrame {
             } else {
                 clsContratos.setQuantidadeKmRet(Integer.parseInt(jTxtValorKmFinal.getText()));
                 jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.calcularValorTotalKM(clsCarros.getValorKmRd(), clsCarros.getKmRodados())));
+                jTxtKmUtil.setText(""+clsContratos.getQuantidadeKmUtil());
             }
 
             JfTxtDataSaida.setEnabled(true);
@@ -1831,6 +1846,7 @@ public class JfrmContratos extends javax.swing.JFrame {
     private javax.swing.JTextField jTxtEmail;
     private javax.swing.JTextField jTxtEstado;
     private javax.swing.JTextField jTxtKm;
+    private javax.swing.JTextField jTxtKmUtil;
     private javax.swing.JTextField jTxtMarca;
     private javax.swing.JTextField jTxtNome;
     private javax.swing.JTextField jTxtNumero;
