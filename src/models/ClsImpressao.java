@@ -368,14 +368,14 @@ public class ClsImpressao {
         //CLASULA 4.1
         String textoClasula4 = null;
         if(clsCont.getObservacoes() == null || clsCont.getObservacoes().equals("")) {
-        textoClasula4 = "Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo"
+        textoClasula4 = "Cláusula 4.1ª. O LOCADOR pagará ao LOCATARIO o valor total pelo serviço de locação de veiculo"
                 + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+" proveniente de "+clsCont.getQuantidadeDiarias()+" Dias de seviço de locação"
                 + " com o custo de "+FormatterMoeda.format(clsCar.getValorDiariaLoc())+" por cada dia utilizado e"
                 + " que deverá ser pago em dinheiro (espécie) ou Cartão de Debito ou Credito. Caso hover algum dano ou multa no"
                 + " veiculo o valor será adicionado ao valor total do contrato a ser emitido nova cópia. E em caso de acidente com"
                 + " perca do veiculo será cobrado o valor de "+FormatterMoeda.format(clsCar.getValorSeguro())+" que se refere ao seguro";
         }else{
-        textoClasula4 = "Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo"
+        textoClasula4 = "Cláusula 4.1ª. O LOCADOR pagará ao LOCATARIO o valor total pelo serviço de locação de veiculo"
                 + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+" proveniente de "+clsCont.getQuantidadeDiarias()+" Dias de seviço de locação"
                 + " com o custo de "+FormatterMoeda.format(clsCar.getValorDiariaLoc())+" por cada dia utilizado, que também contém agregado o valor extra de "+FormatterMoeda.format(clsCont.getValorExtra())+""
                 + " proveniente de "+clsCont.getObservacoes().toUpperCase()+", o valor total deverá ser pago em dinheiro (espécie) ou Cartão de Debito ou Credito. Em caso de acidente com"
@@ -768,7 +768,7 @@ public class ClsImpressao {
         
         String textoClasula41 = null;
         if(clsCont.getObservacoes() == null || clsCont.getObservacoes().equals("")) {
-        textoClasula41 = "Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo"
+        textoClasula41 = "Cláusula 4.1ª. O LOCADOR pagará ao LOCATARIO o valor total pelo serviço de locação de veiculo"
                 + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+" proveniente de "+clsCont.getQuantidadeKmUtil()+""
                 + " KM utilizados no valor de "+FormatterMoeda.format(clsCar.getValorKmRd())+" por cada KM utilizado e"
                 + " que deverá ser pago em dinheiro (espécie) ou Cartão de Debito ou Credito. Caso hover algum dano ou multa no"
@@ -776,7 +776,7 @@ public class ClsImpressao {
                 + " perca do veiculo será cobrado o valor de "+FormatterMoeda.format(clsCar.getValorSeguro())+" que se refere ao seguro";
         }else{
         
-        textoClasula41 = "Cláusula 4.1ª. O LOCADOR pagrá ao LOCATARIO o valor total pelo serviço de locação de veiculo"
+        textoClasula41 = "Cláusula 4.1ª. O LOCADOR pagará ao LOCATARIO o valor total pelo serviço de locação de veiculo"
                 + " o valor total de "+FormatterMoeda.format(clsCont.getValorTotal())+" proveniente de "+clsCont.getQuantidadeKmUtil()+""
                 + " KM utilizados no valor de "+FormatterMoeda.format(clsCar.getValorKmRd())+" por cada KM utilizado e"
                 + " que contém agregado o valor extra de "+FormatterMoeda.format(clsCont.getValorExtra())+""
