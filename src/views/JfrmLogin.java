@@ -283,6 +283,7 @@ public class JfrmLogin extends javax.swing.JFrame {
 
     private void loadUser() {
         jCboUsuario.addItem("Admin");
+        clslogin.setNivel("GERENTE");
         
     }
 
