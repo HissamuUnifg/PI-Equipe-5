@@ -40,21 +40,21 @@ public class ClsClientes extends ClsUsuarios{
 
 
     
-    public void cleanClientes() {
-        this.id = 0;
-        this.nome = "";
-        this.cpf = "";
-        this.telefone = "";
-        this.cnpj = "";
-        this.rg = "";
-        this.ie = "";
-        this.cnh = "";
-        this.celular = "";
-        this.Email = "";
-        this.Observacoes = "";
-        this.RazaoSocial = "";
-        this.DataNascimento = "";
-    
+    public  void cleanClientes(ClsClientes clsCli, ClsEnderecos clsEnd) {
+        clsCli.id = 0;
+        clsCli.nome = "";
+        clsCli.cpf = "";
+        clsCli.telefone = "";
+        clsCli.cnpj = "";
+        clsCli.rg = "";
+        clsCli.ie = "";
+        clsCli.cnh = "";
+        clsCli.celular = "";
+        clsCli.Email = "";
+        clsCli.Observacoes = "";
+        clsCli.RazaoSocial = "";
+        clsCli.DataNascimento = "";
+        clsEnd.cleanEnd(clsEnd);
     }
 
     public ClsClientes( int id, String nome, String nomeLogin, String cpf, String telefone,

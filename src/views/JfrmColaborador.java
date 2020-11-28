@@ -557,9 +557,9 @@ public class JfrmColaborador extends javax.swing.JFrame {
     }//GEN-LAST:event_jTxtSenhaFocusLost
 
     private void JbtnSalvarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JbtnSalvarMouseClicked
-        if (editando == false) {
+        if (!editando) {
             colaboradorDAO.save(clscolaborador);
-            if (colaboradorDAO.isSucesso() == true) {
+            if (colaboradorDAO.isSucesso()) {
                 JOptionPane.showMessageDialog(this, colaboradorDAO.getRetorno(), "Informação", JOptionPane.INFORMATION_MESSAGE);
                 disableControls();
                 setIconBtnNv(false);

@@ -21,6 +21,17 @@ public class ClsEnderecos extends ClsCidades {
     }
 
 
+    public void cleanEnd(ClsEnderecos clsEnd){
+        clsEnd.Id = 0;
+    clsEnd.Rua = "";
+    clsEnd.Numero = "";
+    clsEnd.Bairro = "";
+    clsEnd.TipoEndereco = "";
+    clsEnd.Referencia = "";
+    clsEnd.Cep = "";
+    clsEnd.Id_cidade = 0;
+    clsEnd.idCliente = 0;
+    }
     
     public ClsEnderecos(int Id, String Rua, String Numero, String Bairro, int Id_cidade) {
         this.Id = Id;

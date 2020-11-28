@@ -144,8 +144,10 @@ public class JfrmClientes extends javax.swing.JFrame {
     private void addMascaraCpfCnpj(boolean tipo) throws ParseException {
         //se for true aplica a mascara CPF // se for false aplica a mascara cnpj
         if (tipo == true) {
+                jFTxtCpfCnpj.setValue(null);
                 jFTxtCpfCnpj.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraCpf(jFTxtCpfCnpj))); 
         } else if (tipo == false) {
+                jFTxtCpfCnpj.setValue(null);
                 jFTxtCpfCnpj.setFormatterFactory(new DefaultFormatterFactory(clsMascaracampos.mascaraCnpj(jFTxtCpfCnpj)));
         }
     }
@@ -372,7 +374,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         if (cpf.equals("")) {
             jBtnBuscar.requestFocus();
         } else {
-            clsClientes.cleanClientes();
+            clsClientes.cleanClientes(clsClientes,clsEnderecos);
             boolean valido = clsValidacoes.isValid(cpf);
             boolean tipo = clsValidacoes.isTipoCpfCnpj(); //tipo true é CPF tipo false é CNPJ
             if (valido == true && tipo == true) {
@@ -950,12 +952,22 @@ public class JfrmClientes extends javax.swing.JFrame {
                 jRadioBtnCpfMouseClicked(evt);
             }
         });
+        jRadioBtnCpf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioBtnCpfActionPerformed(evt);
+            }
+        });
 
         jRadioBtnCnpj.setText("Juridica");
         jRadioBtnCnpj.setToolTipText("Marque para pessoa Juridica!");
         jRadioBtnCnpj.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jRadioBtnCnpjMouseClicked(evt);
+            }
+        });
+        jRadioBtnCnpj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioBtnCnpjActionPerformed(evt);
             }
         });
 
@@ -1354,7 +1366,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                             .addComponent(jBtnImprimir, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBtnNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBtnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabelCodigo)
@@ -1404,7 +1416,7 @@ public class JfrmClientes extends javax.swing.JFrame {
         if (precionado == false) {
             jTblEnderecos.setEnabled(false);
             setIconBtnNv(true);
-            clsClientes.cleanClientes();
+            clsClientes.cleanClientes(clsClientes,clsEnderecos);
             enableControl();
             clearTxt();
             try {
@@ -1424,7 +1436,7 @@ public class JfrmClientes extends javax.swing.JFrame {
             setIconBtnNv(false);
             disableControl();
             clearTxt();
-            clsClientes.cleanClientes();
+            clsClientes.cleanClientes(clsClientes,clsEnderecos);
             if (buscando == true || editando == true) {
                 removeTable();
             }
@@ -1716,13 +1728,15 @@ public class JfrmClientes extends javax.swing.JFrame {
                     setIconBtnAdd(false);
                     setIconBtnNv(false);
                     precionado = false;
+                    editando = false;
                 } else {
                     JOptionPane.showMessageDialog(this, "Endereco: " + endDAO.getRetorno() + "Cliente: " + cliDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
                     disableControl();
                     clearTxt();
                     setIconBtnAdd(false);
                     setIconBtnNv(false);
-                     precionado = false;
+                    precionado = false;
+                    editando = false;
                 }
             }
         } else {
@@ -1740,7 +1754,8 @@ public class JfrmClientes extends javax.swing.JFrame {
                     reloadTable();
                     setIconBtnAdd(false);
                     setIconBtnNv(false);
-                     precionado = false;
+                    precionado = false;
+                    editando = false;
                 } else {
                     JOptionPane.showMessageDialog(this, "Endereco: " + endDAO.getRetorno() + "Cliente: " + cliDAO.getRetorno(), "ERRO", JOptionPane.INFORMATION_MESSAGE);
                     disableControl();
@@ -1748,6 +1763,7 @@ public class JfrmClientes extends javax.swing.JFrame {
                     setIconBtnAdd(false);
                     setIconBtnNv(false);
                     precionado = false;
+                    editando = false;
                 }
             }
         }
@@ -1820,9 +1836,19 @@ public class JfrmClientes extends javax.swing.JFrame {
     }//GEN-LAST:event_jBtnImprimirActionPerformed
 
     private void jRadioBtnCpfMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioBtnCpfMouseClicked
-        if (jRadioBtnCpf.isSelected() == true) {
+
+    }//GEN-LAST:event_jRadioBtnCpfMouseClicked
+
+    private void jRadioBtnCnpjMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioBtnCnpjMouseClicked
+
+    }//GEN-LAST:event_jRadioBtnCnpjMouseClicked
+
+    private void jRadioBtnCpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioBtnCpfActionPerformed
+            if (jRadioBtnCpf.isSelected() == true) {
             jRadioBtnCnpj.setEnabled(false);
             try {
+                clsClientes.setCpf("");
+                clsClientes.setCnpj("");
                 jFTxtCpfCnpj.setText("");
                 addMascaraCpfCnpj(true);
                 jTxtNome.setEnabled(true);
@@ -1833,12 +1859,14 @@ public class JfrmClientes extends javax.swing.JFrame {
             jRadioBtnCnpj.setEnabled(true);
             jFTxtCpfCnpj.setText("");
         }
-    }//GEN-LAST:event_jRadioBtnCpfMouseClicked
+    }//GEN-LAST:event_jRadioBtnCpfActionPerformed
 
-    private void jRadioBtnCnpjMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioBtnCnpjMouseClicked
+    private void jRadioBtnCnpjActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioBtnCnpjActionPerformed
         if (jRadioBtnCnpj.isSelected() == true) {
             jRadioBtnCpf.setEnabled(false);
             try {
+                clsClientes.setCpf("");
+                clsClientes.setCnpj("");
                 jFTxtCpfCnpj.setText("");
                 addMascaraCpfCnpj(false);
                 jTxtNome.setEnabled(true);
@@ -1849,7 +1877,7 @@ public class JfrmClientes extends javax.swing.JFrame {
             jRadioBtnCpf.setEnabled(true);
             jFTxtCpfCnpj.setText("");
         }
-    }//GEN-LAST:event_jRadioBtnCnpjMouseClicked
+    }//GEN-LAST:event_jRadioBtnCnpjActionPerformed
      
     /**
      * @param args the command line arguments

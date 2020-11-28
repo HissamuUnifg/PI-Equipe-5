@@ -1140,11 +1140,6 @@ public class JfrmContratos extends javax.swing.JFrame {
         jCboTipoContrato.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jCboTipoContrato.setToolTipText("Selecione o tipo de contrato, escolha entre diaria ou km rodado precione Tab para selecionar");
         jCboTipoContrato.setBorder(javax.swing.BorderFactory.createTitledBorder("Tipo Contrato"));
-        jCboTipoContrato.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jCboTipoContratoFocusLost(evt);
-            }
-        });
         jCboTipoContrato.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jCboTipoContratoKeyPressed(evt);
@@ -1167,11 +1162,6 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtValorKmFinal.setToolTipText("Digite o KM rodado no ato da entrega do veiculo");
         jTxtValorKmFinal.setBorder(javax.swing.BorderFactory.createTitledBorder("KM Rod Final"));
         jTxtValorKmFinal.setDisabledTextColor(new java.awt.Color(90, 90, 90));
-        jTxtValorKmFinal.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTxtValorKmFinalFocusLost(evt);
-            }
-        });
         jTxtValorKmFinal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTxtValorKmFinalMouseClicked(evt);
@@ -1188,11 +1178,6 @@ public class JfrmContratos extends javax.swing.JFrame {
         jTxtQtdDias.setToolTipText("Digite a quantidade de dias que será alugado o veiculo");
         jTxtQtdDias.setBorder(javax.swing.BorderFactory.createTitledBorder("Dias Alugados"));
         jTxtQtdDias.setDisabledTextColor(new java.awt.Color(90, 90, 90));
-        jTxtQtdDias.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTxtQtdDiasFocusLost(evt);
-            }
-        });
         jTxtQtdDias.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTxtQtdDiasMouseClicked(evt);
@@ -1434,27 +1419,6 @@ public class JfrmContratos extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jBtnImprimirActionPerformed
 
-    private void jCboTipoContratoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jCboTipoContratoFocusLost
-
-        if (jCboTipoContrato.getSelectedItem().equals("KM-RODADO")) {
-            enableTipoKM(true);
-            tipoContrato = 0;
-            clsContratos.setTipoLocacao(jCboTipoContrato.getSelectedItem().toString());
-            clsContratos.setQuantidadeDiarias(0);
-            jTxtQtdDias.setText("");
-            
-        } else if (jCboTipoContrato.getSelectedItem().equals("DIÁRIA")) {
-            enableTipoKM(false);
-            tipoContrato = 1;
-            clsContratos.setTipoLocacao(jCboTipoContrato.getSelectedItem().toString());
-            clsContratos.setQuantidadeKmRet(0);
-            jTxtValorKmFinal.setText("");
-            
-        }
-
-
-    }//GEN-LAST:event_jCboTipoContratoFocusLost
-
     private void jBtnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnNovoActionPerformed
         if (precionado == false) {
             listaCarros.clear();
@@ -1509,16 +1473,6 @@ public class JfrmContratos extends javax.swing.JFrame {
     private void jTxtValorExtraMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTxtValorExtraMouseClicked
         jTxtValorExtra.setText("");
     }//GEN-LAST:event_jTxtValorExtraMouseClicked
-
-    private void jTxtQtdDiasFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtQtdDiasFocusLost
-        clsContratos.setValorExtra(0);
-        jTxtValorExtra.setText(FormatterMoeda.format(clsContratos.getValorExtra()));
-        clsContratos.setQuantidadeDiarias(Integer.parseInt(jTxtQtdDias.getText()));
-        jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.calcularValorTotalDIA(clsCarros.getValorDiariaLoc())));
-        JfTxtDataSaida.setEnabled(true);
-        JfTxtDataChegada.setEnabled(true);
-        JfTxtDataSaida.requestFocus();
-    }//GEN-LAST:event_jTxtQtdDiasFocusLost
 
     private void jTxtValorKmFinalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTxtValorKmFinalMouseClicked
         jTxtValorKmFinal.setText("");
@@ -1747,26 +1701,6 @@ public class JfrmContratos extends javax.swing.JFrame {
         }
         }
     }//GEN-LAST:event_jCboTipoContratoKeyPressed
-
-    private void jTxtValorKmFinalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtValorKmFinalFocusLost
-      
-            clsContratos.setValorExtra(0);
-            jTxtValorExtra.setText(FormatterMoeda.format(clsContratos.getValorExtra()));
-            if (Integer.parseInt(jTxtValorKmFinal.getText()) < clsCarros.getKmRodados()) {
-                JOptionPane.showMessageDialog(this, "O campo deve ser preenchido com um valor \n maior que o KM atual do Veiculo!", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
-            } else if (jTxtValorKmFinal.getText().length() < 1) {
-                JOptionPane.showMessageDialog(this, "O campo deve ser preenchido", "ADVERTENCIA", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                clsContratos.setQuantidadeKmRet(Integer.parseInt(jTxtValorKmFinal.getText()));
-                jTxtValorTotal.setText(FormatterMoeda.format(clsContratos.calcularValorTotalKM(clsCarros.getValorKmRd(), clsCarros.getKmRodados())));
-                jTxtKmUtil.setText(""+clsContratos.getQuantidadeKmUtil());
-            }
-
-            JfTxtDataSaida.setEnabled(true);
-            JfTxtDataChegada.setEnabled(true);
-            JfTxtDataSaida.requestFocus();
-        
-    }//GEN-LAST:event_jTxtValorKmFinalFocusLost
 
     private void jTxtObservacoesFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtObservacoesFocusLost
             if(jTxtObservacoes.getText().length() > 999 ){

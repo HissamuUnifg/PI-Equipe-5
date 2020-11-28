@@ -41,6 +41,8 @@ public class ClsMascaraCampos {
         mask.install(textfield);
         return mask;
     }
+    
+
 
     public MaskFormatter mascaraCep(JFormattedTextField textfield) throws ParseException {
         MaskFormatter mask = null;
@@ -62,6 +64,7 @@ public class ClsMascaraCampos {
         return mask;
     }
 
+
     public MaskFormatter mascaraData(JFormattedTextField textfield) throws ParseException {
         MaskFormatter mask = null;
         mask = new MaskFormatter("##/##/####");
@@ -71,6 +74,7 @@ public class ClsMascaraCampos {
         mask.install(textfield);
         return mask;
     }
+    
     public MaskFormatter mascaraDataAno(JFormattedTextField textfield) throws ParseException {
         MaskFormatter mask = null;
         mask = new MaskFormatter("####");
@@ -86,7 +90,6 @@ public class ClsMascaraCampos {
         mask = new MaskFormatter("###########");
         mask.setOverwriteMode(true);
         mask.setValidCharacters("0123456789");
-        mask.setPlaceholderCharacter('_');
         mask.install(textfield);
         return mask;
     }
@@ -102,9 +105,9 @@ public class ClsMascaraCampos {
     }
     
     public MaskFormatter numRenavan(JFormattedTextField textfield) throws ParseException {
-        MaskFormatter mask = new MaskFormatter("***********");
-        //mask.setOverwriteMode(true);
-        mask.setValidCharacters("0,1,2,3,4,5,6,7,8,9");
+        MaskFormatter mask = new MaskFormatter("###########");
+        mask.setOverwriteMode(true);
+        mask.setValidCharacters("0123456789");
         return mask;
     }
 

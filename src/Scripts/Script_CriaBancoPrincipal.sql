@@ -29,6 +29,9 @@ UNIQUE KEY cpf_UNIQUE (Cpf)
 
 
 );
+/*Cria o registro do Usuario Administrador do Sistema*/
+insert into colaboradores (nome, cpf, nomeLogin, Cpf_funCadastro, senha, telefone, nivel) 
+values ('PROJETO INTEGRADOR','03086170530','ADMINISTRADOR','03086170530','123456','77991667297','GERENTE');
 
 /*Nessa tabela a coluna Id fica como chave primaria 
   e auto incremento, e a coluna Cpf fica como chave

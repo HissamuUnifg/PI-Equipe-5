@@ -292,7 +292,6 @@ public class JfrmVeiculos extends javax.swing.JFrame {
         jTxtValorKmRodado.setDocument(new ClsControlaCpNumeric());
         jTxtValorMercado.setDocument(new ClsControlaCpNumeric());
         jTxtValorSeguro.setDocument(new ClsControlaCpNumeric());
-        //jTxtNumeroRenavan.setDocument(new ClsControlaCpNumeric());
 
     }
     /**
@@ -439,11 +438,11 @@ public class JfrmVeiculos extends javax.swing.JFrame {
             msgObgCampo("Numero Renavan");
             jTxtNumeroRenavan.requestFocus();
             return false;
-        } else if (jTxtNumeroRenavan.getText().length() > 30) {
+        } else if (jTxtNumeroRenavan.getText().length() > 11) {
             msgAdvCampo("Numero Renavan");
             jTxtNumeroRenavan.requestFocus();
             return false;
-        } else if (jTxtNumeroRenavan.getText().length() < 9) {
+        } else if (jTxtNumeroRenavan.getText().length() < 11) {
             msgAdvCampo("Numero Renavan");
             jTxtNumeroRenavan.requestFocus();
             return false;
@@ -1465,9 +1464,12 @@ public class JfrmVeiculos extends javax.swing.JFrame {
     }//GEN-LAST:event_JbtnImprimirActionPerformed
 
     private void jTxtNumeroRenavanFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTxtNumeroRenavanFocusLost
-       if ("".equals(jTxtNumeroRenavan.getText())) {
+       if ("".equals(jTxtNumeroRenavan.getText()) || jTxtNumeroRenavan.getText().length() < 1) {
+           msgErrCampo("Numero Renavan");
+        } else if (jTxtNumeroRenavan.getText().length() < 11){
+           msgErrCampo("Numero Renavan");
         } else {
-            clscarros.setRenavam(jTxtNumeroRenavan.getText());
+           clscarros.setRenavam(jTxtNumeroRenavan.getText());
         }
     }//GEN-LAST:event_jTxtNumeroRenavanFocusLost
 

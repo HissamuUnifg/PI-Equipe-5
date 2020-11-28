@@ -78,6 +78,7 @@ public class ContratosDAO {
          sucesso = true;
          
      } catch (SQLException e) {
+            System.out.println(e);
             switch (e.getErrorCode()) {
                 case 1048:
                     retorno = "Verifique todos os campos se estão preenchidos!";

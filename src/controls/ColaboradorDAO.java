@@ -53,6 +53,7 @@ public class ColaboradorDAO {
             retorno = "Gravado com sucesso!";
             sucesso = true;
         } catch (SQLException e) {
+            System.out.println(e);
             if (e.getErrorCode() == 1062) {
                 retorno = "O CPF já está cadastrado!";
                 sucesso = false;
