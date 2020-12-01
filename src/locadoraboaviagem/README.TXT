@@ -1,5 +1,7 @@
 bibliotecas necessarias para a correta compilação do sistema;
 
+/*TODAS AS DEPENDENCIAS NECESSARIAS PARA CORRETO FUNCIONAMENTO ESTÁ NA PASTA DEPENDENCIAS*/
+
 Tem que importar todas as deendencias do JasperReports e iReport;
 /*Tem que fazer o download do iReports e instaar no computador, na pasta dele tem as dependencias necessarias*/
 
