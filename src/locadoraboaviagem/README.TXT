@@ -4,6 +4,7 @@ bibliotecas necessarias para a correta compilação do sistema;
 /*Criar a biblioteca POI e adicionar as dependencias POI*/
 /*Criar a biblioteca JasperReports e adicionar todos as dependencias da Jasper*/
 /*Adicionar a biblioteca do MySql Conector J versão 8*/
+
 Tem que importar todas as deendencias do JasperReports e iReport;
 /*Tem que fazer o download do iReports e instaar no computador, na pasta dele tem as dependencias necessarias*/
 
